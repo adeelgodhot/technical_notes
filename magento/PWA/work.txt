@@ -110,7 +110,7 @@ ssh-add ~/.ssh/id_ed25519
 dc up -d --remove-orphans
 dc ps
 
-
+ 
 9.  Sample Data
 	dc stop app
 	docker-compose exec mysql mysql -u root -pscandipwa -e "DROP DATABASE magento;CREATE DATABASE magento;"
