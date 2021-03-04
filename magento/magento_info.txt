@@ -300,23 +300,23 @@ E:\PHP\Rashed\calvo_docker\Calvo-Store\src\vendor\magento\module-catalog\Model\C
  
 --------------------------------------------------------------
 get website ids from product
-$product->getWebsiteIds() 
+	$product->getWebsiteIds() 
 
-get website id from store
-getStore()->getWebsiteId()
+	get website id from store
+	getStore()->getWebsiteId()
 
-get default store id from website
-$website->getDefaultStore()->getId()
+	get default store id from website
+	$website->getDefaultStore()->getId()
 
-public function __construct(
-        StoreManagerInterface $storeManager,
-        LoggerInterface $logger
-    ) {
-        $this->storeManager = $storeManager;
-        $this->logger = $logger;
-    }
-$storeData = $this->storeManager->getStore($id);
-$storeCode = (string)$storeData->getCode();
+	public function __construct(
+			StoreManagerInterface $storeManager,
+			LoggerInterface $logger
+		) {
+			$this->storeManager = $storeManager;
+			$this->logger = $logger;
+		}
+	$storeData = $this->storeManager->getStore($id);
+	$storeCode = (string)$storeData->getCode();
 -------------------------------------------------------------
 Attribute
 
