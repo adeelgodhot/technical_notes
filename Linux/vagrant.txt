@@ -219,3 +219,32 @@ https://graspingtech.com/mount-nfs-share-windows-10/
  
  config.vm.synced_folder ".", "/var/www", type: "rsync", rsync__args: ["--verbose", "--archive", "--delete", "-z"]
  		
+---------------------------------------
+clone vagrant
+
+https://www.dev-metal.com/copy-duplicate-vagrant-box/
+
+	vagrant halt
+	
+	create a package.box file (default name) in the same folder with
+		vagrant package
+	>>>>>
+	Now create a new folder somewhere (for your new project that uses the box) and initialize a new default Vagrantfile via
+
+	vagrant init
+	Open the file, and edit this: Rename the default boxname (which might be precise64) to something new, like “my-zend-framework-box“.
+
+	config.vm.box = "my-zend-framework-box"
+	Uncomment and edit the default box location from
+
+	# config.vm.box_url = "http://domain.com/path/to/above.box"
+	to the filepath of your package.box. Windows users need to write the path this way:
+
+	config.vm.box_url = "file:///d:/folder/package.box"
+	Then uncomment and change the default IP to something you want, I recommend increasing the last number of the IP.
+
+	config.vm.network :private_network, ip: "192.168.33.101"
+	Run your Vagrant box with:
+
+	vagrant up
+	>>>>>

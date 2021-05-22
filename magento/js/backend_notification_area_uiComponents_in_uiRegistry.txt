@@ -1,0 +1,178 @@
+{
+    "*": {
+        "Magento_Ui/js/core/app": {
+            "types": {
+                "dataSource": [],
+                "text": {
+                    "component": "Magento_Ui\/js\/form\/element\/text",
+                    "extends": "notification_area"
+                },
+                "column.text": {
+                    "component": "Magento_Ui\/js\/form\/element\/text",
+                    "extends": "notification_area"
+                },
+                "action": {
+                    "extends": "notification_area"
+                },
+                "column.actions": {
+                    "extends": "notification_area"
+                },
+                "columns": {
+                    "extends": "notification_area"
+                },
+                "container": {
+                    "extends": "notification_area"
+                },
+                "notification_area": {
+                    "deps": ["notification_area.notification_area_data_source"],
+                    "provider": "notification_area.notification_area_data_source"
+                },
+                "html_content": {
+                    "component": "Magento_Ui\/js\/form\/components\/html",
+                    "extends": "notification_area"
+                }
+            },
+            "components": {
+                "notification_area": {
+                    "children": {
+                        "notification_area": {
+                            "type": "notification_area",
+                            "name": "notification_area",
+                            "children": {
+                                "columns": {
+                                    "type": "columns",
+                                    "name": "columns",
+                                    "children": {
+                                        "created_at": {
+                                            "type": "column.text",
+                                            "name": "created_at",
+                                            "config": {
+                                                "dataType": "text",
+                                                "component": "Magento_AdminNotification\/js\/grid\/columns\/message",
+                                                "componentType": "column",
+                                                "sorting": "asc",
+                                                "label": "",
+                                                "sortOrder": "30"
+                                            }
+                                        },
+                                        "actions": {
+                                            "type": "column.actions",
+                                            "name": "actions",
+                                            "config": {
+                                                "component": "Magento_Ui\/js\/grid\/columns\/actions",
+                                                "label": "Action",
+                                                "dataType": "actions",
+                                                "indexField": "identity",
+                                                "sortOrder": "20"
+                                            }
+                                        },
+                                        "dismiss": {
+                                            "type": "column.actions",
+                                            "name": "dismiss",
+                                            "config": {
+                                                "component": "Magento_Ui\/js\/grid\/columns\/actions",
+                                                "label": "Action",
+                                                "dataType": "actions",
+                                                "indexField": "identity",
+                                                "bodyTmpl": "Magento_AsynchronousOperations\/grid\/cells\/actions",
+                                                "sortOrder": "10"
+                                            }
+                                        }
+                                    },
+                                    "config": {
+                                        "childDefaults": {
+                                            "storageConfig": {
+                                                "provider": "ns = ${ $.ns }, index = bookmarks",
+                                                "root": "columns.${ $.index }",
+                                                "namespace": "current.${ $.storageConfig.root }"
+                                            }
+                                        },
+                                        "component": "Magento_AsynchronousOperations\/js\/grid\/listing",
+                                        "storageConfig": {
+                                            "namespace": "current",
+                                            "provider": "ns = ${ $.ns }, index = bookmarks"
+                                        },
+                                        "componentType": "columns",
+                                        "template": "Magento_AsynchronousOperations\/grid\/listing",
+                                        "link": "http:\/\/www.dev.com\/admin\/bulk\/index\/index\/key\/bbe287fcf54f1621891eb9402a183497f8afb49785f6b3c46c03331cd6ffb538\/",
+                                        "linkText": "Bulk Actions Log",
+                                        "dismissAllText": "Dismiss All Completed Tasks",
+                                        "dismissUrl": "http:\/\/www.dev.com\/admin\/bulk\/notification\/dismiss\/key\/0c45f07491284c54b8bb93f2d007b3cca836b4f490b1b69c751d634fd53fa5db\/",
+                                        "isAllowed": true
+                                    }
+                                },
+                                "modalContainer": {
+                                    "type": "container",
+                                    "name": "modalContainer",
+                                    "children": {
+                                        "modal": {
+                                            "type": "container",
+                                            "name": "modal",
+                                            "children": {
+                                                "insertBulk": {
+                                                    "type": "container",
+                                                    "name": "insertBulk",
+                                                    "config": {
+                                                        "autoRender": false,
+                                                        "realTimeLink": false,
+                                                        "render_url": "http:\/\/www.dev.com\/admin\/mui\/index\/render_handle\/handle\/bulk_bulk_details_modal\/buttons\/1\/key\/a3f4b9276eea80a8710c5cf446db1b3a8b8f175c7fb23ed724929fb1ebb59ec3\/",
+                                                        "update_url": "http:\/\/www.dev.com\/admin\/mui\/index\/render\/key\/1dce6378b7f881b878556c6986d390b13af98d43b985491c5b3ba23f669d5edb\/",
+                                                        "dataLinks": {
+                                                            "imports": false,
+                                                            "exports": false
+                                                        },
+                                                        "component": "Magento_AsynchronousOperations\/js\/insert-form",
+                                                        "externalProvider": "${ $.ns }.bulk_details_form_modal_data_source",
+                                                        "ns": "bulk_details_form_modal",
+                                                        "toolbarContainer": "${ $.parentName }",
+                                                        "formSubmitType": "ajax",
+                                                        "loading": false,
+                                                        "columnsProvider": "ns = notification_area, index = columns",
+                                                        "titlePrefix": "Action Details - #",
+                                                        "modalTitleProvider": "${ $.externalProvider }:data.uuid"
+                                                    }
+                                                }
+                                            },
+                                            "config": {
+                                                "options": {
+                                                    "type": "slide"
+                                                },
+                                                "component": "Magento_Ui\/js\/modal\/modal-component"
+                                            }
+                                        }
+                                    },
+                                    "config": {
+                                        "component": "uiComponent"
+                                    }
+                                }
+                            },
+                            "config": {
+                                "component": "uiComponent"
+                            }
+                        },
+                        "notification_area_data_source": {
+                            "type": "dataSource",
+                            "name": "notification_area_data_source",
+                            "dataScope": "notification_area",
+                            "config": {
+                                "data": {
+                                    "totalRecords": 0,
+                                    "items": []
+                                },
+                                "update_url": "http:\/\/www.dev.com\/admin\/mui\/index\/render\/key\/1dce6378b7f881b878556c6986d390b13af98d43b985491c5b3ba23f669d5edb\/",
+                                "component": "Magento_Ui\/js\/grid\/provider",
+                                "storageConfig": {
+                                    "indexField": "identity"
+                                },
+                                "aclResource": "Magento_AdminNotification::show_list",
+                                "params": {
+                                    "namespace": "notification_area"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,1 +1,13 @@
-src/vendor/scandipwa/customization/src/Controller/AppIcon.php
+1. src/vendor/scandipwa/customization/src/Controller/AppIcon.php
+
+2. E:\PHP\Rashed\calvo_docker\Calvo-Store\src\vendor\scandipwa\catalog-graphql\src\Model\Resolver\Inventory\StockCount.php  53-57
+
+3. E:\PHP\Rashed\calvo_docker\Calvo-Store\src\app\code\Scandiweb\Extend\etc\schema.graphqls
+
+	>>>>>>>>>>>>>>>>>>
+	type ProductStockItem {
+		saleable_qty: Int @doc(description: "Saleable Qty")
+	}
+	>>>>>>>>>>>>>>>>>>
+	
+4. E:\PHP\Rashed\calvo_docker\Calvo-Store\src\app\code\Scandiweb\Extend\etc\di.xml

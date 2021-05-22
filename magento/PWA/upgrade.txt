@@ -1,0 +1,2 @@
+https://docs.scandipwa.com/getting-started-1/depricated-docker-setup/migrating-from-the-docker-setup-legacy
+

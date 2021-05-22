@@ -5,7 +5,7 @@
             $path = str_replace('\\', '/', $path);
             return $path;
   
-3. vendor/magento/module-theme/Model/Theme.php
+3. vendor/magento/module-theme/Model/Theme\Registration.php
     function: _registerThemeRecursively
     line: 114;
     code: //$this->_savePreviewImage
@@ -17,7 +17,7 @@
 
 
 5. setup:di:compile
-  vendor/magento/framework/interception/PluginListGenerator.php
+  vendor/magento/framework/interception/PluginListGenerator.php :: 158
 -                $cacheId = implode('-', $this->scopePriorityScheme) . "-" . $this->cacheId;
 6. app/etc/di.xml 
             722line:  MaterializationStrategy\Symlink->Copy

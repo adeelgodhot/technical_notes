@@ -228,6 +228,7 @@ dc ps
    docker exec -it 917b9b625664 /bin/bash
    
    docker exec -it magento-docker_frontend_1 /bin/bash
+   docker exec -it magento-docker_redis_1 /bin/bash
    
    ---------------------
    docker container dump

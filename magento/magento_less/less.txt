@@ -6,3 +6,7 @@
 //  @screen__xl: 1440px;
 
 https://devdocs.magento.com/guides/v2.4/frontend-dev-guide/css-guide/css_quick_guide_approach.html
+https://devdocs.magento.com/guides/v2.4/frontend-dev-guide/responsive-web-design/rwd_css.html
+https://devdocs.magento.com/guides/v2.4/frontend-dev-guide/responsive-web-design/rwd-breakpoints.html
+
+https://inchoo.net/magento-2/css-media-queries-magento-2/

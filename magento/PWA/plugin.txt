@@ -1,0 +1,86 @@
+https://scandipwa.gitbook.io/docs/how-to-tutorials-intermediate/scandipwa-plugins
+
+webpack:///./src/config/Extensibility/Middleware/handlers/generateGetHandler.js  :: class Member
+
+webpack:///./src/config/Extensibility/Middleware/handlers/generateApplyHandler.js :: function 
+
+webpack:///./src/config/Extensibility/Middleware/handlers/generateConstructHandler.js :: property
+
+
+////// GTM modifications ///////
+app\code\ScandiPWA\GtmGraphQl\src\scandipwa\app\plugin\GTMHocWrapper.plugin.js
+	withGTM(callback(...args), route); ==> return withGTM(callback(...args), route);
+E:\PHP\Rashed\calvo_docker\DevPWA\scandipwa-gtm-1.1 (ScandiPWA)\app\code\ScandiPWA\GtmGraphQl\src\scandipwa\app\util\EventConfig\index.js
+	>>>>>>>>ORG
+	export const mapGtmEventNames = (name) => {
+		switch (name) {
+			case name.includes('impressions'):
+				return EVENT_IMPRESSION;
+			default:
+				return name;
+		}
+	};
+	>>>>>>>>>MOD
+	if(name.includes('impressions')){
+        return  EVENT_IMPRESSION;
+    }
+    return name;
+	>>>>>>>>>
+E:\PHP\Rashed\calvo_docker\DevPWA\app\design\frontend\Scandiweb\pwa\src\config\Extensibility\Middleware\handlers\generateGetHandler.js :: 20
+	>>>>>>>>>
+	if(namespaces[0] == 'Route/HomePage/Container' && memberName=='render') {
+        var i = 1;
+    }
+	>>>>>>>>>
+app/code/ScandiPWA/GtmGraphQl/src/scandipwa/app/util/Event/Event.js :: 48
+	>>>>>>>>>>
+	static observer(name, callback) {
+        if (callback && typeof callback === 'function' && isEventEnabled(name)) {
+            const callbackWrapper = ({ detail: data }) => { callback.call(this, data); };
+
+            window.addEventListener(name, callbackWrapper, false);
+
+            return callbackWrapper;
+        }
+
+        return false;
+    }
+	>>>>>>>>>>
+	static observer(name, callback) {
+        if (callback && typeof callback == 'function' && isEventEnabled(name)) {
+            const callbackWrapper = ({ detail: data }) => { callback.call(this, data); };
+
+            window.addEventListener(name, callbackWrapper, false);
+
+            return callbackWrapper;
+        }
+
+        return false;
+    }
+app\code\ScandiPWA\GtmGraphQl\src\scandipwa\app\util\EventConfig\index.js :: 37
+	>>>>>>>>>>
+	export const mapGtmEventNames = (name) => {
+		if(name.includes('impressions')){
+			return  EVENT_IMPRESSION;
+		}
+		return name;
+	};
+	>>>>>>>>>>>
+	export const mapGtmEventNames = (name) => {
+		if(name.includes('impressions')){
+			return  "gtm_impressions";
+		}
+		return name;
+	};
+	
+ScandiPWA\GtmGraphQl\src\scandipwa\app\plugin\event-dispatches\productDetail.plugin.js :: 7
+	if (product && product.price && product.attributes) { ===> if (product && product.attributes) {
+ScandiPWA\GtmGraphQl\src\scandipwa\app\component\GoogleTagManager\utils\Product.js :: 109
+app\code\ScandiPWA\GtmGraphQl\src\scandipwa\app\util\Product\index.js :: 22 :: getCurrentVariantIndexFromFilters
+	>>>
+	export const getCurrentVariantIndexFromFilters = (product, selectedFilters) => {
+    return - 1;
+	>>>
+app\code\ScandiPWA\GtmGraphQl\src\scandipwa\app\plugin\StoreModifications.plugin.js :: 59 :: afterRequestCustomerData
+	>>>
+	if (gtm.groupedProductsStorageName !== GROUPED_PRODUCTS_GUEST) {   ===> if (gtm?.groupedProductsStorageName !== GROUPED_PRODUCTS_GUEST) {

@@ -338,3 +338,20 @@ SELECT `main_table`.`attribute_id`, `main_table`.`entity_type_id`, `main_table`.
  
  E:\PHP\Clan\web\vendor\magento\module-customer\Controller\Account\CreatePost.php :: 368
  E:\PHP\Clan\web\vendor\magento\module-customer\Model\CustomerExtractor.php  :: public function extract :: 73 line
+ 
+ -------------------------
+ Magento Email
+ 
+ E:\PHP\Mark\html\vendor\magento\module-sales\Model\Order\Email\Sender.php
+	>>>>>>>>>>>>
+	protected function getSender()
+    {
+        return $this->senderBuilderFactory->create(
+            [
+                'templateContainer' => $this->templateContainer,
+                'identityContainer' => $this->identityContainer,
+            ]
+        );
+    }
+	>>>>>>>>>>>>
+ E:\PHP\Mark\html\vendor\magento\module-sales\Model\Order\Email\SenderBuilder.php

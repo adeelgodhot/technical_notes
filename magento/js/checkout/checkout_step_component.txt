@@ -1,0 +1,5 @@
+1. save shipping method
+	Magento_Checkout/js/action/set-shipping-information.js
+2. place order button
+	Magento_Checkout/js/view/payment/default.js
+	Magento_Checkout/js/action/place-order.js

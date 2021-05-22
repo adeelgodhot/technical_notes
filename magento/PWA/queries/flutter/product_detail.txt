@@ -1,0 +1,336 @@
+query{
+    products(
+		filter: {
+				sku: {eq: "ca5"},
+				customer_group_id: {eq: "1"},
+				saleable_quantity: {from: "3"},
+			}, 
+		pageSize: 20, 
+		currentPage: 1
+	) {
+        items {
+            id,
+            sku,
+            name,
+            type_id,
+            stock_status,
+            stock_item {
+                saleable_quantity
+            },
+            price_range {
+                minimum_price {
+                    discount {
+                        amount_off,
+                        percent_off
+                    },
+                    final_price {
+                        currency,
+                        value
+                    },
+                    regular_price {
+                        currency,
+                        value
+                    }
+                }
+            },
+            thumbnail {
+                path,
+                url
+            },
+            small_image {
+                path,
+                url
+            },
+            short_description {
+                html
+            },
+            special_from_date,
+            special_to_date,
+            price_tiers {
+                discount {
+                    amount_off,
+                    percent_off
+                },
+                final_price {
+                    currency,
+                    value
+                },
+                quantity
+            },
+            attributes: s_attributes {
+                attribute_id,
+                attribute_value,
+                attribute_code,
+                attribute_type,
+                attribute_label,
+                attribute_options {
+                    label,
+                    value,
+                    swatch_data {
+                        type,
+                        value
+                    }
+                }
+            },
+            url,
+            review_count,
+            rating_summary,
+            ...on ConfigurableProduct {
+                configurable_options {
+                    attribute_code,
+                    values {
+                        value_index
+                    }
+                },
+                variants {
+                    product {
+                        id,
+                        sku,
+                        name,
+                        type_id,
+                        stock_status,
+                        stock_item {
+                            saleable_quantity
+                        },
+                        price_range {
+                            minimum_price {
+                                discount {
+                                    amount_off,
+                                    percent_off
+                                },
+                                final_price {
+                                    currency,
+                                    value
+                                },
+                                regular_price {
+                                    currency,
+                                    value
+                                }
+                            }
+                        },
+                        thumbnail {
+                            path,
+                            url
+                        },
+                        small_image {
+                            path,
+                            url
+                        },
+                        short_description {
+                            html
+                        },
+                        special_from_date,
+                        special_to_date,
+                        price_tiers {
+                            discount {
+                                amount_off,
+                                percent_off
+                            },
+                            final_price {
+                                currency,
+                                value
+                            },
+                            quantity
+                        },
+                        attributes: s_attributes {
+                            attribute_id,
+                            attribute_value,
+                            attribute_code,
+                            attribute_type,
+                            attribute_label
+                        },
+                        stock_status,
+                        meta_title,
+                        meta_keyword,
+                        canonical_url,
+                        meta_description,
+                        description {
+                            html
+                        },
+                        media_gallery_entries {
+                            id,
+                            file,
+                            label,
+                            position,
+                            disabled,
+                            media_type,
+                            types,
+                            video_content {
+                                media_type,
+                                video_description,
+                                video_metadata,
+                                video_provider,
+                                video_title,
+                                video_url
+                            },
+                            thumbnail {
+                                url
+                            },
+                            base {
+                                url
+                            }
+                        },
+                        ...on SimpleProduct {
+                            price_tiers {
+                                discount {
+                                    amount_off,
+                                    percent_off
+                                },
+                                final_price {
+                                    currency,
+                                    value
+                                },
+                                quantity
+                            }
+                        },
+                        product_links {
+                            position,
+                            link_type,
+                            linked_product_sku
+                        },
+                        ...on CustomizableProductInterface {
+                            options {
+                                ...on CustomizableDropDownOption {
+                                    dropdownValues: value {
+                                        option_type_id,
+                                        price,
+                                        price_type,
+                                        sku,
+                                        title,
+                                        sort_order
+                                    }
+                                },
+                                ...on CustomizableRadioOption {
+                                    dropdownValues: value {
+                                        option_type_id,
+                                        price,
+                                        price_type,
+                                        sku,
+                                        title,
+                                        sort_order
+                                    }
+                                },
+                                ...on CustomizableCheckboxOption {
+                                    checkboxValues: value {
+                                        option_type_id,
+                                        price,
+                                        price_type,
+                                        sku,
+                                        title,
+                                        sort_order
+                                    }
+                                },
+                                ...on CustomizableMultipleOption {
+                                    checkboxValues: value {
+                                        option_type_id,
+                                        price,
+                                        price_type,
+                                        sku,
+                                        title,
+                                        sort_order
+                                    }
+                                },
+                                ...on CustomizableFieldOption {
+                                    fieldValues: value {
+                                        price,
+                                        price_type,
+                                        sku,
+                                        max_characters
+                                    },
+                                    product_sku
+                                },
+                                ...on CustomizableAreaOption {
+                                    areaValues: value {
+                                        price,
+                                        price_type,
+                                        sku,
+                                        max_characters
+                                    },
+                                    product_sku
+                                },
+                                title,
+                                required,
+                                sort_order,
+                                option_id
+                            }
+                        }
+                    }
+                }
+            }
+            stock_status,
+            meta_title,
+            meta_keyword,
+            canonical_url,
+            meta_description,
+            description {
+                html
+            },
+            media_gallery_entries {
+                id,
+                file,
+                label,
+                position,
+                disabled,
+                media_type,
+                types,
+                video_content {
+                    media_type,
+                    video_description,
+                    video_metadata,
+                    video_provider,
+                    video_title,
+                    video_url
+                },
+                thumbnail {
+                    url
+                },
+                base {
+                    url
+                }
+            },
+            ...on SimpleProduct {
+                price_tiers {
+                    discount {
+                        amount_off,
+                        percent_off
+                    },
+                    final_price {
+                        currency,
+                        value
+                    },
+                    quantity
+                }
+            },
+            product_links {
+                position,
+                link_type,
+                linked_product_sku
+            }
+            categories {
+                name,
+                url,
+                breadcrumbs {
+                    category_name,
+                    category_level,
+                    category_url,
+                    category_is_active
+                }
+            },
+            reviews(pageSize: 20, currentPage: 1) {
+                items {
+                    average_rating,
+                    nickname,
+                    title: summary,
+                    detail: text,
+                    created_at,
+                    rating_votes: ratings_breakdown {
+                        rating_code: name,
+                        value
+                    }
+                }
+            }
+            
+            
+        }
+    }
+}

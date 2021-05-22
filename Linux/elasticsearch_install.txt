@@ -14,3 +14,11 @@ https://www.elastic.co/guide/en/elasticsearch/reference/6.4/built-in-users.html
 1.When installing it, please make sure C:\Programs Data\Elastic is empty
 2. elasticsearch-setup-passwords interactive
 the default method of elastic user: changeme
+
+
+////////////////////////////////
+Enable Remote Elastic
+network.host: 0.0.0.0
+network.bind_host: 0.0.0.0
+network.publish_host: 0.0.0.0
+discovery.seed_hosts: ["0.0.0.0", "[::0]"]

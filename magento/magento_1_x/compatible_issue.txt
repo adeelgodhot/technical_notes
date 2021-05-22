@@ -1,0 +1,14 @@
+Core/Model/Layout.php : 555
+public function getOutput()
+    {
+        $out = '';
+        if (!empty($this->_output)) {
+            foreach ($this->_output as $callback) {
+				$f = $callback[1];
+				if($f == null) continue;
+                $out .= $this->getBlock($callback[0])->$f();
+            }
+        }
+
+        return $out;
+    }

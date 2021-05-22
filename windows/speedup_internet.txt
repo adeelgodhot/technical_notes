@@ -1,0 +1,25 @@
+https://fossbytes.com/get-faster-internet-connection-speed-2/
+
+netsh interface tcp show global
+netsh interface tcp set heuristics disabled
+
+2. https://www.techlila.com/increase-internet-speed/
+
+>>>>>>>>>>>>>>>>>>>
+
+How to Increase Internet Speed
+#1 Reservable Bandwidth
+First and foremost, you can begin with enabling the reservable bandwidth and following this by setting it to zero. If this is done, then your system will be in a position to reserve nothing, but the twenty percent default. In order to activate the same, you need to follow a certain prescribed process.
+
+Click on the “Start” button then click on the Run option (You can use shortcut “Windows button + R”) and type gpedit.msc. It’ll open a new window of the “Local Group Policy Editor”. Then go to
+
+–> Local Computer Policy
+–> Computer Configuration
+–> Administrative Templates
+–> Network
+–> QoS Packet Scheduler
+–> Limit Reservable Bandwidth. Click on Limit Reservable bandwidth. Then it’ll open a new window of “Limit reservable bandwidth”.
+
+You will see the “not configured” radio button is selected by default, by default, “the Packet Scheduler limits the system to 20 percent of the bandwidth of a connection” so click on “enabled” radio button and in Options set Bandwidth limit (%) to 0. So from now, the system will reserve nothing, rather than the default 20%.
+
+>>>>>>>>>>>>>>>>>>>>

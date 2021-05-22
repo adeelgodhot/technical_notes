@@ -1,0 +1,9 @@
+https://magento.stackexchange.com/questions/152619/cant-get-magento-javascript-component-to-initialize-before-my-phtml-script
+
+Can't get Magento javascript component to initialize before my phtml script
+
+I'm trying to call a Magento Javascript Component in my phtml page to get the customer data saved in session.
+
+I'm having an issue in that the customerdata constructor gets loaded after my script and I can't figure out how to get my script to run after.
+
+This is the customer-data.js file that needs to get loaded before my script

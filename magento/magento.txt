@@ -87,6 +87,7 @@ https://www.minitool.com/backup-tips/windows-defender-not-turning-on.html
 	     
 	     rm -rf pub/static/adminhtml/ && rm -rf pub/static/_cache/ && rm -rf pub/static/frontend/ && rm -rf pub/static/frontend/deployed_version.txt && rm -rf var/view_preprocessed/
 		 rm -rf pub/static/frontend/Scandiweb/ && rm -rf var/view_preprocessed/pub/static/frontend/Scandiweb
+		 rm -rf pub/static/frontend/Lenehans/ && rm -rf var/view_preprocessed/pub/static/frontend/Lenehans
 		 rm -rf pub/static/adminhtml/* && rm -rf pub/static/_cache/* && rm -rf pub/static/frontend/* && rm -rf pub/static/frontend/deployed_version.txt && rm -rf var/view_preprocessed/*
 		 ** rm -rf var/{cache,di,generation,page_cache,view_preprocessed}	
 		 ** find app/code pub/static app/etc var/generation var/di var/view_preprocessed vendor \( -type f -or -type d \) -exec chmod u-w {} \; && chmod o-rwx app/etc/env.php && chmod u+x bin/magento
@@ -106,7 +107,9 @@ php bin/magento cache:flush
 	  8. php bin/magento setup:static-content:deploy -f en_GB en_US
 	  php bin/magento setup:static-content:deploy -f en_US it_IT
 	  php bin/magento setup:static-content:deploy -f en_US ar_SA
+	  php bin/magento setup:static-content:deploy -f en_US
 	  magento setup:static-content:deploy -f en_US ar_SA -t Scandiweb/pwa
+	  magento setup:static-content:deploy -f en_IE -t Lenehans/lenehans
 	     Note: in this case, deploy mode shouldn't be developer 
 
 		 
@@ -131,7 +134,7 @@ INSERT INTO setup_module VALUES('Mageplaza_DeleteOrders','1.0.0','1.0.0');
 		  ------------------------------------- 
 		  https://devdocs.magento.com/guides/v2.4/config-guide/cli/config-cli-subcommands-static-view.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=static%20deploy
 	      ** php bin/magento setup:static-content:deploy en_GB --exclude-theme Magento/backend
-		  ** php bin/magento setup:static-content:deploy -f en_GB --theme Magento/backend --area adminhtml
+		  ** php bin/magento setup:static-content:deploy -f en_IE --theme Magento/backend --area adminhtml
 		  ** php bin/magento setup:static-content:deploy --theme Magento/luma --area frontend --no-javascript --no-misc --no-html-minify --no-html --no-images
 		  ** php bin/magento setup:static-content:deploy -f en_GB --exclude-area adminhtml
 		  ** php bin/magento setup:static-content:deploy -f en_GB --theme Pearl/weltpixel_custom --area frontend --no-css --no-less --no-images --no-fonts --no-html --no-misc --no-html-minify
@@ -217,6 +220,13 @@ https://sherocommerce.com/magento-2-frontend-developer/
  reindex
  php bin/magento indexer:reindex
  https://devdocs.magento.com/guides/v2.4/config-guide/cli/config-cli-subcommands-index.html
+ 
+ 
+ set indexer mode
+ https://devdocs.magento.com/guides/v2.4/config-guide/cli/config-cli-subcommands-index.html
+ bin/magento indexer:set-mode {realtime|schedule} [indexer]
+ magento indexer:set-mode schedule catalogsearch_fulltext
+ 
 -----------------------------------------------
 --------------------- php setting for magento 2 --------------
  user.ini
@@ -290,6 +300,7 @@ https://devdocs.magento.com/guides/v2.4/config-guide/cron/custom-cron-tut.html?i
 -----------------------------------------  
 less compile
 https://devdocs.magento.com/guides/v2.4/frontend-dev-guide/css-topics/css_debug.html
+https://support.weltpixel.com/hc/en-us/articles/115004531008-How-to-use-GRUNT-for-Magento-2-and-Pearl-Theme-step-by-step-Tutorial-
 
 grunt install
 A. Node Install
@@ -346,6 +357,8 @@ F. Guard-livereload install [This is not necessary because [grunt watch] listens
      cat /proc/sys/fs/inotify/max_user_watches
   2. Modify max_user_watches to 524288
      echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p  
+	 
+ grunt clean:claue && grunt exec:claue && grunt less:claue && grunt watch:claue
   --------------------------------------------------------------
   Content-Security-Policy-Report-Only  for allow Websocket
   
@@ -353,6 +366,24 @@ F. Guard-livereload install [This is not necessary because [grunt watch] listens
   
   https://stackoverflow.com/questions/32986074/content-security-policy-meta-tag-for-allowing-web-socket
   connect-src 'self' ws:;
+  
+	>>>>>>>
+	<csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp:etc/csp_whitelist.xsd">
+		<policies>
+			<policy id="script-src">
+				<values>
+					<value id="devdocs-base" type="host">https://devdocs.magento.com</value>
+					<value id="magento" type="host">https://magento.com</value>
+				</values>
+			</policy>
+			<policy id="connect-src">
+				<values>
+					<value id="devdocs" type="host">https://devdocs.magento.com</value>
+				</values>
+			</policy>
+		</policies>
+	</csp_whitelist>
+	>>>>>>>
   --------------------------------------------------------------
   LiveReload Notworking in vagrant
   https://www.ravisagar.in/blog/how-get-livereload-working-vagrant-and-auto-compile-scss-files-shared-folder
@@ -498,6 +529,12 @@ leanring language
 2. My issue was that the cookie domain in config was not set or was different from the base url
    so when accessing admin area, the domain didn't match the cookie set domain which caused the redirect loop.
    stores > Configuration > General > Web - Default Cookie Settings
+
+From core_config_data
+   remove cookie_domain
+   set httponly -> 0
+ 
+bin/magento module:disable Magento_TwoFactorAuth
 -----------------------------------------
   quality image
   
@@ -637,6 +674,10 @@ email header logo
 
 https://docs.magento.com/user-guide/marketing/email-template-header.html
 https://devdocs.magento.com/guides/v2.4/frontend-dev-guide/templates/template-email.html
+
+pdf logo
+Or in case you want to upload the logo in the Magento backend, you can simply use the following logo variable which takes the image you upload at 
+"Stores > Configuration > Sales > Sales > Invoice and Packing Slip Design > Logo for PDF Print-outs":
 
 a.
 On the Admin sidebar, go to Content > Design > Configuration.
@@ -783,3 +824,208 @@ It's tested by me
    set it based on AED
    38.02
    
+------------------
+check table size
+SELECT table_name AS "Table", ROUND(((data_length + index_length) / 1024 / 1024), 2) AS "Size (MB)" FROM information_schema.TABLES WHERE table_schema = "zalabany_dev" ORDER BY (data_length + index_length) DESC;
+
+SET FOREIGN_KEY_CHECKS=0;
+TRUNCATE TABLE `report_event`;
+TRUNCATE TABLE `report_viewed_product_index`;
+TRUNCATE TABLE `report_viewed_product_aggregated_daily`;
+TRUNCATE TABLE `report_viewed_product_aggregated_yearly`;
+
+TRUNCATE TABLE `mst_cache_warmer_log`;
+SET FOREIGN_KEY_CHECKS=1;
+
+| report_event                                         |   1162.69 |
+| report_viewed_product_index                          |   1119.81 |
+| report_viewed_product_aggregated_daily 
+   
+------------------------------------
+remove definer from mysqldump
+sed -i 's/DEFINER=[^*]*\*/\*/g' sdb.sql
+
+------------------------------------
+magento frontend template
+
+https://devdocs.magento.com/guides/v2.4/frontend-dev-guide/layouts/xml-manage.html
+
+-------------------------------------------
+cms directives
+
+https://www.atwix.com/magento-2/directives/
+
+------------------------------
+Magento Email
+---------------------------
+Compose CMS layout update handler
+https://docs.magento.com/user-guide/design/layout-update-place-block.html
+cms_page_view_selectable_<customer-service>_<ChatTool>.xml
+
+-----------------------------------------
+	Arabic Insert in PDO Mysql
+	https://stackoverflow.com/questions/27718919/insert-arabic-using-pdo-is-not-working
+	$db = new PDO( 
+		'mysql:host=localhost;dbname=addme;charset=utf8', 
+		'root', 
+		'a')
+	);
+-------------------------------------------
+add column to order grid
+https://www.mageworx.com/blog/how-to-add-column-with-filter-to-magento-2-orders-grid/	
+
+-------------------------------------------
+   elastic search issue
+   
+   >>>>>>>>>>>>>>>>>>>>>>>>>>
+		Catalog Search index process unknown error:
+		{"error":{"root_cause":[{"type":"cluster_block_exception","reason":"index [magento2_product_1_v144] blocked by: [FORBIDDEN/12/index read-only / allow delete (api)];"}],"type":"cluster_block_exception","reason":"index [magento2_product_1_v144] blocked by: [FORBIDDEN/12/index read-only / allow delete (api)];"},"status":403}
+		
+		curl -XPUT -H "Content-Type: application/json" http://localhost:9200/_all/_settings -d '{"index.blocks.read_only_allow_delete": null}'
+		curl -XPUT -H "Content-Type: application/json" http://localhost:9200/_all/_settings -d '{"index.blocks.read_only_allow_delete": null}'
+		curl -XPUT -H "Content-Type: application/json" http://localhost:9200/_all/_settings -d '{"index.blocks.read_only_allow_delete": null}'
+		
+		
+   >>>>>>>>>>>>>>>>>>>>>>>>>>
+   show indexes
+   curl --silent -X GET localhost:9200/_cat/indices?v
+   >>>>>>>>>>>>>>
+   curl -X GET "localhost:9200/_cluster/health?pretty"
+   remove all indexer
+   curl -X DELETE 'http://localhost:9200/_all'
+   
+   https://mirasvit.com/blog/magento-2-and-elasticsearch.html
+   https://firebearstudio.com/blog/how-to-restore-green-elasticsearch-index-status-in-magento-2.html
+   
+ ---------------------
+  product collection
+  https://www.mageplaza.com/devdocs/get-product-collection-category-magento-2.html
+  
+  \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory
+  $collection = $this->_productCollectionFactory->create();
+        $collection->addAttributeToSelect('*');
+        $collection->addCategoriesFilter(['in' => ids]);
+		
+-----------------
+add telephone to cusomter create
+https://magento.stackexchange.com/questions/281186/how-can-i-add-a-telephone-field-at-the-time-of-customer-registration-form-in-mag
+
+show address in customer create
+https://magento.stackexchange.com/questions/105988/magento-2-how-to-show-address-field-in-registration-form
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="customer_form_register">
+            <arguments>
+                <argument name="show_address_fields" xsi:type="boolean">true</argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>
+
+----------------------------
+	magento dump 
+	
+	tar -zcvf site.tar.gz app bin dev lib phpserver setup/ update/ vendor/ pub/ .php_cs.dist grunt-config.json.sample Gruntfile.js.sample package.json.sample .htaccess .user.ini composer.json composer.lock index.php nginx.conf.sample .gitignore --exclude="pub/static" --exclude="pub/media/catalog"  --exclude="pub/var"
+	
+	tar -zcvf site.tar.gz app bin dev lib phpserver setup/ update/ vendor/ pub/ .php_cs.dist grunt-config.json.sample Gruntfile.js.sample package.json.sample .htaccess .user.ini composer.json composer.lock index.php nginx.conf.sample .gitignore --exclude="pub/static" --exclude="pub/media/catalog"  --exclude="pub/var" --exclude="pub/themeforest-hOKxrpEo-ninth-optimal-magento-2-theme.zip"
+	
+	---------------------------
+	 customer order status
+	 
+	 https://www.mageplaza.com/kb/how-to-create-custom-order-status-magento-2.html
+-----------------------------
+  Disable email confirmation when signup
+  
+  set confirmation as null in customer_entity table.
+  
+	 
+-----------------------------
+ Add custom field to Elasticsearch IN GraphQL [saleable_quantity]
+ https://webkul.com/blog/add-non-product-attribute-to-magento2-elastic-documents/
+ 
+	 check add fields : http://10.10.11.80:9201/_all
+	 1.>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		<virtualType name="additionalFieldsProviderForElasticsearch" type="Magento\AdvancedSearch\Model\Adapter\DataMapper\AdditionalFieldsProvider">
+			<arguments>
+				<argument name="fieldsProviders" xsi:type="array">
+					<item name="custom_field" xsi:type="object">Scandiweb\Extend\Model\Adapter\BatchDataMapper\CustomDataProvider</item>
+				</argument>
+			</arguments>
+		</virtualType>
+	 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	 2.>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		class CustomDataProvider implements AdditionalFieldsProviderInterface
+		{
+
+			/**
+			 * @inheritdoc
+			 */
+			public function getFields(array $productIds, $storeId)
+			{
+
+				$fields = [];
+				
+				foreach ($productIds as $productId) {
+					$data = ""; //you can get you data here
+					$fields[$productId] = ["custom_field" => $data];
+				}
+
+				return $fields;
+			}
+
+		}
+	3.>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>	
+		graphql_product_search IN etc/search_request.xml
+		
+		Ref:
+			E:\PHP\Rashed\calvo_docker\Calvo-Store\src\vendor\magento\framework\Search\Request\Builder.php :: 154, 159 line
+	4.>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	  query {
+		products(
+				sort: {
+					colors: ASC
+				}, 
+				filter: {
+					category_id: {eq: "68"},
+					customer_group_id: {eq: "1"},
+					saleable_quantity: {from: "1"},
+					price: {}
+				}, 
+	>>>>>> REF >>>>>>>>
+	https://orba.co/how-does-elasticsearch-work-with-magento/	
+------------------------------------------------------------
+ Module Order
+
+	>>>>>>>>>>>>>>>>>
+	it depends on <sequence> in module.xml
+	To apply changes to module.xml, you need to do these: module:disable xxx and then enable it manually
+------------------------------------------------------------
+ mixins order
+	>>>>>>>>>>>>>>>>>>>>>>>>
+	Module Order
+	A, B, C
+	>>>>>>>>>>>>>>>>>>>>>>>>
+	Mixin Order
+	mixin from C, and then mixin from B, and then mixin from A.
+----------------------------------------------------------------
+Elastic Search Tools
+
+https://mirasvit.com/blog/magento-2-elasticsearch-rest-api-developers-toolset.html
+
+------------------------------------------------------
+js template Translation
+
+    pub\static\frontend\Custom\fair-shea\de_DE\js-translation.json is used to translate the JS template
+	[ i18n/*.csv in theme level isn't used for translation of js template ]
+	
+	https://magento.stackexchange.com/questions/121251/magento2-translating-javascript-ko-template-text
+	
+	To define translation for JS template , we need to create language pack like this: app/i18n/ or mageplaza.
+	
+	
+	NOTE: All of These are acceptable:  "Ship Here","Hierhin verschicken" or "Ship Here","Hierhin verschicken",module,Magento_Checkout
+	
+	
+
+	

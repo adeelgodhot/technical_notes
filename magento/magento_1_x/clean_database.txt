@@ -1,0 +1,15 @@
+truncate mage_log_customer;
+truncate mage_log_visitor;
+truncate mage_log_visitor_info;
+truncate mage_log_url;
+truncate mage_log_url_info;
+truncate mage_log_quote;
+truncate mage_report_viewed_product_index;
+truncate mage_report_compared_product_index;
+truncate mage_report_event;
+truncate mage_catalog_compare_item;
+
+
+
+DELETE FROM mage_sales_flat_quote;
+DELETE FROM mage_sales_flat_order;

@@ -1,0 +1,48 @@
+https://www.magestore.com/blog/complete-guide-for-magento-inventory-msi/
+
+https://community.magento.com/t5/Magento-2-x-Admin-Configuration/Explanation-for-Default-stock-and-Salable-Qty/td-p/321304
+
+https://www.atwix.com/magento-2/multi-source-inventory-in-magento-2-3/
+
+https://docs.magento.com/user-guide/catalog/inventory-about-sources-stocks.html
+
+
+
+
+
+
+
+--------------------------------
+ Linked Tables
+ 
+ inventory_source_item
+
+--------------------------------
+Reservation
+
+https://devdocs.magento.com/guides/v2.4/inventory/reservations.html
+
+https://docs.magento.com/user-guide/catalog/inventory-about-order-status-reservation.html
+
+table: inventory_reservation
+
+SELECT order_id FROM sales_order_item WHERE sku='be1';
+select * from inventory_reservation where sku='be1';
++----------------+------------------+------+-----+---------+----------------+
+| Field          | Type             | Null | Key | Default | Extra          |
++----------------+------------------+------+-----+---------+----------------+
+| reservation_id | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| stock_id       | int(10) unsigned | NO   | MUL | NULL    |                |
+| sku            | varchar(64)      | NO   |     | NULL    |                |
+| quantity       | decimal(10,4)    | NO   |     | 0.0000  |                |
+| metadata       | varchar(255)     | YES  |     | NULL    |                |
++----------------+------------------+------+-----+---------+----------------+
+
+|           1127 |        1 | be1 |  -1.0000 | {"event_type":"order_placed","object_type":"order","object_id":"","object_increment_id":"000000428"} |
+|           1852 |        1 | be1 |  -1.0000 | {"event_type":"order_placed","object_type":"order","object_id":"","object_increment_id":"000000723"} |
+|           1897 |        1 | be1 |  -1.0000 | {"event_type":"order_placed","object_type":"order","object_id":"","object_increment_id":"000000734"} 
+
+
+cronjob: inventory_cleanup_reservations
+
+E:\PHP\LEN\work\besthealth\vendor\magento\module-inventory-reservations\Model\ResourceModel\CleanupReservations.php

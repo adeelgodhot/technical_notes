@@ -8,3 +8,17 @@ length adjust
 
 -webkit-line-clamp
 -webkit-box-orient
+
+----------------------------
+ table span using flex
+ 
+ https://stackoverflow.com/questions/37039029/how-to-use-flex-css-and-simulate-a-rowspan-2-and-colspan-2
+ 
+ https://www.w3.org/TR/css-flexbox-1/#auto-margins
+ margin-right: auto;
+ ------------------------------
+ grid
+ 
+ https://www.digitalocean.com/community/tutorials/css-align-justify
+ https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Box_Alignment_in_CSS_Grid_Layout
+ https://css-tricks.com/snippets/css/complete-guide-grid/

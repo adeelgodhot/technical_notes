@@ -8,6 +8,10 @@ Magento_Ui/js/lib/knockout/template/loader.js :: loadFromNode, loadFromFile
 en_US\mage\requirejs\text.js
 Magento_Ui/js/core/app.js
 Magento_Ui/js/core/renderer/layout.js :: run, initComponent, loadSource, 
+
+Magento_Ui/js/lib/core/class.js
+http://dev.lenehans.com/pub/static/version1615552133/frontend/Lenehans/lenehans/en_IE/Magento_Ui/js/lib/core/class.js
+
 pub/static/version1606192358/frontend/Magento/luma/en_US/knockoutjs/knockout.js : 1313 (notifySubscribers)
    ---------------------------------
     ref: https://github.com/requirejs/text
@@ -122,3 +126,12 @@ You only need to add a <script type="text/x-magento-init"> in one of your templa
   How to use UI component
   https://amasty.com/blog/how-to-use-ui-components-in-magento-2/
   E:\PHP\magento236\vendor\magento\module-ui\Controller\Index\Render.php
+-------------------------
+remove / disable component
+
+https://devdocs.magento.com/guides/v2.3/howdoi/checkout/checkout_customize.html#disable
+<item name="%the_component_to_be_disabled%" xsi:type="array">
+    <item name="config" xsi:type="array">
+        <item name="componentDisabled" xsi:type="boolean">true</item>
+    </item>
+</item>

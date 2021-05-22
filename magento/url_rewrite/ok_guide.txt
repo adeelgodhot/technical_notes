@@ -110,3 +110,8 @@ Best regards, Oleg Koval
 php bin/magento ok:urlrewrites:regenerate --entity-type=category --category-id=58 --no-reindex --no-cache-clean --no-cache-flush
 php bin/magento ok:urlrewrites:regenerate --entity-type=category --category-id=38 --no-reindex --no-cache-clean --no-cache-flush
 php bin/magento ok:urlrewrites:regenerate --entity-type=category --category-id=62
+php bin/magento ok:urlrewrites:regenerate --entity-type=category --category-id=64
+php bin/magento ok:urlrewrites:regenerate --entity-type=category --category-id=35
+
+magento ok:urlrewrites:regenerate --entity-type=product --store-id=7
+magento ok:urlrewrites:regenerate --entity-type=product --store-id=8

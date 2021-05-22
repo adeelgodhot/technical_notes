@@ -34,3 +34,32 @@ rever it back to original state
 git add .
 git reset --hard
 -------------------------------
+
+----------------------
+git remote -v
+git remote add origin ...
+git remote set-url origin ...
+
+https://docs.github.com/en/github/getting-started-with-github/managing-remote-repositories
+----------------------
+	git status is so slow
+	https://github.com/romkatv/powerlevel10k/issues/39
+	
+gitstatus_query POWERLEVEL9K && set | egrep '^VCS_STATUS'
+
+----------------------------------------------------------------------------
+git The remote end hung up unexpectedly while git cloning
+
+https://stackoverflow.com/questions/6842687/the-remote-end-hung-up-unexpectedly-while-git-cloning
+
+	>>>>>>>>>>>>>>>>>>>>>>>
+	git config --global http.postBuffer 2048M
+	git config --global http.maxRequestBuffer 1024M
+	git config --global core.compression 9
+
+	git config --global ssh.postBuffer 2048M
+	git config --global ssh.maxRequestBuffer 1024M
+
+	git config --global pack.windowMemory 256m 
+	git config --global pack.packSizeLimit 256m
+	>>>>>>>>>>>>>>>>>>>>>>>
