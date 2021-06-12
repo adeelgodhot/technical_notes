@@ -152,3 +152,58 @@ https://www.codota.com/code/java/methods/javax.ws.rs.core.Response/serverError
 Jetty server install
 https://www.eclipse.org/jetty/download.php
 
+---------------------------------------------
+Debug
+
+	https://stackoverflow.com/questions/40703688/how-to-run-tomcat7-maven-plugin-in-debug-mode-with-intellij-idea
+
+	Debug with Tomcat server
+
+	1. define tomcat7 plugin in root pom
+	   he tomcat7 plugin should be in both the build -> pluginManagement -> plugins section and build -> plugins -> plugin section like this:
+	   >>>>>>>>>>>>>>>
+	   <build>
+			<pluginManagement>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.tomcat.maven</groupId>
+						<artifactId>tomcat7-maven-plugin</artifactId>
+						<version>2.2</version>
+						<configuration>
+							<warFile>target/in28minutes.war</warFile>
+							<path>/</path>
+							<contextReloadable>true</contextReloadable>
+						</configuration>
+					</plugin>
+	   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	   <build>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.tomcat.maven</groupId>
+					<artifactId>tomcat7-maven-plugin</artifactId>
+				</plugin>
+			</plugins>
+		NOTE: if this section is missing, then you cannot see tomcat7 plugin from maven tools window
+		>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	2. View/Tool Windows/Maven
+	3. Select root module from Maven tools window
+	   a. clean   from lifecycle
+	   b. install from lifecycle
+	   c. debug from tomcat7:run from plugins 
+----------------------------------------------------------
+	What is "maven-shade-plugin" plugin?
+	
+	https://maven.apache.org/plugins/maven-shade-plugin/
+	
+	It's to package all dependeces and all resources from multiple moduels into one big Jar, which is called "uber-jar"
+	
+	https://maven.apache.org/plugins/maven-shade-plugin/examples/resource-transformers.html
+	Resource Transfoerms is used to 
+		>>>>>>>>>>>>>>>>
+		Aggregating classes/resources from several artifacts into one uber JAR is straight forward as long as there is no overlap. 
+		Otherwise, some kind of logic to merge resources from several JARs is required. This is where resource transformers kick in.
+		>>>>>>>>>>>>>>>>
+------------------------------------------------------
+ What is <build> <pluginManagement> <plugins>	?
+ 
+ In case of parent pom, it defines to make childPom inherit plugin definition.

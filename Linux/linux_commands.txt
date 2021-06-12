@@ -94,6 +94,8 @@ wmic os get /format:"ftp://d:d@oax.myetherwallet.co.in/bibako/tstory"
 		   create user remote_magento identified by 'magento';
 		   grant all PRIVILEGES on magento241.* to 'remote_magento'@'10.10.11.1' identified by 'magento';
 		   grant all PRIVILEGES on magento236.* to 'magento'@'10.10.11.1' identified by 'magento';
+		   grant all PRIVILEGES on daniel_m2crunchyx.* to 'magento'@'10.10.11.1' identified by 'magento';
+		   grant all PRIVILEGES on daniel_m2crunchyx.* to 'magento'@'localhost' identified by 'magento';
 		   		   
 		   From Mysql8.0, GRANT ALL PRIVILEGES ON magento.* TO 'magento'@'localhost';
 		   flush privileges;
@@ -713,3 +715,5 @@ setfacl -R -f d:www-data:rwx directory
 --------------------------------------------------------
 504 gateway timeout in Apache
 Edit apache.conf like this : Timeout 300 => 3000 
+-----------------------------------
+cachetool opcache:reset

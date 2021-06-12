@@ -1,0 +1,200 @@
+https://docs.oracle.com/javaee/7/firstcup/java-ee002.htm
+
+https://github.com/in28minutes/MavenIn28Minutes/
+
+-------------------------
+	keyword: junit maven dependency
+-------------------------
+
+Goals:  help:effective-pom -Doutput=effective-pom.xml
+	    help:effective-settings -Doutput=effective-settings.xml
+--------------------------------
+	Super POM
+	>>>>>>>>>>>
+	The Super POM is Maven's default POM. All POMs inherit from a parent or default (despite explicitly defined or not). 
+	This base POM is known as the Super POM, and contains values inherited by default. Maven use the effective POM (configuration from super pom plus project configuration) to execute relevant goal.
+	>>>>>>>>>>>
+--------------------------------
+--------------------------------
+mvn -version
+mvn clean install
+mvn help:effective-pom
+mvn tomcat7:run
+---------------------------------
+maven commands
+
+http://tutorials.jenkov.com/maven/maven-commands.html
+
+mvn clean package:	
+	Clears the target directory and Builds the project and packages the resulting JAR file into the target directory.
+	
+----------------------------------
+mvn clean install -rf :your-module
+	:your-module : failed module
+For example, if your build failed in myproject-proxy, you can use the following command:
+mvn -rf hermes-service-print clean install
+
+---------------------------------
+skip test
+
+ mvn -rf hermes-service-print clean install -Dmaven.test.skip=true
+ mvn site:run -Phermes.rest.ui -Dmaven.test.skip=true
+ >>>>>>>>>>>
+	https://www.baeldung.com/maven-profiles
+	First, we'll create a no-tests profile which sets the maven.test.skip property to true:
+
+	<profile>
+		<id>no-tests</id>
+		<properties>
+			<maven.test.skip>true</maven.test.skip>
+		</properties>
+	</profile>
+	Next, we'll execute the profile by running the mvn package -Pno-tests command. Now the artifact is created and the tests are skipped. In this case the mvn package -Dmaven.test.skip command would have been easier.
+	
+	mvn package -P profile_id
+>>>>>>>>>>>>>
+
+---------------
+life cycles
+	https://maven.apache.org/ref/3.6.3/maven-core/lifecycles.html
+	
+	life cycles: default, clean, site
+	phrases:  
+		>>>> clean >>>
+			pre-clean, clean, post-clean
+			
+	goals of clean plugin : clean-goal of clean plugin <-> clean-phrase of clean lifecycle
+------------------
+npm install -g bower
+
+node should be less than 12.
+npm install -g gulp-cli
+npm install --save-dev gulp
+
+-------------
+	AXIS WSDL CODE GENERATION
+	https://axis.apache.org/axis2/java/core/tools/idea/Idea_plug-in_userguide.html
+	
+
+-------------
+Run & Debug maven based project
+https://vaadin.com/docs/v14/flow/tutorials/in-depth-course/project-setup
+https://www.jetbrains.com/help/idea/run-debug-configuration-maven.html
+
+------------------------
+http://javadl.oracle.com/webapps/download/GetFile/1.8.0_121-b13/e9e7ea248e2c4826b92b3f075a80e441/windows-i586/jre1.8.0_121full.msi
+https://sdlc-esd.oracle.com/ESD6/JSCDL/jre/8u121-b13/e9e7ea248e2c4826b92b3f075a80e441/jre/jre1.8.0_121full.msi?GroupName=JSC&FilePath=/ESD6/JSCDL/jre/8u121-b13/e9e7ea248e2c4826b92b3f075a80e441/jre/jre1.8.0_121full.msi&BHost=javadl.sun.com&File=jre1.8.0_121full.msi&AuthParam=1619084274_32693b2580f0c3d9a0c4900eeb8ed6b1&ext=.msi
+-------------------------
+archetypes
+https://maven.apache.org/archetypes
+
+------------------------
+   json string to properities
+   
+   <dependency>
+    <groupId>org.json</groupId>
+    <artifactId>json</artifactId>
+    <version>20180130</version>
+</dependency>
+
+   import java.util.Properties;
+	import org.json.JSONObject;
+	import org.json.Property;
+   
+   
+   JSONObject jsonObject = new JSONObject("{\"phonetype\":\"N95\",\"cat\":\"WP\"}");
+   
+   
+   Properties properties = new Properties();
+      properties.put("title", "This is a title text");
+      properties.put("subtitle", "This is a subtitle text");
+
+      System.out.println("Properties to JSON");
+      JSONObject jsonObject = Property.toJSONObject(properties);
+      System.out.println(jsonObject);
+
+      System.out.println("JSON to properties");
+      System.out.println(Property.toProperties(jsonObject));
+	  
+	>>>>>> JSON <<<
+	import org.json.simple.JSONObject;  
+	import org.json.simple.JSONValue;  
+	public class JsonDecodeExample1 {  
+	public static void main(String[] args) {  
+		String s="{\"name\":\"sonoo\",\"salary\":600000.0,\"age\":27}";  
+		Object obj=JSONValue.parse(s);  
+		JSONObject jsonObject = (JSONObject) obj;  
+	  
+		String name = (String) jsonObject.get("name");  
+		double salary = (Double) jsonObject.get("salary");  
+		long age = (Long) jsonObject.get("age");  
+		System.out.println(name+" "+salary+" "+age);  
+	}  
+	}  
+
+	String name = (String) jsonObject.get("name");  
+	
+	<dependency>  
+    <groupId>com.googlecode.json-simple</groupId>  
+    <artifactId>json-simple</artifactId>  
+    <version>1.1</version>  
+  </dependency>  
+    >>>>>>>>>>>>>
+--------------------------------
+Response
+Response.serverError()
+          .status(Response.Status.BAD_REQUEST)
+          .entity("Invalid nodeType of null. Valid node types are " + Arrays.toString(NodeType.values()))
+          .build();
+https://www.codota.com/code/java/methods/javax.ws.rs.core.Response/serverError
+
+----------------------------
+Jetty server install
+https://www.eclipse.org/jetty/download.php
+
+----------------------------
+What is the maven-shade-plugin used for, and why would you want to relocate Java packages?
+
+	>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	
+	Uber JAR, in short, is a JAR containing everything.
+
+		Normally in Maven, we rely on dependency management. An artifact contains only the classes/resources of itself. Maven will be responsible to find out all artifacts (JARs etc) that the project depending on when the project is built.
+
+		An uber-jar is something that takes all dependencies, and extracts the content of the dependencies and puts them with the classes/resources of the project itself, in one big JAR. By having such an uber-jar, it is easy for execution, because you will need only one big JAR instead of tons of small JARs to run your app. It also eases distribution in some cases.
+
+		Just a side-note: avoid using uber-jar as a Maven dependency, as it is ruining the dependency resolution feature of Maven. Normally we create an uber-jar only for the final artifact for actual deployment or for manual distribution, but not for putting to Maven repository.
+
+		Update: I have just discovered I haven't answered one part of the question : "What's the point of renaming the packages of the dependencies?". Here are some brief updates that will hopefully help people having similar questions.
+
+		Creating an uber-jar for ease of deployment is one use case of the shade plugin. There are also other common use cases which involve package renaming.
+
+		For example, I am developing Foo library, which depends on a specific version (e.g. 1.0) of Bar library. Assuming I cannot make use of other version of Bar lib (because API change, or other technical issues, etc). If I simply declare Bar:1.0 as Foo's dependency in Maven, it is possible to fall into a problem: A Qux project is depending on Foo, and also Bar:2.0 (and it cannot use Bar:1.0 because Qux needs to use new feature in Bar:2.0). Here is the dilemma: should Qux use Bar:1.0 (which Qux's code will not work) or Bar:2.0 (which Foo's code will not work)?
+
+		In order to solve this problem, developer of Foo can choose to use shade plugin to rename its usage of Bar, so that all classes in Bar:1.0 jar are embedded in Foo jar, and the package of the embedded Bar classes is changed from com.bar to com.foo.bar. By doing so, Qux can safely depends on Bar:2.0 because now Foo is no longer depending on Bar, and it is using its own copy of the "altered" Bar located in another package.
+
+     >>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	 
+https://stackoverflow.com/questions/13620281/what-is-the-maven-shade-plugin-used-for-and-why-would-you-want-to-relocate-java
+-----------------------------------------
+java command line help
+
+https://docs.oracle.com/javase/7/docs/technotes/tools/windows/java.html
+
+-----------------
+ GET class path
+ 
+			1. System.out.println(System.getProperties().get("java.class.path"));
+   
+			2.
+            import java.net.URL;
+	        import java.net.URLClassLoader;
+            ClassLoader cl = ClassLoader.getSystemClassLoader();
+
+			URL[] urls = ((URLClassLoader)cl).getURLs();
+
+			for(URL url: urls){
+				System.out.println(url.getFile());
+			}
+-------------------------
+ java -cp doesn't work in case "java -jar"

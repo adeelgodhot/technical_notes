@@ -31,3 +31,5 @@ https://www.aitoc.com/magento-2-custom-product-designer.html?utm_source=mageplaz
 
 4. DHL
 	https://marketplace.magento.com/dhl-shipping-m2.html
+	
+5. https://www.mexbs.com/facebook-shop-integration-magento2-extension

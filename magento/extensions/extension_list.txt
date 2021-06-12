@@ -1,0 +1,15 @@
+1. FireGento/MageSetup
+	https://github.com/firegento/firegento-magesetup2
+	
+	composer require firegento/magesetup2
+	bin/magento module:enable FireGento_MageSetup
+	bin/magento setup:upgrade
+	bin/magento magesetup:setup:run <countrycode>
+	bin/magento magesetup:setup:run de
+	
+	>>>>>>>>>>>>>>
+	MageSetup is a free community module for Magento which makes the setup and configuration of a shop much easier. It includes adjustments for most national laws.
+	
+	It has evolved from GermanSetup which was very popular in Germany,Austria and Switzerland. 
+	hose three countries have very stringent laws which make such a module necessary.
+	>>>>>>>>>>>>>>

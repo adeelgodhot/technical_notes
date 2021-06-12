@@ -16,6 +16,18 @@ php ./bin/magento setup:install --base-url=http://www.devmagento241.com/ \
 	--elasticsearch-port=9200
 	
 	admin_1h3ssf
+	
+dev.m2crunchyx.de	
+php ./bin/magento setup:install --base-url=http://dev.m2crunchyx.de/ \
+	--db-host=localhost --db-name=daniel_m2crunchyx --db-user=magento --db-password=magento \
+        --admin-firstname=Daniel --admin-lastname=Schaaf --admin-email=admin@gmail.com \
+	--admin-user=admin --admin-password=admin123! --language=en_US \
+	--currency=USD --timezone=America/Chicago --use-rewrites=1 \
+	--search-engine=elasticsearch7 --elasticsearch-host=localhost \
+	--elasticsearch-port=9201
+	
+
+
 
 php bin\magento setup:install --base-url=http://www.magento241.com/ --db-host=localhost --db-name=magento241 --db-user=root --db-password= --admin-firstname=Adeel --admin-lastname=God --admin-email=admin@gmail.com --admin-user=admin --admin-password=admin123 --language=en_US --currency=USD --timezone=America/Chicago --use-rewrites=1
 
@@ -88,6 +100,8 @@ https://www.minitool.com/backup-tips/windows-defender-not-turning-on.html
 	     rm -rf pub/static/adminhtml/ && rm -rf pub/static/_cache/ && rm -rf pub/static/frontend/ && rm -rf pub/static/frontend/deployed_version.txt && rm -rf var/view_preprocessed/
 		 rm -rf pub/static/frontend/Scandiweb/ && rm -rf var/view_preprocessed/pub/static/frontend/Scandiweb
 		 rm -rf pub/static/frontend/Lenehans/ && rm -rf var/view_preprocessed/pub/static/frontend/Lenehans
+		 rm -rf pub/static/frontend/appmedia/ && rm -rf var/view_preprocessed/pub/static/frontend/appmedia
+		 rm -rf pub/static/frontend/Danielschaaf/ && rm -rf var/view_preprocessed/pub/static/frontend/Danielschaaf
 		 rm -rf pub/static/adminhtml/* && rm -rf pub/static/_cache/* && rm -rf pub/static/frontend/* && rm -rf pub/static/frontend/deployed_version.txt && rm -rf var/view_preprocessed/*
 		 ** rm -rf var/{cache,di,generation,page_cache,view_preprocessed}	
 		 ** find app/code pub/static app/etc var/generation var/di var/view_preprocessed vendor \( -type f -or -type d \) -exec chmod u-w {} \; && chmod o-rwx app/etc/env.php && chmod u+x bin/magento
@@ -107,13 +121,17 @@ php bin/magento cache:flush
 	  8. php bin/magento setup:static-content:deploy -f en_GB en_US
 	  php bin/magento setup:static-content:deploy -f en_US it_IT
 	  php bin/magento setup:static-content:deploy -f en_US ar_SA
+	  php bin/magento setup:static-content:deploy -f en_GB -t appmedia/holfordirect
 	  php bin/magento setup:static-content:deploy -f en_US
 	  magento setup:static-content:deploy -f en_US ar_SA -t Scandiweb/pwa
-	  magento setup:static-content:deploy -f en_IE -t Lenehans/lenehans
+	  magento setup:static-content:deploy -f en_US en_IE -t Lenehans/lenehans
+	  magento setup:static-content:deploy -f de_DE -t Danielschaaf/crunchyx
 	     Note: in this case, deploy mode shouldn't be developer 
 
 		 
 		 module:uninstall Plumrocket_PrivateSale --remove-data
+		 module:uninstall Meetanshi_FaceBookShop --remove-data
+		 php bin/magento module:uninstall -r Vendor_Module
 		 
 		 php bin/magento setup:store-config:set --base-url="https://calvocover.com/"
 		 php bin/magento setup:store-config:set --base-url-secure="https://calvocover.com/"
@@ -134,7 +152,7 @@ INSERT INTO setup_module VALUES('Mageplaza_DeleteOrders','1.0.0','1.0.0');
 		  ------------------------------------- 
 		  https://devdocs.magento.com/guides/v2.4/config-guide/cli/config-cli-subcommands-static-view.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=static%20deploy
 	      ** php bin/magento setup:static-content:deploy en_GB --exclude-theme Magento/backend
-		  ** php bin/magento setup:static-content:deploy -f en_IE --theme Magento/backend --area adminhtml
+		  ** php bin/magento setup:static-content:deploy -f de_DE --theme Magento/backend --area adminhtml
 		  ** php bin/magento setup:static-content:deploy --theme Magento/luma --area frontend --no-javascript --no-misc --no-html-minify --no-html --no-images
 		  ** php bin/magento setup:static-content:deploy -f en_GB --exclude-area adminhtml
 		  ** php bin/magento setup:static-content:deploy -f en_GB --theme Pearl/weltpixel_custom --area frontend --no-css --no-less --no-images --no-fonts --no-html --no-misc --no-html-minify
@@ -325,7 +343,7 @@ C, Test
    2    php bin/magetno cache:clean
 D. Enable LiveReload extension in Chrome   
 E. Copy the contents of themes.js into local-themes.js in the dev/tools/grunt/configs/ directory.
-F. Guard-livereload install [This is not necessary because [grunt watch] listens 35279 as livereload server]
+F. Guard-livereload install [This is not necessary because [grunt watch] listens 35729 as livereload server]
    http://livereload.com/extensions/
   https://gist.github.com/gajayana/1238504df57638bfca28
   -------------------------------------------------------------
@@ -930,6 +948,8 @@ https://magento.stackexchange.com/questions/105988/magento-2-how-to-show-address
 	
 	tar -zcvf site.tar.gz app bin dev lib phpserver setup/ update/ vendor/ pub/ .php_cs.dist grunt-config.json.sample Gruntfile.js.sample package.json.sample .htaccess .user.ini composer.json composer.lock index.php nginx.conf.sample .gitignore --exclude="pub/static" --exclude="pub/media/catalog"  --exclude="pub/var" --exclude="pub/themeforest-hOKxrpEo-ninth-optimal-magento-2-theme.zip"
 	
+	tar -zcvf site.tar.gz bin dev lib phpserver setup/ update/ pub/ .php_cs.dist grunt-config.json.sample Gruntfile.js.sample package.json.sample .htaccess .user.ini composer.json composer.lock index.php nginx.conf.sample .gitignore --exclude="pub/static" --exclude="pub/media"  --exclude="pub/var"
+	
 	---------------------------
 	 customer order status
 	 
@@ -945,6 +965,11 @@ https://magento.stackexchange.com/questions/105988/magento-2-how-to-show-address
  https://webkul.com/blog/add-non-product-attribute-to-magento2-elastic-documents/
  
 	 check add fields : http://10.10.11.80:9201/_all
+	 
+-------------------------------
+system requirements
+
+https://devdocs.magento.com/guides/v2.4/install-gde/system-requirements.html
 	 1.>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		<virtualType name="additionalFieldsProviderForElasticsearch" type="Magento\AdvancedSearch\Model\Adapter\DataMapper\AdditionalFieldsProvider">
 			<arguments>
@@ -1027,5 +1052,39 @@ js template Translation
 	NOTE: All of These are acceptable:  "Ship Here","Hierhin verschicken" or "Ship Here","Hierhin verschicken",module,Magento_Checkout
 	
 	
+-----------------------------------------------------------
+get store config
 
-	
+$scopeConfig = $objectManager->get('\Magento\Framework\App\Config\ScopeConfigInterface');
+$this->scopeConfig->getValue('dev/debug/template_hints',
+    \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+
+------------------------------------------------------------
+Amasty extension install
+composer config repositories.amasty composer https://composer.amasty.com/community/
+
+------------------------
+php bin/magento config:set admin/captcha/enable 0
+
+--------------------------
+create admin user
+bin/magento admin:user:create
+
+php bin/magento admin:user:create --admin-user=adeel --admin-password=AdeelGreate123! --admin-email=adeelgod@hotmail.com --admin-firstname=Adeel --admin-lastname=G
+---------------------------
+language pack
+
+https://www.mageplaza.com/magento-2-german-language-pack.html
+
+bin/magento i18n:pack [-m|--mode={merge|replace}] [-d|--allow-duplicates] <source> <locale>
+
+
+wget https://github.com/mageplaza/magento-2-german-language-pack/raw/master/de_DE.csv
+php bin/magento i18n:pack -m replace -d de_DE.csv de_DE
+php bin/magento setup:static-content:deploy de_DE
+php bin/magento cache:flush
+
+--------------------------------
+add custom cache
+
+https://www.optiweb.com/blog/magento-2-custom-cache-type/

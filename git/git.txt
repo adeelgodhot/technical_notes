@@ -63,3 +63,30 @@ https://stackoverflow.com/questions/6842687/the-remote-end-hung-up-unexpectedly-
 	git config --global pack.windowMemory 256m 
 	git config --global pack.packSizeLimit 256m
 	>>>>>>>>>>>>>>>>>>>>>>>
+	
+--------------------------------------
+git status so slow
+
+git status --ignore-submodules=all
+
+-------------------------------------
+access token 
+
+https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token
+
+
+---------------------
+Goal: 
+  a. create new commit of current changes in local
+  b. pull commits from remote to local and append the newly created commit above to pulled commits from remote.
+  
+git pull origin develop_new --rebase
+
+ conflicts occurs:
+	here is how to fix it.
+		git add .
+		git rebase --continue
+		
+----------------------
+cancel git add .
+    git reset		

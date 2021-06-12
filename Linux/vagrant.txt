@@ -248,3 +248,7 @@ https://www.dev-metal.com/copy-duplicate-vagrant-box/
 
 	vagrant up
 	>>>>>
+-----------------------------------------------------
+"VirtualBox/Hyper-V conflict: WHvSetupPartition failed - VERR_NEM_VM_CREATE_FAILED"
+
+RUN > CMD > bcdedit /set hypervisorlaunchtype off	

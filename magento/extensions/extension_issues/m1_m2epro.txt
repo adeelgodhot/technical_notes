@@ -1,0 +1,2 @@
+1. E:\PHP\Daniel\ref\m2epro-6.10.1.r15992\app\code\community\Ess\M2ePro\sql\Upgrade\v6_4_6_1__v6_4_7\AllFeatures.php :: 96
+	FROM `m2epro_amazon_listing_product` malp   ===> FROM `mage_m2epro_amazon_listing_product` malp

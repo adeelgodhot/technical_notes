@@ -1,0 +1,59 @@
+1. NoClassDefFoundError
+
+   add Jar to runtime class path
+   java -classpath "c:\a\*"
+   
+   >>>>>>>>>>>>>>>>>>>>
+   System.out.println(System.getProperties().get("java.class.path"));
+   
+            import java.net.URL;
+	        import java.net.URLClassLoader;
+            ClassLoader cl = ClassLoader.getSystemClassLoader();
+
+			URL[] urls = ((URLClassLoader)cl).getURLs();
+
+			for(URL url: urls){
+				System.out.println(url.getFile());
+			}
+   >>>>>>>>>>>>>>>>>>>>
+   https://stackoverflow.com/questions/34413/why-am-i-getting-a-noclassdeffounderror-in-java/5756989#5756989
+   https://javarevisited.blogspot.com/2011/01/how-classpath-work-in-java.html#axzz6vwrm7HbL
+   
+   Fixed:
+	Cause:
+		>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		hermes-service-print/lib/*  isn't added to Shaded Jar in hermes\hermes-rest-server-ui\pom.xml as depedencies
+		>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	Workaround:
+		1. Install all jars in lib As maven repo
+			>>>>>>>>>>>
+			mvn install:install-file -Dfile=bfopdf.jar -DgroupId=com.m11.lib -DartifactId=bfopdf -Dversion=1.0.0 -Dpackaging=jar
+			mvn install:install-file -Dfile=bfopdf-qrcode.jar -DgroupId=com.m11.lib -DartifactId=bfopdf-qrcode -Dversion=1.0.0 -Dpackaging=jar
+			mvn install:install-file -Dfile=icepdf-core-5.1.0.jar -DgroupId=com.m11.lib -DartifactId=icepdf-core -Dversion=1.0.0 -Dpackaging=jar
+			mvn install:install-file -Dfile=icepdf-viewer-5.1.0.jar -DgroupId=com.m11.lib -DartifactId=icepdf-viewer -Dversion=1.0.0 -Dpackaging=jar
+			mvn install:install-file -Dfile=jai_codec.jar -DgroupId=com.m11.lib -DartifactId=jai_codec -Dversion=1.0.0 -Dpackaging=jar
+			mvn install:install-file -Dfile=jPDFPrint.jar -DgroupId=com.m11.lib -DartifactId=jPDFPrint -Dversion=1.0.0 -Dpackaging=jar
+			mvn install:install-file -Dfile=smartjcommon.jar -DgroupId=com.m11.lib -DartifactId=smartjcommon -Dversion=1.0.0 -Dpackaging=jar
+			mvn install:install-file -Dfile=smartjprint.jar -DgroupId=com.m11.lib -DartifactId=smartjprint -Dversion=1.0.0 -Dpackaging=jar
+			>>>>>>>>>>>
+			You can check newly-installed plugins in ~/.m2/repository  [C:\Users\Administrator\.m2\repository]
+				C:\Users\Administrator\.m2\repository\com\m11\lib\bfopdf\1.0.0
+		2. Adding newly-installed repos to hermes-service-print/pom.xml as dependences
+			>>>>>>>>>>>
+			<dependency>
+				<groupId>com.m11.lib</groupId>
+				<artifactId>bfopdf</artifactId>
+				<version>1.0.0</version>
+			</dependency>
+			.....
+			.....
+		3. Remove addjars-maven-plugin from hermes-service-print/pom.xml & hermes-rest-server-ui/pom.xml
+			
+2. add devendency
+	NOTE: please add version like this:
+	
+	<dependency>
+            <groupId>com.m11.lib</groupId>
+            <artifactId>icepdf-core</artifactId>
+            <version>1.0.0</version>
+        </dependency>

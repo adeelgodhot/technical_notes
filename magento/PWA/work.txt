@@ -387,4 +387,8 @@ docker hang issue
      dcf pull
 	 dc up -d --remove-orphans
 	 ....
-	 
+
+---------------------------------
+amazon pay
+
+https://github.com/RoboLV/scandipwa-amazon-pay

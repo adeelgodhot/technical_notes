@@ -4,6 +4,7 @@
    curl -O https://MAG005720361:0422a00637872b1686331788452307b074b2ed83@www.magentocommerce.com/products/downloads/file/Magento-CE-2.4.0_sample_data.tar.gz
    curl -O https://MAG005720361:0422a00637872b1686331788452307b074b2ed83@www.magentocommerce.com/products/downloads/file/Magento-CE-2.4.1.tar.gz
    curl -O https://MAG005720361:0422a00637872b1686331788452307b074b2ed83@www.magentocommerce.com/products/downloads/file/Magento-CE-2.4.2_sample_data.tar.gz
+   curl -O https://MAG005720361:0422a00637872b1686331788452307b074b2ed83@www.magentocommerce.com/products/downloads/file/Magento-CE-2.4.2.tar.gz
 2. Info Usage:
    curl https://MAG_ID:TOKEN@www.magentocommerce.com/products/downloads/info/[OPTION]/[PARAMS]
    

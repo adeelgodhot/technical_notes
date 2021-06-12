@@ -1,0 +1,27 @@
+https://zappiti.uservoice.com/knowledgebase/articles/1830778--network-smb1-sharing-protocol-on-windows-10
+
+sudo smbstatus
+
+------------------------
+sftp to mapdrive
+
+https://sftptogo.com/blog/how-to-map-sftp-as-a-windows-10-drive/
+
+SSH ACCESS
+ip: 10.8.0.1
+username: ahmed
+password: jahsiequ8phi5feesigahbieBee1so
+
+https://linuxize.com/post/how-to-use-sshfs-to-mount-remote-directories-over-ssh/
+
+Remote directory structure
+/home/ahmed
+
+Goal : /home/print
+
+\\sshfs\ahmed@10.8.0.1\..\print
+
+Do you have contact with Ahmed?
+If then,  could you please not tell him that I work for Daniel?
+It's  because he doesn't like me to work with Daniel.
+Ok?
