@@ -1088,3 +1088,14 @@ php bin/magento cache:flush
 add custom cache
 
 https://www.optiweb.com/blog/magento-2-custom-cache-type/
+
+----------------------------
+  magento extension install  by composer
+  
+  https://devdocs.magento.com/extensions/install/
+  
+-------------------------------
+Add Date Time Picker To System Configuration
+
+https://magecomp.com/blog/add-date-time-picker-in-magento-2-system-configuration-with-custom-format/
+https://magento.stackexchange.com/questions/269454/how-to-implement-time-range-picker-in-magento-2-admin-system-xml

@@ -1,0 +1,45 @@
+1. FireGento/MageSetup
+1.  vendor  -- dhl/module-shipping-m2
+
+	https://github.com/netresearch/dhl-module-shipping-m2
+	
+	
+	
+	https://marketplace.magento.com/dhl-shipping-m2.html
+	https://devdocs.magento.com/extensions/install/
+	composer require dhl/shipping-m2:2.0.1
+	
+	php bin/magento module:enable Netresearch_ShippingCore --clear-static-content
+	php bin/magento module:enable Dhl_UnifiedTracking
+	php bin/magento module:enable Netresearch_ConfigFields
+	php bin/magento module:enable Dhl_ShippingCore
+	php bin/magento module:enable Dhl_Paket
+	php bin/magento module:enable Dhl_PaketReturns
+	php bin/magento module:enable DeutschePost_Internetmarke
+	php bin/magento module:enable Netresearch_ShippingUi
+	php bin/magento module:enable PostDirekt_Addressfactory
+	php bin/magento module:enable PostDirekt_Autocomplete
+	php bin/magento module:enable PostDirekt_Core
+	php bin/magento setup:upgrade
+	php bin/magento setup:static-content:deploy -f de_DE en_US
+
+3. Mage fan blog
+	https://magefan.com/magento2-blog-extension
+	Installed Manually
+	
+	composer config repositories.magefan composer https://magefan.com/repo/
+	composer update magefan/module-community
+	composer require magefan/module-blog ^2.10.1
+
+	# Authentication required (repo.magento.com)
+	# Get your Magento Marketplace authentication keys or use these:
+	# Username:7c018006799466c681ad507e27904677
+	# Password:289077c86e811661a8f7751828485d3a
+
+	# Authentication required (magefan.com)
+	# Username:VQSjTHEXjlLKomJwx0123d1bYiDsajGb
+	# Password:ifIPmFfgGeRhn4tL823d8hJwK6gLURc5
+
+	php bin/magento setup:upgrade
+	php bin/magento setup:di:compile
+	php bin/magento setup:static-content:deploy	

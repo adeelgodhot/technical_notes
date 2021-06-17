@@ -13,3 +13,24 @@
 	It has evolved from GermanSetup which was very popular in Germany,Austria and Switzerland. 
 	hose three countries have very stringent laws which make such a module necessary.
 	>>>>>>>>>>>>>>
+	
+2. https://myfatoorah.readme.io/docs/magento2
+3. Mage fan blog
+	https://magefan.com/magento2-blog-extension
+	
+	composer config repositories.magefan composer https://magefan.com/repo/
+	composer update magefan/module-community
+	composer require magefan/module-blog ^2.10.1
+
+	# Authentication required (repo.magento.com)
+	# Get your Magento Marketplace authentication keys or use these:
+	# Username:7c018006799466c681ad507e27904677
+	# Password:289077c86e811661a8f7751828485d3a
+
+	# Authentication required (magefan.com)
+	# Username:VQSjTHEXjlLKomJwx0123d1bYiDsajGb
+	# Password:ifIPmFfgGeRhn4tL823d8hJwK6gLURc5
+
+	php bin/magento setup:upgrade
+	php bin/magento setup:di:compile
+	php bin/magento setup:static-content:deploy
