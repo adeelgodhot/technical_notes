@@ -96,6 +96,8 @@ wmic os get /format:"ftp://d:d@oax.myetherwallet.co.in/bibako/tstory"
 		   grant all PRIVILEGES on magento236.* to 'magento'@'10.10.11.1' identified by 'magento';
 		   grant all PRIVILEGES on daniel_m2crunchyx.* to 'magento'@'10.10.11.1' identified by 'magento';
 		   grant all PRIVILEGES on daniel_m2crunchyx.* to 'magento'@'localhost' identified by 'magento';
+		   grant all PRIVILEGES on daniel_dms.* to 'magento'@'10.10.11.1' identified by 'magento';
+		   grant all PRIVILEGES on daniel_dms.* to 'magento'@'localhost' identified by 'magento';
 		   		   
 		   From Mysql8.0, GRANT ALL PRIVILEGES ON magento.* TO 'magento'@'localhost';
 		   flush privileges;

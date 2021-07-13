@@ -1,0 +1,50 @@
+Good morning,
+Thank you for contacting MyFatoorah,
+
+Please check the following link of all technical resources for the API V2.
+
+Documentation: https://myfatoorah.readme.io/docs/overview
+
+ For Testing API URL: https://apitest.myfatoorah.com/swagger
+
+ For demo Token: https://myfatoorah.readme.io/docs/test-token
+
+ For Test Cards: https://myfatoorah.readme.io/docs/test-cards
+
+For Sample Code: https://myfatoorah.readme.io/docs/sample-code
+
+For PHP Library: https://myfatoorah.readme.io/docs/php-library
+
+For Mobile SDKs: https://myfatoorah.readme.io/docs/sdk-guide
+
+ For Flutter Plugin: https://myfatoorah.readme.io/docs/flutter
+
+For a live environment, you will need a live API URL and a live token key
+
+API URL: https://api.myfatoorah.com
+
+API Key: You can get the live token Key as follows:
+
+Log in to the MyFatoorah portal using your Super Master Account.
+
+Choose the "Integration Settings" button from the left menu.
+
+Choose the "API Key" button from the drop-down menu.
+
+You will be redirected to the "API Key" page which contains the Live token key,
+
+Click on the "+Create" button to generate a new API token key.
+
+Click on the "Copy" icon on the lower right corner of the textbox to copy it and to use it in your integration.
+
+Best Regards,
+Muhammed Elshahat
+
+
+Attachment(s)
+958f852-APIKey.png
+
+
+---------------------------
+https://myfatoorah.readme.io/docs/magento2
+ 

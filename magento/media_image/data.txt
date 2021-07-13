@@ -4,3 +4,79 @@ media/catalog/product/cache/99fe62989f7f9264d0f4eda3659b74d4/3/_/3_6.jpeg
 
 99fe62989f7f9264d0f4eda3659b74d4: hash
    gnerated by vendor\magento\module-catalog\Model\View\Asset\Image.php::getMiscPath
+   
+catalog:images:resize
+	E:\PHP\Daniel\work\m2crunchyx\vendor\magento\module-media-storage\Service\ImageResize.php :: getViewImages :: getThemesInUse :: resizeFromThemes
+		>>>> resizeFromThemes >>>>
+		$productImages = [['filepath' => '/o/r/oriental_leaves_red.jpg']];
+		>>>>>>>>>>>>>>>>>>>>>>>>>>
+	
+	php -dmemory_limit=500G bin/magento catalog:images:resize
+	
+	E:\PHP\Daniel\work\m2crunchyx\vendor\magento\module-catalog\Model\Product\Image\ParamsBuilder.php :: build :: 76
+	
+	E:\PHP\Daniel\work\m2crunchyx\vendor\magento\framework\Encryption\Encryptor.php :: hash :: 259
+	
+	>>>>>>>>>>>>>>>>>>>>
+	>>>>>>>>
+		`
+		/o/r/oriental_leaves_red.jpg
+
+		select * from catalog_product_entity_media_gallery where value='/3/3/33362_main_6.jpg';
+		select * from catalog_product_entity_media_gallery where value='/o/r/oriental_leaves_red.jpg';
+
+		`catalog_product_entity_media_gallery_value`
+
+		select * from catalog_product_entity_media_gallery_value where value_id IN(6728,22301);
+		select * from catalog_product_entity_media_gallery_value where value_id IN(33600);
+		  catalog_product_entity_media_gallery_value.entity_id <=> catalog_product_entity.entity_id
+		>>>>>>>>>>
+		
+	Solution:
+	
+	1. E:\PHP\Daniel\work\m2crunchyx\vendor\magento\module-catalog\Model\ResourceModel\Product\Image.php :: getUsedProductImages
+		>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		    SELECT  `images`.`value` AS `filepath` FROM `catalog_product_entity_media_gallery` AS `images` INNER JOIN `catalog_product_entity_media_gallery_value` AS `image_value` ON images.value_id = image_value.value_id WHERE (images.disabled = 0 AND image_value.disabled = 0) ORDER BY `images`.`value_id` ASC limit 1;
+ 
+			public function getUsedProductImages()
+			{
+				$batchSelectIterator = $this->batchQueryGenerator->generate(
+					'value_id',
+					$this->getUsedImagesSelect(),
+					$this->batchSize,
+					\Magento\Framework\DB\Query\BatchIteratorInterface::NON_UNIQUE_FIELD_ITERATOR
+				);
+				$r = [];
+				//foreach ($batchSelectIterator as $select) {
+					$select = "select DISTINCT g.value as filepath from catalog_product_entity_media_gallery_value as m 
+		inner join catalog_product_entity_media_gallery as g ON g.value_id=m.value_id and g.attribute_id=90
+		where (m.entity_id between 31084 and 31143) OR (m.entity_id between 28261 and 28266) OR (m.entity_id between 29394 and 29404) OR (m.entity_id between 30874 and 30877) OR m.entity_id IN(24897,30132,30868)";
+					foreach ($this->connection->fetchAll($select) as $key => $value) {
+						$r[] = $value;
+					}
+				//}
+				return $r;
+			}
+			
+			
+			***********
+						select DISTINCT g.value as filepath from catalog_product_entity_media_gallery_value as m 
+			inner join catalog_product_entity_media_gallery as g ON g.value_id=m.value_id and g.attribute_id=90
+			where m.entity_id IN(SELECT product_id FROM catalog_product_website where website_id=2);
+        >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	2. E:\PHP\Daniel\work\m2crunchyx\vendor\magento\module-media-storage\Service\ImageResize.php
+       	>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			public function resizeFromThemes(array $themes = null): Generator
+			{
+				$count = $this->productImage->getCountUsedProductImages();
+				if (!$count) {
+					throw new NotFoundException(__('Cannot resize images - product images not found'));
+				}
+
+				$productImages = $this->productImage->getUsedProductImages(); 
+				//$productImages = array_slice($productImages, 3462); 
+				 //var_dump($productImages[10]);exit;
+				 //echo count($productImages);exit;
+				//$productImages = [['filepath' => '/o/r/oriental_leaves_red.jpg']]; 
+				$viewImages = $this->getViewImages($themes ?? $this->getThemesInUse());
+

@@ -553,6 +553,42 @@ From core_config_data
    set httponly -> 0
  
 bin/magento module:disable Magento_TwoFactorAuth
+
+   >>> how to debug redirect issue >>>
+   https://magefan.com/blog/how-to-debug-301-and-302-redirect-in-magento-2
+   1. vendor/magento/framework/HTTP/PhpEnvironment/Response.php
+	   >>>>>>>>>>>>>>>>>
+	   public function setRedirect($url, $code = 302)
+		{
+			var_dump($url); \Magento\Framework\Debug::backtrace(false, true, false); exit();
+			$this->setHeader('Location', $url, true)
+				->setHttpResponseCode($code);
+
+			return $this;
+		}
+   2. vendor/magento/framework/Controller/Result/Redirect.php
+      var_dump($this->url); \Magento\Framework\Debug::backtrace(false, true, false); exit(); 
+   3. vendor\magento\module-store\App\FrontController\Plugin\RequestPreprocessor.php :: aroundDispatch ::68-100
+   4. vendor\magento\module-store\Model\BaseUrlChecker.php :: execute :: 38-45
+   5. Magento\Framework\App\Request\Http => vendor\magento\framework\HTTP\PhpEnvironment\Request :: getScheme :: 
+   TempFix until https is ready to go
+      E:\PHP\Daniel\work\m2crunchyx\vendor\magento\framework\HTTP\PhpEnvironment\Request.php :: isSecure :: 419
+			return true
+			
+   Backend Redirect
+   1. vendor/magento/module-backend/Controller/Adminhtml/Auth/Login.php :: execute :: 54-56
+      if ($requestUrl != $backendUrl) {
+            return $this->getRedirect($backendUrl);
+        }
+		
+      $requestUrl = http://crunchyx.de/admin/admin/index/index/key/a639f64e38cc269fa958b348815eafef734bb0926d32a21f8e99cc011c25e73d/
+	
+      $backendUrl = https://crunchyx.de/admin/admin/index/index/key/a639f64e38cc269fa958b348815eafef734bb0926d32a21f8e99cc011c25e73d/	  
+	  
+    Solution:
+     	if ($requestUrl != $backendUrl) {
+            //return $this->getRedirect($backendUrl);
+        }
 -----------------------------------------
   quality image
   
@@ -845,6 +881,7 @@ It's tested by me
 ------------------
 check table size
 SELECT table_name AS "Table", ROUND(((data_length + index_length) / 1024 / 1024), 2) AS "Size (MB)" FROM information_schema.TABLES WHERE table_schema = "zalabany_dev" ORDER BY (data_length + index_length) DESC;
+SELECT table_name AS "Table", ROUND(((data_length + index_length) / 1024 / 1024), 2) AS "Size (MB)" FROM information_schema.TABLES WHERE table_schema = "calvo_cover_db" ORDER BY (data_length + index_length) DESC;
 
 SET FOREIGN_KEY_CHECKS=0;
 TRUNCATE TABLE `report_event`;
@@ -1070,7 +1107,7 @@ php bin/magento config:set admin/captcha/enable 0
 create admin user
 bin/magento admin:user:create
 
-php bin/magento admin:user:create --admin-user=adeel --admin-password=AdeelGreate123! --admin-email=adeelgod@hotmail.com --admin-firstname=Adeel --admin-lastname=G
+php bin/magento admin:user:create --admin-user=adeel --admin-password=admin123! --admin-email=adeelgod@hotmail.com --admin-firstname=Adeel --admin-lastname=G
 ---------------------------
 language pack
 
@@ -1099,3 +1136,12 @@ Add Date Time Picker To System Configuration
 
 https://magecomp.com/blog/add-date-time-picker-in-magento-2-system-configuration-with-custom-format/
 https://magento.stackexchange.com/questions/269454/how-to-implement-time-range-picker-in-magento-2-admin-system-xml
+
+-------------------
+SetEnvIf Host palomahome.com* MAGE_RUN_CODE=paloma_home
+SetEnvIf Host palomahome.com* MAGE_RUN_TYPE=website
+
+---------------------
+Paypal braintree
+
+https://mage2.pro/t/topic/728

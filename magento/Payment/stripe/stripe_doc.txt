@@ -1,0 +1,13 @@
+https://stripe.com/docs/keys
+
+npm install --save react-stripe-elements
+
+test
+Publishable key
+	pk_test_51JA85iCl32UWRLmdTot5Mu4yz7MxbDLZTDzQdtZOjPhJ6X6kzbJDwuvYlk0SLrSdakCy0ZnOt32gBjUcwu8gIeX700MvZwH3FB
+Secret key
+	sk_test_51JA85iCl32UWRLmdxbXxeDczXxCkxeqJy9hbPPtLN7jWwEgRiBei9tX3hRWkHMx3MINCixXQbcK3mhvMJc1sa4P500j3YpGJPW
+composer require stripe/stripe-php:^7
+https://stripe.com/docs/plugins/magento/install#manual
+https://stripe.com/docs/plugins/magento/configuration
+https://stripe.com/docs/testing

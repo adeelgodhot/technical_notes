@@ -43,3 +43,22 @@
 	php bin/magento setup:upgrade
 	php bin/magento setup:di:compile
 	php bin/magento setup:static-content:deploy	
+
+4. owebia/magento2-module-advanced-shipping
+	https://github.com/owebia/magento2-module-advanced-shipping
+	
+	composer require owebia/magento2-module-advanced-shipping:^2.8.9
+
+	php bin/magento cache:clean
+	php bin/magento module:enable \
+		Owebia_SharedPhpConfig \
+		Owebia_AdvancedShipping
+	php bin/magento setup:upgrade
+	php bin/magento setup:di:compile
+	
+	php bin/magento setup:static-content:deploy
+5   M2ePro
+   https://docs.m2epro.com/help/m2/install-upgrade-m2e-pro
+   https://docs.m2epro.com/help/m2/install-upgrade-m2e-pro/from-magento-marketplace-v-2-4-via-command-line
+6.  mageware/smtp
+	https://github.com/mageware/magento2-smtp-mailer
