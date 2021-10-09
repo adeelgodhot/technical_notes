@@ -1,0 +1,28 @@
+1. How to add layout handle using events.
+	E:\PHP\Mark\html\vendor\swissup\module-checkout-success\etc\frontend\events.xml
+	
+	>>>>>>>>>>>>>>>>>>>>
+	<event name="layout_load_before">
+        <observer name="swissup_checkoutsuccess__prepare_layout" instance="Swissup\CheckoutSuccess\Observer\PrepareLayout" />
+    </event>
+	
+		if ($this->helper->getConfigValue('general/enabled')
+            && $this->helper->isOnSuccessPage()
+        ) {
+            $observer->getLayout()->getUpdate()->addHandle('swissup_checkoutsuccess');
+        }
+	>>>>>>>>>>>>>>>>>>>>>
+	
+2. How to set template using helper in XML
+	
+<action method="setTemplate">
+                <argument name="template" xsi:type="helper" helper="Olegnax\Athlete2\Helper\UpdaterTemplate::setProductsLayout"/>
+            </action>
+3. Change Tab Order in Product page
+
+	<block class="Magento\Catalog\Block\Product\View\Attributes" name="product.attributes" as="additional" template="Magento_Catalog::product/view/attributes.phtml" group="detailed_info">
+                    <arguments>
+                        <argument translate="true" name="title" xsi:type="string">More Information</argument>
+                        <argument name="sort_order" xsi:type="string">20</argument>
+                    </arguments>
+                </block>

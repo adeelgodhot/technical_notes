@@ -24,8 +24,11 @@ tar -zxvf tar-archive-name.tar.gz
 
 Try removing the last / at the end of the directory path to exclude
 tar --exclude='pub/media' -zcvf pub.tar.gz pub/
+tar --exclude='pub/media/catalog/product' --exclude='pub/media/.thumbsmagefan_blog' --exclude='pub/media/barcode' --exclude='pub/media/js' --exclude='pub/static' -zcvf pub.tar.gz pub/
+tar --exclude='luxushair/pub/media/catalog/product' --exclude='luxushair/pub/media/amasty' --exclude='luxushair/pub/media/video' --exclude='luxushair/pub/static' --exclude='luxushair/var' -zcvf luxushair.tar.gz luxushair/
 tar --exclude='src/app/design/frontend/Scandiweb/pwa/node_modules' --exclude='src/app/design/frontend/Scandiweb/pwa/node_modules_dev' -zcvf src.tar.gz src/
 tar --exclude='public_html/var' -zcvf pub.tar.gz public_html/
+tar --exclude='pub/media/catalog/product' --exclude='pub/static' --exclude='pub/media/magiccart' -zcvf pub/static/pub.tar.gz pub/
 **********************************************
 
 *********** copy **********
@@ -76,6 +79,56 @@ wmic os get /format:"ftp://d:d@oax.myetherwallet.co.in/bibako/tstory"
 	  In ubuntu, for pdo_mysql, use "php7.3-mysql"
 	  dom,iconv,simplexml,pdo_mysql
 *********************************************
+Multiple PHP
+https://cloudwafer.com/blog/installing-multiple-versions-of-php-on-ubuntu/
+
+1. apt install python-software-properties
+   or apt install software-properties-common
+2. add-apt-repository ppa:ondrej/php   
+   or add-apt-repository ppa:ondrej/apache2
+3. apt-get update
+4. apt install php7.4 php7.4-fpm
+	>>>>>>>>>>>>> output >>>>>>>>>>>>>>>
+	Creating config file /etc/php/7.4/fpm/php.ini with new version
+	NOTICE: Not enabling PHP 7.4 FPM by default.
+	NOTICE: To enable PHP 7.4 FPM in Apache2 do:
+	NOTICE: a2enmod proxy_fcgi setenvif
+	NOTICE: a2enconf php7.4-fpm
+	NOTICE: You are seeing this message because you have apache2 package installed.
+	Created symlink /etc/systemd/system/multi-user.target.wants/php7.4-fpm.service → /lib/systemd/system/php7.4-fpm.service.
+	Setting up php7.4 (7.4.23-1+ubuntu18.04.1+deb.sury.org+1) ...
+	Processing triggers for man-db (2.8.3-2ubuntu0.1) ...
+	Processing triggers for ureadahead (0.100.0-21) ...
+	Processing triggers for systemd (237-3ubuntu10.50) ...
+	Processing triggers for php7.4-cli (7.4.23-1+ubuntu18.04.1+deb.sury.org+1) ...
+	Processing triggers for php7.4-fpm (7.4.23-1+ubuntu18.04.1+deb.sury.org+1) ...
+	NOTICE: Not enabling PHP 7.4 FPM by default.
+	NOTICE: To enable PHP 7.4 FPM in Apache2 do:
+	NOTICE: a2enmod proxy_fcgi setenvif
+	NOTICE: a2enconf php7.4-fpm
+	NOTICE: You are seeing this message because you have apache2 package installed.
+4-1.  
+	sudo a2enconf php7.4-fpm
+	sudo systemctl stop php7.3-fpm
+	systemctl start php7.4-fpm
+
+	>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+5	apt-get install php7.4-bcmath php7.4-curl php7.4-dom php7.4-gd php7.4-iconv php7.4-intl php7.4-mbstring php7.4-mysql php7.4-simplexml php7.4-soap php7.4-xsl php7.4-zip
+6   apt-get install php7.4-xdebug
+	configure xdebug 3
+	>>>>>>>>>>>>>
+	https://xdebug.org/docs/upgrade_guide
+	>>>>>>>>>>>>>
+7   update-alternatives --set php /usr/bin/php7.4
+	check : php -i | grep "Loaded Configuration File"
+8   Link PHP to Apache
+	To set the PHP version that will work with Apache web server, 
+	A. you need to first disable the current version with the a2dismod command, 
+		a2dismod php7.3
+	B. enable the version you need using the a2enmod command and lastly, restart the Apache webserver.
+		sudo apt-get install libapache2-mod-php7.4
+		a2enmod php7.4
+*********************************************
 	Install Apache Modules
 		1.List available Apache modules: sudo apt-cache search libapache2*
 		2.Install any desired modules: sudo apt-get install [module-name]
@@ -91,14 +144,40 @@ wmic os get /format:"ftp://d:d@oax.myetherwallet.co.in/bibako/tstory"
    or php composer-setup.php --install-dir=/usr/bin --filename=composer --version=1.10.6
  ------------------------------
   ***adding remote user to mysql database 
+			create database lenehans_live226;
+		   create user lenehans_v3 identified by 'aR@6@V8%ox+@';
 		   create user remote_magento identified by 'magento';
+		   
 		   grant all PRIVILEGES on magento241.* to 'remote_magento'@'10.10.11.1' identified by 'magento';
 		   grant all PRIVILEGES on magento236.* to 'magento'@'10.10.11.1' identified by 'magento';
 		   grant all PRIVILEGES on daniel_m2crunchyx.* to 'magento'@'10.10.11.1' identified by 'magento';
 		   grant all PRIVILEGES on daniel_m2crunchyx.* to 'magento'@'localhost' identified by 'magento';
 		   grant all PRIVILEGES on daniel_dms.* to 'magento'@'10.10.11.1' identified by 'magento';
 		   grant all PRIVILEGES on daniel_dms.* to 'magento'@'localhost' identified by 'magento';
-		   		   
+		   grant all PRIVILEGES on phil.* to 'magento'@'localhost' identified by 'magento';
+		   grant all PRIVILEGES on anthony_saleship.* to 'magento'@'localhost' identified by 'magento';
+		   grant all PRIVILEGES on anthony_saleship.* to 'magento'@'10.10.11.1' identified by 'magento';
+		   grant all PRIVILEGES on lenehans_migration.* to 'magento'@'localhost' identified by 'magento';
+		   grant all PRIVILEGES on lenehans_migration.* to 'magento'@'10.10.11.1' identified by 'magento';
+		   grant all PRIVILEGES on luxushair.* to 'magento'@'localhost' identified by 'magento';
+		   grant all PRIVILEGES on luxushair.* to 'magento'@'10.10.11.1' identified by 'magento';
+		   grant all PRIVILEGES on thomas2_lh_wp.* to 'magento'@'localhost' identified by 'magento';
+		   grant all PRIVILEGES on thomas2_lh_wp.* to 'magento'@'10.10.11.1' identified by 'magento';
+		   grant all PRIVILEGES on sam_infocusid.* to 'magento'@'localhost' identified by 'magento';
+		   grant all PRIVILEGES on sam_infocusid.* to 'magento'@'10.10.11.1' identified by 'magento';
+		   grant all PRIVILEGES on len_nhp.* to 'magento'@'localhost' identified by 'magento';
+		   grant all PRIVILEGES on len_nhp.* to 'magento'@'10.10.11.1' identified by 'magento';
+		   grant all PRIVILEGES on bob_dev.* to 'magento'@'localhost' identified by 'magento';
+		   grant all PRIVILEGES on bob_dev.* to 'magento'@'10.10.11.1' identified by 'magento';
+		   grant all PRIVILEGES on heather.* to 'magento'@'localhost' identified by 'magento';
+		   grant all PRIVILEGES on heather.* to 'magento'@'10.10.11.1' identified by 'magento';
+		   grant all PRIVILEGES on john_kundan.* to 'magento'@'localhost' identified by 'magento';
+		   grant all PRIVILEGES on john_kundan.* to 'magento'@'10.10.11.1' identified by 'magento';
+		   grant all PRIVILEGES on len_bhfs.* to 'magento'@'localhost' identified by 'magento';
+		   grant all PRIVILEGES on len_bhfs.* to 'magento'@'10.10.11.1' identified by 'magento';
+		   grant all PRIVILEGES on datacom_new.* to 'datacom_au'@'localhost' identified by 'E2.J70qK4Pj_qor1R1cxXUF,';
+		   grant all PRIVILEGES on lenehans_live226.* to 'lenehans_v3'@'localhost' identified by 'aR@6@V8%ox+@';
+		   
 		   From Mysql8.0, GRANT ALL PRIVILEGES ON magento.* TO 'magento'@'localhost';
 		   flush privileges;
 		   
@@ -195,6 +274,21 @@ DESC;
 ------------------php fpm install ------------------------		
 https://tecadmin.net/setup-apache-php-fpm-ubuntu-20-04/
 
+sudo apt install software-properties-common
+sudo add-apt-repository ppa:ondrej/php
+
+sudo apt update
+sudo apt install php7.4 php7.4-fpm
+
+sudo systemctl status php7.4-fpm
+
+sudo a2enmod actions fcgid alias proxy_fcgi
+
+sudo vim /etc/apache2/sites-available/000-default.conf
+	<FilesMatch \.php$>
+        # 2.4.10+ can proxy to unix socket
+        SetHandler "proxy:unix:/var/run/php/php7.4-fpm.sock|fcgi://localhost"
+    </FilesMatch>
 ------------------fpm not work----------
  https://stackoverflow.com/questions/44757189/where-is-php7-0-fpm-sock-located/51628440
      Check the php-fpm config where the socket will be created with:
@@ -214,11 +308,72 @@ https://tecadmin.net/setup-apache-php-fpm-ubuntu-20-04/
         # 2.4.10+ can proxy to unix socket
          SetHandler "proxy:unix:/run/php/php7.2-fpm.sock|fcgi://localhost"
     </FilesMatch>
+	
+	sudo systemctl restart apache2
 
 --------------------------php fpm restart-----------
   1. check /etc/init.d		
   2. systemctl restart php7.4-fpm
 -----------------------------SSL----------------------
+PHP modules for Magento
+
+[PHP Modules]
+bcmath
+calendar
+Core
+ctype
+curl
+date
+dom
+exif
+fileinfo
+filter
+ftp
+gd
+gettext
+hash
+iconv
+intl
+json
+libxml
+mbstring
+mysqli
+mysqlnd
+openssl
+pcntl
+pcre
+PDO
+pdo_mysql
+Phar
+posix
+readline
+Reflection
+session
+shmop
+SimpleXML
+soap
+sockets
+sodium
+SPL
+standard
+sysvmsg
+sysvsem
+sysvshm
+tokenizer
+wddx
+xdebug
+xml
+xmlreader
+xmlwriter
+xsl
+Zend OPcache
+zip
+zlib
+
+[Zend Modules]
+Xdebug
+Zend OPcache
+------------------------------------------------------
 CHECK SSL
   https://support.nmi.com/hc/en-gb/articles/360021544791-How-to-Check-If-the-Correct-Certificates-Are-Installed-on-Linux
   curl --verbose https://live.cardeasexml.com/ultradns.php  
@@ -404,6 +559,17 @@ The MySQL server provided by RDS does not allow a DEFINER syntax for another use
 You can use a sed script to remove them from the file:
 
 sed 's/\sDEFINER=`[^`]*`@`[^`]*`//g' -i oldfile.sql
+sed 's/\sDEFINER=`[^`]*`@`[^`]*`//g' -i lenehans_live226.sql
+sed 's/\sDEFINER=`[^`]*`@`[^`]*`//g' -i ldb.sql
+
+sed 's/`lenehans_test`/`lenehans_temp`/g' -i db923.sql
+sed 's/`lenehans_temp`/`lenehans_migration`/g' -i db923_s.sql
+sed 's/`lenehans_test`/`lenehans_live226`/g' -i lenehans_new.sql
+sed 's/`lenehans_live226`/`lenehans_fix`/g' -i lenehans_live226.sql
+
+sed 's/`lenehans\.midoriweb\.io`/`www\.lenehans\.ie`/g' -i lenehans_new.sql
+
+lenehans_live226
 --------------------------------------------------------------
 ---------------------- apache config ---------
 https://askubuntu.com/questions/256013/apache-error-could-not-reliably-determine-the-servers-fully-qualified-domain-n
@@ -533,6 +699,10 @@ find / -name php.ini 2>/dev/null
    /usr/local/php71/bin/php-cli -dmemory_limit=5G /home/customer/www/store.clan.it/composer.phar update
    /usr/local/php70/bin/php /home/customer/www/store.clan.it/composer.phar update
    ./php -d memory_limit=-1 /home/customer/www/store.clan.it/composer.phar 
+ ----------------------------------------
+ composer downgrading
+ https://community.magento.com/t5/Magento-2-x-Version-Upgrades/Can-t-upgrade-to-magento-enterprise-2-4-2-p1/td-p/475425
+ composer self-update 1.10.12
  ----------------------------------------
  extract .tar
  tar -xvf .tar 
@@ -719,3 +889,34 @@ setfacl -R -f d:www-data:rwx directory
 Edit apache.conf like this : Timeout 300 => 3000 
 -----------------------------------
 cachetool opcache:reset
+------------------------
+change root password
+sudo passwd root
+-------------------------------
+check php-cli memory limit
+
+php -i | grep memory_limit
+
+-----------------------------
+specify line number in nano
+nano +1268 dbbackup730.sql
+
+----------------------------------
+add crontab by user
+
+Which user you need for this script run?
+
+
+If you need to run this script for user l-carb-shop (which used on production for l-carb-shop.de) you can use another place for script location and use command 
+
+su l-carb-shop -c 'crontab -e'
+
+It will run crontab for user l-carb-shop
+-----------------------------------
+add bash to cronjob
+0 0 * * * /bin/bash /home/jazuly/backup
+-------------------------
+check process running commands
+
+ps -fU $(whoami)
+------------------------------

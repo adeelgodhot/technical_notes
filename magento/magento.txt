@@ -102,6 +102,10 @@ https://www.minitool.com/backup-tips/windows-defender-not-turning-on.html
 		 rm -rf pub/static/frontend/Lenehans/ && rm -rf var/view_preprocessed/pub/static/frontend/Lenehans
 		 rm -rf pub/static/frontend/appmedia/ && rm -rf var/view_preprocessed/pub/static/frontend/appmedia
 		 rm -rf pub/static/frontend/Danielschaaf/ && rm -rf var/view_preprocessed/pub/static/frontend/Danielschaaf
+		 rm -rf pub/static/frontend/MageBig/martfury_lenehans/ && rm -rf var/view_preprocessed/pub/static/frontend/MageBig/martfury_lenehans
+		 rm -rf pub/static/frontend/Pearl/weltpixel_custom_luxushair && rm -rf var/view_preprocessed/pub/static/frontend/Pearl/weltpixel_custom_luxushair
+		 rm -rf pub/static/frontend/Smartwave/porto_child && rm -rf var/view_preprocessed/pub/static/frontend/Smartwave/porto_child
+		 rm -rf pub/static/frontend/Olegnax/a2_child && rm -rf var/view_preprocessed/pub/static/frontend/Olegnax/a2_child
 		 rm -rf pub/static/adminhtml/* && rm -rf pub/static/_cache/* && rm -rf pub/static/frontend/* && rm -rf pub/static/frontend/deployed_version.txt && rm -rf var/view_preprocessed/*
 		 ** rm -rf var/{cache,di,generation,page_cache,view_preprocessed}	
 		 ** find app/code pub/static app/etc var/generation var/di var/view_preprocessed vendor \( -type f -or -type d \) -exec chmod u-w {} \; && chmod o-rwx app/etc/env.php && chmod u+x bin/magento
@@ -126,6 +130,11 @@ php bin/magento cache:flush
 	  magento setup:static-content:deploy -f en_US ar_SA -t Scandiweb/pwa
 	  magento setup:static-content:deploy -f en_US en_IE -t Lenehans/lenehans
 	  magento setup:static-content:deploy -f de_DE -t Danielschaaf/crunchyx
+	  magento setup:static-content:deploy -f en_IE -t MageBig/martfury_lenehans
+	  magento setup:static-content:deploy -f nb_NO -t Pearl/weltpixel_custom_luxushair
+	  magento setup:static-content:deploy -f en_US -t Olegnax/a2_child
+	  
+	  php bin/magento se:s:d -f en_IE en_US --theme Magento/backend --area adminhtml
 	     Note: in this case, deploy mode shouldn't be developer 
 
 		 
@@ -342,40 +351,42 @@ C, Test
    1	rm -rf pub/static/frontend/ && rm -rf var/view_processed/source
    2    php bin/magetno cache:clean
 D. Enable LiveReload extension in Chrome   
-E. Copy the contents of themes.js into local-themes.js in the dev/tools/grunt/configs/ directory.
-F. Guard-livereload install [This is not necessary because [grunt watch] listens 35729 as livereload server]
-   http://livereload.com/extensions/
-  https://gist.github.com/gajayana/1238504df57638bfca28
-  -------------------------------------------------------------
-	$ sudo apt-get install ruby-dev
-	$ sudo gem install bundle
-	$ sudo gem install guard
-	$ sudo gem install guard-livereload
+E. Copy the contents of themes.js into local-themes.js in the dev/tools/grunt/configs/ directory
+F. Install livereload in Vagrant
+	sudo npm install -g livereload
+	grunt watch
+	>>>>>>>>>>>>>>>>>>>>>>>
+	You can test that the port is open and listening by starting grunt watch 
+	(when livereload node module is installed this also starts the livereload server). 
+	Then connect to <hostname>:35729 and when it's working you'll see some json output:
 
-	cd to project folder
-	$ bundle init
- 
-	open .Gemfile, add following:
-	gem 'guard'
-	gem 'guard-livereload'
+	127.0.0.1:35729
+	sudo netstat -lntp
+	{"tinylr":"Welcome","version":"0.2.1"}
+	>>>>>>>>>>>>>>>>>>>>>>>
+	
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+[
+	Modification live-reload chrome extension (ID: jnihajbhpnppcggbcgedagnkighmdlei)
+		The location of installed extension
+			C:\Users\User_Name\AppData\Local\Google\Chrome\User Data\Default\Extensions.
+			C:\Users\Administrator\AppData\Local\Google\Chrome\User Data\Profile 2\Extensions\jnihajbhpnppcggbcgedagnkighmdlei
+	Copy it into F:\DevTools\live_reload\1
+	Edit it	
+		global.js
+		169 line::	this.host = '10.10.11.80';
+	>>>>>>>>>>>>>>>>>>
+	Using the modified version of the extension.
+		Visit the Chrome extension page (chrome://extensions/).
+		Enable Developer mode, by activating the switch in the upper-right corner.
+		Click on the "Load unpacked extension" button.
+		Select the folder of your extension (to know which folder is correct, check whether the folder contains a file called manifest.json).
+		Confirm. You're done.
+	>>>>>>>>>>>>>>>>>>
+		
+	
+]
 
-	back to terminal
-	$ bundle exec guard init livereload
-
-	open .Guardfile, add following:
-	# https://github.com/guard/guard-livereload
-	guard :livereload do
-	  watch(%r{.+.(css|js|html|php)$})
-	end
-
-	back to terminal
-	$ bundle exec guard
-  -------------------------------------------------------------
-  1. For Check max_user_watches
-     cat /proc/sys/fs/inotify/max_user_watches
-  2. Modify max_user_watches to 524288
-     echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p  
-	 
  grunt clean:claue && grunt exec:claue && grunt less:claue && grunt watch:claue
   --------------------------------------------------------------
   Content-Security-Policy-Report-Only  for allow Websocket
@@ -676,6 +687,7 @@ You need to configure Two-Factor Authorization in order to proceed
 
 bin/magento module:disable Magento_TwoFactorAuth
 ----------------------------------
+debug sql
 SQL LOG
 <!--<preference for="Magento\Framework\DB\LoggerInterface" type="Magento\Framework\DB\Logger\LoggerProxy"/>-->
     <preference for="Magento\Framework\DB\LoggerInterface" type="Magento\Framework\DB\Logger\File"/>
@@ -685,6 +697,9 @@ SQL LOG
       <argument name="debugFile" xsi:type="string">log/sql.log</argument>
   </arguments>
 </type>	
+
+php bin/magento dev:query-log:enable
+php bin/magento dev:query-log:disable
 -----------------------------
 How checkout page rendered
 
@@ -1108,6 +1123,7 @@ create admin user
 bin/magento admin:user:create
 
 php bin/magento admin:user:create --admin-user=adeel --admin-password=admin123! --admin-email=adeelgod@hotmail.com --admin-firstname=Adeel --admin-lastname=G
+php bin/magento admin:user:create --admin-user=yana --admin-password=admin123! --admin-email=yanaivashkoweb@gmail.com --admin-firstname=Y --admin-lastname=I
 ---------------------------
 language pack
 
@@ -1145,3 +1161,168 @@ SetEnvIf Host palomahome.com* MAGE_RUN_TYPE=website
 Paypal braintree
 
 https://mage2.pro/t/topic/728
+
+-------------------------
+  set webroot to pub
+  
+  'directories' => [
+        'document_root_is_pub' => true
+    ]
+
+--------------------------	
+Order collection
+
+https://www.mageplaza.com/devdocs/get-all-order-collection-filters-magento-2.html?__cf_chl_captcha_tk__=pmd_no7y3Zdp2h5M7eGL8xSaI0Ev2MMjjPuUmrox2d3KYuA-1630308338-0-gqNtZGzNAvujcnBszQkl
+
+	>>>>>>>>>>>>>>>>>>>>>>>>
+	$collection = $this->_orderCollectionFactory->create($customerId)
+            ->addFieldToSelect('*')
+            ->addFieldToFilter('status',
+                [
+                    [ 'like' => 'paystat%'],
+                    [ 'like' => '%inkasso%'],
+                    [ 'eq' => 'processing']
+                ]
+            );
+	>>>>>>>>>>>>>>>>>>>>>>>
+	
+------------------------------
+Magento Debug helper
+
+	vendor\magento\framework\App\Action\Action.php :: dispatch
+		/*$quote = \Magento\Framework\App\ObjectManager::getInstance()
+            ->get(\Magento\Quote\Model\Quote::class)
+            ->load(11114);
+        $h = \Magento\Framework\App\ObjectManager::getInstance()
+            ->get(\Custom\Checkout\Helper\CreditScore::class);
+        $h->isAvailable($quote);*/
+------------------------------------
+Set mobile theme
+	In Admin Panel go to Content-> Design-> Configuration
+	Choose the store that you need
+	In Design Rule section add new User Agent Rules with next string:
+	/iPhone|iPod|BlackBerry|Palm|Googlebot-Mobile|Mobile|mobile|mobi|Windows Mobile|Safari Mobile|Android|Opera Mini/i
+	and choose the needed theme for mobile
+---------------------------------
+Remove category filter from layered navigation
+
+Store > Catalog > Layered Navigation > display_category > No
+
+-----------------
+magento import extension
+
+Wyomind
+https://www.wyomind.com/mass-product-update-import-magento.html
+
+--------------------------------
+custom maintenance
+
+https://magecomp.com/blog/custom-maintenance-mode-page-magento-2/
+
+Step 1: Go to the pub/error folder then rename local.xml.sample to local.xml file: 
+Step 2: Now copy the default folder and rename it. Give name magecomp
+Step 3: Now go to magecomp folder and open 503.phtml and add your custom code and design to show custom maintenance page
+Step 4: Refresh the page. 
+---------------------------------
+get stock table linked to website
+
+SELECT `inventory_stock_sales_channel`.`stock_id` FROM `inventory_stock_sales_channel` WHERE (type = 'website') AND (code = 'diydirect_ie')
+----------------------------
+default stock
+
+	vendor\magento\module-inventory-catalog\Model\DefaultStockProvider.php
+	>>>>>>>>>>
+	public function getId(): int
+    {
+        return 1;
+    }
+	>>>>>>>>>>>
+	vendor\magento\module-inventory-catalog\Plugin\InventorySalesApi\StockResolver\AdaptStockResolverToAdminWebsitePlugin.php
+	>>>>>>>>>>>
+	if (SalesChannelInterface::TYPE_WEBSITE === $salesChannel->getType()
+            && WebsiteInterface::ADMIN_CODE === $salesChannel->getCode()) {
+            return $this->stockRepository->get($this->defaultStockProviderInterface->getId());
+        }
+        return $proceed($salesChannel);
+	>>>>>>>>>>.
+------------------------------
+Remove the store-view special catalog product 
+
+delete from catalog_product_entity_int where IFNULL(store_id, 0) <> 0;
+delete from catalog_product_entity_decimal where IFNULL(store_id, 0) <> 0;
+delete from catalog_product_entity_text where IFNULL(store_id, 0) <> 0;
+delete from catalog_product_entity_datetime where IFNULL(store_id, 0) <> 0;
+delete from catalog_product_entity_varchar where IFNULL(store_id, 0) <> 0;
+delete from catalog_product_entity_int where IFNULL(store_id, 0) <> 0;
+delete from catalog_product_entity_media_gallery_value where IFNULL(store_id, 0) <> 0;
+
+-------------------------------------
+Magento profiler
+
+Here is what you need to do:
+
+1. Log in to your FTP/SSH, and navigate to root directory of your store.
+2. Open .htaccess file, and add there the following line (usually at the beginning): 
+	SetEnv MAGE_PROFILER "html"
+3. If you wish to direct profiling information to CSV file, replace “html” with “csvfile”. Then 
+	all output will be stored in var/log/profiler.csv file.
+4. Log in to your SSH/CLI shell, navigate to your store root directory and switch your store 
+	to developer mode with bin/magento deploy:mode:set developer command.
+	
+	>>>>>>>>>>>>>>>>>
+	To enable the profiler using type html and create a flagfile:
+
+	bin/magento dev:profiler:enable html
+	To enable the profiler using type csvfile and create a flagfile:
+
+	bin/magento dev:profiler:enable csvfile
+	The output will be saved to <project_root>/var/log/profiler.csv. The profiler.csv will be overridden on each page refresh.
+
+	To disable the profiler and remove the flagfile:
+
+	bin/magento dev:profiler:disable
+	
+--------------------------------------------
+Plugin cannot be used
+
+Plugins cannot be used with any of the following:
+
+Final methods
+Final classes
+Non-public methods
+Static methods
+__construct
+Virtual types
+Objects that are instantiated before Magento\Framework\Interception is bootstrapped
+Objects that are not instantiated by the ObjectManager (e.g. by using new directly).
+
+-------------------------------------------
+Plugin Overrides
+
+https://magento.stackexchange.com/questions/155520/how-to-override-or-disable-core-plugins-in-magento2/155527#155527
+	<type name="Magento\Sales\Block\Order\Email\Items\Order\DefaultOrder">
+        <plugin name="Amasty_Stockstatus::EmailStatus" type="Amasty\Stockstatus\Plugin\Order\Email\Items\DefaultOrder" />
+    </type>
+	<type name="Magento\Sales\Block\Order\Email\Items\Order\DefaultOrder">
+        <plugin name="Amasty_Stockstatus::EmailStatus" disabled="true" />
+        <plugin name="MidoriWeb_Custom::EmailStatusBundle" type="MidoriWeb\Custom\Plugin\Order\Email\Items\DefaultOrder" sortOrder="1" />
+    </type>
+Then you should create own class, which will extend the magento plugin class. In own class you can overwrite protected method.
+	namespace MidoriWeb\Custom\Plugin\Order\Email\Items;
+
+	class DefaultOrder extends \Amasty\Stockstatus\Plugin\Order\Email\Items\DefaultOrder
+	{
+-----------------------------------------
+Email Template Variables
+
+vendor\magento\module-email\Model\Template\Filter.php
+
+-----------------------------------------
+DB Logger using env.php
+
+'db_logger' => [
+        'output' => 'disabled',
+        'log_everything' => 1,
+        'query_time_threshold' => '0.001',
+        'include_stacktrace' => 1
+    ]

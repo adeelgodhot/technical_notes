@@ -1,0 +1,143 @@
+https://devdocs.magento.com/guides/v2.4/ui_comp_guide/concepts/ui_comp_uielement_concept.html
+
+The main difference between observe() and track() is that observe() is mainly used without first boolean argument. So it really converts properties to observable functions. It changes how property can be accessed. Otherwise track() uses property accessors. So property access remains the same.
+
+Example:
+
+this.observable = 1;
+this.observe('observable');
+
+this.observable(2); // setter
+this.observable();  // getter
+
+this.trackable = 1;
+this.track('trackable');
+
+this.trackable = 2; // setter
+this.trackable;     // getter
+
+------------------------------------
+The initObservable method sets up variable tracking, as described in this article. In short: this lets you make an property a Knockout observable property by listing it as a tracks default. Knockout observable properties can update the UI automatically whenever they, themselves, are updated.
+
+The initObservable method is called in the uiElement's initialize method. The initialize method is a __constructor/_construct style method for Magento's custom javascript object system.
+
+#File: vendor/magento/module-ui/view/base/web/js/lib/core/element/element.js
+initialize: function () {
+    this._super()
+        .initObservable()
+        .initModules()
+        .initStatefull()
+        .initLinks()
+        .initUnique();
+
+    return this;
+},
+
+---------------------------------------
+How to define knockout property as observable in Magento 2?
+	Magento uses knockout Javascript to enhance some of its native features. You must have to know about the Knockout observable feature to use it.
+
+	knockout observables are used to get track changes of the current view model property. if you want to subscribe to a change of your view model objects, you must define your property or objects as observable.
+
+	knockout observable in Magento defined by multiple ways in the javascript file.
+
+	1. Using knockout JS as dependency on the define() method of the JS file.
+
+		define(['uiComponent', 'ko'], function (Component, ko) {
+			'use strict';
+
+			return Component.extend({
+				name: ko.observable("My Product name"),
+				total: ko.observable(7),
+				items: ko.observableArray([
+					{name: "Product 1", price: 2},
+					{name: "Product 2", price: 5}
+				])
+			});
+		});
+
+		define(['uiComponent', 'ko'], function (Component, ko) {
+			'use strict';
+		 
+			return Component.extend({
+				name: ko.observable("My Product name"),
+				total: ko.observable(7),
+				items: ko.observableArray([
+					{name: "Product 1", price: 2},
+					{name: "Product 2", price: 5}
+				])
+			});
+		});
+		Here We have to define the name and total property as ko.observable() and if you have an array you can define the array as observable with ko.observableArray([])
+
+	2. Using uiComponent as dependency on define method with tracks property,
+
+		define(['uiComponent'], function (Component) {
+			'use strict';
+
+			return Component.extend({
+				defaults: {
+					tracks: {
+						name: true
+						total: true
+						items: true
+					}
+				},
+			});
+		});
+
+		define(['uiComponent'], function (Component) {
+			'use strict';
+		 
+			return Component.extend({
+				defaults: {
+					tracks: {
+						name: true
+						total: true
+						items: true
+					}
+				},
+			});
+		});
+		Using tracks property you can define property as observables.
+
+	3. Using uiComponent as dependency on define method with initObservable(),
+
+		define(['uiComponent'], function (Component) {
+			'use strict';
+
+			return Component.extend({
+				defaults: {
+						name: 'rakesh'
+						total: 10
+						items: [
+					{name: "Product 1", price: 2},
+					{name: "Product 2", price: 5}
+				]
+				},
+				initObservable: function () {
+					this._super().observe(['name', 'total', 'items']);
+					return this;
+				}
+			});
+		});
+
+		define(['uiComponent'], function (Component) {
+			'use strict';
+		 
+			return Component.extend({
+				defaults: {
+						name: 'rakesh'
+						total: 10
+						items: [
+			 {name: "Product 1", price: 2},
+			 {name: "Product 2", price: 5}
+		 ]
+				},
+				initObservable: function () {
+					this._super().observe(['name', 'total', 'items']);
+					return this;
+				}
+			});
+		});
+		Using initObservable() method from the parent element.js file, you can define property as observables.

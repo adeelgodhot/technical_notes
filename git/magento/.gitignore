@@ -1,0 +1,47 @@
+# These are some examples of commonly ignored file patterns.
+# You should customize this list as applicable to your project.
+# Learn more about .gitignore:
+#     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
+
+# Node artifact files
+node_modules/
+/.idea/
+/app/etc/config.php
+/app/etc/env.php
+/bin/
+/dev/
+/generated/
+/lib/
+/phpserver/
+/pub/static/
+/pub/media/catalog/
+/pub/m2crunchyx_api/
+/pub/analysis/
+/setup/
+/update/
+/vendor/
+/var/
+/.htaccess
+/auth.json
+/.php_cs.dist
+/.user.ini
+/composer.json
+/grunt-config.json
+/Gruntfile.js
+/index.php
+/nginx.conf.sample
+/package.json
+/package-lock.json
+/composer.lock
+/*.sql
+/*.csv
+/*.txt
+/*.tar.gz
+/*.sample
+/.editorconfig
+/*.md
+/*.zip
+/*.xml
+/*.org
+/*.patch
+/*.html

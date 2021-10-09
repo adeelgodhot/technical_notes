@@ -34,3 +34,6 @@
 	php bin/magento setup:upgrade
 	php bin/magento setup:di:compile
 	php bin/magento setup:static-content:deploy
+4. Estimated Delivery Date
+https://www.wyomind.com/magento2/estimated-delivery-date-magento.html
+bin/magento wyomind:license:activate Wyomind_EstimatedDeliveryDate NA3872JK8WVGTUTD3

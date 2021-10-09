@@ -392,3 +392,9 @@ docker hang issue
 amazon pay
 
 https://github.com/RoboLV/scandipwa-amazon-pay
+
+---------------------------------
+Update inventory saleability by queue
+
+/usr/bin/php7.4 /home/ubuntu/Projects/magento-docker/src/bin/magento queue:consumers:start inventory.reservations.updateSalabilityStatus --single-thread --max-messages=10000
+	E:\PHP\Mark\migration\vendor\magento\module-inventory-indexer\Model\Queue\UpdateIndexSalabilityStatus.php

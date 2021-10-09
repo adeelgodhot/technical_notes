@@ -1,2 +1,19 @@
 category.product.type.details.renderers
+	$block->getProductDetailsHtml($_product)
+		vendor\magento\module-catalog\Block\Product\AbstractProduct.php
+		getting the renderer , which is kind of child block of which alias is "details.renderers"
+order.success.additional.info
 
+
+-------------------------------------------
+product.info.main[Container]
+	alert.urls[Container]
+	product.info[block]
+	
+product.info.details
+	tabs
+	template: ::product/view/details.phtml
+	render child blocks of which group attr is "detailed_info"
+	
+catalog.leftnav [Magento\LayeredNavigation\Block\Navigation\Category]
+	catalog.navigation.renderer [Magento\LayeredNavigation\Block\Navigation\FilterRenderer]

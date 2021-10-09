@@ -39,6 +39,10 @@ git reset --hard
 git remote -v
 git remote add origin ...
 git remote set-url origin ...
+	------------ setting by tokens ------------
+	https://github.com/settings/tokens
+	git remote add origin https://[USERNAME]:[NEW TOKEN]@github.com/[USERNAME]/[REPO].git
+	git remote set-url origin https://adeelgodhot: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@github.com/adeelgodhot/personal_data.git
 
 https://docs.github.com/en/github/getting-started-with-github/managing-remote-repositories
 ----------------------

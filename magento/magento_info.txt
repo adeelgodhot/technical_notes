@@ -355,3 +355,15 @@ SELECT `main_table`.`attribute_id`, `main_table`.`entity_type_id`, `main_table`.
     }
 	>>>>>>>>>>>>
  E:\PHP\Mark\html\vendor\magento\module-sales\Model\Order\Email\SenderBuilder.php
+ -----------------------------------------------
+ Widget Layout
+ vendor\magento\module-widget\Model\ResourceModel\Layout\Plugin.php
+ vendor\magento\module-widget\Model\ResourceModel\Layout\Update.php
+ 
+ SELECT `layout_update`.`xml`, `layout_update`.`handle` FROM `layout_update`
+ INNER JOIN `layout_link` AS `link` ON link.layout_update_id=layout_update.layout_update_id WHERE (link.store_id IN (0, :store_id)) AND (link.theme_id = :theme_id) AND (link.is_temporary = 0) ORDER BY `layout_update`.`sort_order` ASC
+ 
+ DB: layout_link, layout_update
+ 
+ SELECT `layout_update`.`xml`, `layout_update`.`handle` FROM `layout_update`
+ INNER JOIN `layout_link` AS `link` ON link.layout_update_id=layout_update.layout_update_id WHERE (link.store_id IN (0, 4)) AND (link.theme_id = 18) AND (link.is_temporary = 0) ORDER BY `layout_update`.`sort_order` ASC

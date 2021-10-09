@@ -1,0 +1,22 @@
+The following is an example of a mixin that extends the target component with a function that introduces a new blockVisibility property to a column element.
+
+File: ExampleCorp/Sample/view/base/web/js/columns-mixin.js
+
+define(function () {
+    'use strict';
+
+    var mixin = {
+
+        /**
+         *
+         * @param {Column} elem
+         */
+        isDisabled: function (elem) {
+            return elem.blockVisibility || this._super();
+        }
+    };
+
+    return function (target) { // target == Result that Magento_Ui/.../columns returns.
+        return target.extend(mixin); // new result that all other modules receive
+    };
+});
