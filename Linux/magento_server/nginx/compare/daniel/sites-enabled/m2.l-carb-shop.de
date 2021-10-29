@@ -1,0 +1,20 @@
+upstream fastcgi_backend {
+  server  unix:/run/php/php-fpm.sock;
+}
+
+server {
+
+  listen 443 ssl;
+  server_name l-carb-shop.de www.l-carb-shop.de m2.l-carb-shop.de;
+  set $MAGE_ROOT /var/www/m2.l-carb-shop.de;
+  include /var/www/m2.l-carb-shop.de/nginx.conf;
+
+    ssl_certificate     /etc/nginx/ssl/m2.l-carb-shop/fullchain.pem;
+    ssl_certificate_key /etc/nginx/ssl/m2.l-carb-shop/privkey.pem;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_stapling on;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 10m;
+    ssl_prefer_server_ciphers on;
+}
+

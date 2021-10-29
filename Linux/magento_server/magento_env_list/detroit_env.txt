@@ -1,0 +1,116 @@
+<?php
+return [
+    'backend' => [
+        'frontName' => 'magetwod_admin'
+    ],
+    'crypt' => [
+        'key' => '7aad89695d12618f051136b1f3db4e38'
+    ],
+    'db' => [
+        'table_prefix' => '',
+        'connection' => [
+            'default' => [
+                'host' => '127.0.0.1',
+                'dbname' => 'devdetro_dev2',
+                'username' => 'devdetro_dev2',
+                'password' => 'StudyFarmHintMouse29',
+                'model' => 'mysql4',
+                'engine' => 'innodb',
+                'initStatements' => 'SET NAMES utf8;',
+                'active' => '1',
+                'driver_options' => [
+                    1014 => false
+                ]
+            ]
+        ]
+    ],
+    'resource' => [
+        'default_setup' => [
+            'connection' => 'default'
+        ]
+    ],
+    'x-frame-options' => 'SAMEORIGIN',
+    'MAGE_MODE' => 'production',
+    'session' => [
+        'save' => 'redis',
+        'redis' => [
+            'host' => '/var/run/redis-multi-devdetro.dev.detroitwheelandtire.com_sessions/redis.sock',
+            'port' => '0',
+            'database' => '0',
+            'compression_library' => 'snappy',
+            'max_concurrency' => '20'
+        ]
+    ],
+    'cache_types' => [
+        'config' => 1,
+        'layout' => 1,
+        'block_html' => 1,
+        'collections' => 1,
+        'reflection' => 1,
+        'db_ddl' => 1,
+        'eav' => 1,
+        'customer_notification' => 1,
+        'full_page' => 1,
+        'config_integration' => 1,
+        'config_integration_api' => 1,
+        'translate' => 1,
+        'config_webservice' => 1,
+        'compiled_config' => 1,
+        'vertex' => 1,
+        'google_product' => 1
+    ],
+    'install' => [
+        'date' => 'Mon, 08 Jan 2018 22:47:55 +0000'
+    ],
+    'system' => [
+        'default' => [
+            'dev' => [
+                'debug' => [
+                    'debug_logging' => '0'
+                ]
+            ]
+        ]
+    ],
+    'downloadable_domains' => [
+        'www.detroitwheelandtire.com',
+        'smhttp-ssl-59428.nexcesscdn.net'
+    ],
+    'cache' => [
+        'frontend' => [
+            'default' => [
+                'backend' => 'Cm_Cache_Backend_Redis',
+                'backend_options' => [
+                    'server' => '/var/run/redis-multi-devdetro.dev.detroitwheelandtire.com_cache/redis.sock',
+                    'database' => '0',
+                    'port' => '0'
+                ],
+                'id_prefix' => '66c_'
+            ],
+            'page_cache' => [
+                'id_prefix' => '66c_'
+            ]
+        ],
+        'allow_parallel_generation' => false
+    ],
+    'queue' => [
+        'consumers_wait_for_messages' => 0
+    ],
+    'lock' => [
+        'provider' => 'db',
+        'config' => [
+            'prefix' => 'devdwt'
+        ]
+    ],
+    'remote_storage' => [
+        'driver' => 'file'
+    ],
+    'http_cache_hosts' => [
+        [
+            'host' => '172.18.35.104',
+            'port' => '8000'
+        ]
+    ],
+    'directories' => [
+        'document_root_is_pub' => true
+    ]
+];

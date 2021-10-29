@@ -5,6 +5,7 @@ https://www.atlassian.com/git/tutorials/saving-changes/gitignore
 https://firedev.com/posts/git-ignore-deleted-files/
 git update-index --assume-unchanged .ruby-version
 git update-index --no-assume-unchanged src/app/etc/di.xml
+git update-index --no-assume-unchanged src/app/etc/env.php
 git update-index --no-assume-unchanged src/vendor/magento/magento2-base/app/etc/di.xml
 
 ////////////////////////
@@ -93,4 +94,15 @@ git pull origin develop_new --rebase
 		
 ----------------------
 cancel git add .
-    git reset		
+    git reset --hard
+
+----------------------
+remove remote commit from git
+
+git reset HEAD~2
+git add .
+git reset --hard
+git push origin main --force
+
+----------------------------	
+	

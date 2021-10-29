@@ -27,3 +27,74 @@ Following will be a very good reading
 https://blog.engineyard.com/2014/composer-its-all-about-the-lock-file
 
 Enjoy the power of composer.lock file!
+
+-----------------------------------------------------
+********** composer install ***********
+1. apt install composer
+2. which composer
+3. php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+4. php composer-setup.php --install-dir /usr/bin --filename composer
+   or php composer-setup.php --install-dir=/usr/bin --filename=composer --version=1.10.6
+   php composer-setup.php --install-dir=/usr/bin --filename=composer --version=2.1.9
+   
+ php -r '$phar = new Phar("composer.phar"); $phar->extractTo("./composer");'
+---------------------------
+https://devdocs.magento.com/guides/v2.4/comp-mgr/cli/cli-upgrade.html
+
+composer clear-cache
+composer update	
+	update composer.lock
+	-W to update all dependencies
+composer update A B C means composer will update only A,B,C.	
+composer install
+	download dependecies by reading composer.lock
+composer require-commerce magento/product-community-edition 2.4.3 --no-update
+	--no-update means "(Required) Disables the automatic update of the dependencies"
+
+----------------------------------------
+   composer
+   php -d memory_limit=-1 composer.phar --no-plugins
+   php -dmemory_limit=5G composer update
+   /usr/local/php70/bin/php-cli /home/customer/www/store.clan.it/composer.phar
+   /usr/local/php71/bin/php-cli -dmemory_limit=5G /home/customer/www/store.clan.it/composer.phar update
+   /usr/local/php70/bin/php /home/customer/www/store.clan.it/composer.phar update
+   ./php -d memory_limit=-1 /home/customer/www/store.clan.it/composer.phar 
+ ----------------------------------------
+ composer downgrading
+ https://community.magento.com/t5/Magento-2-x-Version-Upgrades/Can-t-upgrade-to-magento-enterprise-2-4-2-p1/td-p/475425
+ composer self-update 1.10.12
+ 
+ composer upgrading
+ composer self-update --2
+
+------------------------------------------------------
+composer update
+
+	composer update will update your depencencies as they are specified in composer.json
+		For example, if you require this package as a dependency:
+
+		"mockery/mockery": "0.9.*",
+		and you have actually installed the 0.9.1 version of the package, running composer update will cause an upgrade of this package (for example to 0.9.2, if it's already been released)
+
+	in detail composer update will:
+
+		Read composer.json
+		Remove installed packages that are no more required in composer.json
+		Check the availability of the latest versions of your required packages
+		Install the latest versions of your packages
+		Update composer.lock to store the installed packages version
+	
+composer install
+
+	composer install will not update anything; it will just install all the dependencies as specified in the composer.lock file
+
+	In detail:
+
+		Check if composer.lock file exists (if not, run composer-update and create it)
+		Read composer.lock file
+		Install the packages specified in the composer.lock file
+
+When to install and when to update
+
+	composer update is mostly used in the 'development phase', to upgrade our project packages according to what we have specified in the composer.json file,
+	composer install is primarily used in the 'deploying phase' to install our application on a production server or on a testing environment, using the same dependencies stored in the composer.lock file created by composer update.

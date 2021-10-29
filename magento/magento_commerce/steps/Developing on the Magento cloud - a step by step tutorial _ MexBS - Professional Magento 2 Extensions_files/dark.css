@@ -1,0 +1,65 @@
+/*
+
+Dark style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>
+
+*/
+
+body.tm-blog-post-view .post-text .hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #444;
+}
+
+body.tm-blog-post-view .post-text .hljs-keyword,
+body.tm-blog-post-view .post-text .hljs-selector-tag,
+body.tm-blog-post-view .post-text .hljs-literal,
+body.tm-blog-post-view .post-text .hljs-section,
+body.tm-blog-post-view .post-text .hljs-link {
+  color: white;
+}
+
+body.tm-blog-post-view .post-text .hljs,
+body.tm-blog-post-view .post-text .hljs-subst,
+body.tm-blog-post-view .post-text .hljs-tag,
+body.tm-blog-post-view .post-text .hljs-attr {
+  color: #ddd;
+}
+
+body.tm-blog-post-view .post-text .hljs-string,
+body.tm-blog-post-view .post-text .hljs-title,
+body.tm-blog-post-view .post-text .hljs-name,
+body.tm-blog-post-view .post-text .hljs-type,
+body.tm-blog-post-view .post-text .hljs-attribute,
+body.tm-blog-post-view .post-text .hljs-symbol,
+body.tm-blog-post-view .post-text .hljs-bullet,
+body.tm-blog-post-view .post-text .hljs-built_in,
+body.tm-blog-post-view .post-text .hljs-addition,
+body.tm-blog-post-view .post-text .hljs-variable,
+body.tm-blog-post-view .post-text .hljs-template-tag,
+body.tm-blog-post-view .post-text .hljs-template-variable {
+  color: #d88;
+}
+
+body.tm-blog-post-view .post-text .hljs-comment,
+body.tm-blog-post-view .post-text .hljs-quote,
+body.tm-blog-post-view .post-text .hljs-deletion,
+body.tm-blog-post-view .post-text .hljs-meta {
+  color: #777;
+}
+
+body.tm-blog-post-view .post-text .hljs-keyword,
+body.tm-blog-post-view .post-text .hljs-selector-tag,
+body.tm-blog-post-view .post-text .hljs-literal,
+body.tm-blog-post-view .post-text .hljs-title,
+body.tm-blog-post-view .post-text .hljs-section,
+body.tm-blog-post-view .post-text .hljs-doctag,
+body.tm-blog-post-view .post-text .hljs-type,
+body.tm-blog-post-view .post-text .hljs-name,
+body.tm-blog-post-view .post-text .hljs-strong {
+  font-weight: bold;
+}
+
+body.tm-blog-post-view .post-text .hljs-emphasis {
+  font-style: italic;
+}

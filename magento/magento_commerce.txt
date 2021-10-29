@@ -1,0 +1,141 @@
+https://devdocs.magento.com/release/availability.html#compatibility
+
+https://www.mexbs.com/magento-blog/developing-on-the-magento-cloud-a-step-by-step-tutorial
+
+https://cloud.magento.com/project/3217/develop/devworkflow
+CLI : https://devdocs.magento.com/cloud/env/environments-start.html
+https://devdocs.magento.com/cloud/reference/cli-ref-topic.html
+https://devdocs.magento.com/cloud/live/live-sanity-check.html (How to build)
+https://devdocs.magento.com/cloud/live/sens-data-over.html (Configuration management for store settings, app/etc/config.php)
+https://devdocs.magento.com/cloud/howtos/install-components.html (Install & Upgrade extension)
+https://devdocs.magento.com/cloud/project/project-webint-snap.html#restore-snapshot (restore snapshot)
+https://devdocs.magento.com/cloud/project/project-patch.html (Apply Patch)
+https://devdocs.magento.com/cloud/deploy/cloud-deployment-process.html (Optimize development)
+https://devdocs.magento.com/cloud/deploy/scenario-based-deployment.html (Scenario-based deployment)
+
+	magento-cloud project:list
+	magento-cloud environment:list (It is important to use the magento-cloud environment:list command because it displays environment hierarchies, whereas the git branch command does not.)
+	(git fetch origin)
+		git fetch origin 
+	Checkout, or switch to, a specific branch and environment.
+		magento-cloud environment:checkout <environment-ID>
+	
+	You can create a new environment branch using the  command syntax. 
+	It may take some additional time to create and activate a new environment branch.
+		magento-cloud environment:branch <environment-name> <parent-environment-ID>
+	Use the environment ID to pull any updated code to your local. This is not necessary if the environment branch is new
+		git pull origin <environment-ID>
+	(Optional) Create a snapshot of the environment as a backup
+		magento-cloud snapshot:create -e <environment-ID>
+
+Merge a branch
+	After completing development, you can merge this branch to the parent:
+	Complete code in your local branch.
+	Add, commit, and push changes to the environment.
+		git add -A && git commit -m "Commit message" && git push origin <branch-name>
+		
+	Merge with the parent environment:
+		magento-cloud environment:merge <environment-ID>
+
+1. Install Magento CLI (Optional
+	https://devdocs.magento.com/cloud/reference/cli-ref-topic.html
+	
+	a. curl -sS https://accounts.magento.cloud/cli/installer | php
+    b. export PATH=$PATH:$HOME/.magento-cloud/bin
+	c. . ~/.bash_profile
+	d. magento-cloud
+	e. magento-cloud list
+
+2. Login 
+   magento-cloud auth:api-token-login
+   
+   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+   Please enter an API token:
+	>
+
+	The API token is valid.
+	You are logged in.
+
+	Generating SSH certificate...
+	A new SSH certificate has been generated.
+	It will be automatically refreshed when necessary.
+	Do you want to create an SSH configuration file automatically? [Y/n] y
+	Configuration file created successfully: /home/vagrant/.ssh/config
+   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 	
+3. Clone
+	magento-cloud get 62gm6c43tjfa4 -e b2b
+4. Register SSH key for remote connection
+	eval "$(ssh-agent -s)"
+	ssh-add ~/.ssh/2/id_rsa
+5. Update Cloud environments with a new SSH key
+	After you add an SSH key, redeploy each active Cloud environment to upload the new key
+	magento-cloud redeploy --project 62gm6c43tjfa4 --environment b2b
+6. Enter to SSH & extract DB details
+	magento-cloud ssh
+	php -r 'print_r(json_decode(base64_decode($_ENV["MAGENTO_CLOUD_RELATIONSHIPS"]))->database);'
+		>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		(
+            [username] => user
+            [scheme] => mysql
+            [service] => mysql
+            [fragment] =>
+            [ip] => 169.254.95.34
+            [hostname] => lu7jfscmrj6ljp5f6k2zzn3erm.mysql.service._.magentosite.cloud
+            [public] =>
+            [cluster] => 62gm6c43tjfa4-b2b-gncyehq
+            [host] => database.internal
+            [rel] => mysql
+            [query] => stdClass Object
+                (
+                    [is_master] => 1
+                )
+
+            [path] => main
+            [password] =>
+            [type] => mysql:10.3
+            [port] => 3306
+            [host_mapped] =>
+        )
+		dbname: main
+		>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	mysql --host=169.254.95.34 --user=user --password= --port=3306
+	mysql --host=database.internal --user=user --password= --port=3306 main > db.sql
+7  Update dependencies.
+	composer --no-ansi --no-interaction install --no-progress --prefer-dist --optimize-autoloader
+8. Create a snapshot of the environment.
+	magento-cloud snapshot:create -e b2b
+		>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		Creating a snapshot of b2b
+		Waiting for the activity oykszfc64r2na (yanaivashkoweb created a backup of b2b):
+
+		Creating snapshot of b2b
+		Created backup 7ow3aswqfzla7wplmbaibynmca
+		[============================] 4 mins (complete)
+		Activity oykszfc64r2na succeeded
+		Snapshot name: 7ow3aswqfzla7wplmbaibynmca
+		>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+9. TEST Build
+	magento-cloud local:build
+10. dump and download app/etc/config.php
+	ssh 62gm6c43tjfa4-b2b-gncyehq--mymagento@ssh.eu-6.magento.cloud "./vendor/bin/ece-tools config:dump"
+	rsync 62gm6c43tjfa4-b2b-gncyehq--mymagento@ssh.eu-6.magento.cloud:app/etc/config.php ./app/etc/config.php
+11. 
+	composer update firebear/importexport box/spout 
+
+12 Restore environment
+	https://devdocs.magento.com/cloud/env/restore-environment.html
+	Disable configuration management
+		magento-cloud ssh
+		rm app/etc/config.php
+	Uninstall Adobe Commerce
+		php bin/magento setup:uninstall
+	Reset the git branch
+		git log --reverse
+		To reset your branch to its original initialized state, find the very first commit that created your branch
+		git reset --h <commit_hash>
+		git push --force <origin> <branch>
+13. Restore a snapshot
+	https://devdocs.magento.com/cloud/project/project-webint-snap.html
+	magento-cloud snapshot:list
+	magento-cloud snapshot:restore 7ow3aswqfzla7wplmbaibynmca
+		

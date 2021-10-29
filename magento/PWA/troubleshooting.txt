@@ -47,3 +47,8 @@ Solution:
         return (
             <h2>{ text }</h2>
         );
+----------------------------------------
+translation issue in OMAN Store 
+
+php bin/spuo
+-------------------------------------------

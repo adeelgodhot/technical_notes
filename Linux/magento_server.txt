@@ -1,0 +1,132 @@
+1. sudo apt install net-tools
+2. install nginx
+	sudo apt-get install nginx
+3. check unginx user
+	ps aux|grep nginx|grep -v grep
+	
+	www-data
+4. setup user
+	sudo adduser calvo
+	pwd: calvo
+	
+	usermod -a -G www-data calvo
+5.  configure nginx
+	sudo ln -s /etc/nginx/sites-available/calvo /etc/nginx/sites-enabled/calvo
+6. Install php-fpm
+	sudo apt install php7.4-fpm
+7. download magento
+	cd /home/calvo/public_html
+    curl -O https://MAG005720361:0422a00637872b1686331788452307b074b2ed83@www.magentocommerce.com/products/downloads/file/Magento-CE-2.4.3-p1.tar.gz
+8. php extensions
+	https://devdocs.magento.com/guides/v2.4/install-gde/prereq/php-settings.html
+	sudo apt install -y php74u-pdo php74u-mysqlnd php74u-opcache php74u-xml php74u-gd php74u-devel php74u-mysql php74u-intl php74u-mbstring php74u-bcmath php74u-json php74u-iconv php74u-soap
+	
+	sudo apt install -y php7.4-bcmath
+	sudo apt install -y php7.4-curl
+	sudo apt install -y php7.4-dom
+	sudo apt install -y php7.4-intl
+	sudo apt install -y php7.4-pdo-mysql
+	sudo apt install -y php7.4-simplexml
+	sudo apt install -y php7.4-soap
+	sudo apt install -y php7.4-xmlwriter
+	sudo apt install -y php7.4-xsl
+	sudo apt install -y php7.4-zip
+	sudo apt install -y php7.4-gd
+9. install MariaDB 10.4
+	sudo apt install mariadb-client-core-10.3
+	https://computingforgeeks.com/how-to-install-mariadb-on-ubuntu/
+	Step 1: Install software-properties-common if missing:
+		sudo apt update
+		sudo apt-get install software-properties-common
+	Step 2: Import MariaDB gpg key:
+		Run the command below to add Repository Key to the system
+			sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+	Step 3: Add the apt repository
+		Once the PGP key is imported, proceed to add repository URL:
+			sudo add-apt-repository "deb [arch=amd64,arm64,ppc64el] http://mariadb.mirror.liquidtelecom.com/repo/10.4/ubuntu $(lsb_release -cs) main"
+		If you don’t have add-apt-repository present in your system. check  How to Install add-apt-repository on Debian / Ubuntu 18.04/16.04
+	Step 4: Install MariaDB Server on Ubuntu 20.04|18.04|16.04
+		The last step is the installation of MariaDB Server:
+			sudo apt update
+			sudo apt -y install mariadb-server mariadb-client
+	Step 5:
+		sudo mysql -u root
+	
+	Setup user & db
+		create user admin identified by 'CalvoCover86';
+		create user calvo identified by 'CalvoCover86';
+		create database calvo_cover_db;
+		grant all PRIVILEGES on calvo_cover_db.* to 'calvo'@'localhost' identified by 'CalvoCover86';
+		grant all PRIVILEGES on calvo_cover_db.* to 'calvo'@'127.0.0.1' identified by 'CalvoCover86';
+		
+		
+		drop user admin@localhost;
+		drop user calvo@localhost;
+		drop user calvo@127.0.0.1;
+		drop user admin;
+		drop user calvo;
+		
+		create user calvo identified by 'CalvoCover86';
+		
+		It’s crucial to refresh the privileges once new ones have been awarded with the command:
+			FLUSH PRIVILEGES;
+		
+		SHOW GRANTS FOR 'calvo'@localhost;
+10. Redis 6.0
+	check version : redis-server --version
+	https://otodiginet.com/database/how-to-install-and-configure-redis-6-0-on-ubuntu-20-04-lts/
+	
+	1. Add PPA chris-lea/redis-server
+		We will use PPA chris-lea/redis-server repository for our Redis 6.0 source, 
+		for this purpose we will add this repository to the system by submitting command line
+			sudo add-apt-repository ppa:chris-lea/redis-server
+	2. Update the system
+		To take effect, we will update the system to the newest software package, by submitting command line : 
+			sudo apt-get update
+	3. Install Redis 6.0
+		sudo apt-get install redis-server -y
+		
+		sudo systemctl enable redis-server.service.
+	4. Verify Redis Version
+		redis-server --version
+	5. Configuring Redis 6.0
+		a. the next step is to configure Redis so that it can run properly and in accordance with the expected system. 
+		Redis configuration is located at /etc/redis/redis.conf file. At our scenario, Redis is installed on application server, 
+		where the binding IP Address is located at 127.0.0.1 ::1. Just uncomment the parameter :
+	6. Install Redis Client
+		sudo apt-get install redis-tools
+	7. ConnectionTesting
+		redis-cli -h 127.0.0.1
+		>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		ramans@diginet-app02:~$ redis-cli -h 127.0.0.1
+		 127.0.0.1:6379> set testkey ototest
+		 OK
+		 127.0.0.1:6379> get testkey
+		 "ototest"
+		 127.0.0.1:6379> exit
+
+11. Elasticsearch 7.9
+	https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html
+	
+	wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+	sudo apt-get install apt-transport-https
+	echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-7.x.list
+	
+		>>>>>>>>>>>>>>>>>>>>>>>>>
+		Examine /etc/apt/sources.list.d/elasticsearch-7.x.list for the duplicate entry or locate the duplicate entry amongst the files in /etc/apt/sources.list.d/ and the /etc/apt/sources.list file.
+		>>>>>>>>>>>>>>>>>>>>>>>>
+	Check ; curl -X GET "localhost:9200/"
+	
+	sudo apt-get update && sudo apt-get install elasticsearch
+12. Install Magento
+
+	php bin/magento setup:install --base-url=http://15.185.117.186/ \
+	--db-host=localhost --db-name=calvo_cover_db --db-user=calvo --db-password=CalvoCover86 \
+        --admin-firstname=Yana --admin-lastname=Ivashko --admin-email=yanaivashkoweb@gmail.com \
+	--admin-user=admin --admin-password=admin123! --language=ar_SA \
+	--currency=AED --timezone=Asia/Dubai --use-rewrites=1 \
+	--search-engine=elasticsearch7 --elasticsearch-host=localhost \
+	--elasticsearch-port=9200 --elasticsearch-index-prefix=calvo
+	
+
+		http://15.185.117.186/admin_r9igou

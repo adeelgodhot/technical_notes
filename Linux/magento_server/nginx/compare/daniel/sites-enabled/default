@@ -1,0 +1,45 @@
+server {
+        listen   10080;
+        keepalive_timeout   50000;
+
+        root /usr/share/phpmyadmin;
+	client_max_body_size 2048m;
+        location / {
+		allow 10.8.0.0/24;
+		allow 91.221.165.38/32;
+		allow 83.221.194.197/32;
+		allow  all;
+                index index.php index.html index.htm;
+	}
+
+        location ~ \.php$ {
+                fastcgi_pass   unix:/var/run/php5-fpm.sock;
+                fastcgi_index  index.php;
+                fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+                include        fastcgi_params;
+		fastcgi_read_timeout 50000;
+        }
+        location /phpmyadmin {
+			
+               root /usr/share/;
+               index index.php index.html index.htm;
+               location ~ ^/phpmyadmin/(.+\.php)$ {
+                       try_files $uri =404;
+                       root /usr/share/;
+                       fastcgi_pass unix:/var/run/php5-fpm.sock;
+                       fastcgi_index index.php;
+                       fastcgi_param SCRIPT_FILENAME $request_filename;
+                       include /etc/nginx/fastcgi_params;
+		       fastcgi_read_timeout 36000;
+               }
+               location ~* ^/phpmyadmin/(.+\.(jpg|jpeg|gif|css|png|js|ico|html|xml|txt))$ {
+                       root /usr/share/;
+			fastcgi_read_timeout 36000;
+               }
+        }
+        location /phpMyAdmin {
+               rewrite ^/* /phpmyadmin last;
+        }
+
+}
+

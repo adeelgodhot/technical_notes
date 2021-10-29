@@ -1,2 +1,5 @@
 https://docs.scandipwa.com/getting-started-1/depricated-docker-setup/migrating-from-the-docker-setup-legacy
 
+https://docs.scandipwa.com/introduction/cma-csa-and-scandipwa
+
+https://docs.create-scandipwa-app.com/themes/extensions-and-themes

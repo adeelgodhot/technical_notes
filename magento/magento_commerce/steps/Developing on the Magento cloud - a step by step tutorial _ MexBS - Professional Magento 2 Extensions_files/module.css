@@ -1,0 +1,11 @@
+/*
+*   TM_AjaxCatalog
+*/
+.swatch-option-tooltip {
+  visibility: hidden;
+}
+@media (min-width: 1024px) {
+  .swatch-option-tooltip {
+    visibility: visible;
+  }
+}

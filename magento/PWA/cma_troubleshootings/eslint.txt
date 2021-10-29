@@ -1,0 +1,14 @@
+https://docs.scandipwa.com/developing-with-scandi/developer-tools/configuring-eslint
+
+
+1. npm install eslint
+	export PATH=$PATH:./node_modules/.bin
+2. eslint --init
+
+
+How to ignore eslint in Scandi
+
+"eslintConfig": {
+        "extends": "@scandipwa",
+        "ignorePatterns": ["src/**"]
+    },

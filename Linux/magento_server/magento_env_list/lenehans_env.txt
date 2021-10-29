@@ -1,0 +1,139 @@
+<?php
+return [
+    'backend' => [
+        'frontName' => 'lenehans_back'
+    ],
+    'crypt' => [
+        'key' => 'c61f872a7c8c9ee65911caac186bf5f4'
+    ],
+    'db' => [
+        'table_prefix' => '',
+        'connection' => [
+            'default' => [
+                'host' => 'localhost',
+                'dbname' => 'lenehans_live225',
+                'username' => 'lenehans_v2',
+                'password' => 'YR@6@V8%ox+@',
+                'active' => '1',
+                'model' => 'mysql4',
+                'engine' => 'innodb',
+                'initStatements' => 'SET NAMES utf8;',
+                'driver_options' => [
+                    1014 => false
+                ]
+            ]
+        ]
+    ],
+    'resource' => [
+        'default_setup' => [
+            'connection' => 'default'
+        ]
+    ],
+    'x-frame-options' => 'SAMEORIGIN',
+    'MAGE_MODE' => 'production',
+    'session' => [
+        'save' => 'redis',
+        'redis' => [
+            'host' => '/var/run/redis-sessions/redis-sessions.sock',
+            'port' => '6380',
+            'password' => '',
+            'timeout' => '2.5',
+            'persistent_identifier' => '',
+            'database' => '2',
+            'compression_threshold' => '2048',
+            'compression_library' => 'gzip',
+            'log_level' => '3',
+            'max_concurrency' => '20',
+            'break_after_frontend' => '5',
+            'break_after_adminhtml' => '30',
+            'first_lifetime' => '600',
+            'bot_first_lifetime' => '60',
+            'bot_lifetime' => '7200',
+            'disable_locking' => '0',
+            'min_lifetime' => '60',
+            'max_lifetime' => '2592000',
+            'sentinel_master' => '',
+            'sentinel_servers' => '',
+            'sentinel_connect_retries' => '5',
+            'sentinel_verify_master' => '0'
+        ]
+    ],
+    'cache_types' => [
+        'config' => 1,
+        'layout' => 1,
+        'block_html' => 1,
+        'collections' => 1,
+        'reflection' => 1,
+        'db_ddl' => 1,
+        'eav' => 1,
+        'customer_notification' => 1,
+        'config_integration' => 1,
+        'config_integration_api' => 1,
+        'full_page' => 1,
+        'translate' => 1,
+        'config_webservice' => 1,
+        'fishpig_wordpress' => 0,
+        'amasty_shopby' => 0,
+        'compiled_config' => 1,
+        'google_product' => 1
+    ],
+    'install' => [
+        'date' => 'Thu, 14 Jun 2018 05:42:12 +0000'
+    ],
+    'system' => [
+        'default' => [
+            'dev' => [
+                'debug' => [
+                    'debug_logging' => '0'
+                ]
+            ]
+        ]
+    ],
+    'http_cache_hosts' => [
+        [
+            'host' => '127.0.0.1',
+            'port' => '80'
+        ]
+    ],
+    'cache' => [
+        'frontend' => [
+            'default' => [
+                'id_prefix' => '3ab_',
+                'backend' => 'Cm_Cache_Backend_Redis',
+                'backend_options' => [
+                    'server' => '/var/run/redis/redis.sock',
+                    'database' => '0',
+                    'port' => '6379',
+                    'password' => '',
+                    'compress_data' => '1',
+                    'compression_lib' => ''
+                ]
+            ],
+            'page_cache' => [
+                'id_prefix' => '3ab_',
+                'backend' => 'Cm_Cache_Backend_Redis',
+                'backend_options' => [
+                    'server' => '/var/run/redis-fpc/redis-fpc.sock',
+                    'database' => '1',
+                    'port' => '6379',
+                    'password' => '',
+                    'compress_data' => '0',
+                    'compression_lib' => ''
+                ]
+            ]
+        ]
+    ],
+    'downloadable_domains' => [
+        'www.lenehans.ie',
+        'greenhousesdirect.ie'
+    ],
+    'lock' => [
+        'provider' => 'db',
+        'config' => [
+            'prefix' => ''
+        ]
+    ],
+    'queue' => [
+        'consumers_wait_for_messages' => 1
+    ]
+];

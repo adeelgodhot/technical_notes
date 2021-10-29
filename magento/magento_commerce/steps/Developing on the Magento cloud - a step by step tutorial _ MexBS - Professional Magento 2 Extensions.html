@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<!-- saved from url=(0090)https://www.mexbs.com/magento-blog/developing-on-the-magento-cloud-a-step-by-step-tutorial -->
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" async="" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/insight.min.js.download"></script><script type="text/javascript" async="" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/recaptcha__en.js.download" crossorigin="anonymous" integrity="sha384-ZjjsZZeLRk73AP2KU+bNcMQpmHPr8zQewzqvhVFA/9vdEzGKSWg1CmTxIstEzz7M"></script><script async="" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/analytics.js.download"></script><script>
+    var require = {
+        "baseUrl": "https://www.mexbs.com/pub/static/frontend/Mexbs/base/en_US"
+    };
+</script>
+        
+<meta name="description" content="In this step-by-step tutorial, we show how to start developing on the Magento Cloud (Starter and Pro plans). We present a development workflow chart that illustrates the steps.">
+<meta name="keywords" content="Magento Cloud development, Magento Cloud Starter plan, Magento Cloud Pro plan, Magento CLoud development workflow, Magento CLoud development flow, Magento CLoud development flow chart">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Developing on the Magento cloud - a step by step tutorial | MexBS - Professional Magento 2 Extensions</title>
+<link rel="stylesheet" type="text/css" media="all" href="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/calendar.css">
+<link rel="stylesheet" type="text/css" media="all" href="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/module.css">
+<link rel="stylesheet" type="text/css" media="all" href="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/rule-popup.css">
+<link rel="stylesheet" type="text/css" media="all" href="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/material-icons.css">
+<link rel="stylesheet" type="text/css" media="all" href="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/blog.css">
+<link rel="stylesheet" type="text/css" media="all" href="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/style.css">
+<link rel="stylesheet" type="text/css" media="all" href="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/media.css">
+<link rel="stylesheet" type="text/css" media="all" href="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/dark.css">
+<link rel="stylesheet" type="text/css" media="screen" href="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/slider-pro.css">
+<link rel="stylesheet" type="text/css" media="screen" href="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/animate.css">
+<script type="text/javascript" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/7ab72ff6715ba3ee8241ced2be5da10a.js.download"></script>
+<link rel="icon" type="image/x-icon" href="https://www.mexbs.com/pub/media/favicon/websites/1/favico.jpg">
+<link rel="shortcut icon" type="image/x-icon" href="https://www.mexbs.com/pub/media/favicon/websites/1/favico.jpg">
+        <!-- Hotjar Tracking Code for https://www.mexbs.com -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:1103702,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script><script async="" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/hotjar-1103702.js.download"></script><script type="text/javascript">
+    window.recpatchaFormOnSubmit = function(formSelector){
+        require([
+            'jquery',
+            'mage/validation'
+        ], function($, mageValidation){
+            var dataForm = $(formSelector);
+
+            if(dataForm.validation('isValid')){
+                dataForm.submit();
+            }
+            grecaptcha.reset(window.recpatchaWidgetIds[formSelector]);
+        });
+    };
+
+    window.onloadRecaptchaCallback = function(){
+        require([
+            'jquery',
+            'mage/validation'
+        ], function($){
+            $(document).ready(function(){
+                window.recpatchaWidgetIds = {};
+
+                var formsSelectors = ["#newsletter_in_footer",".form-create-account",".form-login",".review-form",".password.forget",".form.contact"];
+                var widgetId;
+
+                $(formsSelectors).each(function(index, formSelector){
+                    if($(formSelector).length){
+                        $(formSelector).mage('validation', {});
+
+                        var dataFormButton = $(formSelector).find("button.action");
+
+                        dataFormButton.addClass("g-recaptcha");
+
+                        widgetId = grecaptcha.render(dataFormButton.get(0), {
+                            sitekey: '6LfoxVQUAAAAAFT-NVuVQDrfENdbQPV6WRrUlIOc',
+                            callback: function() {
+                                recpatchaFormOnSubmit(formSelector)
+                            },
+                            theme: 'light'
+                        });
+
+                        window.recpatchaWidgetIds[formSelector] = widgetId;
+                    }
+                });
+            });
+        });
+    };
+</script>
+<script src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/api.js.download" async="" defer="">
+</script>
+    <script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery/jquery.mobile.custom" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/jquery.mobile.custom.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/responsive" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/responsive.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mage/dataPost" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/dataPost.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/theme" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/theme.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mage/bootstrap" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/bootstrap.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/jquery.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mage/translate-inline" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/translate-inline.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/main" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/main.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mage/translate" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/translate.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="TemplateMonster_Blog/js/highlight" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/highlight.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/modal/modal" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/modal.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery/jquery.cookie" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/jquery.cookie.js.download"></script><script async="" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/modules.bff3b8d60820fc90decc.js.download" charset="utf-8"></script><style type="text/css">iframe#_hjRemoteVarsFrame {display: none !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important;}</style><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mage/validation" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/validation.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="matchMedia" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/matchMedia.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mage/template" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/template.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mage/apply/main" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/main.js(1).download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/knockout/bootstrap" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/bootstrap.js(1).download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Mexbs_Homepage/js/slick" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/slick.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mage/mage" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/mage.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="underscore" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/underscore.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="text" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/text.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/key-codes" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/key-codes.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery/validate" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/jquery.validate.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mage/apply/scripts" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/scripts.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="knockoutjs/knockout" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/knockout.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="knockoutjs/knockout-es5" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/knockout-es5.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="domReady" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/domReady.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/knockout/template/engine" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/engine.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/knockout/bindings/bootstrap" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/bootstrap.js(2).download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/knockout/extender/observable_array" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/observable_array.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/knockout/extender/bound-nodes" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/bound-nodes.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mage/common" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/common.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery/jquery-migrate" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/jquery-migrate.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery/ui" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/jquery-ui.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery/jquery-storageapi" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/jquery.storageapi.min.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/knockout/template/observable_source" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/observable_source.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/knockout/template/renderer" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/renderer.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery/jquery.metadata" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/jquery.metadata.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="knockoutjs/knockout-repeat" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/knockout-repeat.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="knockoutjs/knockout-fast-foreach" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/knockout-fast-foreach.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/knockout/bindings/resizable" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/resizable.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/knockout/bindings/i18n" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/i18n.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/knockout/bindings/scope" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/scope.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/knockout/bindings/range" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/range.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/knockout/bindings/mage-init" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/mage-init.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/knockout/bindings/keyboard" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/keyboard.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/knockout/bindings/optgroup" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/optgroup.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/knockout/bindings/after-render" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/after-render.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/knockout/bindings/autoselect" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/autoselect.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/knockout/bindings/datepicker" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/datepicker.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/knockout/bindings/outer_click" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/outer_click.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/knockout/bindings/fadeVisible" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/fadeVisible.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/knockout/bindings/collapsible" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/collapsible.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/knockout/bindings/staticChecked" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/staticChecked.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/knockout/bindings/simple-checked" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/simple-checked.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/knockout/bindings/bind-html" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/bind-html.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/knockout/bindings/tooltip" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/tooltip.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mage/utils/wrapper" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/wrapper.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/core/events" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/events.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="es6-collections" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/es6-collections.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/core/class" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/class.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/knockout/template/loader" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/loader.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/view/utils/async" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/async.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/registry/registry" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/registry.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mage/utils/main" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/main.js(2).download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mage/calendar" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/calendar.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/view/utils/dom-observer" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/dom-observer.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/view/utils/bindings" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/bindings.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mage/utils/arrays" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/arrays.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mage/utils/compare" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/compare.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mage/utils/misc" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/misc.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mage/utils/objects" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/objects.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mage/utils/strings" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/strings.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mage/utils/template" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/template.js(1).download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery/jquery-ui-timepicker-addon" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/jquery-ui-timepicker-addon.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="MutationObserver" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/MutationObserver.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="FormData" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/FormData.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mage/loader" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/loader.js(1).download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_PageCache/js/page-cache" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/page-cache.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/core/app" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/app.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mage/dropdown" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/dropdown.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mage/cookies" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/cookies.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="TemplateMonster_AjaxCompare/js/compare-products-top-link" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/compare-products-top-link.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/block-loader" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/block-loader.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Customer/js/section-config" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/section-config.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Customer/js/customer-data" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/customer-data.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/core/renderer/types" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/types.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/core/renderer/layout" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/layout.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/modal/alert" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/alert.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Catalog/js/compare" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/compare.js(1).download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mage/storage" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/storage.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Checkout/js/view/minicart" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/minicart.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/core/collection" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/collection.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Checkout/js/view/checkout/minicart/subtotal/totals" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/totals.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Catalog/js/view/image" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/image.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Theme/js/view/messages" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/messages.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/modal/confirm" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/confirm.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mage/decorate" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/decorate.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mage/url" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/url.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/core/element/element" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/element.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Checkout/js/sidebar" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/sidebar.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Customer/js/model/authentication-popup" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/authentication-popup.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mage/collapsible" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/collapsible.js(1).download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/core/element/links" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/links.js.download"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Magento_Ui/js/lib/core/storage/local" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/local.js.download"></script></head>
+    <body data-container="body" id="page" class="blog-post-developing-on-the-magento-cloud-a-step-by-step-tutorial tm-blog-post-view page-layout-1column" aria-busy="false" style="">
+        <script>
+    var compareProductAddAjax = 1;</script>
+    <script>
+        require.config({
+            deps: [
+                'jquery',
+                'mage/translate',
+                'jquery/jquery-storageapi'
+            ],
+            callback: function ($) {
+                'use strict';
+
+                var dependencies = [],
+                    versionObj;
+
+                $.initNamespaceStorage('mage-translation-storage');
+                $.initNamespaceStorage('mage-translation-file-version');
+                versionObj = $.localStorage.get('mage-translation-file-version');
+
+                if (versionObj.version !== '5df7a4c3277c611f6e16fe7c68d0313b42df7aaa') {
+                    dependencies.push(
+                        'text!js-translation.json'
+                    );
+
+                }
+
+                require.config({
+                    deps: dependencies,
+                    callback: function (string) {
+                        if (typeof string === 'string') {
+                            $.mage.translate.add(JSON.parse(string));
+                            $.localStorage.set('mage-translation-storage', string);
+                            $.localStorage.set(
+                                'mage-translation-file-version',
+                                {
+                                    version: '5df7a4c3277c611f6e16fe7c68d0313b42df7aaa'
+                                }
+                            );
+                        } else {
+                            $.mage.translate.add($.localStorage.get('mage-translation-storage'));
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+
+
+    <noscript>
+        <div class="message global noscript">
+            <div class="content">
+                <p>
+                    <strong>JavaScript seems to be disabled in your browser.</strong>
+                    <span>For the best experience on our site, be sure to turn on Javascript in your browser.</span>
+                </p>
+            </div>
+        </div>
+    </noscript>
+<!-- BEGIN GOOGLE ANALYTICS CODE -->
+<script>
+//<![CDATA[
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    
+ga('create', 'UA-34055110-1', 'auto');
+ga('send', 'pageview');
+    
+//]]>
+</script>
+<!-- END GOOGLE ANALYTICS CODE -->
+<script type="text/javascript">
+    require([
+        "jquery"
+    ], function($){
+
+        var setCookie = function(name,value,days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days*24*60*60*1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+        };
+        var getCookie = function(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
+        };
+
+        var setAffCookieIfAffSetInUrl = function(){
+            var urlParamsString = window.location.search;
+            var result = urlParamsString.match(/maff=([^&]*)/g);
+
+            if(result instanceof Array){
+                var maffUid = result[0].replace("maff=", "");
+
+                if(maffUid != ''){
+                    var previousCookieValue = getCookie('maff');
+                    var previousCookieExists = (previousCookieValue != null);
+
+                    if(!previousCookieExists){
+                        setCookie('maff', maffUid, 365);
+                    }
+                }
+            }
+        };
+
+        $(document).ready(function(){
+            setAffCookieIfAffSetInUrl();
+        });
+    });
+</script>
+<div id="productComparePopup" style="display: none;">
+</div>
+<div class="wrapper"><style>
+    body{
+        overflow-x: hidden;
+    }
+</style><style>
+    .header .user::before {
+        background-image: url("https://www.mexbs.com/pub/media/new-design/user.png");
+    }
+    .header .messages::before {
+        background-image: url("https://www.mexbs.com/pub/media/new-design/messages.png");
+    }
+</style>
+<header class="header">
+    <div class="wrap row">
+        <div class="column-left row">
+            <svg class="menu-trigger js-popup-open" data-popup-id="#js-mobile-menu" width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="25" height="2" fill="black"></rect><rect y="7" width="19" height="2" fill="black"></rect><rect y="14" width="25" height="2" fill="black"></rect></svg>
+            <a href="https://www.mexbs.com/" class="logo"></a>
+            <a href="https://solutionpartners.adobe.com/fragments/partners/a1X1O00000B2gmuUAB.html" target="__blank">
+                <img class="adobe-partnership-badge" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/Adobe_Solution_Partner_badge_Bronze.webp" alt="Bronze Adobe Solution Partner">
+            </a>
+
+            <nav class="nav">
+                <a href="https://www.mexbs.com/magento-2-extensions/">Magento 2 Extensions</a>
+                <a href="https://www.mexbs.com/magento-blog/">Magento blog</a>
+            </nav>
+        </div>
+        <div class="column-right row">
+            <a href="https://www.mexbs.com/customer/account/" class="user" id="my_account_link" style="display:none;"><span>My Account</span></a>
+            <a href="https://www.mexbs.com/customer/account/login/" class="user" id="login_link"><span>Login</span></a>
+            <a href="https://www.mexbs.com/customer/account/logout/" class="btn-sign-in sign-out row" id="sign_out_link" style="display:none;">
+                <svg width="25" height="21" viewBox="0 0 25 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2.67907 0H14.2862C15.7656 0 16.9648 1.00736 16.9648 2.25V6.75C16.9648 7.16422 16.565 7.50001 16.0719 7.50001C15.5788 7.50001 15.179 7.16422 15.179 6.75V2.25C15.179 1.83577 14.7793 1.49998 14.2862 1.49998H2.67902C2.18589 1.49998 1.78615 1.83577 1.78615 2.25V18.75C1.78615 19.1642 2.18589 19.5 2.67902 19.5H14.2862C14.7794 19.5 15.1791 19.1642 15.1791 18.75V14.25C15.1791 13.8358 15.5788 13.5 16.072 13.5C16.5651 13.5 16.9648 13.8358 16.9648 14.25V18.75C16.9648 19.9926 15.7656 21 14.2863 21H2.67912C1.19979 21 0.000555038 19.9926 0.000555038 18.75V2.25C0.00050354 1.00736 1.19974 0 2.67907 0Z" fill="black"></path>
+                    <path d="M7.14396 9.74999H21.9528L19.0126 7.28021C18.6701 6.98227 18.6799 6.50748 19.0346 6.21973C19.3806 5.93905 19.9292 5.93905 20.2751 6.21973L24.7394 9.96971C24.8224 10.0394 24.8879 10.1222 24.9323 10.2135C25.0226 10.397 25.0226 10.603 24.9323 10.7865C24.8877 10.878 24.8218 10.9611 24.7386 11.031L20.2743 14.781C19.9317 15.0789 19.3665 15.0872 19.0118 14.7994C18.6571 14.5117 18.6473 14.0369 18.9898 13.739C18.997 13.7327 19.0043 13.7266 19.0118 13.7205L21.9528 11.25H7.14391C6.65078 11.25 6.25104 10.9142 6.25104 10.5C6.25104 10.0857 6.65083 9.74999 7.14396 9.74999Z" fill="black"></path>
+                </svg>
+                <span>Sign Out</span>
+            </a>
+            <a href="https://www.mexbs.com/contact/" class="messages"><span>Contact Us</span></a>
+            <div data-block="minicart" class="minicart-wrapper">
+    <a href="https://www.mexbs.com/magento-blog/developing-on-the-magento-cloud-a-step-by-step-tutorial#" class="btn row js-popup-open action showcart" data-popup-id="#js-modal-cart" data-bind="scope: &#39;minicart_content&#39;">
+        <span>My cart</span>
+        <svg width="21" height="21" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg"><path d="M6.3 16.8C5.14294 16.8 4.2 17.7471 4.2 18.9C4.2 20.0529 5.14294 21 6.3 21C7.45706 21 8.4 20.0529 8.4 18.9C8.4 17.7471 7.45706 16.8 6.3 16.8ZM0 0V2.1H2.1L5.88 10.08L4.41 12.6C4.30294 12.9129 4.2 13.3371 4.2 13.65C4.2 14.8029 5.14294 15.75 6.3 15.75H18.9V13.65H6.72C6.61294 13.65 6.51 13.5471 6.51 13.44V13.3329L7.45294 11.5459H15.2229C16.0629 11.5459 16.6929 11.1259 17.01 10.4959L20.79 3.67294C21 3.46294 21 3.35588 21 3.14588C21 2.51588 20.58 2.09588 19.95 2.09588H4.41L3.46706 0H0ZM16.8 16.8C15.6471 16.8 14.7 17.7471 14.7 18.9C14.7 20.0529 15.6471 21 16.8 21C17.9529 21 18.9 20.0529 18.9 18.9C18.9 17.7471 17.9529 16.8 16.8 16.8Z"></path></svg>
+        <span class="num" style="display: none;">
+            <!-- ko if: getCartParam('summary_count') --><!-- /ko -->
+        </span>
+    </a>
+            
+        <script>
+        window.checkout = {"shoppingCartUrl":"https:\/\/www.mexbs.com\/checkout\/cart\/","checkoutUrl":"https:\/\/www.mexbs.com\/checkout\/","updateItemQtyUrl":"https:\/\/www.mexbs.com\/checkout\/sidebar\/updateItemQty\/","removeItemUrl":"https:\/\/www.mexbs.com\/checkout\/sidebar\/removeItem\/","imageTemplate":"Magento_Catalog\/product\/image","baseUrl":"https:\/\/www.mexbs.com\/","minicartMaxItemsVisible":5,"customerLoginUrl":"https:\/\/www.mexbs.com\/customer\/account\/login\/","isRedirectRequired":false,"autocomplete":"off","captcha":{"user_login":{"isCaseSensitive":false,"imageHeight":50,"imageSrc":"","refreshUrl":"https:\/\/www.mexbs.com\/captcha\/refresh\/","isRequired":false},"guest_checkout":{"isCaseSensitive":false,"imageHeight":50,"imageSrc":"","refreshUrl":"https:\/\/www.mexbs.com\/captcha\/refresh\/","isRequired":false}}};
+    </script>
+    
+<div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front mage-dropdown-dialog" tabindex="-1" role="dialog" aria-describedby="ui-id-1" style="display: none;"><div class="block block-minicart empty ui-dialog-content ui-widget-content" data-role="dropdownDialog" id="ui-id-1">
+            <div id="minicart-content-wrapper" data-bind="scope: &#39;minicart_content&#39;">
+                <!-- ko template: getTemplate() --><div class="modal-cart js-popup" id="js-modal-cart">
+    <h2>Cart</h2>
+    <!-- ko if: getCartParam('summary_count') --><!-- /ko -->
+    <!-- ko ifnot: getCartParam('summary_count') -->
+    <div class="empty-minicart label">
+        <!-- ko i18n: 'You have no items in your shopping cart.' --><span>You have no items in your shopping cart.</span><!-- /ko -->
+    </div>
+    <!-- /ko -->
+    <div class="action">
+        <!-- ko if: getCartParam('summary_count') --><!-- /ko -->
+        <!-- ko if: getCartParam('summary_count') --><!-- /ko -->
+    </div> <!-- /.action -->
+</div> <!-- /.modal-cart -->
+<!-- /ko -->
+            </div>
+                    </div></div></div>
+
+        </div> <!-- /.column-right -->
+
+    </div> <!-- /.wrap -->
+</header> <!-- /.header -->
+<div class="mobile-menu js-popup" id="js-mobile-menu">
+    <ul>
+        <li><a href="https://www.mexbs.com/magento-2-extensions/">Magento 2 Extensions</a></li>
+        <li><a href="https://www.mexbs.com/magento-blog/">Magento blog</a></li>
+    </ul>
+    <div id="my_account_link_mobile" style="display: none;"><a href="https://www.mexbs.com/customer/account/">My Account</a></div>
+    <div id="login_link_mobile"><a href="https://www.mexbs.com/customer/account/login/">Login</a></div>
+    <div id="sign_out_link_mobile" style="display: none;"><a href="https://www.mexbs.com/customer/account/logout/">Sign Out</a></div>
+</div> <!-- /.mobile-menu -->
+<script>
+    require([
+        'jquery'
+    ], function($) {
+        $(document).ready(function(){
+            $.ajax({
+                url: "https://www.mexbs.com/mbtheme/ajax/isLoggedIn/",
+                type: 'post',
+                dataType: 'json',
+                success: function (response) {
+                    if(!$.isEmptyObject(response)){
+                        if(response.hasOwnProperty('is_logged_in')
+                            && (response['is_logged_in'] == true)){
+                            $("#my_account_link").show();
+                            $("#my_account_link_mobile").show();
+                            $("#login_link").hide();
+                            $("#login_link_mobile").hide();
+                            if($(window).width() > 1366){
+                                $("#sign_out_link").show();
+                            }
+                            $("#sign_out_link_mobile").show();
+                        }else{
+                            $("#my_account_link").hide();
+                            $("#my_account_link_mobile").hide();
+                            $("#login_link").show();
+                            $("#login_link_mobile").show();
+                            $("#sign_out_link").hide();
+                            $("#sign_out_link_mobile").hide();
+                        }
+                    }
+                }
+            });
+        });
+    });
+</script><section class="banner-top">
+    <div class="wrap row">
+        <img src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/sveta-oksen-photo.png" alt="">
+        <div class="column-right">
+            <h2>Magento interviewed our CEO, Sveta Oksen</h2>
+            <p class="description">About the innovation in the field of Magento extensions.</p>
+            <a href="https://magento.com/blog/marketplace/developer-diaries-mexbs" class="next" target="_blank">
+                <span>To the Full Interview</span>
+                <svg width="35" height="30" viewBox="0 0 35 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.5001 15.5H33.1001C33.4001 15.5 33.6001 15.3 33.6001 15C33.6001 14.7 33.4001 14.5 33.1001 14.5H1.5001C1.2001 14.5 1.0001 14.7 1.0001 15C1.0001 15.3 1.2001 15.5 1.5001 15.5Z" fill="white"></path><path d="M25.6001 22.9C25.7001 22.9 25.9001 22.9 26.0001 22.8L33.5001 15.4C33.5001 15.3 33.6001 15.2 33.6001 15C33.6001 14.8 33.5001 14.7 33.5001 14.6L26.0001 7.20001C25.8001 7.00001 25.5001 7.00001 25.3001 7.20001C25.1001 7.40001 25.1001 7.70001 25.3001 7.90001L32.4001 15L25.2001 22C25.0001 22.2 25.0001 22.5 25.2001 22.7C25.3001 22.8 25.4001 22.9 25.6001 22.9Z" fill="white"></path></svg>
+            </a> <!-- /.next -->
+        </div> <!-- /.column-right -->
+    </div> <!-- /.wrap -->
+</section> <!-- /.banner-top --><main id="maincontent" class="page-main"><a id="contentarea" tabindex="-1"></a>
+<div class="page messages"><div data-placeholder="messages"></div><div data-bind="scope: &#39;messages&#39;">
+    <div data-bind="foreach: { data: cookieMessages, as: &#39;message&#39; }" class="messages"></div>
+    <div data-bind="foreach: { data: messages().messages, as: &#39;message&#39; }" class="messages"></div>
+</div>
+
+</div><div class="columns"><div class="column"><input name="form_key" type="hidden" value="qxer6KAwO2Z9a0OH">
+
+<section class="article">
+    <div class="wrap">
+        <div class="head">
+            <h1>Developing on the Magento cloud - a step by step tutorial</h1>
+
+            <div class="info row">
+                <div class="column-left row">
+
+                    <div class="row">
+                        <div class="date row">
+                            <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.04688 7.875H2.95312C2.77266 7.875 2.625 7.72734 2.625 7.54688V6.45312C2.625 6.27266 2.77266 6.125 2.95312 6.125H4.04688C4.22734 6.125 4.375 6.27266 4.375 6.45312V7.54688C4.375 7.72734 4.22734 7.875 4.04688 7.875ZM7 7.54688V6.45312C7 6.27266 6.85234 6.125 6.67188 6.125H5.57812C5.39766 6.125 5.25 6.27266 5.25 6.45312V7.54688C5.25 7.72734 5.39766 7.875 5.57812 7.875H6.67188C6.85234 7.875 7 7.72734 7 7.54688ZM9.625 7.54688V6.45312C9.625 6.27266 9.47734 6.125 9.29688 6.125H8.20312C8.02266 6.125 7.875 6.27266 7.875 6.45312V7.54688C7.875 7.72734 8.02266 7.875 8.20312 7.875H9.29688C9.47734 7.875 9.625 7.72734 9.625 7.54688ZM7 10.1719V9.07812C7 8.89766 6.85234 8.75 6.67188 8.75H5.57812C5.39766 8.75 5.25 8.89766 5.25 9.07812V10.1719C5.25 10.3523 5.39766 10.5 5.57812 10.5H6.67188C6.85234 10.5 7 10.3523 7 10.1719ZM4.375 10.1719V9.07812C4.375 8.89766 4.22734 8.75 4.04688 8.75H2.95312C2.77266 8.75 2.625 8.89766 2.625 9.07812V10.1719C2.625 10.3523 2.77266 10.5 2.95312 10.5H4.04688C4.22734 10.5 4.375 10.3523 4.375 10.1719ZM9.625 10.1719V9.07812C9.625 8.89766 9.47734 8.75 9.29688 8.75H8.20312C8.02266 8.75 7.875 8.89766 7.875 9.07812V10.1719C7.875 10.3523 8.02266 10.5 8.20312 10.5H9.29688C9.47734 10.5 9.625 10.3523 9.625 10.1719ZM12.25 3.0625V12.6875C12.25 13.4121 11.6621 14 10.9375 14H1.3125C0.587891 14 0 13.4121 0 12.6875V3.0625C0 2.33789 0.587891 1.75 1.3125 1.75H2.625V0.328125C2.625 0.147656 2.77266 0 2.95312 0H4.04688C4.22734 0 4.375 0.147656 4.375 0.328125V1.75H7.875V0.328125C7.875 0.147656 8.02266 0 8.20312 0H9.29688C9.47734 0 9.625 0.147656 9.625 0.328125V1.75H10.9375C11.6621 1.75 12.25 2.33789 12.25 3.0625ZM10.9375 12.5234V4.375H1.3125V12.5234C1.3125 12.6137 1.38633 12.6875 1.47656 12.6875H10.7734C10.8637 12.6875 10.9375 12.6137 10.9375 12.5234Z" fill="#C4C4C4"></path></svg>
+                            <span>Jul 9, 2019</span>
+                        </div> <!-- /.date -->
+                        <div class="author row">
+                            <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.1781 8.60576L11.6027 8.42768C12.4097 7.21255 12.5243 5.98306 12.5243 5.32409C12.5243 2.38748 10.3276 0.00366211 7.61338 0.00366211C4.90278 0.00366211 2.70242 2.38355 2.70242 5.32409C2.70242 5.9832 2.81696 7.21237 3.62402 8.42768L3.04867 8.60576C1.20949 9.17505 0.628906 10.9871 0.628906 12.0812V12.8403C0.628906 14.1069 1.58005 15.1373 2.74919 15.1373H12.4775C13.6467 15.1373 14.5979 14.1069 14.5979 12.8403V12.0812C14.5979 11.0098 14.0324 9.17975 12.1781 8.60576ZM7.61338 1.42244C9.60237 1.42244 11.2148 3.16929 11.2148 5.32409C11.2148 7.4789 9.60237 9.22574 7.61338 9.22574C5.62439 9.22574 4.01201 7.4789 4.01201 5.32409C4.01201 3.16929 5.62439 1.42244 7.61338 1.42244ZM13.2883 12.8403C13.2883 13.3253 12.9253 13.7185 12.4776 13.7185H2.74919C2.30147 13.7185 1.9385 13.3253 1.9385 12.8403V12.0812C1.9385 11.1008 2.53837 10.2393 3.40845 9.96995L4.66629 9.58061C5.0674 9.90729 6.09718 10.6445 7.61338 10.6445C9.12958 10.6445 10.1594 9.90729 10.5605 9.58061L11.8183 9.96995C12.6884 10.2393 13.2883 11.1008 13.2883 12.0812V12.8403Z" fill="#C4C4C4"></path></svg>
+                            <span>by Sveta Oksen</span>
+                        </div> <!-- /.author -->
+                    </div>
+                    <a href="https://www.mexbs.com/magento-blog/?category=magento-cloud" class="category">Magento Cloud</a>
+                </div> <!-- /.column-left -->
+            </div> <!-- /.info -->
+        </div> <!-- /.head -->
+        <p class="blog-author-date">By <span>Sveta Oksen</span>, <meta content="2019-07-09">July 9, 2019</p>
+<h2>What is Magento Cloud?</h2>
+<p>Magento cloud is an all-in-one hosting, development, and deployment solution provided by Magento. </p>
+<h2>Magento cloud environments</h2>
+<p>When you subscribe to the Magento cloud plan, you receive a number of environments.</p>
+<p>An environment is a standalone Magento installation. It has a separate server and a database. Additionally, if the environment is production or staging - it also has Fastly, and New Relic installed on it.</p>
+<p>Magento cloud provides you with a number of environments. In the Starter plan, there are 4 environments - Production, Staging and two Dev environments. In the Pro plan, there are 8 environments - Production, Staging, Integration, Global Master and 4 Dev environments. </p>
+<h2>What is this tutorial about?</h2>
+<p>In this tutorial, I will present a Magento Cloud development flow chart. Afterwards, I will explain each step in the chart and show the commands that you need to run at each step. </p>
+<p>At the end of this tutorial, all of the necessary environments will be set up and ready for work. Afterwards, we will deploy your first feature to the Magento Cloud.</p>
+<p>In this tutorial, I will also show you how to install a <strong>specific Magento version</strong> on the Cloud, instead of the default one.</p>
+<p>So let’s start with the tutorial and the flow chart.</p>
+<h2>Magento Cloud development - step by step tutorial (on the Starter plan)</h2>
+<p>From now on, I will be talking only about the Starter plan. However, working on the Pro plan is very similar, and I will explain the modifications that are needed to be done to the flow at the end of the article (<a href="https://www.mexbs.com/magento-blog/developing-on-the-magento-cloud-a-step-by-step-tutorial#the-pro-plan-vs-the-starter-plan">here</a>).</p>
+<p>Here is the chart of the Magento Cloud Starter plan development flow -<br><br>
+<img src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/magento-cloud-development-workflow-starter-plan.png" title="Magento Cloud (Starter plan) development flow">
+</p>
+<p>You can see that the chart consists of two sections: “One time steps” and “Recurring steps”. As you can guess, the steps under the “One time steps” section you only follow once - when you set up the environments (master, Staging, dev4) for the first time.</p>
+<p>After completing the one time steps, and having the Staging and the dev4 environments ready (dev4 is the name we gave to our development branch / environment - you can use any different name), you can proceed to the fun part - the development of your features.</p>
+<p>The development workflow consists of the “Recurring steps” that are described in the chart. You should follow these steps each time you develop a new feature and want to publish it to the production (Master) environment.</p>
+<p>Now we will go over each step in the chart, explain it and show the exact commands that you need to run.</p>
+<p><strong>Note:</strong> In my dev machine I am using Ubuntu 16.04 with git (version 2.7.4) installed on it.</p>
+<p>Ok, let's start.</p>
+<h2>Part 1: One time steps</h2>
+<p>This part of the development flow, you only need to do once - when you set up the environment.</p>
+<p>At the end of this part, you will have the necessary environments (master, Staging, and dev4) up and running, and you will be ready to start writing some code!</p>
+<p>So let’s proceed to the steps.</p>
+<h2>Step 1: Clone the master branch to your dev machine</h2>
+<h3>(1) Make sure that you have SSH keys set up on your dev server and the Magento Cloud</h3>
+<p>Before we can clone the master branch to our dev machine, we need to set up our SSH keys in the Magento cloud interface and our dev machine. </p>
+<p>To do that, log in to the Magento cloud interface, by going to <a href="https://accounts.magento.cloud/" target="__blank" rel="noopener noreferrer">https://accounts.magento.cloud/</a> and logging in. Then click on the account settings - <br><br>
+<img src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/magento-cloud-dashboard.png" title="Magento Cloud account settings">
+</p>
+<p>Go to the SSH keys section and make sure that the keys that reside in your ~/.ssh directory on your dev machine exist in the SSH keys list. If you don’t have your keys set up, and if you use Windows for development - read our tutorial on <a href="https://www.mexbs.com/magento-blog/setting-up-your-ssh-keys-on-your-dev-machine-for-magento-cloud-development-using-puttygen-on-windows/" target="__blank">how to set up your SSH keys on your dev machine for the Magento Cloud development using PuttyGen on Windows</a>. Otherwise, if you develop on Linux, read the <a href="https://devdocs.magento.com/guides/v2.3/cloud/before/before-workspace-ssh.html" target="__blank" rel="noopener noreferrer">“Enable SSH keys” tutorial by Magento</a>.
+</p>
+<h3>(2) Copy the clone command from the Magento Cloud</h3>
+<p>Go to your Magento Cloud account (<a href="https://accounts.magento.cloud/" target="__blank" rel="noopener noreferrer">https://accounts.magento.cloud/</a>). Click on the project that you want to clone. In our case, we only have one project - “Dev” - <br><br>
+<img src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/magento-cloud-click-on-project.png" title="Magento Cloud account dashboard - click on the project">
+</p>
+<p>In the next screen, make sure to select the “Master” environment and copy the git clone command - <br><br>
+<img src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/magento-cloud-master-clone.png" title="Magento Cloud web interface - click on the clone link in the Master environment">
+</p>
+<p>Now SSH to your dev machine, and go to your working directory (for example /var/www):</p>
+<pre><code class="shell hljs">cd /var/www</code></pre>
+<p>Paste the clone command. It should look something like the following:</p>
+<pre><code class="shell hljs">git clone --branch master eepi6abcdefgh@git.us-4.magento.cloud:eepi6abcdefgh.git dev</code></pre>
+<p>The cloning process should run and finish successfully, creating the /var/www/dev directory that includes the cloned files. If you go to the dev directory and do ls -la, you will see something like the following - <br><br>
+<img src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/dev-directory.png" title="Cloned master files listed">
+</p>
+<p>You can see that the vendor directory doesn’t exist. It is because it is created dynamically by the Magento build when you push changes to your branch - we will talk about it later.</p>
+<p>Let’s open the .gitignore file. You will see the following:<br><br>
+<img src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/magento-cloud-gitignore.png" title="Magento cloud .gitignore file contents"></p>
+<p>It means that everything except the listed files and directories is ignored. That is, you should only make changes to the files/folders in that list because the Magento Cloud build script will overwrite the others. </p>
+<p>For the development process it means that if you want to add a new module / extension you should either do it by specifying it in the composer.json file - in this case the Magento build will pull it into the vendor directory, or you should work on your new module in the app/code directory, because it is not getting overwritten by the Magento build.</p>
+<p><strong>Note:</strong> In this tutorial, we will only show how to develop your module in app/code. If you want your module to be pulled via composer, the process is almost identical to the described in this tutorial. The only difference is that in Step 10 instead of copying your module to app/code, you should pack it up and put it in your composer repository, and specify it in the composer.json.</p>
+<h2>Step 2: Modify the composer files to the desired Magento version</h2>
+<p>In this tutorial, we want to work on the Magento Commerce (Enterprise) 2.1.8. The newest Magento version at the moment is 2.3.2, but let's say that for some reason we need to work on 2.1.8.</p>
+<p>To cause the master to build Magento Commerce 2.1.8, we first make sure that the correct PHP version is set in the <strong>.magento.app.yaml</strong> file. In the case of Magento 2.1.8, it should be 7.0.</p>
+<p>Afterwards, we run the following commands, to set the composer to use our Magento version:</p>
+<pre><code class="shell hljs">
+composer require magento/magento-cloud-metapackage 2.1.8  --no-update<br>
+rm -rf composer.lock<br>
+composer update<br>
+</code></pre>
+<h2>Step 3: Commit and push the changes to master</h2>
+<p>Run the following commands:</p>
+<pre><code class="shell hljs">
+git add composer.json composer.lock .magento.app.yaml<br>
+git commit -m "Set Magento version to 2.1.8"<br>
+git push --set-upstream origin master<br>
+</code></pre>
+<p>The Magento deployment and build will start. When it finishes successfully you will see something like the following in your CLI:<br><br>
+<img src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/magento-cloud-master-deployment-cli.png" title="CLI output of a successful master deployment">
+</p>
+<p style="border-top: 1px solid #282828; padding-top: 20px;"><strong>Note #1:</strong> If you get the error “Could not open input file: ./vendor/bin/ece-tools”, go back to step 2, and before the composer update command run the following command:
+</p>
+<pre><code class="shell hljs">
+composer require magento/ece-tools --no-update
+</code></pre>
+<p>Then remove the composer.lock:</p>
+<pre><code class="shell hljs">
+rm -rf composer.lock
+</code></pre>
+<p>And run the composer update again:</p>
+<pre><code class="shell hljs">
+composer update
+</code></pre>
+<p>Now re-run the commands of Step 3 again (add, commit and push).</p>
+<p><strong>Note #2:</strong> If you get the error Failed opening required '/app/vendor/composer/../../app/etc/NonComposerComponentRegistration.php', run the following commands:</p>
+<pre style="border-bottom: 1px solid #282828; padding-bottom: 30px;"><code class="shell hljs">
+chmod 666 app/etc/NonComposerComponentRegistration.php<br>
+git add --force app/etc/NonComposerComponentRegistration.php<br>
+git commit -m "Fixed NonComposerComponentRegistration.php permissions"<br>
+git push --set-upstream origin master<br>
+</code></pre>
+<p>In the end of the successful build, it gave us the URL of the “master” website (In our case http://master-7rqtwti-eepabcdefg.crg.us-4.magentosite.cloud/)</p>
+<p>Let’s try browsing there. You will probably get the following error screen -<br><br>
+<img src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/master-error-screen-no-magento-installed.png" title="A message on Master environment homepage is showing up and saying " an="" error="" occurred="" during="" the="" application="" run"=""></p>
+<p>The reason is that there is no Magento installed on the master - let’s install it now.</p>
+<p style="border-top: 1px solid #282828; padding-top: 20px;"><strong>Note:</strong> If you get a Magento homepage screen, but you don’t remember ever installing Magento, SSH to the master environment by following “(1) SSH to the master environment” in Step 4 and then run the following command to uninstall Magento:</p>
+<pre style="border-bottom: 1px solid #282828; padding-bottom: 30px;"><code class="shell hljs">
+php bin/magento setup:uninstall
+</code></pre>
+<h2>Step 4: SSH to the master environment and install Magento</h2>
+<h3>(1) SSH to the master environment</h3>
+<p>Go to the Magento Cloud interface, click on the Master environment, click on “Access Site” and copy the SSH Access field -<br><br>
+<img src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/copy-ssh-command-for-master.png" title="In the Master environment web interface copy the SSH command"></p>
+<p>Now paste it in your dev server and hit “enter”. You should see the cloud welcome message - <br><br>
+<img src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/magento-cloud-master-ssh-welcome-message.png" title="Welcome message shows up in the CLI of the master environment"></p>
+<h3>(2) Install Magento</h3>
+<p>Install Magento by running the following command.  Don’t forget to replace the --base-url value with the <strong>non HTTPS</strong> URL of your master environment (the one that was outputted on the CLI at the end of the build. You can also find it by going to the Magento Cloud interface, and clicking on “Access Site”.). Also, replace the login credentials to the ones that you want.</p>
+<pre><code class="shell hljs">
+php bin/magento setup:install \<br>
+   --admin-firstname=AdminName \<br>
+   --admin-lastname=AdminLastname \<br>
+   --admin-email=admin@myhost.com \<br>
+   --admin-user=admin \<br>
+   --admin-password=123456 \<br>
+   --base-url=http://master-7rqtwti-eepi6wrws7crg.us-4.magentosite.cloud/ \<br>
+   --db-host=database.internal \<br>
+   --db-name=main \<br>
+   --db-user=user \<br>
+   --currency=USD \<br>
+   --timezone=America/Chicago \<br>
+   --language=en_US \<br>
+   --use-rewrites=1<br>
+</code></pre>
+<p style="border-top: 1px solid #282828; padding-top: 20px;"><strong>Note:</strong> If you get an error during the installation in which Magento complains that it can’t write to the session directory, try uninstalling Magento:</p>
+<pre><code class="shell hljs">
+php bin/magento setup:uninstall
+</code></pre>
+<p>And then installing Magento with the setting --session-save=db:</p>
+<pre style="border-bottom: 1px solid #282828; padding-bottom: 30px;"><code class="shell hljs">
+php bin/magento setup:install \<br>
+   --admin-firstname=AdminName \<br>
+   --admin-lastname=AdminLastname \<br>
+   --admin-email=admin@myhost.com \<br>
+   --admin-user=admin \<br>
+   --admin-password=123456 \<br>
+   --base-url=http://master-7rqtwti-eepi6wrws7crg.us-4.magentosite.cloud/ \<br>
+   --db-host=database.internal \<br>
+   --db-name=main \<br>
+   --db-user=user \<br>
+   --currency=USD \<br>
+   --timezone=America/Chicago \<br>
+   --language=en_US \<br>
+   --use-rewrites=1 \<br>
+   --session-save=db<br>
+</code></pre>
+<p>Once the Magento installation succeeds, you should see the following -<br><br>
+<img src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/magento-installation-on-master-success.png" title="Master CLI outputs the Magento installation progress and success message"></p>
+<p>Copy the admin path (in my case it is admin_17dc5n) to be able to access the admin panel. (If you lose it, you can find it in app/etc/env.php file)</p>
+<p>Now run the static files deployment:</p>
+<pre><code class="shell hljs">
+php bin/magento setup:static-content:deploy
+</code></pre>
+<p>Now browse to the Master website again, and you should see the Magento homepage screen - Hooray!
+<br><br>
+<img src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/magento-cloud-master-website-homepage.png" title="The master homepage shows up Magento demo homepage">
+</p>
+<h2>Step 5: Create the Staging environment out of Master, and activate the Staging environment</h2>
+<h3>(1) Create the Staging branch</h3>
+<p>Create the Staging branch and push it by running the following commands:</p>
+<pre><code class="shell hljs">
+cd /var/www/dev<br>
+git checkout -b Staging<br>
+git push origin Staging<br>
+</code></pre>
+<h3>(2) Activate the Staging environment</h3>
+<p>To activate the Staging environment, we first need to install the “magento-cloud” command on our dev server. To do that, run the following commands in your CLI (SSH):</p>
+<pre><code class="shell hljs">
+curl -sS https://accounts.magento.cloud/cli/installer | php
+</code></pre>
+<p>Now run the command “su -” or simply restart the SSH (I use Putty, so I simply closed it and re-opened again). This is needed for the magento-cloud command to start working on the CLI. Don’t forget to return back to your working directory (in my case /var/www/dev) after re-logging in.</p>
+<p>Now login to the magento-cloud by running:</p>
+<pre><code class="shell hljs">
+magento-cloud auth:password-login
+</code></pre>
+<p>The system will ask for your Cloud username and password. Pay attention that even though  Magento Cloud is now using the Magento website credentials to login to their web interface, the credentials that we are asked for now are the <strong>old Magento Cloud credentials</strong>.</p>
+<p>You can find your Magento Cloud username, by going to the Magento Cloud interface (<a href="https://accounts.magento.cloud/" target="__blank" rel="noopener noreferrer">https://accounts.magento.cloud/</a>), clicking “Account Settings”, and checking the “Create New Password” checkbox - 
+<br><br>
+<img src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/magento-cloud-finding-your-username.png" title="Magento Cloud web interface - the username shows up when checking the " create="" new="" password"="" checkbox"="">
+</p>
+<p>After successful authentication, you will see the following message:<br><br>
+<img src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/magento-cloud-cli-login-success.png" title="Magento Cloud web interface - the username shows up when checking the " success="" message="" shows="" up="" in="" cli="" after="" the="" successful="" authentication="" with="" magento="" cloud="" command"=""></p>
+<p>Now we can activate our Staging branch, by running:</p>
+<pre><code class="shell hljs">
+magento-cloud environment:activate Staging
+</code></pre>
+<p>After the successful deployment, you should see a success message. Let’s double check that the environment “Staging” was indeed created and activated, by going to the Magento Cloud web interface, our project, and making sure that “Staging” shows up on the top left.</p>
+<p>If you click on it, and then click on the “Configure Environment” button, you will see that it’s status is “Active” -<br><br>
+<img src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/staging-in-the-environments-list.png" title="Magento Cloud web interface - the username shows up when checking the " the="" staging="" environment="" shows="" up="" in="" magento="" cloud="" interface="" on="" left="" and="" its="" status="" is="" active"=""></p>
+<p>Now click on Staging on the top left, click on “Access Site” and click on one of the URLs - <br><br>
+<img src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/magento-cloud-staging-url.png" title="Magento Cloud web interface - the username shows up when checking the " the="" staging="" website="" urls="" show="" up="" in="" magento="" cloud="" web="" interface"=""></p>
+<p>You should see a Magento homepage - Hooray!</p>
+<p>You can see that unlike the Master environment, the Staging environment has Magento installed on it already. It seems that the Magento Cloud copied the Database from Master for the Staging environment.</p>
+<p>I think that it is really cool because it saves you the work of duplicating the DB yourself. </p>
+<p style="border-top: 1px solid #282828; padding-top: 20px;"><strong>Important:</strong> make sure that it didn’t redirect you to the Master URL. If yes, perform the following steps to fix the issue:
+</p>
+<p>SSH to the Staging environment. Then access the DB by running:</p>
+<pre><code class="shell hljs">
+mysql -h database.internal -u user
+</code></pre>
+<p>Afterward, run:</p>
+<pre><code class="shell hljs">
+use main;
+</code></pre>
+<pre><code class="sql hljs">
+<span class="hljs-keyword">update</span> core_config_data <span class="hljs-keyword">set</span> <span class="hljs-keyword">value</span>=<span class="hljs-string">"http://staging-vdt2zeq-eepi6abcdefgh.us-4.magentosite.cloud/"</span> <span class="hljs-keyword">where</span> <span class="hljs-keyword">path</span>=<span class="hljs-string">"web/unsecure/base_url"</span>;
+</code></pre>
+<p>(make sure to replace http://staging-vdt2zeq-eepi6abcdefgh.us-4.magentosite.cloud/ with the URL of your staging environment)</p>
+<p>Afterward, exit the mysql and flush the cache by running</p>
+<pre style="border-bottom: 1px solid #282828; padding-bottom: 30px;"><code class="shell hljs">
+php bin/magento cache:flush
+</code></pre>
+<h2>Step 6: Create the dev4 branch out of Staging, and activate the dev4 environment</h2>
+<p>Now we move on to creating our development branch / environment “dev4”.</p>
+<h3>(1) Create the dev4 branch</h3>
+<p>Create your development branch (in our tutorial, we give our development branch the name “dev4”) and push it by running the following commands:</p>
+<pre><code class="shell hljs">
+cd /var/www/dev
+git checkout -b dev4<br>
+git push origin dev4<br>
+</code></pre>
+<h3>(2) Activate the dev4 environment</h3>
+<p>To activate our dev4 environment, run:</p>
+<pre><code class="shell hljs">
+magento-cloud environment:activate dev4
+</code></pre>
+<p>After the successful deployment, you should see a success message. Let’s double check that the environment “dev4” was indeed created and activated, by going to the Magento Cloud web interface, our project, and making sure that “dev4” shows up on the top left.</p>
+<p>If you click on it, and then click on the “Configure Environment” button, you will see that it’s status is “Active” -<br><br>
+<img src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/dev4-in-the-environments-list.png" title="The dev4 environment shows up in the Magento Cloud interface on the left and its status is active"></p>
+<p>Now click on dev4 on the top left, click on “Access Site” and click on one of the URLs -<br><br>
+<img src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/magento-cloud-dev4-url.png" title="The dev4 website URLs show up in the Magento Cloud web interface"></p>
+<p>You should see a Magento homepage - Hooray!</p>
+<p>You can see that similarly to the Staging environment, the dev4 environment has Magento installed on it already (the DB is duplicated from Master).</p>
+<h2>Step 7: Set up a Database and install Magento on your dev server in the local-dev directory</h2>
+<h3>(1) Setup LAMP (Linux, Apache, MySQL, PHP) on your dev server</h3>
+<p>To be able to develop on your dev machine, you need first to install LAMP on it. We won’t cover the steps for it in our tutorial, but there are tons of great tutorials for that. For example, the “<a href="https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-16-04" target="__blank" rel="noopener noreferrer">How To Install Linux, Apache, MySQL, PHP (LAMP) stack on Ubuntu 16.04</a>” article by DigitalOcean.</p>
+<h3>(2) Download and Install Magento</h3>
+<p>After setting up LAMP on your dev server, it’s time to download and install Magento. </p>
+<p>Pay attention that you should install Magento in a directory other than the directory where the code of the dev4 branch resides. (In our case the code of dev4 branch is in /var/www/dev, so we will install Magento in /var/www/local-dev). </p>
+<p>We don’t suggest that you will develop your code directly in /var/www/dev because it has many missing files to run Magento. We found that it is much less troublesome to install Magento and work on our features development in a different directory. So in our case, we created /var/www/<strong>local-dev</strong> directory on our dev server and installed Magento there.</p>
+<p>To install Magento, create a new directory on your server (in our example /var/www/local-dev) and follow one of the great Magento installation tutorials out there (for example “<a href="https://websiteforstudents.com/install-magento-ubuntu-17-04-17-10-apache2-mariadb-php/" target="__blank" rel="noopener noreferrer">Install Magento On Ubuntu 17.04 | 17.10 With Apache2, MariaDB And PHP</a>” tutorial by Website for Students).</p>
+<p>Once the Magento is working on your dev server, it’s time to proceed to the fun part - writing some code!</p>
+<p>The next part is called “Recurring Steps” - as its name says, you will need to perform these steps over and over again each time you go through a development cycle.</p>
+<h2>Part 2: Recurring steps</h2>
+<p>Now you should have your environments set up. In this point, you are ready to start developing your features, test them locally and deploy them to dev4, Staging, and Master (in this order). </p>
+<p>Let's go over the development workflow steps and explain them one by one.</p>
+<h2>Step 8: Go to the dev directory on your local server, switch to dev4, pull staging into it, and copy the tracked files to local-dev</h2>
+<p>Make sure that you are on the up-to-date dev4 branch, by going to the dev directory on your dev machine (in our tutorial it is located in /var/www/dev), and running:</p>
+<pre><code class="shell hljs">
+git checkout dev4<br>
+git pull origin dev4<br>
+</code></pre>
+<p>Now merge in Staging by running</p>
+<pre><code class="shell hljs">
+git pull origin Staging
+</code></pre>
+<p>If there are some changes on Staging, you might also want to push them to your dev4 branch, to keep the remote branch up-to-date:</p>
+<pre><code class="shell hljs">
+git push origin dev4
+</code></pre>
+<p>Now copy the tracked files from /var/www/dev to /var/www/local-dev. This is needed for your local environment to be up-to-date with the changes on dev4 -</p>
+<pre><code class="shell hljs">
+cp -a /var/www/dev/app/* /var/www/local-dev/<br>
+cp -a /var/www/dev/composer.json /var/www/local-dev/<br>
+</code></pre>
+<h2>Step 9: Develop your feature in local-dev</h2>
+<p>Now it’s time to work on your feature in the local-dev directory.</p>
+<p>We are going to create a HelloWorld module that will display a “Hello World” message in the header.</p>
+<h3>(1) Add the HelloWorld module files</h3>
+<p>Create the HelloWorld module by creating the following files in /var/www/local-dev:</p>
+<p>app/code/Mexbs/HelloWorld/registration.php</p>
+<pre><code class="php hljs">
+<span class="hljs-meta">&lt;?php</span>
+<br>\Magento\Framework\Component\ComponentRegistrar::register(
+<br>&nbsp;&nbsp;&nbsp;&nbsp;\Magento\Framework\Component\ComponentRegistrar::MODULE,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-string">'Mexbs_HelloWorld'</span>,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">__DIR__</span>
+<br>);
+</code></pre>
+<p>app/code/Mexbs/HelloWorld/etc/module.xml</p>
+<pre><code class="xml hljs">
+<span class="hljs-meta">&lt;?xml&nbsp;version="1.0"?&gt;</span>
+<br><span class="hljs-tag">&lt;<span class="hljs-name">config</span>&nbsp;<span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">"http://www.w3.org/2001/XMLSchema-instance"</span>&nbsp;<span class="hljs-attr">xsi:noNamespaceSchemaLocation</span>=<span class="hljs-string">"../../../../../lib/internal/Magento/Framework/Module/etc/module.xsd"</span>&gt;</span>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-tag">&lt;<span class="hljs-name">module</span>&nbsp;<span class="hljs-attr">name</span>=<span class="hljs-string">"Mexbs_HelloWorld"</span>&nbsp;<span class="hljs-attr">setup_version</span>=<span class="hljs-string">"1.0.0"</span>&nbsp;/&gt;</span>
+<br><span class="hljs-tag">&lt;/<span class="hljs-name">config</span>&gt;</span>
+</code></pre>
+<p>app/code/Mexbs/HelloWorld/view/frontend/layout/default.xml</p>
+
+<p>app/code/Mexbs/HelloWorld/etc/module.xml</p>
+<pre><code class="xml hljs">
+<span class="hljs-meta">&lt;?xml&nbsp;version="1.0"?&gt;</span>
+<br><span class="hljs-tag">&lt;<span class="hljs-name">page</span>&nbsp;<span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">"http://www.w3.org/2001/XMLSchema-instance"</span>&nbsp;<span class="hljs-attr">xsi:noNamespaceSchemaLocation</span>=<span class="hljs-string">"urn:magento:framework:View/Layout/etc/page_configuration.xsd"</span>&gt;</span>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-tag">&lt;<span class="hljs-name">referenceContainer</span>&nbsp;<span class="hljs-attr">name</span>=<span class="hljs-string">"page.top"</span>&gt;</span>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-tag">&lt;<span class="hljs-name">block</span>&nbsp;<span class="hljs-attr">class</span>=<span class="hljs-string">"Magento\Framework\View\Element\Template"</span>
+</span><br><span class="hljs-tag">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">name</span>=<span class="hljs-string">"hello.world.test"</span>
+</span><br><span class="hljs-tag">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">template</span>=<span class="hljs-string">"Mexbs_HelloWorld::hello_world.phtml"</span>
+</span><br><span class="hljs-tag">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-attr">before</span>=<span class="hljs-string">"-"</span>
+</span><br><span class="hljs-tag">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&gt;</span>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-tag">&lt;/<span class="hljs-name">referenceContainer</span>&gt;</span>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<br><span class="hljs-tag">&lt;/<span class="hljs-name">page</span>&gt;</span>
+</code></pre>
+<p>app/code/Mexbs/HelloWorld/view/frontend/templates/hello_world.phtml</p>
+<pre><code class="php hljs">
+Hello World!!!
+</code></pre>
+<h3>(2) Install the HelloWorld module on your local environment</h3>
+<p>Run the following commands to install the HelloWorld module on your local dev server:</p>
+<pre><code class="shell hljs">
+php bin/magento module:enable Mexbs_HelloWorld --clear-static-content<br>
+php bin/magento setup:upgrade<br>
+php bin/magento cache:flush<br>
+php bin/magento setup:static-content:deploy<br>
+</code></pre>
+<h3>(3) Test the feature</h3>
+<p>Let’s go to the HomePage - we should see the “Hello World!!!” message showing up in the header - <br><br>
+<img src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/hello-world-message-in-the-header.png" title="The Hello World message shows up in the header of the Magento homepage"></p>
+<p>Now when we finished testing our feature, it’s time to commit it, push and deploy to dev4.</p>
+<h2>Step 10: Once the feature is ready, copy the contents of the app directory from local-dev to dev4 directory</h2>
+<p>Copy the content of the app directory from /var/www/local-dev to /var/www/dev by running:</p>
+<pre><code class="shell hljs">
+mkdir /var/www/dev/app<br>
+cp -r /var/www/local-dev/app/* /var/www/dev/app<br>
+</code></pre>
+<p>Add the changes to git:</p>
+<pre><code class="shell hljs">
+git add app/
+</code></pre>
+<h2>Step 11: Commit to dev4 and push</h2>
+<p>Commit the changes to dev4 and push by running:</p>
+<pre><code class="shell hljs">
+git commit -m "Added HelloWorld module"<br>
+git push origin dev4<br>
+</code></pre>
+<p>Now, go to the dev4 environment frontend and you should see the “Hello World!!!” showing up!</p>
+<h2>Step 12: Does the feature look good on the dev4 branch and is ready to go live?</h2>
+<p>If you find some bugs and therefore you think that the feature is not ready to go live - go back to Step 8.</p>
+<p>Otherwise, proceed to the next step.</p>
+<h2>Step 13: Merge dev4 to the Staging branch and push (directly or using a pull request)</h2>
+<p>Now we are ready to merge our development branch (dev4) to staging.</p>
+<h3>Why is it important to merge to Staging instead of directly merging to master?</h3>
+<p>It is essential to merge your dev branch to Staging (once the feature is ready) and not directly to master, because of the following reasons:</p>
+<ol style="list-style: none;">
+<li><strong>(1)</strong> The staging is much closer (setup wise) to the production (master) environment than dev4. Unlike the dev environment, it has Fastly and New Relic installed on it. On the Pro plan, Staging and production also share the same dedicated server.</li>
+<li><strong>(2)</strong> If more than one developer is working on the project - Staging is the perfect environment to test your features together, before merging them to production</li>
+</ol>
+<p>Let’s proceed with merging dev4 to Staging.  Run the following commands:</p>
+<pre><code class="shell hljs">
+git checkout Staging<br>
+git pull origin Staging<br>
+git pull origin dev4<br>
+git push origin Staging<br>
+</code></pre>
+
+<p>Now the Cloud build should start, and after it finishes, you should see the “Hello World!!!” showing up on the Staging home page.</p>
+<h2>Step 14: Was the feature tested on Staging and worked fine?</h2>
+<p>If for some reason the feature doesn’t work correctly on Staging (for example because it conflicts with the features of other developers, or doesn’t work with Fastly, etc), debug it on your local server and then proceed to Step 8.</p>
+<p>Otherwise, proceed to the next step.</p>
+<h2>Step 15: Merge the Staging branch to the master branch and push</h2>
+<p>This is the most exciting step because your feature (and perhaps the features of the other developers who took part in the current dev cycle - if you work by agile methodology and have sprints) is about to be deployed to production! </p>
+<p>Do it by performing the following steps:</p>
+<pre><code class="shell hljs">
+git checkout master<br>
+git pull origin Staging<br>
+git push origin master<br>
+</code></pre>
+<p>Now the master build should start, and after it finishes successfully - the “Hello World!!” message should show up on the production home page. </p>
+<p><strong>Hooray! Our first development cycle is done!</strong></p>
+<h2>What next?</h2>
+<p>Once you get some new features / bug fixes to work on, simply go to Step 8 and work your way from there until you get here again.</p>
+<h2 id="the-pro-plan-vs-the-starter-plan">The Pro plan vs the Starter plan - the development workflow differences</h2>
+<p>If you have the Magento Cloud Pro plan, there are slight modifications that need to be done to the development workflow presented in this tutorial.</p>
+<p>Let’s first look at the differences in the architecture between the Starter plan and the Pro plan.</p>
+<h3>The architectural differences between the Starter plan and the Pro plan</h3>
+<p>The main differences are:</p>
+<ol style="list-style: none;">
+<li>
+<p><strong>(1)</strong> In addition to the Production and Staging environments that the Starter plan has, the Pro plan has also the Global Master and the Integration environments:</p>
+<p>The <strong>Global Master</strong> environment should always contain the latest master code and is used for emergency debugging. </p>
+<p>Here is what Magento documentation says about the Global Master: <span style="font-style: italic;">“The Global Master branch is a part of the Integration environment. You should always push a copy of the Production code to the Global Master in case there is an emergent need to debug the Production environment without interrupting services.”</span></p>
+<p>A developer and a friend of ours suggested that he uses the Global Master to do destructive tests when something doesn’t look right on production. For example: deleting and changing products and customers.</p>
+<p>Another friend suggested that it is a good Git practice - having one environment /  branch that matches the production.  In addition to the destructive tests, he says, you can use it always to be able to roll back to it as the latest working branch. (For example after applying an erroneous patch on master).</p>
+<p>The <strong>Integration</strong> environment provides the opportunity to perform another layer of testing before deploying to the Staging environment.</p>
+</li>
+<li><strong>(2)</strong> Unlike the two active dev branches / environments in the Starter plan, in the Pro plan, you can have up to four active dev branches / environments.</li>
+</ol>
+<h2>The modified development flow  - Pro plan</h2>
+<p>Here is a chart of the Magento Cloud Pro plan development flow -<br><br>
+<img src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/magento-cloud-development-workflow-pro-plan.png" title="Magento Cloud (Pro plan) development flow">
+</p>
+<p>You can see that we added a few new steps that are related to the Integration and the Global Master branches. We also changed a few steps. The new steps and the changes are highlighted in light blue.</p>
+<p>Now we are going to explain the modifications that we did to the flow. Pay attention that if the step doesn't show up in the list of modified steps, it means that it is identical for Starter and Pro plan.</p>
+<p>Here is the explanation for our modifications:</p>
+<h2>Step 4.1: Create the Global Master environment out of Master, and activate the Global Master environment</h2>
+<p>To perform this step, follow step 5, but instead of Staging use the name of the Global Master branch.</p>
+<h2>Step 5.1: Create the Integration branch out of Staging, and activate the Integration environment</h2>
+<p>To perform this step, follow step 5, but instead of Staging use Integration. </p>
+<h2>Step 6: Create the dev4 branch out of Integration, and activate the dev4 environment</h2>
+<p>Step 6 has slightly changed - instead of creating the dev4 branch out of Staging, we create it out of the Integration branch.</p>
+<h2>Step 8:  Go to the dev directory on  your local server, switch to dev4, pull Integration into it, and copy the tracked files to local-dev</h2>
+<p>Step 8 has slightly changed - instead of pulling the Staging into the dev4 branch, we pull Integration into dev4 instead.</p>
+<h2>Step 12.1: Merge dev4 to the Integration branch and push (directly or using a pull request)</h2>
+<p>To perform this step, follow Step 13, but instead of Staging, use Integration.</p>
+<h2>Step 12.2: Was the feature tested on Integration and worked fine?</h2>
+<p>In this step, check if the feature works well on the Integration environment and therefore is ready to be merged to Staging.</p>
+<h2>Step 15.1: Merge the master branch to the Global Master branch and push</h2>
+<p>This is the extra step that needs to be done after the merge to master. Merge master branch to the Global Master by running the following commands:
+</p>
+<pre><code class="shell hljs">
+git checkout [name-of-Global-Master]<br>
+git pull origin master<br>
+git push origin [name-of-Global-Master]<br>
+</code></pre>
+<p>Replace [name-of-Global-Master] with the name of the branch that is your Global Master branch.</p>
+<h2>What is next for the Pro plan?</h2>
+<p>Once you get some new features / bug fixes to work on, simply go to Step 8 and work your way from there until you get here again. </p>
+<p>Otherwise, that’s it!</p>
+<h2>Summing up</h2>
+<p>Magento Cloud is an excellent solution that takes care of the infrastructural part of the development cycle for you. You don’t need to worry about server maintenance, deployment, downtime, git hosting, and more. All that is left for you is to develop, test your feature, and go live.</p>
+<p>In this tutorial, we presented our development workflow chart for the Magento Cloud Starter plan and the Pro plan. It should help you get started with the Magento cloud development, and also reminding you where to proceed at any point of your development cycle.</p>    </div> <!-- /.wrap -->
+</section> <!-- /.article -->
+
+
+
+<script type="text/javascript">
+    require(
+        [
+            'jquery',
+            'TemplateMonster_Blog/js/highlight'
+        ],
+        function(
+            $,
+            highlight
+            ) {
+            $(document).ready(function(){
+                highlight.initHighlighting();
+            });
+        }
+    );
+</script></div></div></main><footer class="footer">
+<div class="wrap">
+    <div class="row-top">
+        <div class="column">
+            <a href="https://www.mexbs.com/" class="logo"></a>
+            <a href="https://extdn.org/" class="extdn-logo" target="_blank">
+                <img src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/logo_extdn.png" alt="Proud member of ExtDN">
+            </a>
+        </div>
+        <div class="column">
+            <h3>Menu</h3>
+            <div class="links">
+                <a href="https://www.mexbs.com/magento-2-extensions/">Magento 2 Extensions</a>
+                <a href="https://www.mexbs.com/magento-blog/">Magento blog</a>
+                <a href="https://www.mexbs.com/contact/">Contact Us</a>
+                <a href="https://www.mexbs.com/customer/account/">My Account</a>
+                <a href="https://www.mexbs.com/partnership/">Partnership Program</a>
+                <a href="https://www.mexbs.com/partners/">Partners</a>
+            </div> <!-- /.links -->
+        </div>
+        <div class="column">
+            <h3>Support</h3>
+            <div class="links">
+                <a href="https://www.mexbs.com/contact/">Contact</a>
+                <a href="https://www.mexbs.com/license/">License Agreement</a>
+                <a href="https://www.mexbs.com/privacy-policy/">Privacy Policy</a>
+            </div> <!-- /.links -->
+        </div>
+        <div class="column">
+            <h3>Social</h3>
+            <div class="social row">
+                <a href="https://www.facebook.com/mexbs/" target="_blank">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M28.8 0H3.2C1.44 0 0 1.44 0 3.2V28.8C0 30.56 1.44 32 3.2 32H28.8C30.56 32 32 30.56 32 28.8V3.2C32 1.44 30.56 0 28.8 0ZM27.2 3.2V8H24C23.04 8 22.4 8.64 22.4 9.6V12.8H27.2V17.6H22.4V28.8H17.6V17.6H14.4V12.8H17.6V8.8C17.6 5.76 20.16 3.2 23.2 3.2H27.2Z" fill="white"></path></svg>
+                </a>
+                <a href="https://twitter.com/mexbs" target="_blank">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M28.8 0H3.2C1.44 0 0 1.44 0 3.2V28.8C0 30.56 1.44 32 3.2 32H28.8C30.56 32 32 30.56 32 28.8V3.2C32 1.44 30.56 0 28.8 0ZM25.12 11.68C24.96 19.04 20.32 24.16 13.28 24.48C10.4 24.64 8.32 23.68 6.4 22.56C8.48 22.8801 11.2 22.0801 12.64 20.8C10.56 20.64 9.28 19.52 8.64 17.76C9.28 17.92 9.92 17.76 10.4 17.76C8.48 17.12 7.2 16 7.04 13.44C7.52 13.76 8.16 13.92 8.8 13.92C7.36 13.12 6.4 10.08 7.52 8.16C9.6 10.4 12.16 12.32 16.32 12.64C15.2 8.16 21.2801 5.76 23.6801 8.8C24.8001 8.64 25.6001 8.16 26.4001 7.84C26.0801 8.96 25.4401 9.6 24.6401 10.24C25.4401 10.08 26.2401 9.92 26.8801 9.6C26.72 10.4 25.92 11.04 25.12 11.68Z" fill="white"></path></svg>
+                </a>
+                <a href="https://www.linkedin.com/company/mexbs" target="_blank">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M28.8 0H3.2C1.44 0 0 1.44 0 3.2V28.8C0 30.56 1.44 32 3.2 32H28.8C30.56 32 32 30.56 32 28.8V3.2C32 1.44 30.56 0 28.8 0ZM9.6 27.2H4.8V12.8H9.6V27.2ZM7.2 10.08C5.6 10.08 4.32 8.8 4.32 7.2C4.32 5.6 5.6 4.32 7.2 4.32C8.8 4.32 10.08 5.6 10.08 7.2C10.08 8.8 8.8 10.08 7.2 10.08ZM27.2 27.2H22.4V18.72C22.4 17.4401 21.28 16.32 20 16.32C18.72 16.32 17.6 17.4401 17.6 18.72V27.2H12.8V12.8H17.6V14.72C18.4 13.44 20.16 12.48 21.6 12.48C24.64 12.48 27.2 15.04 27.2 18.08V27.2Z" fill="white"></path></svg>
+                </a>
+                <a href="https://www.youtube.com/channel/UCU0rjkBH4CzL_htP-VJznTg/" target="_blank">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.3333 16L13.3333 20V12L21.3333 16Z" fill="white"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M28.8 0H3.2C1.44 0 0 1.32 0 2.93333V29.0667C0 30.68 1.44 32 3.2 32H28.8C30.56 32 32 30.68 32 29.0667V2.93333C32 1.32 30.56 0 28.8 0ZM24 8H8C6.52724 8 5.33333 9.19391 5.33333 10.6667V21.3333C5.33333 22.8061 6.52724 24 8 24H24C25.4728 24 26.6667 22.8061 26.6667 21.3333V10.6667C26.6667 9.19391 25.4728 8 24 8ZM21.3333 16L13.3333 20V12L21.3333 16Z" fill="white"></path></svg>
+                </a>
+            </div> <!-- /.social -->
+        </div>
+    </div> <!-- /.row-top -->
+    <div class="row-bottom">© 2020 MexBS. All Rights Reserved.</div>
+</div> <!-- /.wrap -->
+</footer><script type="text/javascript">
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function(
+            $,
+            modal
+            ) {
+
+            var popupTpl = '<aside ' +
+            'class="modal-<%= data.type %> <%= data.modalClass %> ' +
+            '<% if(data.responsive){ %><%= data.responsiveClass %><% } %> ' +
+            '<% if(data.innerScroll){ %><%= data.innerScrollClass %><% } %>"'+
+            'data-role="modal"' +
+            'data-type="<%= data.type %>"' +
+            'tabindex="0">'+
+            '    <div data-role="focusable-start" tabindex="0"></div>'+
+            '    <div class="modal-inner-wrap"'+
+            'data-role="focusable-scope">'+
+            '    <div '+
+            'class="modal-content" '+
+            'data-role="content">' +
+            '<button '+
+            'class="action-close" '+
+            'data-role="closeBtn" '+
+            'type="button">'+
+             '<span><%= data.closeText %></span>' +
+             '</button>' +
+            '</div>'+
+            '   </div>'+
+            '   </aside>';
+
+            var modalOptions = {
+                type: 'popup',
+                responsive: false,
+                innerScroll: false,
+                buttons: [],
+                popupTpl: popupTpl,
+                modalClass: 'rule-popup',
+                closeText: 'X',
+                modalCloseBtnHandler: function(){
+                    this.closeModal();
+                    displayNextPopupAndSetCookie();
+                }
+            };
+
+            var popupIdExistsInArray = function(popupId, popupArray){
+                for(var i=0; i<popupArray.length; i++){
+                    if(popupArray[i]['id'] == popupId){
+                        return true;
+                    }
+                }
+                return false;
+            };
+
+            window.lastChainedDisplayedPopupIndex = 0;
+            window.popupsReponse = null;
+
+            var displayNextPopupAndSetCookie = function (){
+                var popupIndex = window.lastChainedDisplayedPopupIndex;
+
+                if(window.popupsReponse == null
+                    || ! (popupIndex in window.popupsReponse)){
+                    return;
+                }
+
+                var popupId = window.popupsReponse[popupIndex]['id'];
+                var popupHtml = window.popupsReponse[popupIndex]['html'];
+
+                var popupDisplayedCookieValue = $.cookie('rule_popup_displayed');
+                var displayedPopups = [];
+                if(popupDisplayedCookieValue != null){
+                    displayedPopups = popupDisplayedCookieValue.split(",");
+                }
+                window.lastChainedDisplayedPopupIndex = popupIndex + 1;
+
+                if($.inArray(popupId, displayedPopups) == -1){
+                    $(".rule-popup-modal-wrapper").html(popupHtml);
+                    $('.rule-popup-modal-wrapper').modal('openModal');
+                    displayedPopups.push(popupId);
+                    var popupDisplayedNewCookieValue = displayedPopups.join(",");
+                    $.cookie('rule_popup_displayed', popupDisplayedNewCookieValue);
+                }else{
+                    displayNextPopupAndSetCookie();
+                }
+            };
+
+            $(document).ready(function(){
+                $.ajax({
+                    url: "https://www.mexbs.com/additional_promotions/action/getRulePopup/",
+                    type: 'post',
+                    dataType: 'json',
+                    success: function (response) {
+                        if(!$.isEmptyObject(response)){
+                            window.popupsReponse = response;
+
+                            modal(modalOptions, $('.rule-popup-modal-wrapper'));
+                            displayNextPopupAndSetCookie();
+                        }
+                    }
+                });
+            });
+        }
+    );
+</script>
+<div class="rule-popup-modal-wrapper"></div><script type="text/javascript">
+    _linkedin_data_partner_id = "184689";
+</script><script type="text/javascript">
+    (function(){var s = document.getElementsByTagName("script")[0];
+        var b = document.createElement("script");
+        b.type = "text/javascript";b.async = true;
+        b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+        s.parentNode.insertBefore(b, s);})();
+</script>
+<noscript>
+    <img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=184689&fmt=gif" />
+</noscript></div>    
+
+<iframe name="_hjRemoteVarsFrame" title="_hjRemoteVarsFrame" id="_hjRemoteVarsFrame" src="./Developing on the Magento cloud - a step by step tutorial _ MexBS - Professional Magento 2 Extensions_files/box-d09a446edefba0dcce5d5143e1840e9a.html" style="display: none !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important;"></iframe></body></html>

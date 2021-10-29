@@ -1,1 +1,67 @@
 https://devdocs.magento.com/guides/v2.3/migration/migration-migrate-settings.html
+
+https://www.dotcomweavers.com/magento-2-migration-guide/
+
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\data-migration-tool\src\Migration\ResourceModel\Destination.php
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\data-migration-tool\src\Migration\App\Step\AbstractIntegrity.php :: 145 :: check
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\data-migration-tool\src\Migration\Step\Eav\Integrity\ClassMap.php
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\data-migration-tool\src\Migration\Reader\Map.php
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\data-migration-tool\src\Migration\Reader\ClassMap.php
+**********************************************
+
+1. Install Magento 2.4.3
+	curl -O https://MAG005720361:0422a00637872b1686331788452307b074b2ed83@www.magentocommerce.com/products/downloads/file/Magento-CE-2.4.3.tar.gz
+	
+	php bin/magento setup:install --base-url=https://m2.l-carb-shop.de/ \
+	--db-host=10.0.0.1 --db-name=m2_l_carb_shop_de --db-prefix=mage_ --db-user=gor --db-password=blauS66S \
+        --admin-firstname=Daniel --admin-lastname=Schaaf --admin-email=admin@gmail.com \
+	--admin-user=admin --admin-password=admin123! --language=de_DE \
+	--currency=EUR --timezone=Europe/Berlin --use-rewrites=1 \
+	--search-engine=elasticsearch7 --elasticsearch-host=localhost \
+	--elasticsearch-port=9200 --elasticsearch-index-prefix=lcarb-shop
+	
+	backup db
+2. Install Migration Tool
+	grep COMPOSER_AUTH
+	export COMPOSER_AUTH='{"http-basic":{"repo.magento.com": {"username": "faa0e4be60219d1d7dbfdb865c469b7e", "password": "babf0e55ee4c8f5d5c5176abdf90f8f8"}}}'
+	
+	composer config repositories.magento composer https://repo.magento.com
+	composer require magento/data-migration-tool:2.4.3
+3. Configure Migration Tool
+	app\code\Vendor\Migration\etc\opensource-to-opensource\1.9.2.1\config.xml
+	app\code\Vendor\Migration\etc\opensource-to-opensource\map-eav.xml
+	crypt_key should be from local.xml from magento 1.
+	
+	
+4. Migrate Settings
+		grant all PRIVILEGES on sub_l_carb_shop_de.* to 'gor'@'10.0.0.160' identified by 'blauS66S';
+		
+		php bin/magento migrate:settings -a /var/www/daniel_m2_lcarb_shop/app/code/Vendor/Migration/etc/opensource-to-opensource/1.9.2.1/config.xml
+		php bin/magento migrate:data -a /var/www/daniel_m2_lcarb_shop/app/code/Vendor/Migration/etc/opensource-to-opensource/1.9.2.1/config.xml
+		php bin/magento migrate:delta -a /var/www/daniel_m2_lcarb_shop/app/code/Vendor/Migration/etc/opensource-to-opensource/1.9.2.1/config.xml
+		
+		php bin/magento migrate:settings -a /var/www/m2.l-carb-shop.de/app/code/Vendor/Migration/etc/opensource-to-opensource/1.9.2.1/config.xml
+		mage_store_group
+		4 => group_crunchyx
+		5 => group_lcarbshopcom
+		6 => group_carb_handel
+		
+		truncate mage_log_url;
+		truncate mage_log_url_info;
+		truncate mage_log_visitor;
+		truncate mage_log_visitor_info;
+		truncate mage_log_quote;
+		truncate mage_log_customer;
+		
+		php bin/magento migrate:data -a /var/www/m2.l-carb-shop.de/app/code/Vendor/Migration/etc/opensource-to-opensource/1.9.2.1/config.xml
+		php bin/magento migrate:data -r -a /var/www/m2.l-carb-shop.de/app/code/Vendor/Migration/etc/opensource-to-opensource/1.9.2.1/config.xml
+		
+		php bin/magento indexer:reindex
+5. Migrate media
+	Copy media/catalog to pub/media/catalog
+	
+	php bin/magento catalog:images:resize
+	
+6. Delta
+
+	

@@ -26,7 +26,15 @@ php ./bin/magento setup:install --base-url=http://dev.m2crunchyx.de/ \
 	--search-engine=elasticsearch7 --elasticsearch-host=localhost \
 	--elasticsearch-port=9201
 	
-
+devm2.l-carb-shop.de	
+php ./bin/magento setup:install --base-url=http://devm2.l-carb-shop.de/ \
+	--db-host=localhost --db-name=daniel_m2_lcarb_shop --db-prefix=mage_ --db-user=magento --db-password=magento \
+        --admin-firstname=Daniel --admin-lastname=Schaaf --admin-email=admin@gmail.com \
+	--admin-user=admin --admin-password=admin123! --language=de_DE \
+	--currency=EUR --timezone=Europe/Berlin --use-rewrites=1 \
+	--search-engine=elasticsearch7 --elasticsearch-host=localhost \
+	--elasticsearch-port=9201 --elasticsearch-index-prefix=lcarb-shop
+	
 
 
 php bin\magento setup:install --base-url=http://www.magento241.com/ --db-host=localhost --db-name=magento241 --db-user=root --db-password= --admin-firstname=Adeel --admin-lastname=God --admin-email=admin@gmail.com --admin-user=admin --admin-password=admin123 --language=en_US --currency=USD --timezone=America/Chicago --use-rewrites=1
@@ -106,6 +114,7 @@ https://www.minitool.com/backup-tips/windows-defender-not-turning-on.html
 		 rm -rf pub/static/frontend/Pearl/weltpixel_custom_luxushair && rm -rf var/view_preprocessed/pub/static/frontend/Pearl/weltpixel_custom_luxushair
 		 rm -rf pub/static/frontend/Smartwave/porto_child && rm -rf var/view_preprocessed/pub/static/frontend/Smartwave/porto_child
 		 rm -rf pub/static/frontend/Olegnax/a2_child && rm -rf var/view_preprocessed/pub/static/frontend/Olegnax/a2_child
+		 rm -rf pub/static/frontend/Mgs/ninth && rm -rf var/view_preprocessed/pub/static/frontend/Mgs/ninth
 		 rm -rf pub/static/adminhtml/* && rm -rf pub/static/_cache/* && rm -rf pub/static/frontend/* && rm -rf pub/static/frontend/deployed_version.txt && rm -rf var/view_preprocessed/*
 		 ** rm -rf var/{cache,di,generation,page_cache,view_preprocessed}	
 		 ** find app/code pub/static app/etc var/generation var/di var/view_preprocessed vendor \( -type f -or -type d \) -exec chmod u-w {} \; && chmod o-rwx app/etc/env.php && chmod u+x bin/magento
@@ -133,6 +142,7 @@ php bin/magento cache:flush
 	  magento setup:static-content:deploy -f en_IE -t MageBig/martfury_lenehans
 	  magento setup:static-content:deploy -f nb_NO -t Pearl/weltpixel_custom_luxushair
 	  magento setup:static-content:deploy -f en_US -t Olegnax/a2_child
+	  magento setup:static-content:deploy -f en_GB -t Mgs/ninth
 	  
 	  php bin/magento se:s:d -f en_IE en_US --theme Magento/backend --area adminhtml
 	     Note: in this case, deploy mode shouldn't be developer 
@@ -1326,3 +1336,70 @@ DB Logger using env.php
         'query_time_threshold' => '0.001',
         'include_stacktrace' => 1
     ]
+--------------------------------------------
+get qty increments
+
+$product->getExtensionAttributes()->getStockItem()->getQtyIncrements()
+
+--------------------------------------------
+How to add the attribute to customer address
+	dhlaccount => in the form : adminhtml_customer_address, customer_address_edit, customer_register_address
+	>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	$eavConfig = Mage::getSingleton('eav/config');
+	foreach ($attributes as $attributeCode => $data) {
+		$attribute = $eavConfig->getAttribute('customer_address', $attributeCode);
+		$attribute->addData($data);
+		$usedInForms = array(
+			'adminhtml_customer_address',
+			'customer_address_edit',
+			'customer_register_address'
+		);
+		$attribute->setData('used_in_forms', $usedInForms);
+		$attribute->save();
+	}
+	
+	----------------------------------
+	E:\PHP\Daniel\webroot\app\code\core\Mage\Eav\Model\Resource\Attribute.php
+	protected function _afterSave(Mage_Core_Model_Abstract $object)
+    {
+        $forms      = $object->getData('used_in_forms');
+        $adapter    = $this->_getWriteAdapter();
+        if (is_array($forms)) {
+            $where = array('attribute_id=?' => $object->getId());
+            $adapter->delete($this->_getFormAttributeTable(), $where);
+
+            $data = array();
+            foreach ($forms as $formCode) {
+                $data[] = array(
+                    'form_code'     => $formCode,
+                    'attribute_id'  => (int)$object->getId()
+                );
+            }
+
+            if ($data) {
+                $adapter->insertMultiple($this->_getFormAttributeTable(), $data);
+            }
+        }
+	----------------------------------
+	insert  into `mage_customer_form_attribute`(`form_code`,`attribute_id`) values 
+	('adminhtml_customer_address',19),
+	('adminhtml_customer_address',20),
+	>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+----------------------------------------------
+	color swatch
+	
+	SELECT * FROM eav_attribute WHERE attribute_code='color'
+		>> attribute_id = 93, backend_type=int
+	SELECT * FROM catalog_product_entity_int WHERE attribute_id=93 AND row_id=65037
+		>> value_id=27
+	SELECT * FROM eav_attribute_option WHERE attribute_id=93
+		>> ...
+		>> option_id=27, sort_order=119
+	SELECT * FROM eav_attribute_option_value WHERE option_id=27
+		>> value_id=1958, value="WHITE"
+	SELECT * FROM eav_attribute_option_swatch WHERE option_id=27
+		>> swatch_id=13, type=3, value="#ffffff"
+----------------------------------------------
+Import / Export Products
+
+https://firebearstudio.com/blog/magento-2-import-and-export-guide-list.html

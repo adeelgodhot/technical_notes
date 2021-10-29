@@ -1,0 +1,401 @@
+define([
+    'jquery',
+    'Mexbs_Homepage/js/slick'
+], function ($, slick) {
+    'use strict';
+
+    let $selected = 0;
+
+    let $win_width = $(window).outerWidth(); //ширина окна
+
+
+    /* radio
+     ------------------------------------------------------- */
+    $('.js-radio').on('click', function(){
+
+        let $this = $(this);
+
+
+        let currentSelection = $this.parent().find(".js-radio.checked");
+        if(currentSelection.length){
+            if((currentSelection.attr("data-option-value") != 'undefined')
+                && (currentSelection.attr("data-option-value") != 'undefined')
+                && (currentSelection.attr("data-option-value") == $this.attr("data-option-value"))){
+                return;
+            }
+        }
+
+        let	$d = $this.data();
+        let	$wrap = $('#'+ $d.wrap);
+
+        if ($this.hasClass('disabled')) {
+            return false;
+        }
+
+        $wrap.data('value', $d.value).children('.js-radio').removeClass('checked');
+        $('input[type="hidden"][name="'+ $this.attr("data-attribute-id") +'"]').val($this.attr("data-option-value"));
+
+        if($this.text().indexOf("Enterprise") > -1){
+            $("div:contains('10 Hours')").click().find(".label-checkbox span").text(" FREE");
+            $("div:contains('10 Hours')").addClass("disabled");
+            var priceDiv = $("#product_addtocart_form .wrap-price .price");
+            var currentPrice = priceDiv.text().match(/\d+/);
+            priceDiv.text("$" + (parseInt(currentPrice)+100) + ".00");
+        }else{
+            $("div:contains('10 Hours')").removeClass("disabled");
+            $("div:contains('10 Hours')").click().find(".label-checkbox span").text(" +$100");
+            var priceDiv = $("#product_addtocart_form .wrap-price .price");
+            var currentPrice = priceDiv.text().match(/\d+/);
+            priceDiv.text("$" + (parseInt(currentPrice)-100) + ".00");
+        }
+
+        $this.addClass('checked');
+
+        return false;
+    });
+
+
+    /* checkbox
+     ------------------------------------------------------- */
+    $('.js-checkbox').on('click', function(){
+        let $this = $(this);
+
+        if ($this.hasClass('disabled')) {
+            return false;
+        }
+
+        if ($(this).hasClass('checked')) {
+            $this.removeClass('checked');
+        } else{
+            $this.addClass('checked');
+        }
+
+        var allChecked = [];
+
+        $('.js-checkbox.checked[data-option-id="' + $this.attr('data-option-id') + '"]').each(function(){
+            allChecked.push($(this).attr('data-option-value'));
+        });
+
+        var hiddenInout = $('input[type="hidden"][name="options['+ $this.attr('data-option-id') +'][]"]');
+        if(allChecked.length == 0){
+            hiddenInout.val('');
+        }else{
+            hiddenInout.val(allChecked.join(","));
+        }
+
+        if ($(this).hasClass('checked')) {
+            $("#"+$(this).attr('data-input-id')).val("1");
+        }else{
+            $("#"+$(this).attr('data-input-id')).val("0");
+        }
+
+
+        return false;
+    });
+
+    $(".change-password .js-checkbox").on('click', function(){
+        if($(this).hasClass("checked")){
+            $("#change_password").val("1");
+            $(".change-password-form-container").show();
+        }else{
+            $("#change_password").val("0");
+            $(".change-password-form-container").hide();
+        }
+    });
+
+    /* Показать / скрыть пароль
+     ------------------------------------------------------- */
+    $('.js-eye').on('click', function(){
+        let $this = $(this);
+        let $input = $this.prev('.input-field');
+
+        if ($this.parent().hasClass('eye-show')) {
+            $this.parent().removeClass('show');
+            $input.attr('type', 'password');
+        } else {
+            $this.parent().addClass('eye-show');
+            $input.attr('type', 'text');
+        }
+
+        return false;
+    });
+
+
+    /* Выпадающие списки
+     ------------------------------------------------------- */
+    $('.js-open-form-select').on('click', function(){
+
+        var $this = $(this);
+
+        if ($this.hasClass('open')) {
+            $this.removeClass('open');
+            $('.js-form-select').hide();
+            return false;
+        } else {
+            $('.js-form-select').hide();
+        }
+
+        $selected = $this; //открытый select в данный момент
+        $selected.addClass('open').next('.js-form-select').show();
+        return false;
+    });
+
+
+    $(function(){
+        $(document).click(function(event) {
+            if ($('.js-form-select').is(':visible')) {
+                if ($(event.target).closest('.js-form-select').length) { return; }
+                $('.js-form-select').hide().prev('.js-open-form-select').removeClass('open');
+                event.stopPropagation();
+            }
+        });
+    });
+
+
+    $('body').on('click','.js-option', function(){
+        let $this = $(this);
+        $('.js-form-select').hide();
+
+        if($selected != 0){
+            $selected.removeClass('open default');
+        }
+
+        var selectBox = $(this).closest(".select").find(".js-open-form-select");
+        selectBox.children('span').text($this.text());
+        selectBox.addClass("selected");
+        selectBox.removeClass("default");
+
+        var countryIdChanged = false;
+        if(($(this).parent().attr("data-input-id") == "country_id")
+            && ($(this).attr("data-value") != $("#country_id").val())){
+            countryIdChanged = true;
+        }
+
+        $("#"+$(this).parent().attr("data-input-id")).val($(this).attr("data-value"));
+
+        if(countryIdChanged){
+            $(document).trigger('countryIdChanged');
+        }
+
+
+
+        return false;
+    });
+
+
+    /* добавления / вычитание на 1
+     ------------------------------------------------------- */
+    $('.js-one').on('click', function(){
+        let $d = $(this).data();
+        let	$countDesktop = $('#js-cart-amount'+ $d.id+ '-itm');
+        let	$countMobile = $('#js-cart-amount'+ $d.id+ '-m');
+        let	$count_val = parseInt($countDesktop.text()); //количество единиц отдельного товара
+
+        if ($d.action === 'add') {
+            $count_val ++;
+        } else {
+            $count_val --;
+
+            if ($count_val === 0) {
+                return false;
+            }
+        }
+
+        //количество единиц отдельного товара
+        $("#"+$countDesktop.attr("data-input-id")).val($count_val);
+        $countDesktop.text($count_val);
+        $countMobile.text($count_val);
+
+        return false;
+    });
+
+
+    /* Показать скрытый блок
+     ------------------------------------------------------- */
+    $('.js-show-hidden').on('click', function(){
+        var $this = $(this),
+            $container = $($this.data('hidden'));
+
+        if ($this.hasClass('active')) {
+            $this.removeClass('active');
+            $container.addClass('hidden');
+        } else {
+            $this.addClass('active');
+            $container.removeClass('hidden');
+        }
+
+        return false;
+    });
+
+
+    /* Показать полное описание
+     ------------------------------------------------------- */
+    $('.js-full-review').on('click', function(){
+        var $this = $(this),
+            $container = $($this.data('full'));
+
+        if ($this.hasClass('active')) {
+            $this.removeClass('active').children('span').text('Show full review');
+            $container.removeClass('full');
+        } else {
+            $this.addClass('active').children('span').text('Hide full review');
+            $container.addClass('full');
+        }
+
+        return false;
+    });
+
+
+    /* Слайдер
+     ------------------------------------------------------- */
+    $('#js-slick1').slick({
+        dots: true, //показывать точки
+        appendDots: $('#js-dots1'), //блок где будут размещены точки
+        //обнуляем стандартный шаблон точек
+        customPaging: function() {
+            return '';
+        },
+        prevArrow: $('#js-prev1'), //кнопка назад
+        nextArrow: $('#js-next1'), //кнопка вперед
+        slidesToShow: 1, //показывать слайдов
+        slidesToScroll: 1, //прокручивать слайдов
+        speed: 700, //скорость анимации изменения слайда
+        autoplay: false,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    arrows: false
+                }
+            },
+        ]
+    });
+
+
+    /* Слайдер
+     ------------------------------------------------------- */
+    if($win_width > 750) {
+        $('.js-slider2').each(function(){
+            let $this = $(this);
+
+            $this.find('.js-slick2').slick({
+                dots: true, //показывать точки
+                appendDots: $this.find('.js-dots2'), //блок где будут размещены точки
+                //обнуляем стандартный шаблон точек
+                customPaging: function() {
+                    return '';
+                },
+                prevArrow: $this.find('.js-prev2'), //кнопка назад
+                nextArrow: $this.find('.js-next2'), //кнопка вперед
+                slidesToShow: 1, //показывать слайдов
+                slidesToScroll: 1, //прокручивать слайдов
+                speed: 700, //скорость анимации изменения слайда
+                autoplay: false,
+                responsive: [
+                    {
+                        breakpoint: 1366,
+                        settings: {
+                            arrows: false
+                        }
+                    },
+                ]
+            });
+
+        });
+    }
+
+
+    /* Оценка
+     ------------------------------------------------------- */
+    $('.js-rating-point').on('click', function(){
+        let $this = $(this);
+        let $wrap = $this.parent();
+
+        $wrap.children('.js-rating-point').removeClass('filling');
+        $this.addClass('filling').prevAll().addClass('filling');
+        return false;
+    });
+
+
+    /* Переключение картинок
+     ------------------------------------------------------- */
+    /*
+    $('.js-preview').on('click', function(){
+        let $this = $(this);
+        let	$d = $this.data();
+
+        $('#js-wrap-preview'+ $d.num).children('.js-preview').removeClass('active');
+        $this.addClass('active');
+        $('#js-img-big'+ $d.num).attr('src', $this.attr("src"));
+    });
+    */
+
+
+    /* Открыть popup
+     ------------------------------------------------------- */
+    $('.js-popup-open').click(function () {
+
+        let $popup = $($(this).data('popupId'));
+
+        $('.js-popup').removeClass('open');
+        $popup.addClass('open');
+
+        return false;
+    });
+
+
+    /* Закрыть popup при клике вне его зоны
+     ------------------------------------------------------- */
+    $(function(){
+        $(document).on('click touchstart', function(event) {
+            if ($('.js-popup').filter('.open').length) {
+                if ($(event.target).closest('.js-popup').length) { return; }
+                $('.js-popup').removeClass('open');
+                event.stopPropagation();
+            }
+        });
+    });
+
+
+    /* Модальное окно subscribe
+     ------------------------------------------------------- */
+    $('#js-subscribe').on('click', function(){
+        $('#page').addClass('form-open');
+        $('#js-modal-subscription-success').show().removeClass('bounceOutDown').addClass('bounceInUp');
+        return false;
+    });
+
+
+    $('#page').on('click', '.js-close', function(){
+        closeModal();
+        return false;
+    });
+
+
+    $(document).click(function(event) {
+        if ($('.fs-box1').is(':visible')) {
+            if ($(event.target).closest('.js-form').length) { return; }
+            closeModal();
+            event.stopPropagation();
+        }
+    });
+
+
+    function closeModal() {
+        let $modal = $('.fs-box1:visible');
+        $modal.removeClass('bounceInUp').addClass('bounceOutDown');
+        setTimeout(function() {
+            $modal.hide();
+            $('#page').removeClass('form-open');
+        }, 700);
+    }
+
+
+    /* Ширина баннера
+     ------------------------------------------------------- */
+    if ($('#js-banner').length) {
+        let $banner_width = $('body').innerWidth();
+        let $scroll_width = $win_width - $('body').innerWidth();
+        $('#js-banner').width($banner_width).css('margin-left', - $scroll_width);
+    }
+});

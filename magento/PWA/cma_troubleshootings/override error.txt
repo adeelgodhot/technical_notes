@@ -1,0 +1,155 @@
+Kevin May 20th at 11:59 AM
+Hi @Reinis, on scandipwa 4.4.0, I follow this guide to create a Header override, but failed to compile, can you help?
+src/component/Header/Header.component.js
+  Line 1:1:    Run autofix to sort these imports!                                                                     simple-import-sort/sort
+  Line 11:8:   Namespace for this node is not valid! Consider changing it to hcApp/Component/Header/Component/Header  @scandipwa/scandipwa-guidelines/use-namespace
+  Line 11:14:  Class name must be derived from the file name, using postfix                                           @scandipwa/scandipwa-guidelines/derived-class-names
+docs.scandipwa.comdocs.scandipwa.com
+Overriding JavaScript
+Override JavaScript files using the ScandiPWA Override Mechanism
+19 replies
+
+Kevin  5 months ago
+this is my code
+import { Header as SourceHeader } from 'SourceComponent/Header/Header.component';
+import Link from 'Component/Link';
+import OfflineNotice from 'Component/OfflineNotice';
+
+import {
+    CART_OVERLAY,
+    CUSTOMER_WISHLIST
+} from 'Component/Header/Header.config';
+
+/** @namespace Component/Header/Component */
+export class Header extends SourceHeader {
+    renderLogo(isVisible = false) {
+        const { isLoading } = this.props;
+
+        if (isLoading) {
+            return null;
+        }
+
+        return (
+            <Link
+              to="/"
+              aria-label="Go to homepage by clicking on logo"
+              aria-hidden={ !isVisible }
+              tabIndex={ isVisible ? 0 : -1 }
+              block="Header"
+              elem="LogoWrapper"
+              mods={ { isVisible } }
+              key="logo"
+            >
+                { this.renderLogoImage() }
+            </Link>
+        );
+    }
+
+    render() {
+        const { stateMap } = this;
+        const {
+            navigationState: { name, isHiddenOnMobile = false },
+            isCheckout,
+            device
+        } = this.props;
+
+        if (!device.isMobile) {
+            // hide edit button on desktop
+            stateMap[CUSTOMER_WISHLIST].edit = false;
+            stateMap[CART_OVERLAY].edit = false;
+        }
+
+        return (
+            <section block="Header" elem="Wrapper">
+                <header
+                  block="Header"
+                  mods={ { name, isHiddenOnMobile, isCheckout } }
+                  mix={ { block: 'FixedElement', elem: 'Top' } }
+                  ref={ this.logoRef }
+                >
+                    { /* this.renderTopMenu() */ }
+                    <nav block="Header" elem="Nav">
+                        { this.renderNavigationState() }
+                    </nav>
+                    { this.renderMenu() }
+                </header>
+                <OfflineNotice />
+            </section>
+        );
+    }
+}
+
+export default Header;
+(edited)
+
+Reinis  5 months ago
+Hi, you are running into eslint errors, mostly related to code style. I am working on making these errors easier to understand.
+
+Reinis  5 months ago
+Import sorting: In scandi, other component imports should go first, then imports specific to this component
+
+Reinis  5 months ago
+so Component/Link and Component/OfflineNotice import should go after SourceComponent/Header/Header.component, but before Component/Header/Header.config. you can run eslint fix to autofix this
+
+Reinis  5 months ago
+2. as the message states, you need to change the namespace:
+/** @namespace hcApp/Component/Header/Component/Header **/
+
+Reinis  5 months ago
+3. if the filename is Header.component.js, the class name needs to be HeaderComponent . some tutorials are outdated and use the wrong name
+
+Reinis  5 months ago
+after 3 you will also need to update the namespace again
+
+Kevin  5 months ago
+how to run eslint fix to autofix the imports?
+
+Reinis  5 months ago
+check eslint docs
+
+Reinis  5 months ago
+eslint --fix i think
+
+Kevin  5 months ago
+got it, thanks
+
+Kevin  5 months ago
+I encounter another eslint error
+src/component/Link/Link.component.js
+  Line 45:22:  Prop spreading is forbidden  @scandipwa/scandipwa-guidelines/jsx-no-props-destruction
+how to solve this? (edited) 
+
+Reinis  5 months ago
+i would need to see the line of code that is causing the issue
+
+Reinis  5 months ago
+it sounds like you're using the spread operator ... for props, which is discouraged, because it's not clear what props are passed
+
+Reinis  5 months ago
+if you copied that code from scandi source, most likely you can ignore the warning with something similar to:
+// eslint-disable-line  @scandipwa/scandipwa-guidelines/jsx-no-props-destruction
+
+Kevin  5 months ago
+ya, I copy the render function of Link.component from source
+i tried added // eslint-disable-line @scandipwa/scandipwa-guidelines/jsx-no-props-destruction, but still showing the error
+        return (
+            <RouterLink
+              // eslint-disable-line @scandipwa/scandipwa-guidelines/jsx-no-props-destruction
+              { ...props }
+              to={ to }
+              // eslint-disable-next-line react/forbid-component-props
+              className={ classNameConverted }
+            >
+                { children }
+            </RouterLink>
+        );
+
+Reinis  5 months ago
+if you want to add it on the same line, use eslint-disable-line
+you added it on the previous line, so use eslint-disable-next-line
+
+Reinis  5 months ago
+you're on the right track!
+
+Kevin  5 months ago
+got it, thanks

@@ -1,0 +1,17 @@
+aside.modal-popup.rule-popup .modal-content{
+    padding: 0;
+}
+aside..modal-popup.rule-popup{
+    display:none;
+}
+aside.modal-popup .modal-inner-wrap{
+    width: 45%;
+}
+aside.modal-popup.rule-popup .rule-popup-modal-wrapper img{
+    display: block;
+}
+@media only screen and (max-width: 768px){
+    aside.modal-popup .modal-inner-wrap {
+        width: 75%;
+    }
+}

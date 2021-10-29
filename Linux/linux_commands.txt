@@ -128,6 +128,23 @@ https://cloudwafer.com/blog/installing-multiple-versions-of-php-on-ubuntu/
 	B. enable the version you need using the a2enmod command and lastly, restart the Apache webserver.
 		sudo apt-get install libapache2-mod-php7.4
 		a2enmod php7.4
+		
+	--------------------------
+	Switch from 7.4 to 7.3
+	sudo systemctl stop php7.4-fpm
+	sudo systemctl stop php7.3-fpm
+	sudo a2dismod php7.4
+	sudo a2enmod php7.3
+	sudo systemctl restart apache2
+	php7.3 bin/magento c:c
+	
+	Switch from 7.3 to 7.4
+	sudo systemctl stop php7.3-fpm
+	sudo systemctl stop php7.4-fpm
+	sudo a2dismod php7.3
+	sudo a2enmod php7.4
+	sudo systemctl restart apache2
+    --------------------------	
 *********************************************
 	Install Apache Modules
 		1.List available Apache modules: sudo apt-cache search libapache2*
@@ -136,12 +153,6 @@ https://cloudwafer.com/blog/installing-multiple-versions-of-php-on-ubuntu/
 
         apt-get install libapache2-mod-security2	
 **************************************************
-********** composer install ***********
-1. apt install composer
-2. which composer
-3. php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-4. php composer-setup.php --install-dir /usr/bin --filename composer
-   or php composer-setup.php --install-dir=/usr/bin --filename=composer --version=1.10.6
  ------------------------------
   ***adding remote user to mysql database 
 			create database lenehans_live226;
@@ -178,9 +189,20 @@ https://cloudwafer.com/blog/installing-multiple-versions-of-php-on-ubuntu/
 		   grant all PRIVILEGES on datacom_new.* to 'datacom_au'@'localhost' identified by 'E2.J70qK4Pj_qor1R1cxXUF,';
 		   grant all PRIVILEGES on lenehans_live226.* to 'lenehans_v3'@'localhost' identified by 'aR@6@V8%ox+@';
 		   
+		   grant all PRIVILEGES on daniel_m2_lcarb_shop.* to 'magento'@'localhost' identified by 'magento';
+		   grant all PRIVILEGES on daniel_m2_lcarb_shop.* to 'magento'@'10.10.11.1' identified by 'magento';
+		   
+		   grant all PRIVILEGES on daniel.* to 'magento'@'localhost' identified by 'magento';
+		   grant all PRIVILEGES on daniel.* to 'root'@'10.10.11.80' identified by '';
+		   
+		   grant all PRIVILEGES on clan.* to 'magento'@'localhost' identified by 'magento';
+		   grant all PRIVILEGES on clan.* to 'magento'@'10.10.11.1' identified by 'magento';
+		   
 		   From Mysql8.0, GRANT ALL PRIVILEGES ON magento.* TO 'magento'@'localhost';
 		   flush privileges;
 		   
+		   It’s crucial to refresh the privileges once new ones have been awarded with the command in MariaDB:
+				FLUSH PRIVILEGES;
 		   SHOW GRANTS
           **********************************************
 		   select user,host from mysql.user;
@@ -545,10 +567,6 @@ sudo apt-get install varnish
   netstat -tulpn
 ------------ gzip checking ---------
 curl -v --compressed https://magento-497627-1598867.cloudwaysapps.com/ > /dev/null
----------------- add repo composer -------------
-
-composer config repositories.repo-name vcs https://github.com/magesuite/magesuite/repo
-
 
 -------------------------------------------------
 ----------------------- mysql definer problem ---------------
@@ -594,7 +612,7 @@ ServerName localhost
        **************************************
        Find the web server user’s group
        
-       Ubuntu: ps aux | grep apache to find the apache user, then groups <apache user> to find the group.
+       Ubuntu: "ps aux | grep apache" to find the apache user, then "groups <apache user>" to find the group.
        Typically, the username and the group name are both www-data.
       *************************************************
       Put the Magento file system owner in the web server’s group
@@ -627,6 +645,41 @@ ServerName localhost
 	find var generated vendor pub/static pub/media app/etc -type d -exec chmod g+ws {} +
 	chown -R :<web server group> .
 	chmod u+x bin/magento
+	 u+x will make file executable for the user
+		>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		https://ftp.kh.edu.tw/Linux/Redhat/en_6.2/doc/gsg/s1-navigating-chmodnum.htm
+		r = 4
+
+		w = 2
+
+		x = 1
+
+		- = 0
+		 -  (rw-)   (rw-)  (r--)
+			  |       |      |
+			4+2+0   4+2+0  4+0+0
+		Here's a list of some common settings, numerical values and their meanings:
+
+		-rw------- (600) -- Only the user has read and write permissions.
+
+		-rw-r--r-- (644) -- Only user has read and write permissions; the group and others can read only.
+
+		-rwx------ (700) -- Only the user has read, write and execute permissions.
+
+		-rwxr-xr-x (755) -- The user has read, write and execute permissions; the group and others can only read and execute.
+
+		-rwx--x--x (711) -- The user has read, write and execute permissions; the group and others can only execute.
+
+		-rw-rw-rw- (666) -- Everyone can read and write to the file. Bad idea.
+
+		-rwxrwxrwx (777) -- Everyone can read, write and execute. Another bad idea.
+
+		Here are a couple common settings for directories:
+
+		drwx------ (700) -- Only the user can read, write in this directory.
+
+		drwxr-xr-x (755) -- Everyone can read the directory, but its contents can only be changed by the user.
+
       ************************************
 	  
 	  groups
@@ -691,18 +744,7 @@ find /path/to/file/ -iname filename
  find php.ini
 find / -name php.ini 2>/dev/null 
 
-----------------------------------------
-   composer
-   php -d memory_limit=-1 composer.phar --no-plugins
-   php -dmemory_limit=5G composer update
-   /usr/local/php70/bin/php-cli /home/customer/www/store.clan.it/composer.phar
-   /usr/local/php71/bin/php-cli -dmemory_limit=5G /home/customer/www/store.clan.it/composer.phar update
-   /usr/local/php70/bin/php /home/customer/www/store.clan.it/composer.phar update
-   ./php -d memory_limit=-1 /home/customer/www/store.clan.it/composer.phar 
- ----------------------------------------
- composer downgrading
- https://community.magento.com/t5/Magento-2-x-Version-Upgrades/Can-t-upgrade-to-magento-enterprise-2-4-2-p1/td-p/475425
- composer self-update 1.10.12
+
  ----------------------------------------
  extract .tar
  tar -xvf .tar 
@@ -759,6 +801,22 @@ sudo systemctl restart ssh
    ssh-keygen
    
 ------------------------------------------------------
+REMOTE SSH Connection IN Ubuntu
+
+Adding your SSH key to the ssh-agent
+	Before adding a new SSH key to the ssh-agent to manage your keys, you should have checked for existing SSH keys and generated a new SSH key.
+	Start the ssh-agent in the background.
+
+	$ eval "$(ssh-agent -s)"
+		> Agent pid 59566
+	Depending on your environment, you may need to use a different command. For example, you may need to use root access by running sudo -s -H before starting the ssh-agent, or you may need to use exec ssh-agent bash or exec ssh-agent zsh to run the ssh-agent.
+
+	Add your SSH private key to the ssh-agent. If you created your key with a different name, or if you are adding an existing key that has a different name, replace id_ed25519 in the command with the name of your private key file.
+	$ ssh-add ~/.ssh/id_ed25519
+	
+	Add the SSH key to your account on GitHub. For more information, see "Adding a new SSH key to your GitHub account."
+
+---------------------------------------------
 check folder owner/group
 ls -l {folder} 
 -rw-r--r--
@@ -920,3 +978,35 @@ check process running commands
 
 ps -fU $(whoami)
 ------------------------------
+set java home
+
+	To display JAVA_HOME variable path, run this command 
+		echo $JAVA_HOME
+	If nothing appears then follow the below steps:
+
+	To see all the java versions installed in Ubuntu, use this command:
+	sudo update-alternatives --config java
+
+	Set your java path using this. - 
+		export JAVA_HOME=<YOUR-JAVA-PATH>
+		
+-------------------------------
+trouble shooting "unable to acquire the dpkg frontend lock"		
+
+https://pingvinus.ru/note/dpkg-lock
+
+	1. ps aux | grep -i apt
+		>>>>>>>>>>>>>>>>>
+	    root 9425 0.0 0.0 79516 3752 pts/1 S+ 10:31 0:00 sudo apt-get install inkscape
+		pingvin+ 9456 0.0 0.0 38892 944 pts/0 S+ 10:32 0:00 grep --color=auto -i apt
+		>>>>>>>>>>>>>>>>>
+		sudo kill -9 9425
+	2. If the first method did not help you
+	  We need to delete all lock files. To do this, run the commands:
+
+		sudo rm /var/lib/apt/lists/lock
+		sudo rm /var/cache/apt/archives/lock
+		sudo rm /var/lib/dpkg/lock
+		sudo rm /var/lib/dpkg/lock-frontend
+		
+		sudo dpkg --configure -a

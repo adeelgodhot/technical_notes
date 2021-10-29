@@ -1,0 +1,24 @@
+1. Source fields are not mapped. Document: catalog_eav_attribute. Fields
+	a. create map_eav.xml
+	b. source->field_rules
+			<ignore>
+                <field>catalog_eav_attribute.is_visible_on_checkout</field>
+            </ignore>
+2. 	Incompatibility in data. Source document: eav_attribute. Field: backend_model. Error: Class customerit/entity_address_attribute_backend_customertype is not mapped in record attribute_id=153
+	Add this in your vendor/magento/data-migration-tool/etc/opensource-to-opensource/class-map.xml. Ensure that class-map.xml is specified correctly in config.xml
+
+	<rename>
+			<from>ultramegamenu/category_attribute_source_dropdown_type</from>
+			<to></to>
+	</rename>
+3. SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '4-' for key 'MAGE_EAV_ATTRIBUTE_GROUP_ATTRIBUTE_SET_ID_ATTRIBUTE_GROUP_CODE'
+4. SQLSTATE[08S01]: Communication link failure: 1153 Got a packet bigger than 'max_allowed_packet' bytes
+	Change in the my.ini or ~/.my.cnf file by including the single line under [mysqld] or [client] section in your file:
+
+	max_allowed_packet=512M
+	
+	SHOW VARIABLES LIKE '%max%';
+	
+	set global net_buffer_length = 1000000;
+	set global max_allowed_packet = 1000000000;
+5.

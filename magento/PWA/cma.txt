@@ -1,0 +1,138 @@
+https://docs.scandipwa.com/getting-started-1/magento-theme-mode
+
+1. Install node
+
+  sudo apt update
+  curl -fsSL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+  sudo apt-get install -y nodejs
+2.Linux requirements
+  A. Install platform-specific dependencies
+    Since magento-scripts 1.4.0 CMA will also check installed dependencies before starting the application, and if they are missing will provide instructions on how to install them!
+ 
+	sudo apt-get install \
+    libcurl4-openssl-dev \
+    libonig-dev \
+    libjpeg-dev \
+    libjpeg8-dev \
+    libjpeg-turbo8-dev \
+    libpng-dev \
+    libicu-dev \
+    libfreetype6-dev \
+    libzip-dev \
+    libssl-dev \
+    build-essential \
+    libbz2-dev \
+    libreadline-dev \
+    libsqlite3-dev \
+    libssl-dev \
+    libxml2-dev \
+    libxslt1-dev \
+    libonig-dev \
+    php-cli \
+    php-bz2 \
+    pkg-config \
+    autoconf \
+    libsodium-dev
+   B. Install Docker
+		# Download installation script
+		curl -fsSL https://get.docker.com -o get-docker.sh
+		
+		# Run installation script
+		sudo bash get-docker.sh
+		
+		# Add your user to the “docker” group to run docker without root.
+		sudo usermod -aG docker $USER
+		
+		# After that you'll need to logout and login to your account or,
+		# you can temporarily enable group changes by running command below
+		newgrp docker
+    C. Install PHPBrew
+		Since magento-scripts@1.7.0 this part will be done automatically.
+		
+		# Download PHPBrew
+		curl -L -O https://github.com/phpbrew/phpbrew/releases/latest/download/phpbrew.phar
+		
+		# Make it executable
+		chmod +x phpbrew.phar
+		
+		# Move PHPBrew binary to system folder.
+		sudo mv phpbrew.phar /usr/local/bin/phpbrew
+		
+		# Initialize PHPBrew
+		phpbrew init
+		
+		>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		<=====================================================>
+		Phpbrew environment is initialized, required directories are created under
+
+			/home/ubuntu/.phpbrew
+
+		Paste the following line(s) to the end of your ~/.bashrc and start a
+		new shell, phpbrew should be up and fully functional from there:
+
+			source /home/ubuntu/.phpbrew/bashrc
+
+		To enable PHP version info in your shell prompt, please set PHPBREW_SET_PROMPT=1
+		in your `~/.bashrc` before you source `~/.phpbrew/bashrc`
+
+			export PHPBREW_SET_PROMPT=1
+
+		To enable .phpbrewrc file searching, please export the following variable:
+
+			export PHPBREW_RC_ENABLE=1
+
+
+		For further instructions, simply run `phpbrew` to see the help message.
+
+		Enjoy phpbrew at $HOME!!
+		>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    D. Prepare the environment
+		D.1 Use auth.json
+			>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			Some projects have different authentication keys for repositories, so you can use auth.json file in the root of your project and put credentials inside this file.
+			CMA will handle everything from here.
+			>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		D.2 Use COMPOSER_AUTH environmental variable
+		
+			export COMPOSER_AUTH='{"http-basic":{"repo.magento.com": {"username": "faa0e4be60219d1d7dbfdb865c469b7e", "password": "babf0e55ee4c8f5d5c5176abdf90f8f8"}}}'
+			add it to .bashrc
+3. Creating an App
+	npx create-magento-app app-backend
+	
+    cma.json
+	change port
+		/var/www/cma/app-backend/node_modules/.create-magento-app-cache/port-config.json
+
+
+	cd my-app & npm run start -- --debug
+	npm run stop
+4. npx create-scandipwa-app my-app
+5. Link Magento App with ScandiPWA 
+	The Create Magento App (CMA) comes with a built-in mechanism for ScandiPWA theme linking. 
+	In order to link a ScandiPWA theme with CMA project, execute the following command from CMA project root:
+	
+	npm run link -- /var/www/cma/my-app
+6. Run ScandiPWA App in Magento mode
+	Run the command below from your ScandiPWA App directory:
+	
+	BUILD_MODE=magento npm run start
+	
+	This command will now watch the files and put their compiled versions into the magento/Magento_Theme folder.
+7. Change Magento theme to ScandiPWA
+	Go to your Magento Admin panel (by default it can be accessed on /admin), Content > Configuration, 
+	choose a website that you want to apply theme on, click Edit and select your theme, click Save!
+	
+	Open your store URL and the ScandiPWA theme should be online.
+	
+8. ScandiPWA CLI
+	https://docs.scandipwa.com/developing-with-scandi/developer-tools/scandipwa-cli
+	sudo chown -R ubuntu:ubuntu /usr/lib/node_modules
+	npm i -g scandipwa-cli
+	
+	https://docs.create-magento-app.com/getting-started/available-commands/cli
+	Opens a new instance of Bash with aliases for PHP, Composer and Magento used in Create Magento App project.
+	npm run cli
+	php -v
+9. create extension
+
+   https://docs.scandipwa.com/developing-with-scandi/extensions/creating-an-extension

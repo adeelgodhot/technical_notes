@@ -1,0 +1,22 @@
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+define([
+    'jquery',
+    'matchMedia',
+], function ($, mediaCheck) {
+    'use strict';
+
+    mediaCheck({
+        media: '(min-width: 768px)',
+        // Switch to Desktop Version
+        entry: function () {
+
+        },
+        // Switch to Mobile Version
+        exit: function () {
+        }
+    });
+});

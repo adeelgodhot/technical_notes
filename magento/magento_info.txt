@@ -367,3 +367,63 @@ SELECT `main_table`.`attribute_id`, `main_table`.`entity_type_id`, `main_table`.
  
  SELECT `layout_update`.`xml`, `layout_update`.`handle` FROM `layout_update`
  INNER JOIN `layout_link` AS `link` ON link.layout_update_id=layout_update.layout_update_id WHERE (link.store_id IN (0, 4)) AND (link.theme_id = 18) AND (link.is_temporary = 0) ORDER BY `layout_update`.`sort_order` ASC
+
+ ---------------------------------------------------------------------
+ Catalog product import
+ 
+ E:\PHP\Clan\site\vendor\magento\module-catalog-import-export\Model\Import\Product.php 
+	1552 :: _saveProducts 
+	1510 :: getImagesFromRow
+	1741 :: 
+	2103 :: _getUploader
+ E:\PHP\Clan\site\vendor\magento\module-catalog-import-export\Model\Import\Uploader.php
+	187
+ E:\PHP\Clan\site\vendor\magento\framework\File\Uploader.php
+	240
+	403 :: getCorrectFileName
+			=> 410
+			>>>>>>>>>>>>>>>>>>>>
+				if (strlen($fileInfo['basename']) > 36) {
+					//throw new \InvalidArgumentException('Filename is too long; must be 90 characters or less');
+					throw new \InvalidArgumentException('something went wrong');
+				}
+			>>>>>>>>>>>>>>>>>>>>>
+			
+--------------------------------------------
+Aggregate Sales Order Report
+
+E:\PHP\Rashed\calvo_docker\Calvo-Store\src\vendor\magento\module-sales\Model\ResourceModel\Report\Order\Createdat.php
+E:\PHP\Rashed\calvo_docker\Calvo-Store\src\vendor\magento\module-reports\Model\ResourceModel\Order\Collection.php
+E:\PHP\Rashed\calvo_docker\Calvo-Store\src\vendor\magento\module-sales\etc\crontab.xml
+
+E:\PHP\Rashed\calvo_docker\Calvo-Store\src\vendor\magento\module-sales\Model\CronJob\AggregateSalesReportOrderData.php
+E:\PHP\Rashed\calvo_docker\Calvo-Store\src\vendor\magento\module-sales\Model\ResourceModel\Report\Order.php
+
+	>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	SELECT DISTINCT  DATE(DATE_ADD(`date_range_table`.`created_at`, INTERVAL 14400 SECOND)) FROM `sales_order` AS `date_range_table` WHERE (date_range_table.created_at >= '2021-10-20 12:01:06')
+	
+	SELECT `sales_order_aggregated_created`.`period`, 0 AS `store_id`, `sales_order_aggregated_created`.`order_status`, SUM(orders_count) AS `orders_count`, SUM(total_qty_ordered) AS `total_qty_ordered`, SUM(total_qty_invoiced) AS `total_qty_invoiced`, SUM(total_income_amount) AS `total_income_amount`, SUM(total_revenue_amount) AS `total_revenue_amount`, SUM(total_profit_amount) AS `total_profit_amount`, SUM(total_invoiced_amount) AS `total_invoiced_amount`, SUM(total_canceled_amount) AS `total_canceled_amount`, SUM(total_paid_amount) AS `total_paid_amount`, SUM(total_refunded_amount) AS `total_refunded_amount`, SUM(total_tax_amount) AS `total_tax_amount`, SUM(total_tax_amount_actual) AS `total_tax_amount_actual`, SUM(total_shipping_amount) AS `total_shipping_amount`, SUM(total_shipping_amount_actual) AS `total_shipping_amount_actual`, SUM(total_discount_amount) AS `total_discount_amount`, SUM(total_discount_amount_actual) AS `total_discount_amount_actual` FROM `sales_order_aggregated_created` WHERE (store_id <> 0) AND (1=0) GROUP BY `period`,
+	`order_status`
+	
+	SELECT DATE(DATE_ADD(`o`.`created_at`, INTERVAL 14400 SECOND)) AS `period`, `o`.`store_id`, `o`.`status` AS `order_status`, COUNT(o.entity_id) AS `orders_count`, SUM(oi.total_qty_ordered) AS `total_qty_ordered`, SUM(oi.total_qty_invoiced) AS `total_qty_invoiced`, SUM((IFNULL(o.base_grand_total, 0) - IFNULL(o.base_total_canceled, 0)) * IFNULL(o.base_to_global_rate, 0)) AS `total_income_amount`, SUM((IFNULL(o.base_total_invoiced, 0) - IFNULL(o.base_tax_invoiced, 0) - IFNULL(o.base_shipping_invoiced, 0) - (IFNULL(o.base_total_refunded, 0) - IFNULL(o.base_tax_refunded, 0) - IFNULL(o.base_shipping_refunded, 0))) * IFNULL(o.base_to_global_rate, 0)) AS `total_revenue_amount`, SUM((IFNULL(o.base_total_paid, 0) - IFNULL(o.base_total_refunded, 0) - IFNULL(o.base_tax_invoiced, 0) - IFNULL(o.base_shipping_invoiced, 0) - IFNULL(o.base_total_invoiced_cost, 0)) * IFNULL(o.base_to_global_rate, 0)) AS `total_profit_amount`, SUM(IFNULL(o.base_total_invoiced, 0) * IFNULL(o.base_to_global_rate, 0)) AS `total_invoiced_amount`, SUM(IFNULL(o.base_total_canceled, 0) * IFNULL(o.base_to_global_rate, 0)) AS `total_canceled_amount`, SUM(IFNULL(o.base_total_paid, 0) * IFNULL(o.base_to_global_rate, 0)) AS `total_paid_amount`, SUM(IFNULL(o.base_total_refunded, 0) * IFNULL(o.base_to_global_rate, 0)) AS `total_refunded_amount`, SUM((IFNULL(o.base_tax_amount, 0) - IFNULL(o.base_tax_canceled, 0)) * IFNULL(o.base_to_global_rate, 0)) AS `total_tax_amount`, SUM((IFNULL(o.base_tax_invoiced, 0) -IFNULL(o.base_tax_refunded, 0)) * IFNULL(o.base_to_global_rate, 0)) AS `total_tax_amount_actual`, SUM((IFNULL(o.base_shipping_amount, 0) - IFNULL(o.base_shipping_canceled, 0)) * IFNULL(o.base_to_global_rate, 0)) AS `total_shipping_amount`, SUM((IFNULL(o.base_shipping_invoiced, 0) - IFNULL(o.base_shipping_refunded, 0)) * IFNULL(o.base_to_global_rate, 0)) AS `total_shipping_amount_actual`, SUM((ABS(IFNULL(o.base_discount_amount, 0)) - IFNULL(o.base_discount_canceled, 0)) * IFNULL(o.base_to_global_rate, 0)) AS `total_discount_amount`, SUM((IFNULL(o.base_discount_invoiced, 0) - IFNULL(o.base_discount_refunded, 0)) * IFNULL(o.base_to_global_rate, 0)) AS `total_discount_amount_actual` FROM `sales_order` AS `o`
+ INNER JOIN (SELECT `sales_order_item`.`order_id`, SUM(qty_ordered - IFNULL(qty_canceled, 0)) AS `total_qty_ordered`, SUM(qty_invoiced) AS `total_qty_invoiced` FROM `sales_order_item` WHERE (parent_item_id IS NULL) GROUP BY `order_id`) AS `oi` ON oi.order_id = o.entity_id WHERE (o.state NOT IN ('pending_payment', 'new'))
+	
+	INSERT INTO `sales_order_aggregated_created` (`period`, `store_id`, `order_status`, `orders_count`, `total_qty_ordered`, `total_qty_invoiced`, `total_income_amount`, `total_revenue_amount`, `total_profit_amount`, `total_invoiced_amount`, `total_canceled_amount`, `total_paid_amount`, `total_refunded_amount`, `total_tax_amount`, `total_tax_amount_actual`, `total_shipping_amount`, `total_shipping_amount_actual`, `total_discount_amount`, `total_discount_amount_actual`) SELECT `sales_order_aggregated_created`.`period`, 0 AS `store_id`, `sales_order_aggregated_created`.`order_status`, SUM(orders_count) AS `orders_count`, SUM(total_qty_ordered) AS `total_qty_ordered`, SUM(total_qty_invoiced) AS `total_qty_invoiced`, SUM(total_income_amount) AS `total_income_amount`, SUM(total_revenue_amount) AS `total_revenue_amount`, SUM(total_profit_amount) AS `total_profit_amount`, SUM(total_invoiced_amount) AS `total_invoiced_amount`, SUM(total_canceled_amount) AS `total_canceled_amount`, SUM(total_paid_amount) AS `total_paid_amount`, SUM(total_refunded_amount) AS `total_refunded_amount`, SUM(total_tax_amount) AS `total_tax_amount`, SUM(total_tax_amount_actual) AS `total_tax_amount_actual`, SUM(total_shipping_amount) AS `total_shipping_amount`, SUM(total_shipping_amount_actual) AS `total_shipping_amount_actual`, SUM(total_discount_amount) AS `total_discount_amount`, SUM(total_discount_amount_actual) AS `total_discount_amount_actual` FROM `sales_order_aggregated_created` WHERE (store_id <> 0) AND (1=0) GROUP BY `period`,
+	`order_status` ON DUPLICATE KEY UPDATE `period` = VALUES(`period`), `store_id` = VALUES(`store_id`), `order_status` = VALUES(`order_status`), `orders_count` = VALUES(`orders_count`), `total_qty_ordered` = VALUES(`total_qty_ordered`), `total_qty_invoiced` = VALUES(`total_qty_invoiced`), `total_income_amount` = VALUES(`total_income_amount`), `total_revenue_amount` = VALUES(`total_revenue_amount`), `total_profit_amount` = VALUES(`total_profit_amount`), `total_invoiced_amount` = VALUES(`total_invoiced_amount`), `total_canceled_amount` = VALUES(`total_canceled_amount`), `total_paid_amount` = VALUES(`total_paid_amount`), `total_refunded_amount` = VALUES(`total_refunded_amount`), `total_tax_amount` = VALUES(`total_tax_amount`), `total_tax_amount_actual` = VALUES(`total_tax_amount_actual`), `total_shipping_amount` = VALUES(`total_shipping_amount`), `total_shipping_amount_actual` = VALUES(`total_shipping_amount_actual`), `total_discount_amount` = VALUES(`total_discount_amount`), `total_discount_amount_actual` = VALUES(`total_discount_amount_actual`)
+----------------------------------------------
+composer issue
+
+E:\PHP\Darscrubs\site\composer\src\Composer\DependencyResolver\PoolBuilder.php :: loadPackagesMarkedForLoading :: 319
+	repo.magneto.com
+		E:\PHP\Darscrubs\site\composer\src\Composer\Repository\ComposerRepository.php :: loadRootServerFile :: 869
+			https://repo.magento.com/packages.json
+		fetchFile :: 1106
+		
+E:\PHP\Darscrubs\site\composer\src\Composer\Util\Http\CurlDownloader.php
+
+E:\PHP\Darscrubs\site\composer\src\Composer\Installer\InstallationManager.php :: 267 :: downloadAndExecuteBatch
+E:\PHP\Darscrubs\site\composer\src\Composer\Installer\LibraryInstaller.php :: download
+
+E:\PHP\Darscrubs\site\composer\src\Composer\Downloader\DownloadManager.php :: $handleError :: 157 :: 189
+
+E:\PHP\Darscrubs\site\composer\src\Composer\Downloader\FileDownloader.php :: 81 :: download :: 213
