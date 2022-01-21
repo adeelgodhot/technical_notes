@@ -1,0 +1,28 @@
+    ssl_certificate     /etc/nginx/ssl/m2.l-carb-shop/fullchain.pem;
+    ssl_certificate_key /etc/nginx/ssl/m2.l-carb-shop/privkey.pem;
+
+	
+fullchain.pem
+	-----BEGIN CERTIFICATE-----
+	MIIFQDCCBCigAwIBAgISA3WrjHyO8U04oqllFgv/VJUtMA0GCSqGSIb3DQEBCwUA
+	MDIxCzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBFbmNyeXB0MQswCQYDVQQD
+	EwJSMzAeFw0yMTEwMTkwNzA1MDhaFw0yMjAxMTcwNzA1MDdaMBwxGjAYBgNVBAMT
+	EW0yLmwtY2FyYi1zaG9wLmRlMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
+	AQEAq0QjXtdgdetLeyIhQXWq2CTRn1p24nFWfpOnfOrLo+KAHDCPtJRQ8PP86tKa
+	+pVrNwDCdbCJML7GHnPNKvYYyou5MFsbDfvPH9ycwnBOk0Vz2/5W8msVw9+I9hnj
+	/HIsf4CPphi+Ac3riiRz+z8ZyTYFI3cVkgdlIakrzWtcO1vL7p6XgBwg2238qbav
+	tV0wSWBS/bcdLXQ4Ratj5KnMNzyQinhMMhRG1ARmdhTM9SFcmUpO5Ze1KPsIzlpP
+	
+privkey.pem
+	-----BEGIN PRIVATE KEY-----
+	MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCrRCNe12B160t7
+	IiFBdarYJNGfWnbicVZ+k6d86suj4oAcMI+0lFDw8/zq0pr6lWs3AMJ1sIkwvsYe
+	c80q9hjKi7kwWxsN+88f3JzCcE6TRXPb/lbyaxXD34j2GeP8cix/gI+mGL4BzeuK
+	JHP7PxnJNgUjdxWSB2UhqSvNa1w7W8vunpeAHCDbbfyptq+1XTBJYFL9tx0tdDhF
+	q2Pkqcw3PJCKeEwyFEbUBGZ2FMz1IVyZSk7ll7Uo+wjOWk9h5EEbNB9y0YRZp2OC
+	8wRQGmSSCK4tDWsnMbiVV2Us7T3mivYsGWUONNarZKg1pcGgOpNzheAnVf1ghQtP
+	rUYbizcLAgMBAAECggEAHWjoAgNOJzGuloh32XvRSKiZ7plkTOJVjgrg+gx/x7a/
+	dRfJtaK6e4YKanCb+GfsL1fMDNWx2VMJRnVwR+5Wt4Fi3bDnZnFVUg1aRfFvLM8C
+	ZEa6u4o0BJzAMjKj+dfJWGPFRyp8hmbMCb7Uw9JEJU9Hdp2ecKMgdLVONko3XmHP
+	KuoehHCYd5XpVaulhr98V7c+KL1ue2fDFk+dy0m+DndmcKjVmlXumpIm6z+cDQjt
+	Ag2U+2+zgGUEtCQ7psouOFO44y+t9VgT/FX4k129qGgh7vnBh4ougkNcf3qYwtNF

@@ -1,0 +1,37 @@
+store_view_mode : admin, Kuwait (store code)
+	if it's not set, then the default store code (Kuwait) is being used for importing.
+	
+	firebear doesn't accept 'admin' as its value
+	firebear doesn't accept 'default' as its value
+
+_store
+	firebear accept 'admin' but use the default store
+	firebear accept 'default' but use the default store
+	
+product_websites : admin, base,scrubslab
+
+
+Error
+	2021-11-17 19:23:01 : Wrong URL/path used for attribute image For SKU : "2120" in rows in rows: 20
+	it means the image url returns error.
+	
+Tip
+	when importing imags with url, please don't turn on the following setttings;
+		Deferred Import Images
+		Use Image Import Source
+		
+	when importing 
+		product_type is required, like simple
+		qty is required
+		price is required
+		
+		
+Link child to configurable product
+	1. Feed
+		include group in child row (will be used as parent sku)
+	2. Profile
+		Custom logic for creation of configurable products 
+			On => Yes
+		Create Configurable Products => Off (if parent already exists)
+		Product attributes for variations
+			=> color, size, length

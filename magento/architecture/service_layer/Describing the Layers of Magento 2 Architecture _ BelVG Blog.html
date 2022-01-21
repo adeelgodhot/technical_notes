@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<!-- saved from url=(0090)https://belvg.com/blog/magento-2-architecture-how-is-it-used-in-magento-2-application.html -->
+<html lang="en-US" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="https://www.facebook.com/2008/fbml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Describing the Layers of Magento 2 Architecture | BelVG Blog</title>
+<link rel="profile" href="https://gmpg.org/xfn/11">
+<link rel="pingback" href="https://belvg.com/blog/xmlrpc.php">
+<link href="https://www.googletagmanager.com/" rel="preconnect" crossorigin="">
+<link href="https://www.google-analytics.com/" rel="preconnect" crossorigin="">
+<link rel="preload" href="https://belvg.com/blog/wp-content/plugins/popup-builder/style/sgcolorbox/custom7.css?v=1" as="style">
+<style type="text/css">			.heateorSssInstagramBackground{background:radial-gradient(circle at 30% 107%,#fdf497 0,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285aeb 90%)}
+											.heateor_sss_horizontal_sharing .heateorSssSharing,.heateor_sss_standard_follow_icons_container .heateorSssSharing{
+							color: #fff;
+						border-width: 0px;
+			border-style: solid;
+			border-color: transparent;
+		}
+				.heateor_sss_horizontal_sharing .heateorSssTCBackground{
+			color:#666;
+		}
+				.heateor_sss_horizontal_sharing .heateorSssSharing:hover,.heateor_sss_standard_follow_icons_container .heateorSssSharing:hover{
+						border-color: transparent;
+		}
+		.heateor_sss_vertical_sharing .heateorSssSharing,.heateor_sss_floating_follow_icons_container .heateorSssSharing{
+							color: #fff;
+						border-width: 0px;
+			border-style: solid;
+			border-color: transparent;
+		}
+				.heateor_sss_vertical_sharing .heateorSssTCBackground{
+			color:#666;
+		}
+				.heateor_sss_vertical_sharing .heateorSssSharing:hover,.heateor_sss_floating_follow_icons_container .heateorSssSharing:hover{
+						border-color: transparent;
+		}
+		
+		@media screen and (max-width:783px) {.heateor_sss_vertical_sharing{display:none!important}}@media screen and (max-width:783px) {.heateor_sss_floating_follow_icons_container{display:none!important}}@media screen and (max-width:768px) { 
+i.heateorSssSharing {
+
+width: 60px!important;
+
+border-radius:4px!important;
+}
+
+.single .heateor_sss_sharing_container {
+padding-left:10px!important;
+padding-right:10px!important;
+
+}</style><link rel="preload" as="font" href="https://belvg.com/blog/wp-content/themes/marroco-new/assets/css/roboto-mono-v11-latin-100.woff2" data-wpacu-preload-font="1" crossorigin="">
+<link rel="preload" as="font" href="https://belvg.com/blog/wp-content/themes/marroco-new/assets/css/roboto-mono-v11-latin-300.woff2" data-wpacu-preload-font="1" crossorigin="">
+<link rel="preload" as="font" href="https://belvg.com/blog/wp-content/themes/marroco-new/assets/css/roboto-mono-v11-latin-700.woff2" data-wpacu-preload-font="1" crossorigin="">
+<link rel="preload" as="font" href="https://belvg.com/blog/wp-content/themes/marroco-new/assets/css/roboto-mono-v11-latin-regular.woff2" data-wpacu-preload-font="1" crossorigin="">
+<link rel="preload" as="font" href="https://belvg.com/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-100.woff2" data-wpacu-preload-font="1" crossorigin="">
+<link rel="preload" as="font" href="https://belvg.com/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-300.woff2" data-wpacu-preload-font="1" crossorigin="">
+<link rel="preload" as="font" href="https://belvg.com/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-700.woff2" data-wpacu-preload-font="1" crossorigin="">
+<link rel="preload" as="font" href="https://belvg.com/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-regular.woff2" data-wpacu-preload-font="1" crossorigin="">
+<link rel="preload" as="font" href="https://belvg.com/blog/wp-content/themes/marroco-new/assets/css/fa-brands-400.woff2" data-wpacu-preload-font="1" crossorigin="">
+<script src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/6182881.js.download" type="text/javascript" id="cookieBanner-6182881" data-cookieconsent="ignore" data-hs-ignore="true" data-loader="hs-scriptloader" data-hsjs-portal="6182881" data-hsjs-env="prod" data-hsjs-hublet="na1"></script><script src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/conversations-embed.js.download" type="text/javascript" id="hubspot-messages-loader" data-loader="hs-scriptloader" data-hsjs-portal="6182881" data-hsjs-env="prod" data-hsjs-hublet="na1"></script><script src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/collectedforms.js.download" type="text/javascript" id="CollectedForms-6182881" crossorigin="anonymous" data-leadin-portal-id="6182881" data-leadin-env="prod" data-loader="hs-scriptloader" data-hsjs-portal="6182881" data-hsjs-env="prod" data-hsjs-hublet="na1"></script><script src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/6182881.js(1).download" type="text/javascript" id="hs-analytics"></script><script type="text/javascript" async="" src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/analytics.js.download"></script><script async="" src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/gtm.js.download"></script><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-N8BR2C7');</script>
+
+<meta name="description" itemprop="description" content="A detailed description of each of the 4 layers in Magento 2 architecture: presentation, service, domain and persistence layers.">
+<link rel="canonical" href="https://belvg.com/blog/magento-2-architecture-how-is-it-used-in-magento-2-application.html">
+
+<link rel="dns-prefetch" href="https://www.instagram.com/">
+<link rel="preload" href="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/belvg-logo.svg" as="image" importance="high">
+<link rel="preload" href="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/Architecture_in_Magento_2_What_Is-3.jpg" as="image" importance="high" media="(min-width: 480px)">
+<link rel="preload" href="https://belvg.com/blog/wp-content/uploads/2018/04/Architecture_in_Magento_2_What_Is-3-480x270.jpg" as="image" importance="high" media="(max-width: 480px)">
+
+<meta name="twitter:card" value="summary_large_image">
+<meta name="twitter:url" value="https://belvg.com/blog/magento-2-architecture-how-is-it-used-in-magento-2-application.html">
+<meta name="twitter:title" value="Magento 2 Architecture. Service Layer">
+<meta name="twitter:description" value="Magento 2 architecture description">
+<meta name="twitter:image" value="https://belvg.com/blog/wp-content/uploads/2018/04/Architecture_in_Magento_2_What_Is-3.jpg">
+<meta name="twitter:site" value="@belvg.com">
+<meta name="twitter:creator" value="@BelVG_com">
+
+<meta property="og:title" content="Magento 2 Architecture. Service Layer">
+<meta property="og:description" content="Magento 2 architecture description">
+<meta property="fb:app_id" content="276940035794307">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://belvg.com/blog/magento-2-architecture-how-is-it-used-in-magento-2-application.html">
+<meta property="og:site_name" content="BelVG Blog">
+<meta property="og:image" content="https://belvg.com/blog/wp-content/uploads/2018/04/Architecture_in_Magento_2_What_Is-3.jpg">
+
+<meta itemprop="name" content="Magento 2 Architecture. Service Layer">
+<meta itemprop="image" content="https://belvg.com/blog/wp-content/uploads/2018/04/Architecture_in_Magento_2_What_Is-3.jpg">
+<meta itemprop="description" content="Magento 2 architecture description">
+<meta itemprop="url" content="https://belvg.com/blog/magento-2-architecture-how-is-it-used-in-magento-2-application.html">
+<link data-wpacu-style-handle="crayon" rel="stylesheet" id="crayon-css" href="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/crayon.min.css" type="text/css" media="all">
+<link data-wpacu-style-handle="crayon-theme-classic" rel="stylesheet" id="crayon-theme-classic-css" href="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/classic.css" type="text/css" media="all">
+<link data-wpacu-style-handle="crayon-font-monaco" rel="stylesheet" id="crayon-font-monaco-css" href="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/monaco.css" type="text/css" media="all">
+<link data-wpacu-style-handle="es-widget-css" rel="stylesheet" id="es-widget-css-css" href="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/es-widget.css" type="text/css" media="all">
+<link data-wpacu-style-handle="post-views-counter-frontend" rel="stylesheet" id="post-views-counter-frontend-css" href="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/frontend.css" type="text/css" media="all">
+<link data-wpacu-style-handle="bw-shortcode" rel="stylesheet" id="bw-shortcode-css" href="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/shortcode.css" type="text/css" media="all">
+<link data-wpacu-style-handle="style" rel="stylesheet" id="style-css" href="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/style.css" type="text/css" media="all">
+<link data-wpacu-style-handle="bw-bootstrap" rel="stylesheet" id="bw-bootstrap-css" href="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/bootstrap.min.css" type="text/css" media="all">
+<link data-wpacu-style-handle="bw-load-fa" rel="stylesheet" id="bw-load-fa-css" href="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/all.css" type="text/css" media="all">
+<link data-wpacu-style-handle="bw-style" rel="stylesheet" id="bw-style-css" href="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/style.min.css" type="text/css" media="all">
+<link data-wpacu-style-handle="bw-belvg-fonts" rel="stylesheet" id="bw-belvg-fonts-css" href="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/belvg-fonts.min.css" type="text/css" media="all">
+<link data-wpacu-style-handle="bw-media" rel="stylesheet" id="bw-media-css" href="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/media.min.css" type="text/css" media="all">
+<script type="text/javascript">
+/* <![CDATA[ */
+var ed_data = {"messages":{"ed_required_field":"Please fill in the required field.","ed_invalid_name":"Name seems invalid.","ed_invalid_email":"Email address seems invalid.","ed_unexpected_error":"Oops.. Unexpected error occurred.","ed_sent_successfull":"Download link sent successfully to your email address.","ed_select_downloads":"Please select your downloads.","ed_invalid_captcha":"Robot verification failed, please try again.","ed_toofast_message":"You are trying to submit too fast. try again in 1 minute.","ed_blocked_message1":"Your submission is not accepted due to security reason. Please contact admin.","ed_blocked_message2":"Entered name or email contains a word that is not allowed. Please contact admin."},"ed_ajax_url":"https:\/\/belvg.com\/blog\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script defer="defer" type="text/javascript" src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/saved_resource"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var CrayonSyntaxSettings = {"version":"2.7.1","is_admin":"0","ajaxurl":"https:\/\/belvg.com\/blog\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"Press %s to Copy, %s to Paste","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script data-wpacu-script-handle="crayon_js" type="text/javascript" src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/crayon.min.js.download" defer="defer"></script>
+<script data-wpacu-script-handle="load-embed" type="text/javascript" src="https://www.instagram.com/embed.js?ver=4.9.8" async="async"></script>
+<link rel="https://api.w.org/" href="https://belvg.com/blog/wp-json/">
+<link rel="prev" title="Client’s story: Working on Klubklub Magento 2 Webstore" href="https://belvg.com/blog/clients-story-working-on-klubklub-webstore.html">
+<link rel="next" title="Configuring Magento 2 Site Design in the Admin Panel" href="https://belvg.com/blog/configuring-magento-2-site-design-in-the-admin-panel.html">
+<style>.ed_form_message.success { color: #008000; }.ed_form_message.error { color: #ff0000; }.ed_form_message.boterror { color: #ff0000; }</style><script type="text/javascript">
+							SG_POPUPS_QUEUE = [];
+							SG_POPUP_DATA = [];
+							SG_APP_POPUP_URL = 'https://belvg.com/blog/wp-content/plugins/popup-builder';
+							SG_POPUP_VERSION='2.633_1;';
+							function sgAddEvent(element, eventName, fn) {
+								if (element.addEventListener)
+									element.addEventListener(eventName, fn, false);
+								else if (element.attachEvent)
+									element.attachEvent('on' + eventName, fn);
+							}
+						</script><style>  /* critical css single*/  
+@font-face{font-family:Roboto;font-style:normal;font-weight:100;font-display:swap;src:url(/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-100.eot);src:local('Roboto Thin'),local('Roboto-Thin'),url(/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-100.eot?#iefix) format('embedded-opentype'),url(/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-100.woff2) format('woff2'),url(/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-100.woff) format('woff'),url(/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-100.ttf) format('truetype'),url(/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-100.svg#Roboto) format('svg')}@font-face{font-family:Roboto;font-style:normal;font-weight:300;font-display:swap;src:url(/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-300.eot);src:local('Roboto Light'),local('Roboto-Light'),url(/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-300.eot?#iefix) format('embedded-opentype'),url(/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-300.woff2) format('woff2'),url(/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-300.woff) format('woff'),url(/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-300.ttf) format('truetype'),url(/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-300.svg#Roboto) format('svg')}@font-face{font-family:Roboto;font-style:normal;font-weight:400;font-display:swap;src:url(/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-regular.eot);src:local('Roboto'),local('Roboto-Regular'),url(/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-regular.eot?#iefix) format('embedded-opentype'),url(/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-regular.woff2) format('woff2'),url(/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-regular.woff) format('woff'),url(/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-regular.ttf) format('truetype'),url(/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-regular.svg#Roboto) format('svg')}@font-face{font-family:Roboto;font-style:normal;font-weight:700;font-display:swap;src:url(/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-700.eot);src:local('Roboto Bold'),local('Roboto-Bold'),url(/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-700.eot?#iefix) format('embedded-opentype'),url(/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-700.woff2) format('woff2'),url(/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-700.woff) format('woff'),url(/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-700.ttf) format('truetype'),url(/blog/wp-content/themes/marroco-new/assets/css/roboto-v20-latin-700.svg#Roboto) format('svg')}body{font-family:Roboto,sans-serif;background:#fff;font-size:18px;line-height:1.5em;font-weight:300;font-style:normal;color:#000;min-height:100vh;display:flex;flex-direction:column}h1{font-size:48px;font-weight:700;line-height:1.4em}h2{font-size:30px;font-weight:700;line-height:1.5em}h3{font-size:24px;font-weight:700;line-height:1.5em}h4{font-size:20px;font-weight:700;line-height:1.5em}a{text-decoration:none}a[href^=tel]{color:#fff;text-decoration:underline}.ghost{display:none!important;visibility:hidden;opacity:0}strong{font-weight:700}.font-16{font-size:16px;line-height:1.5em}.breadcrumbs{font-size:14px;line-height:24px;font-weight:300;padding:30px 0 20px}.breadcrumbs .current-item{font-weight:700;float:none;display:inline;padding:0;margin-bottom:0}.breadcrumbs a{color:#000!important}.call-to-action,button{color:#fff;text-decoration:none;padding:11px 30px;display:inline-block;border-radius:25px;font-weight:300}.call-to-action,button{background:#f36}a{color:#f36!important}.call-to-action{color:#fff!important}@media only screen and (max-width:1200px){h2{font-size:24px}h3{font-size:22px}}@media only screen and (max-width:991px){h1{font-size:36px}}body,html{font-size:18px;font-family:Roboto,sans-serif!important;background-color:#fff!important}*{outline:0!important}a,a:visited{color:#25b9d7;text-decoration:none}input,input::-webkit-inner-spin-button,input::-webkit-outer-spin-button{-webkit-appearance:none}.single-post article.post .post-excerpt>p{margin-bottom:1em!important}.single-post article.post .post-excerpt strong{font-weight:700}#navigation ul{list-style:none;margin:0;z-index:1;font-weight:300;font-size:16px}#navigation ul li{float:left}#navigation ul li{padding:0;margin:0}#navigation>ul>li.menu-item-has-children{position:relative}#navigation ul ul li{border:none;overflow:hidden}#navigation ul li a{display:block;text-decoration:none;color:#000;padding:0 20px;text-transform:uppercase;font-size:13px}#navigation>ul>li>a{position:relative;font-size:inherit;font-family:inherit;font-weight:inherit;line-height:50px;text-transform:none;font-family:inherit}#navigation>ul>li a{color:#000!important}#navigation>ul>li.menu-item-has-children:after{content:" ";position:absolute;top:15px;right:-5px;background:url(/blog/wp-content/themes/marroco-new/assets/img/menu-arrow.svg) no-repeat center/contain;width:27px;height:22px}#navigation ul ul{background:#fff;-webkit-box-shadow:0 3px 6px 0 rgba(0,0,0,.2);box-shadow:0 3px 6px 0 rgba(0,0,0,.2);position:relative;border-radius:0;padding:10px 0}#navigation ul ul:after{content:" ";position:absolute;bottom:100%;left:30%;margin-left:-10px;border-width:10px;border-style:solid;border-color:transparent transparent #fff;display:none}#navigation ul ul a span{overflow:hidden;width:auto}#navigation ul ul a span:after{background-color:#fb3644;background-color:rgba(251,54,68,.7);z-index:22}#navigation ul ul ul{border-color:#e4e4e4!important;margin-left:-14px}#navigation ul ul li a{font-family:inherit;font-size:inherit;font-weight:inherit;line-height:inherit;text-transform:capitalize;padding:10px 20px;overflow:hidden}#navigation ul ul ul li a{color:#fff;font-weight:700}#navigation .sub-menu{float:left;width:100%;margin-bottom:25px}#navigation .sub-menu>li{float:left;width:100%}#navigation .sub-menu>li:last-child>a{border-bottom:0}#navigation .sub-menu .sub-menu{width:100%;position:absolute;top:0;right:0;margin-left:0;left:100%;max-height:100%;overflow-y:auto}#navigation .sub-menu .sub-menu li{float:left;width:100%;position:relative}#navigation .sub-menu .sub-menu li a{color:#000;font-weight:inherit;background-color:#fff!important;border:none}#navigation .sub-menu .sub-menu{display:none}#navigation .menu>li>.sub-menu{position:absolute;width:280px;min-width:260px;display:none;margin-top:0}#mobile-menu{display:none;font-family:Roboto,sans-serif}#mobile-menu .search-form{margin-bottom:15px}#header{z-index:1000;position:relative;position:fixed;top:0;width:100%;position:sticky;position:-webkit-sticky}body.boxed #header{background-color:transparent}body.boxed .header-wrap{margin:0 auto;width:100%;position:relative}.search-wrap{background-color:#fafafa;clear:left;position:sticky;position:-webkit-sticky;top:84px;z-index:999}#header .row{width:100%;clear:both}body.single-post #header .row{max-width:1640px;padding:0 20px}#mobile-toggle{display:none}.row{margin:0 auto;width:100%;max-width:1110px;background-color:#fff;overflow:hidden}.row{margin-bottom:0}.submenu-content>.row-holder{width:auto!important;margin-right:auto}#content{float:none;width:100%;padding:40px 0 0;min-height:100%}#content.right{width:100%;background:0 0}.single-post #content.right{background:#fff;display:flex;float:none;max-width:1640px;margin:0 auto;padding:0 20px;height:100%;align-items:flex-start}div.main-title-area{text-align:center;max-width:1640px;margin:0 auto;padding:0 20px;background:#fff;position:relative;z-index:200}.post{float:left;width:100%;margin-bottom:30px;position:relative}.post{padding:0 40px}.post-featured{position:relative;font-size:0;float:left;width:100%;text-align:center;padding:0;margin-bottom:20px}.post-featured img{display:inline-block;width:100%}.post-excerpt{width:100%;padding:0;max-width:850px;padding-top:15px;font-weight:300;color:#000}.post-excerpt p span{font-weight:300!important}.post-header{float:left;width:100%;padding:20px 40px 7px;text-align:left}.post-header h1{position:relative;text-align:left;padding-bottom:10px;color:#000;text-transform:none}.post-header h1:after{content:"";position:absolute;bottom:10px;width:200px;height:5px;background-color:#f1f1f1;left:50%;display:none;margin-left:-100px}.cat-tags-list{display:flex;margin-right:5px;color:#666;font-size:12px;line-height:22px;margin-bottom:10px;margin-top:10px;padding-left:0;width:100%;font-family:Roboto,sans-serif}.single-post .cat-tags-list{colortext-decorationfont-size:#39funderline16px;line-height:26px;font-weight:300;color:#666}.search-wrap .search-form{float:left;width:100%;position:relative;position:relative}.search-wrap .search-form .search-field{width:100%;padding:11px 48px 11px 15px;height:50px;border-right:0;background-color:#f9f9f9;border:solid 6px rgba(255,75,81,.3)}.search-wrap .search-form .search-submit{position:absolute;top:0;left:15px;background-color:transparent;color:#fff}.search-wrap .search-form-container .search-closer{position:absolute;right:5px;top:6px;width:38px;height:38px;padding:0;background:0 0}#mobile-menu .search-form .search-field{background-color:#fff;border-color:#646464;color:#fff}#mobile-menu .search-form .search-submit{background-color:transparent}.search-form .search-field{line-height:17px}.widget{float:left;width:100%;margin-bottom:35px}.widget>div{float:left;width:100%}.widget_search,.widget_search>*{padding:0;border:0}.widget_search input{float:left;width:100%;padding:10px;background-color:#eee;border:0;border-radius:0}.widget_search .screen-reader-text{display:none}.widget_search{border:0}input[type=email],input[type=text]{border-radius:0}.single-page{overflow:hidden;background:#fff}p{color:#000}.for-sub-header{position:relative;overflow:visible}.related-articles .cat-tags-list{display:none}.header-bg{background:#fff;height:84px;overflow:visible;display:flex;align-items:center;position:relative}.header-index-logo{display:block;margin-right:20px;padding:0}.header-index-logo img{vertical-align:middle;max-width:100%;min-width:120px}.header-index-nav{display:inline-block;vertical-align:middle;height:84px;font-family:Roboto,sans-serif;width:100%}.header-index-nav nav{height:100%;display:flex;align-items:center}.header-index-nav ul{list-style:none;margin:0;padding:0;text-align:left}.header-index-nav>nav>ul>li a{font-size:inherit;line-height:inherit;font-weight:inherit}.header-index-nav>nav>ul>li a{color:#000!important}.header-index-nav nav>ul{vertical-align:middle;height:100%;margin-right:auto;font-size:inherit;font-weight:300;display:flex;flex-direction:row}.header-index-nav nav>ul>li{height:100%}.header-index-nav nav>ul>li>a .item_title{overflow:hidden;letter-spacing:0;font-size:inherit;font-weight:inherit}.header-index-nav nav>ul>li>a .item_title:after{content:'';position:absolute;left:0;top:calc(50% - 1px);height:1px;width:100%;background-color:#fff;-webkit-transform:scale(0,0);transform:scale(0,0);opacity:0;-webkit-transform-origin:0 50%;transform-origin:0 50%;display:inline-block}.header-index-nav nav>ul>li>a .item_title:before{background-color:rgba(255,255,255,.6);z-index:11}.header-index-nav nav>ul>li>a .item_title:after{background-color:#fb3644;background-color:rgba(251,54,68,.7);z-index:22}.header-index-nav nav>ul>li>a{padding:0;display:inline-block;vertical-align:middle;display:flex;align-items:center;border-style:solid;position:relative;height:100%;letter-spacing:2px}.header-index-nav nav>ul>li>a:before{height:2px;bottom:0}.header-index-nav nav>ul>li>a:after{height:1px;bottom:4px}.header-index-nav nav>ul>li>a>span.item_outer{display:block}.header-index-nav nav>ul>li>a span.item_inner{display:inline-block;padding:0 -webkit-transition:text-decoration .2s ease-out, border-color .2s ease-out, background-color .2s ease-out}.header-index-nav nav>ul>li>a span.item_inner:before{bottom:0;height:2px}.header-index-nav nav>ul>li>a span.item_inner:after{height:1px;bottom:4px}.header-index-nav ul li a .item_outer:before{display:none}#header .nav-contacts{display:flex;align-items:center;padding-left:15px;padding-right:15px}#header .nav-contacts p{margin-bottom:0}#header .nav-contacts a{color:#000!important}#menu-item-12816 .item_title{color:#f36!important}#mobile-menu ul>li>ul.sub-menu li{position:relative}#mobile-menu .nav-contacts{padding:15px;margin:5px 15px 0;border-top:1px solid #666}#mobile-menu #mobile-toggle+.field{padding-top:50px}#mobile-menu .nav-contacts p{margin:0}#mobile-menu ul>li>ul.sub-menu li ul{background:#555}#mobile-menu ul>li>ul.sub-menu li ul li a{padding:5px 54px}.header-index-nav nav>ul>li>a .item_title:after{display:none}.header-index-nav nav>ul>li>a .item_title:after{display:none}#menu-main-menu ul>.menu-item{position:static}#main-menu-custom-qoute-butt{min-width:130px}#main-menu-custom-qoute-butt a{padding:7px 10px;width:100%;text-align:center;border:1px solid #f36}.article-content .post-views,.single-post .post-views{padding-left:10px;position:relative;display:inline-block;margin-bottom:0;color:inherit}.article-content .views-count,.single-post .views-count{padding-left:20px;color:inherit}.single-post .author-name{padding-left:20px;font-weight:700;color:#000!important}.article-content .post-views:before,.single-post .post-views:before{content:'';position:absolute;background:url(/blog/wp-content/themes/marroco-new/assets/img/eye-icon.svg) no-repeat center/contain;width:15px;height:15px;top:3px}.single-post .post-views:before{width:16px;height:16px;top:4px}#content.right{padding-top:0}.submenu-container{max-width:1640px;margin:0 auto;padding:0 20px;position:relative}.search-opener:before{content:'';position:absolute;left:7px;top:14px;background:url(/blog/wp-content/themes/marroco-new/assets/img/search.svg) no-repeat center/contain;width:20px;height:20px}.submenu-content{display:flex}.search-opener{height:50px;padding:0 25px;color:#999;background-color:transparent;position:relative}.search-opener-container button{font-family:inherit}.search-opener span{padding-left:8px;padding-top:1px;font-size:16px;line-height:50px;font-weight:700;color:#000;background:0 0}.search-closer:before{position:absolute;content:'';width:30px;height:1px;left:5px;transform:rotate(45deg);background-color:#999}.search-closer:after{position:absolute;content:'';width:30px;height:1px;left:5px;transform:rotate(135deg);background-color:#999}.search-wrap aside#search{margin:0;opacity:1;position:absolute;top:0;left:20px;z-index:999;max-width:calc(100% - 40px)}.search-wrap aside#search.closed{opacity:0;z-index:-1}.search-wrap .submenu-content{opacity:1}.search-wrap aside#search input[type=text]:-webkit-autofill{background-color:#fff;-webkit-box-shadow:0 0 0 1000px #fff inset}.cat-tags-list a.post-by-author{color:#000!important;font-weight:700;text-decoration:none;padding:0 10px;display:inline-block}.search-wrap #search input::-webkit-input-placeholder{font-size:16px;line-height:24px;font-weight:700;color:#000!important;font-family:inherit}.search-wrap #search input::-ms-input-placeholder{font-size:16px;font-weight:700;color:#000!important;font-family:inherit,sans-serif}.search-wrap #search input:-ms-input-placeholder{font-size:16px;font-weight:700;color:#000!important;font-family:inherit}.search-wrap #search input:-moz-placeholder{font-size:16px;font-weight:700;color:#000!important;font-family:inherit}.search-wrap #search input::-moz-placeholder{font-size:16px;font-weight:700;color:#000!important;font-family:inherit}.single .subscribe-block{padding-bottom:40px}.es_widget_form{clear:both;position:relative;background:#fafafa;padding:80px 0;display:flex;flex-direction:column;align-items:center;text-align:center}.es_widget_form .es_caption,.es_widget_form .es_textbox{flex:1;position:relative;margin-left:20px;margin-right:20px}.es_widget_form .es_caption{color:#000;padding-bottom:40px}.es_widget_form .es_button{flex-basis:30%;padding:0}.es_lablebox{display:none}.es_widget_form .es_textbox{display:flex;flex-wrap:wrap;align-items:center}.es_widget_form .es_textbox_class{background-color:#fff;color:#000;border:1px solid #ccc!important;border-radius:6px;flex:1;margin-right:20px;font-size:16px}.es_widget_form .es_textbox_class::-webkit-input-placeholder{font-size:16px;font-family:Roboto,sans-serif}.es_widget_form .es_textbox_class:-ms-input-placeholder{font-size:16px;font-family:Roboto,sans-serif}.es_widget_form .es_textbox_class::-moz-placeholder{font-size:16px;font-family:Roboto,sans-serif}.es_widget_form .es_textbox_class:-moz-placeholder{font-size:16px;font-family:Roboto,sans-serif}.es_widget_form input{height:50px}.es_widget_form .es_button .es_textbox_button{background:#f36;flex-basis:30%;position:relative;text-transform:none;font-size:inherit}.es_widget_form .es_button .es_textbox_button:after{content:"Subscribe"}.es_widget_form .es_textbox input:-webkit-autofill{background-color:#ff4b51;-webkit-box-shadow:0 0 0 1000px #ff4b51 inset;-webkit-text-fill-color:#fff!important}.es_widget_form .es_textbox input::-webkit-input-placeholder{font-size:14px;line-height:26px;font-weight:400;color:#000;font-family:inherit}.es_widget_form .es_textbox input::-ms-input-placeholder{font-size:14px;line-height:26px;font-weight:400;color:#fff;font-family:inherit}.es_widget_form .es_textbox input:-ms-input-placeholder{font-size:14px;line-height:26px;font-weight:400;color:#fff;font-family:inherit}.es_widget_form .es_textbox input:-moz-placeholder{font-size:14px;line-height:26px;font-weight:400;color:#fff;font-family:inherit}.es_widget_form .es_textbox input::-moz-placeholder{font-size:14px;line-height:26px;font-weight:400;color:#fff;font-family:inherit}.subscribe-top .es_textbox_button{background:url(/blog/wp-content/themes/marroco-new/assets/img/subscribe-arrow.svg) no-repeat bottom;background-size:contain}.subscribe-top .es_widget_form .es_textbox{padding-bottom:0}.single-post article{padding:0;margin-bottom:0}.single-post .post-header{float:none;padding:0;margin:0 auto}.single-post .post-featured{float:none}.single-post .post-excerpt{margin:0 auto;float:none}.nav-by-hooks{position:fixed;left:0;top:242px;max-width:400px;max-height:600px;overflow-y:auto;background:0 0;margin:0;padding:3rem 0 0;font-family:inherit;z-index:301;min-width:184px}.nav-by-hooks .hooks-title{padding:0;position:absolute;top:0;left:0;height:3rem;width:100%}.nav-by-hooks button{padding:15px;height:3rem;background-color:#fafafa;color:#000;font-size:18px;text-align:left;min-width:140px;width:auto;border-radius:0;position:relative;display:flex;align-items:center;box-shadow:0 4px 4px rgba(0,0,0,.16)}.nav-by-hooks button img{max-width:15px;margin-right:20px}.nav-by-hooks button svg{display:none}.nav-by-hooks .hooks-container{padding:10px 15px 10px 10px;transform:translateX(-100%);background-color:#fff}.nav-by-hooks h4{padding-bottom:10px;margin-bottom:10px}.subscribe-block{font-size:18px}.subscribe-top{font-family:inherit}.subscribe-top-button-container{padding:20px 0;display:flex;align-items:center;margin-bottom:20px}.subscribe-top-button{height:40px;background-color:#fff;color:#f36;font-family:inherit;font-size:15px;padding:0 30px;border:1px solid #f36;min-width:180px}.subscribe-top-button:after{content:'Subscribe';font-weight:inherit}.es_msg,.subscribe-top-note{line-height:1.2;font-size:12px;display:inline-block;color:#666;padding:10px 0 0;font-family:inherit;flex-basis:100%;text-align:left}.subscribe-top-note a{display:inline-block;padding-bottom:1px}#sg-popup-content-wrapper-1 .es_msg{display:block}.es_msg span{color:#fff}.subscribe-top-form{display:none}.subscribe-top-form .es_msg span{color:green!important}.subscribe-top-form .es_widget_form{height:auto;padding:80px 0;margin-top:0}.subscribe-top-form .es_widget_form .es_caption{padding-bottom:40px}.single-post .single-page{box-shadow:none;font-family:inherit;padding-top:40px;flex-basis:1200px;margin:0 40px 0 0;height:100%}#sg-popup-content-wrapper-1{font-family:Roboto,sans-serif!important}.sidebar_container{flex-basis:360px;padding:40px 0 0;transform:none;position:sticky;position:-webkit-sticky;top:202px;overflow-x:hidden}.contact-form-wrapper{background:url(/blog/wp-content/themes/marroco-new/assets/img/contact-background.png) no-repeat center/cover}#header.top{position:fixed;position:sticky;position:-webkit-sticky;top:0;left:0;right:0;z-index:1000;display:block;background:#fff;color:#000;-webkit-box-shadow:0 3px 4px rgba(0,0,0,.1);-ms-box-shadow:0 3px 4px rgba(0,0,0,.1);box-shadow:0 3px 4px rgba(0,0,0,.1)}header a[href*=tel]{color:#000;text-decoration:none}.header-index-nav ul .dropdown-menu.row{padding:30px 15px!important;overflow:visible}.header-index-nav ul>.nav-item:last-child{padding-left:10px}.header-index-nav ul>.nav-item:not(#menu-item-12820){position:relative}.header-index-nav ul>.nav-item.menu-item-has-children>.nav-link{position:relative}.header-index-nav ul>.nav-item.menu-item-has-children>.nav-link:after{content:'';position:absolute;width:10px;height:10px;top:calc(50% - 5px);right:-10px;background:url(/blog/wp-content/themes/marroco-new/assets/img/arrow-down.svg) no-repeat center/contain;transform:rotate(0)}.header-index-nav ul>.nav-item>.dropdown-menu{margin-top:0;left:0;border:0;border-radius:0;background-clip:border-box;-webkit-box-shadow:0 32px 32px rgba(0,0,0,.16);-ms-box-shadow:0 32px 32px rgba(0,0,0,.16);box-shadow:0 32px 32px rgba(0,0,0,.16);padding:30px 15px;z-index:20;font-size:16px}.header-index-nav ul>.nav-item>.dropdown-menu .submenu-columns>li{padding:5px 0}.header-index-nav ul .nav-item .dropdown-column .title{padding:0;text-transform:uppercase;padding-bottom:1rem;display:block;font-weight:700}.submenu-columns a{text-align:inherit;white-space:nowrap;color:inherit}.header-index-nav ul .nav-item>.dropdown-menu{min-width:280px;width:auto;left:calc(50% - 120px);border-top:1px solid #ccc;top:110px;opacity:0;display:flex;visibility:hidden}#menu-item-12820>.dropdown-menu{flex-wrap:nowrap;color:#000;left:20px;max-width:calc(100% - 20px);min-width:972px;width:auto}.header-index-nav ul .nav-item>.dropdown-menu:before{position:absolute;content:'';width:18px;height:1px;left:calc(50% - 24px);top:-1px;background-color:#fff}#menu-item-12820>.dropdown-menu:before{left:312px}.header-index-nav ul .nav-item>.dropdown-menu:after{position:absolute;content:'';width:22px;height:11px;left:calc(50% - 26px);top:-11px;background:url(/blog/wp-content/themes/marroco-new/assets/img/arrow-up-border.png) no-repeat center/contain}#menu-item-12820>.dropdown-menu:after{left:310px}.header-index-nav ul .nav-item .dropdown-menu{position:absolute}#menu-item-16095 .submenu-columns{display:flex;flex-wrap:wrap;flex-direction:column;max-height:150px;height:100%}#menu-item-12820>.dropdown-menu>li{margin:0 0 0 20px;flex:1}#menu-item-12820>.dropdown-menu>li:first-child{flex:2;margin:0}.header-index-nav ul .nav-item:not(#menu-item-12820)>.dropdown-menu{flex-wrap:wrap}.header-index-nav ul .nav-item:not(#menu-item-12820)>.dropdown-menu>li{padding:5px 20px;flex-basis:100%}.header-index-nav ul .nav-item:not(#menu-item-12820)>.dropdown-menu>li:first-child{padding:0 20px 5px}.header-index-nav .nav-link{padding:0 15px}.header-index-nav ul>.nav-item.menu-item-has-children>.nav-link{padding-left:25px}.header-index-nav ul>.nav-item:not(.menu-item-has-children)+.nav-item.menu-item-has-children>.nav-link{padding-left:15px}.contact-form-wrapper{display:flex;align-items:flex-start;flex-wrap:wrap;padding-top:30px}.email-before-download{padding:35px 35px;margin-top:1em;text-align:center;background:#fff;border:1px solid #ccc}.email-before-download>svg{display:block;margin:0 auto}.email-before-download form{width:100%;margin-top:15px}.email-before-download form .form-fields-wrapper{display:flex;flex-direction:column}.download-link-submit{color:#fff;background:#da2128;border-radius:25px;padding:10px 100px;border:none;margin-top:50px}.email-before-download.contact-form-wrapper .form-fields-wrapper input{width:100%;border:1px solid #ccc;border-radius:6px}.email-before-download.contact-form-wrapper .form-fields-wrapper input{height:50px;padding:0 10px}#content .email-before-download .download-link-submit{color:#fff;height:50px;background:#f36;border-radius:25px;padding:10px 50px;border:none;margin-top:0}.email-before-download form .form-fields-wrapper{display:flex;flex-direction:column}.form-fields-wrapper{padding-top:1.5em}.ed_form_spinner{position:absolute;bottom:10px;right:20px}.email-before-download form#ed_form{position:relative}.header-index-nav .contact-mobile{width:40px;height:40px;margin:0 15px 0 auto;background:url(/blog/wp-content/themes/marroco-new/assets/img/contact-mobile.svg) no-repeat center/cover;display:none}#navigation>ul>li:first-child>a{margin-left:-20px}@media only screen and (max-width:1336px){.sidebar_container{overflow-y:scroll}}@media only screen and (max-width:1280px){#content{padding:30px 0}#content.right,.single-post .header-index{padding-right:15px;padding-left:15px}.post,.post-header{padding-left:30px;padding-right:30px}#navigation>ul>li:first-child>a{padding-left:30px}}@media only screen and (max-width:1200px){#header .nav-contacts{display:none}}@media only screen and (max-width:1155px){.header-index-nav ul#menu-main-menu>li:last-child{display:none}.sidebar_container{overflow-y:scroll}}@media only screen and (max-width:1024px){.header-bg{height:50px}#navigation>ul>li>a{font-size:14px}.header-index-nav{display:none}#mobile-toggle{display:block;position:fixed;top:20px;margin-top:-25px;right:0px;width:50px;height:50px;z-index:1002}body:not(.mobile-visible) #mobile-toggle i,body:not(.mobile-visible) #mobile-toggle i:before,body:not(.mobile-visible) #mobile-toggle i:after{color:#000!important;background-color:#000!important}#mobile-toggle i{width:30px;height:5px;position:absolute;top:28px;right:20px;background-color:#fff}#mobile-toggle i:after,#mobile-toggle i:before{content:"";width:30px;height:5px;position:absolute;top:-10px;left:0;background-color:#fff}#mobile-toggle i:before{top:10px}#mobile-menu{display:flex;flex-direction:column;text-align:center;position:fixed;top:0;left:100%;width:100%;min-height:100vh;height:100%;-webkit-overflow-scrolling:touch;z-index:1001;color:#fff;background-color:#333333}#mobile-menu .call-to-action{align-self:center;margin-bottom:25px}#mobile-menu .nav-contacts a,#mobile-menu .call-to-action a{color:#fff!important;text-decoration:none}#mobile-menu ul{margin:0;list-style:none}#mobile-menu ul.menu{text-align:center}#mobile-menu ul.menu ul{background:#333333}#mobile-menu ul.menu a{display:block;padding:10px 24px;color:#fff!important;font-size:24px;font-weight:300}#mobile-menu ul.menu>li>.sub-menu>li>a{font-size:18px;font-weight:100}#mobile-menu ul.menu>li>a{color:#fff!important}#mobile-menu ul.menu>li:last-child>a{border-bottom:0}#mobile-menu .search-form{position:relative;width:100%;margin-bottom:28px}#mobile-menu .search-field{width:100%;padding:11px;line-height:17px}#mobile-menu .search-submit{position:absolute;top:2px;right:14px;color:#fff;height:39px;width:41px}#wrapper{position:relative;left:0}body #mobile-menu .search-form .search-field{background:#ffffff;color:#000;border:1px solid #CCCCCC!important;border-radius:6px}#mobile-menu ul.menu ul li ul li{display:block;color:#b1b1b1;font-size:14px;font-weight:normal;text-transform:none}#mobile-menu ul.menu ul li a{display:block;font-size:14px;font-weight:normal;text-transform:none;padding:14px 34px}#mobile-menu ul.menu ul li ul li a{font-weight:100;line-height:1.5em}#mobile-menu #searchform{padding:0 15px}#mobile-menu ul.menu .sub-menu{position:relative}#mobile-menu ul.menu .sub-menu{display:none}#mobile-menu ul.menu .sub-menu .sub-menu{padding:25px 0;margin:0 15px;display:none}#mobile-menu ul.menu li.menu-item-has-children{position:relative}header#header{min-height:50px;padding-bottom:0}.header-index-logo{line-height:57px;width:60%}.header-index-logo img{margin-left:-3px}.submenu-container,button.search-closer{display:none}.sidebar_container{display:none}.single-post .single-page{flex-basis:100%;margin:0 auto}.nav-by-hooks{top:unset;width:100%;max-width:none;max-height:75vh;bottom:0;transform:translateY(calc(100% - 3rem))}.nav-by-hooks button{width:100%}.nav-by-hooks .hooks-container{transform:translateX(0)}}@media only screen and (max-width:991px){#content{padding:20px 0}.post,.post-header{padding-left:20px;padding-right:20px}#navigation>ul>li:first-child>a{padding-left:20px}.header-index-nav .contact-mobile{display:block}}@media (max-width:767px){.single-post #content.right{padding:0}}@media only screen and (max-width:768px){#content .es_widget_form{flex-direction:column;text-align:center}#content .es_widget_form .es_caption,#content .es_widget_form .es_textbox{margin:10px 15px}#content .es_widget_form .es_textbox{width:70%;text-align:left}#content .es_widget_form .es_caption{font-size:24px;line-height:37px}#content.right,#content{width:100%!important;padding-right:0;padding-left:0}#header{padding-bottom:0;min-height:50px}#wrapper{position:relative;background-color:#f4f4f4;left:0}.subscribe-top-button-container,.single-post .post-excerpt,.single-post .post-excerpt,.single-post .post-header h1,.single-post .cat-tags-list,.single-post .header-index{padding-left:10px!important;padding-right:10px!important}#header .row,body.single-post #header .row{padding:0}div.main-title-area,.single-post .post-featured{padding:0 10px}.es_widget_form .es_textbox{flex-direction:column;align-items:flex-start}.es_widget_form .es_textbox_class{flex:none;margin:0 auto}.es_widget_form .es_button{flex:none;padding-top:20px;min-width:240px;order:2;align-self:center}.subscribe-top-note{order:1}.es_msg{order:3;align-self:center}.es_widget_form .es_caption,.es_widget_form .es_textbox{margin-left:10px;margin-right:10px}#mobile-toggle i{right:10px}}@media only screen and (max-width:640px){#content .es_widget_form .es_caption{font-size:22px;line-height:24px}.subscribe-top-button-container{flex-direction:column;align-items:flex-start}}@media only screen and (max-width:480px){#content .es_widget_form{height:auto}}@media (min-width:1024px){.header-index-nav nav>ul>li:last-of-type{display:none}}@media (max-width:1024px){#main-menu-custom-qoute-butt{display:none}}@media (min-width:1024px) and (max-width:1920px){.single-post .single-page{margin:0 40px 0 140px}}
+</style><link rel="shortcut icon" href="https://belvg.com/blog/wp-content/uploads/2015/11/favicon-4.png"><style>
+			::selection {background:#ff4f4f;color:#fff;}
+			::-moz-selection {background:#ff4f4f;color:#fff;}
+		.bargraph li span, .post-categories a, .post-tags a, .billboard-slider .info .read-more a:hover, .bw-slider .owl-buttons div:hover, .article-thumb:hover .icon, .woocommerce #content input.button.alt, .woocommerce #respond input#submit.alt, .woocommerce a.button.alt, .woocommerce button.button.alt, .woocommerce input.button.alt, .woocommerce-page #content input.button.alt, .woocommerce-page #respond input#submit.alt, .woocommerce-page a.button.alt, .woocommerce-page button.button.alt, .woocommerce-page input.button.alt, #footer .reviews article .bar .progress, .reviews article .bar .progress, .widget_tag_cloud a, #header.version-3 .right-content.black .search-submit:hover, #header.version-3 .search-form .search-submit, .page .search-form .search-submit:hover, #header.version-3 .search-form .search-submit:hover, .cat-tags a, .score-box .score, .review-score .bar .progress, .article-thumb .rate, #header .social a:hover {background-color:#ff4f4f!important}#footer .widget_tag_cloud a:hover {background-color:#ff4f4f!important;}.bw-button, .bw-slider .title h3:hover, .article-title h3.bb a:hover, #sidebar .reviews article .bar .score-label a:hover, .bw-megamenu .article-title span:hover, .bw-megamenu .megamenu-slider .item:hover .title h3, .bw-megamenu .small-link:hover, .woocommerce .cart-collaterals .shipping_calculator .shipping-calculator-button, .woocommerce-page .cart-collaterals .shipping_calculator .shipping-calculator-button, .woocommerce .product_meta a, #footer .bw-popular-widget-nav a.active, .widget_archive ul a, .widget_categories ul a, .widget_pages ul a, #content .post table th, .post-author .cont h4 a:hover, .cat-tags-list a, .header-parallax .date strong a:hover, .post-subtitle a:hover, a, a:visited {color:#ff4f4f}.post-tags a:before, .cat-tags a:before {border-right-color:#ff4f4f}blockquote {border-left:8px solid:#ff4f4f}#footer #wp-calendar tbody td {border-top:1px solid #ff4f4f}#footer #wp-calendar tfoot tr td {border-top:1px solid #ff4f4f}.billboard-slider .info .read-more a:hover, .bw-slider .owl-buttons div:hover, .article-thumb:hover .icon {border-color:#ff4f4f}blockquote {border-color:#ff4f4f}
+			body {background-color:#f4f4f4}
+			#header .row-holder {background-color:#111}
+			body.boxed #header .row-holder .row.for-sub-header {background-color:#111;}
+		.papa-grid h3 a {color:#000}.post-categories a:hover, .post-tags a:hover {background-color:#000!important}.article-thumb .rate:after {border-color:rgba(195,19,19,1) transparent}#header {background-color:#fff;}</style><style></style><style>/* just custom css*/
+.m-0 {
+  margin: 0;
+}
+.back-w {
+  background: white;
+}
+/* CSS for wp-team-list plugin */
+.avatar-90 {
+  width: 60px;
+  height: 60px;
+}
+.wp-team-member-role {
+  margin-bottom: 0;
+}
+.WT-hidden-avatar {
+  display: none;
+}</style> <script defer="" type="text/javascript" src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/jquery.magnific-popup.min.js.download">
+    </script>
+<script defer="" type="text/javascript" src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/main.js.download"></script>
+<script defer="" type="text/javascript" src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/underscore-min.js.download"></script>
+</head>
+<body class="post-template-default single single-post postid-15644 single-format-image enable-lazy-image boxed"><style type="text/css">html.hs-messages-widget-open.hs-messages-mobile,html.hs-messages-widget-open.hs-messages-mobile body{overflow:hidden!important;position:relative!important}html.hs-messages-widget-open.hs-messages-mobile body{height:100%!important;margin:0!important}#hubspot-messages-iframe-container{display:initial!important;z-index:2147483647;position:fixed!important;bottom:0!important}#hubspot-messages-iframe-container.widget-align-left{left:0!important}#hubspot-messages-iframe-container.widget-align-right{right:0!important}#hubspot-messages-iframe-container.internal{z-index:1016}#hubspot-messages-iframe-container.internal iframe{min-width:108px}#hubspot-messages-iframe-container .shadow-container{display:initial!important;z-index:-1;position:absolute;width:0;height:0;bottom:0;content:""}#hubspot-messages-iframe-container .shadow-container.internal{display:none!important}#hubspot-messages-iframe-container .shadow-container.active{width:400px;height:400px}#hubspot-messages-iframe-container iframe{display:initial!important;width:100%!important;height:100%!important;border:none!important;position:absolute!important;bottom:0!important;right:0!important;background:transparent!important}</style>
+
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N8BR2C7" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+
+
+<div id="mobile-menu">
+<span id="mobile-toggle"><i></i></span>
+<div class="field">
+<div class="search-form-container">
+<form role="search" method="get" id="searchform" class="search-form" action="https://belvg.com/blog/" data-hs-cf-bound="true">
+<div><label class="screen-reader-text" for="s">Search for:</label>
+<input type="text" class="search-field" value="" placeholder="Blog search" name="s" id="s">
+<button type="submit" id="searchsubmit" class="search-submit" aria-label="Search button"></button>
+</div>
+</form>
+<button class="search-closer" aria-label="Search closer"></button>
+</div> </div>
+<div class="field">
+<div class="menu-mobile-menu-container"><ul id="menu-mobile-menu" class="menu"><li id="menu-item-12826" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-has-children menu-item-12826"><a href="https://belvg.com/blog/">Blog</a>
+<ul class="sub-menu">
+<li id="menu-item-24692" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-has-children menu-item-24692"><a href="https://belvg.com/ecommerce">ECommerce</a>
+<ul class="sub-menu">
+<li id="menu-item-24693" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-24693"><a href="https://belvg.com/marketing">Marketing</a></li>
+<li id="menu-item-24694" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-24694"><a href="https://belvg.com/belvg-live">BelVG Live</a></li>
+</ul>
+<div class="arrow-wrapper"><i class="toggle-menu"></i></div></li>
+<li id="menu-item-24695" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-24695"><a>Development</a>
+<ul class="sub-menu">
+<li id="menu-item-24696" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-24696"><a href="https://belvg.com/magento">Magento</a></li>
+<li id="menu-item-24697" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-24697"><a href="https://belvg.com/magento-developer">Magento Developer</a></li>
+<li id="menu-item-24699" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-24699"><a href="https://belvg.com/magento-speed-optimization">Magento Speed Optimization</a></li>
+<li id="menu-item-24698" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-24698"><a href="https://belvg.com/magento-seo">Magento SEO</a></li>
+</ul>
+<div class="arrow-wrapper"><i class="toggle-menu"></i></div></li>
+<li id="menu-item-24704" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-24704"><a href="https://belvg.com/prestashop">Prestashop</a>
+<ul class="sub-menu">
+<li id="menu-item-24700" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-24700"><a href="https://belvg.com/prestashop-webdesign">PrestaShop Webdesign</a></li>
+<li id="menu-item-24701" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-24701"><a href="https://belvg.com/prestashop-custom-development">PrestaShop Custom Development</a></li>
+<li id="menu-item-24703" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-24703"><a href="https://belvg.com/prestashop-speed-optimization">PrestaShop Speed Optimization</a></li>
+<li id="menu-item-24702" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-24702"><a href="https://belvg.com/prestashop-seo">PrestaShop SEO</a></li>
+</ul>
+<div class="arrow-wrapper"><i class="toggle-menu"></i></div></li>
+<li id="menu-item-24705" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-24705"><a href="https://belvg.com/certification">Certification</a>
+<ul class="sub-menu">
+<li id="menu-item-24706" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-24706"><a href="https://belvg.com/magento-developer">Magento Developer</a></li>
+<li id="menu-item-24708" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-24708"><a href="https://belvg.com/magento-solution-specialist">Magento Solution Specialist</a></li>
+<li id="menu-item-24707" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-24707"><a href="https://belvg.com/magento-front-end-developer">Magento Front End Developer</a></li>
+</ul>
+<div class="arrow-wrapper"><i class="toggle-menu"></i></div></li>
+<li id="menu-item-25195" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-25195"><a>Design</a>
+<ul class="sub-menu">
+<li id="menu-item-25196" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-25196"><a href="https://belvg.com/web-design">Web Design</a></li>
+<li id="menu-item-25197" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-25197"><a href="https://belvg.com/responsive-web-design">Responsive Web Design</a></li>
+<li id="menu-item-25198" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-25198"><a href="https://belvg.com/website-redesign">Website Redesign</a></li>
+<li id="menu-item-25199" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-25199"><a href="https://belvg.com/web-design-audit">Design Audit</a></li>
+<li id="menu-item-25200" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-25200"><a href="https://belvg.com/web-design-process">Design Process</a></li>
+<li id="menu-item-25201" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-25201"><a href="https://belvg.com/web-design-from-scratch">Web Design from Scratch</a></li>
+</ul>
+<div class="arrow-wrapper"><i class="toggle-menu"></i></div></li>
+</ul>
+<div class="arrow-wrapper"><i class="toggle-menu"></i></div></li>
+<li id="menu-item-12833" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12833"><a href="https://belvg.com/work/">Work</a></li>
+<li id="menu-item-16097" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-16097"><a>Services</a>
+<ul class="sub-menu">
+<li id="menu-item-16098" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-16098"><a>Magento</a>
+<ul class="sub-menu">
+<li id="menu-item-16099" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-16099"><a href="https://belvg.com/magento-development">Magento Development</a></li>
+<li id="menu-item-23863" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-23863"><a href="https://belvg.com/magento2-development">Magento 2 Development</a></li>
+<li id="menu-item-16100" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-16100"><a href="https://belvg.com/migration-to-magento-2">Magento Migration</a></li>
+<li id="menu-item-23864" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-23864"><a href="https://belvg.com/magento-webdesign">Magento Webdesign</a></li>
+<li id="menu-item-23865" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-23865"><a href="https://belvg.com/magento-custom-development">Magento Custom Development</a></li>
+<li id="menu-item-23866" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-23866"><a href="https://belvg.com/magento-integration">Magento Integration</a></li>
+<li id="menu-item-23867" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-23867"><a href="https://belvg.com/magento-support">Magento Support</a></li>
+<li id="menu-item-23868" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-23868"><a href="https://belvg.com/magento-audit">Magento Audit</a></li>
+</ul>
+<div class="arrow-wrapper"><i class="toggle-menu"></i></div></li>
+<li id="menu-item-16102" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-16102"><a>PrestaShop</a>
+<ul class="sub-menu">
+<li id="menu-item-16103" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-16103"><a href="https://belvg.com/prestashop-development">PrestaShop Development</a></li>
+<li id="menu-item-23869" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-23869"><a href="https://belvg.com/prestashop-upgrade">PrestaShop Upgrade &amp; Migration</a></li>
+<li id="menu-item-23871" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-23871"><a href="https://belvg.com/prestashop-theme">Prestashop Theme Development</a></li>
+<li id="menu-item-23872" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-23872"><a href="https://belvg.com/prestashop-support">PrestaShop Support &amp; Maintenance</a></li>
+<li id="menu-item-23873" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-23873"><a href="https://belvg.com/prestashop-dedicated-developer">Dedicated PrestaShop Developers</a></li>
+<li id="menu-item-16105" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-16105"><a href="https://belvg.com/prestashop-modules">PrestaShop Addon Development</a></li>
+</ul>
+<div class="arrow-wrapper"><i class="toggle-menu"></i></div></li>
+<li id="menu-item-23875" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-23875"><a href="https://belvg.com/ecommerce-development">Ecommerce</a>
+<ul class="sub-menu">
+<li id="menu-item-26007" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-26007"><a href="https://belvg.com/shopify-development">Shopify Development</a></li>
+<li id="menu-item-26010" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-26010"><a href="https://belvg.com/bigcommerce-development">BigСommerce Development</a></li>
+<li id="menu-item-26012" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-26012"><a href="https://belvg.com/woocommerce-development">WooCommerce Development</a></li>
+</ul>
+<div class="arrow-wrapper"><i class="toggle-menu"></i></div></li>
+</ul>
+<div class="arrow-wrapper"><i class="toggle-menu"></i></div></li>
+<li id="menu-item-16110" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-16110"><a>Our Apps</a>
+<ul class="sub-menu">
+<li id="menu-item-12836" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12836"><a href="https://store.belvg.com/">Magento Store</a></li>
+<li id="menu-item-12837" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12837"><a href="https://module-presta.com/">Prestashop Store</a></li>
+</ul>
+<div class="arrow-wrapper"><i class="toggle-menu"></i></div></li>
+<li id="menu-item-16111" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-16111"><a>Company</a>
+<ul class="sub-menu">
+<li id="menu-item-16113" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-16113"><a href="https://belvg.com/about">About</a></li>
+<li id="menu-item-16114" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-16114"><a href="https://belvg.com/team">Team</a></li>
+<li id="menu-item-25146" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-25146"><a href="https://belvg.com/tutorial">Tutorial</a></li>
+<li id="menu-item-16115" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-16115"><a href="https://belvg.com/contact">Contact</a></li>
+</ul>
+<div class="arrow-wrapper"><i class="toggle-menu"></i></div></li>
+<li id="menu-item-12838" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12838"><a href="https://belvg.com/contact/">Free quote</a></li>
+</ul></div> </div>
+
+<div class="nav-contacts">
+<div>
+<h4>
+<a href="tel:+16503532301">US: +1 650 353 2301</a>
+</h4>
+<p class="font-16">
+<a href="mailto:contact@belvg.com">contact@belvg.com</a>
+</p>
+</div>
+</div>
+<div class="get-audit-btn"><a href="https://belvg.com/audit" class="call-to-action">Get Free Audit</a></div>
+<div class="nav-item call-to-action"><a href="https://belvg.com/contact" class="nav-link">Contact Us</a></div>
+</div> <div id="wrapper">
+<div class="thetop"></div>
+<header id="header" class="versions version-1 nav-invert enable-sticky">
+
+<div class="header-index header-bg">
+<div class="header-wrap">
+<div class="row header-bg">
+<div class="header-index-logo">
+<a href="https://belvg.com/"><img src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/belvg-logo.svg" width="120" height="38" alt="BelVG" class="logo-img"></a>
+</div>
+<div class="header-index-nav">
+<nav>
+<ul id="menu-main-menu" class=""><li id="menu-item-12814" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-12814"><a class="nav-link" href="https://belvg.com/work"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Work</span></span></span></span></a></li>
+<li id="menu-item-12816" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-12816"><a class="nav-link" href="https://belvg.com/blog/"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Blog</span></span></span></span></a></li>
+<li id="menu-item-12820" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-12820"><a class="nav-link"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Services</span></span></span></span></a>
+<ul class="dropdown-menu row">
+<li id="menu-item-16095" class="nav-item column dropdown-column menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-16095"><a class="submenu-item title"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Magento Services</span></span></span></span></a>
+<ul class="submenu-columns">
+<li id="menu-item-12821" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-12821"><a href="https://belvg.com/magento-development"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Magento Development</span></span></span></span></a></li>
+<li id="menu-item-23510" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-23510"><a href="https://belvg.com/magento2-development"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Magento 2 Development</span></span></span></span></a></li>
+<li id="menu-item-12824" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-12824"><a href="https://belvg.com/migration-to-magento-2"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Magento 2 Migration</span></span></span></span></a></li>
+<li id="menu-item-22046" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-22046"><a href="https://belvg.com/magento-webdesign"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Magento Webdesign</span></span></span></span></a></li>
+<li id="menu-item-22047" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-22047"><a href="https://belvg.com/magento-custom-development"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Magento Custom Development</span></span></span></span></a></li>
+<li id="menu-item-22048" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-22048"><a href="https://belvg.com/magento-integration"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Magento Integration</span></span></span></span></a></li>
+<li id="menu-item-22049" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-22049"><a href="https://belvg.com/magento-audit"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Magento Audit</span></span></span></span></a></li>
+<li id="menu-item-22140" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-22140"><a href="https://belvg.com/magento-support"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Magento Support</span></span></span></span></a></li>
+</ul>
+</li>
+<li id="menu-item-16096" class="nav-item column dropdown-column menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-16096"><a class="submenu-item title"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">PrestaShop Services</span></span></span></span></a>
+<ul class="submenu-columns">
+<li id="menu-item-12822" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-12822"><a href="https://belvg.com/prestashop-development"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">PrestaShop Development</span></span></span></span></a></li>
+<li id="menu-item-15792" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-15792"><a href="https://belvg.com/prestashop-upgrade"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">PrestaShop Upgrade &amp; Migration</span></span></span></span></a></li>
+<li id="menu-item-15793" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-15793"><a href="https://belvg.com/prestashop-theme"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">PrestaShop Theme Development</span></span></span></span></a></li>
+<li id="menu-item-23438" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-23438"><a href="https://belvg.com/prestashop-support"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">PrestaShop Support &amp; Maintenance</span></span></span></span></a></li>
+<li id="menu-item-23439" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-23439"><a href="https://belvg.com/prestashop-dedicated-developer"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Dedicated PrestaShop developers</span></span></span></span></a></li>
+<li id="menu-item-23440" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-23440"><a href="https://belvg.com/prestashop-modules"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">PrestaShop Addon Development</span></span></span></span></a></li>
+</ul>
+</li>
+<li id="menu-item-22163" class="nav-item column dropdown-column menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-22163"><a class="submenu-item title"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Ecommerce Services</span></span></span></span></a>
+<ul class="submenu-columns">
+<li id="menu-item-24515" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-24515"><a href="https://belvg.com/ecommerce-development"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Ecommerce Development</span></span></span></span></a></li>
+<li id="menu-item-26816" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-26816"><a href="https://belvg.com/shopware-partner"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Shopware Partner</span></span></span></span></a></li>
+<li id="menu-item-26006" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-26006"><a href="https://belvg.com/shopify-development"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Shopify Development</span></span></span></span></a></li>
+<li id="menu-item-26009" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-26009"><a href="https://belvg.com/bigcommerce-development"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">BigСommerce Development</span></span></span></span></a></li>
+<li id="menu-item-26011" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-26011"><a href="https://belvg.com/woocommerce-development"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">WooCommerce Development</span></span></span></span></a></li>
+<li id="menu-item-25556" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-25556"><a href="https://belvg.com/web-design"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Web Design</span></span></span></span></a></li>
+<li id="menu-item-25557" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-25557"><a href="https://belvg.com/web-design-process"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Web Design Process</span></span></span></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li id="menu-item-16076" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-16076"><a class="nav-link"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Our apps</span></span></span></span></a>
+<ul class="dropdown-menu row">
+<li id="menu-item-12817" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-12817"><a class="submenu-item title" href="https://store.belvg.com/"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Magento Store</span></span></span></span></a></li>
+<li id="menu-item-12818" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-12818"><a class="submenu-item title" href="https://module-presta.com/"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Prestashop Store</span></span></span></span></a></li>
+</ul>
+</li>
+<li id="menu-item-12815" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-12815"><a class="nav-link" href="https://belvg.com/about"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Company</span></span></span></span></a>
+<ul class="dropdown-menu row">
+<li id="menu-item-15788" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-15788"><a class="submenu-item title" href="https://belvg.com/about"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">About</span></span></span></span></a></li>
+<li id="menu-item-15789" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-15789"><a class="submenu-item title" href="https://belvg.com/team"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Team</span></span></span></span></a></li>
+<li id="menu-item-22164" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-22164"><a class="submenu-item title" href="https://belvg.com/career"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Career</span></span></span></span></a></li>
+<li id="menu-item-15790" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-15790"><a class="submenu-item title" href="https://belvg.com/contact"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Contact</span></span></span></span></a></li>
+</ul>
+</li>
+<li id="menu-item-25145" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-25145"><a class="nav-link" href="https://belvg.com/tutorial"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Tutorial</span></span></span></span></a></li>
+<li id="menu-item-12819" class="nav-item menu-item menu-item-type-custom menu-item-object-custom menu-item-12819"><a class="nav-link" href="https://belvg.com/contact"><span class="item_outer"><span class="item_inner"><span class="item_text"><span class="item_title">Free Quote</span></span></span></span></a></li>
+</ul> <a href="https://belvg.com/contact" class="contact-mobile" aria-label="Contact"></a>
+<div class="nav-contacts">
+<div>
+<h4>
+<a href="tel:+16503532301">US: 1 650 353 2301</a>
+</h4>
+<p class="font-16">
+<a href="mailto:contact@belvg.com">contact@belvg.com</a>
+</p>
+</div>
+</div>
+<div class="get-audit-btn"><a href="https://belvg.com/audit" class="call-to-action">Get Free Audit</a></div>
+<div id="main-menu-custom-qoute-butt"><a class="call-to-action" href="https://belvg.com/contact" target="_self"><span class="edgtf-btn-text">Contact Us</span></a></div>
+</nav>
+</div>
+</div>
+</div>
+</div>
+</header>
+<div id="container">
+<div class="main-title-area">
+<div class="breadcrumbs">
+
+<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to BelVG site." href="https://belvg.com/"><span property="name">Home</span> </a> &gt;
+<meta property="position" content="1"></span><span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to BelVG Blog." href="https://belvg.com/blog"><span property="name">Blog</span></a><meta property="position" content="1"></span> &gt; <span class="post post-post current-item">Magento 2 Architecture. Service Layer</span> </div>
+</div>
+<div class="search-wrap">
+</div>
+<div id="content" class="right">
+<div class="nav-by-hooks" style="display: none;">
+<div class="hooks-title">
+<button class="nav-by-hooks-title" onclick="toggleHooks()">
+<img src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/Table-of-contents.svg" width="15" height="12" alt="Table of contents">
+Contents
+<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" width="15" height="15" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M22.8397 7.61328L7.61324 22.8398" stroke="black"></path>
+<path d="M22.8397 22.8398L7.61325 7.61337" stroke="black"></path>
+</svg>
+</button>
+</div>
+<div class="hooks-container">
+<div class="hooks-inner"></div>
+</div>
+</div>
+<div class="single-page">
+
+<div class="post-header">
+<h1 class="post-title  ">
+Magento 2 Architecture. Service Layer </h1>
+<div class="cat-tags-list">
+Apr 26, 2018<p class="post-views"><span class="views-count">3665</span><a href="https://belvg.com/blog/author/andrey-litvin" class="author-name"> Andrey Litvin </a></p> </div> <div class="ghost"></div> <div class="subscribe-top" style="display:none">
+<div class="subscribe-top-button-container">
+<button class="subscribe-top-button" aria-label="Subscribe"></button>
+</div>
+<div class="subscribe-top-form">
+<div class="subscribe-block"> <div>
+<form class="es_widget_form" data-hs-cf-bound="true">
+<h2 class="es_caption">Get interesting stuff and updates to your email inbox</h2>
+<div class="es_lablebox"><label for="es_txt_email">Email *</label></div>
+<div class="es_textbox">
+<input class="es_textbox_class" name="es_txt_email" id="es_txt_email" placeholder="Email address" onkeypress="if(event.keyCode==13) es_submit_page(&#39;https://belvg.com/blog&#39;)" value="" maxlength="225" type="text">
+<label class="es_lab_email"></label>
+<div class="es_button">
+<input class="es_textbox_button call-to-action" name="es_txt_button" id="es_txt_button" onclick="return es_submit_page(&#39;https://belvg.com/blog&#39;)" value="Subscribe" type="button">
+</div>
+<span class="subscribe-top-note">By clicking on the button, you consent to the processing of <a href="https://belvg.com/privacy-policy" target="_blank">your personal data</a></span>
+<div class="es_msg"><span id="es_msg"></span></div>
+</div>
+<input name="es_txt_name" id="es_txt_name" value="" type="hidden">
+<input name="es_txt_group" id="es_txt_group" value="" type="hidden">
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<article id="post-15644" class="post post-15644 type-post status-publish format-image has-post-thumbnail hentry category-ecommerce category-magento2-development category-magento-speed-optimization post_format-post-format-image" style="padding-top:25px">
+<div class="post-featured">
+<picture>
+<source srcset="https://belvg.com/blog/wp-content/uploads/2018/04/Architecture_in_Magento_2_What_Is-3-480x270.jpg 480w" media="(max-width:480px)">
+<source srcset="https://belvg.com/blog/wp-content/uploads/2018/04/Architecture_in_Magento_2_What_Is-3.jpg" media="(min-width: 480px)">
+<img width="770" height="433" src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/Architecture_in_Magento_2_What_Is-3.jpg" alt="Magento 2 Architecture. Service Layer">
+</picture>
+</div>
+<div class="post-excerpt">
+<p>Understanding layered software&nbsp;architecture is essential for understanding basic Magento product organization. In this article we are going to provide a detailed explanation of each of the 4 layers in Magento 2 and the way they are used in Magento 2 application. After that we will take a close-up look at Service layer, there is a lot to talk about.</p>
+<p><span id="more-15644"></span></p>
+<p>Magento 2 Architecture can be divided into the following layers:</p>
+<ul><li><span style="color: #000000;">Presentation layer;</span></li>
+<li><span style="color: #000000;">Service layer;</span></li>
+<li><span style="color: #000000;">Domain layer;</span></li>
+<li><span style="color: #000000;">Persistence layer.</span></li>
+</ul><p>These layers, that also include components,&nbsp;are demonstrated on the following diagram:</p>
+<p>&nbsp;</p>
+<p></p><noscript><img class="aligncenter size-full wp-image-15645" src="https://belvg.com/blog/wp-content/uploads/2018/04/image2.png" alt="Magento architecture" width="720" height="540" srcset="https://belvg.com/blog/wp-content/uploads/2018/04/image2.png 720w, https://belvg.com/blog/wp-content/uploads/2018/04/image2-350x263.png 350w, https://belvg.com/blog/wp-content/uploads/2018/04/image2-700x525.png 700w, https://belvg.com/blog/wp-content/uploads/2018/04/image2-480x360.png 480w" sizes="(max-width: 720px) 100vw, 720px" title="Magento 2 Architecture. Service Layer"></noscript><img class="aligncenter size-full wp-image-15645 lazy" src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/image2.png" alt="Magento architecture" width="720" height="540" srcset="" sizes="(max-width: 720px) 100vw, 720px" data-src="https://belvg.com/blog/wp-content/uploads/2018/04/image2.png" data-srcset="https://belvg.com/blog/wp-content/uploads/2018/04/image2.png 720w, https://belvg.com/blog/wp-content/uploads/2018/04/image2-350x263.png 350w, https://belvg.com/blog/wp-content/uploads/2018/04/image2-700x525.png 700w, https://belvg.com/blog/wp-content/uploads/2018/04/image2-480x360.png 480w" title="Magento 2 Architecture. Service Layer" style="opacity: 1;"><h2><strong><span style="color: #000000;">Presentation Layer</span></strong></h2>
+<p>Presentation layer includes a view of the administrative part of the site, an API call, and a view for site users. This level consists of such components as layouts, blocks, templates and controllers. The view code controls the user/administrator interaction with the store and its appearance. Presentation layer components call the Service layer, which in its turn sends queries to Domain layer.</p>
+<h2><strong><span style="color: #000000;">Service Layer</span></strong></h2>
+<p>Service layer serves as a bridge between Presentation layer and Domain layer. This is implemented using service contracts, which are defined using PHP interfaces. All the calls from web service interfaces (API) or users (controllers) are routed through Service layer. This allows you to separate the business logic from the code. Service contract includes:</p>
+<ul><li><span style="color: #000000;">Controllers;</span></li>
+<li><span style="color: #000000;">Web services (SOAP and REST API calls);</span></li>
+<li><span style="color: #000000;">Third-party modules using service contracts.</span></li>
+</ul><h2><span style="color: #000000;"><strong>Domain Layer</strong></span></h2>
+<p>Domain layer contains the level of the module’s business logic. It usually does not contain the information specific to a particular resource or database. Its main functions include:</p>
+<ul><li><span style="color: #000000;">identifying common Magento data objects or models that contain business logic; </span></li>
+<li><span style="color: #000000;">(optional) implementation of service contracts.</span></li>
+</ul><h2><span style="color: #000000;"><strong>Persistence Layer</strong></span></h2>
+<p>Magento uses the “active record” pattern for saving. In Magento, the model object contains a “resource model” that compares the object with one or more database records. “Resource model” is responsible for performing such functions as:</p>
+<ul><li><span style="color: #000000;">Executing all CRUD requests. The resource model contains the SQL code for executing these queries;</span></li>
+<li><span style="color: #000000;">Performing additional business logic. For example, a resource model can perform data validation, run processes before or after saving data, or perform other operations on the database.</span></li>
+</ul><p>If you expect to return multiple items from a database query, you must implement a special type of “Resource model”, known as “collection”. “Collection” is a class that loads several models into a structure similar to an array, based on a set of rules.</p>
+<p>Now let us take a closer look at Service layer in Magento 2.</p>
+<h2><strong><span style="color: #000000;">Magento 2 Service Layer</span></strong></h2>
+<p>Service layer In Magento 2 is a new layer that lies between Presentation layer and the business logic. The goal is to make all calls from other modules, as well calls from Presentation layer (blocks, templates and controllers) pass through Service layer. Besides that, Service layer can be easily opened as a REST web service or a SOAP endpoint.</p>
+<p>Service layer for the module is a set of PHP interfaces, data types, and the implementation of these interfaces. Let’s take the Customer Interface class code as an example, with the names of the fields of the entity being a constant, and the methods get () and set () serving to write data in the entity table and the module’s attributes. Also note that in PHPDoc we define the type of the field value. We describe the fields of the user object as following:<br></p>
+<div id="crayon-61e24324c9f9c823488488" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style="margin-top: 20px; margin-bottom: 20px; height: auto;">
+<div class="crayon-toolbar" data-settings=" mouseover hide delay" style="margin-top: -18px; display: none; z-index: 4;"><span class="crayon-title"></span>
+<div class="crayon-tools" style=""><div class="crayon-button crayon-nums-button" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div><span class="crayon-language">PHP</span></div></div>
+<div class="crayon-info" style=""></div>
+<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly="" style="tab-size: 4; z-index: 0; opacity: 0; overflow: hidden;">&lt;?php
+namespace Magento\Customer\Api\Data;
+
+interface CustomerInterface extends \Magento\Framework\Api\CustomAttributesDataInterface
+{
+&nbsp;&nbsp;&nbsp;...
+&nbsp;&nbsp;&nbsp;const FIRSTNAME = 'firstname';
+&nbsp;&nbsp;&nbsp;...
+&nbsp;&nbsp;&nbsp;/**
+&nbsp;&nbsp;&nbsp;&nbsp;* Get first name
+&nbsp;&nbsp;&nbsp;&nbsp;*
+&nbsp;&nbsp;&nbsp;&nbsp;* @return string
+&nbsp;&nbsp;&nbsp;&nbsp;*/
+&nbsp;&nbsp;&nbsp;public function getFirstname();
+&nbsp;&nbsp;&nbsp;/**
+&nbsp;&nbsp;&nbsp;&nbsp;* Set first name
+&nbsp;&nbsp;&nbsp;&nbsp;*
+&nbsp;&nbsp;&nbsp;&nbsp;* @param string $firstname
+&nbsp;&nbsp;&nbsp;&nbsp;* @return $this
+&nbsp;&nbsp;&nbsp;&nbsp;*/
+&nbsp;&nbsp;&nbsp;public function setFirstname($firstname);
+&nbsp;&nbsp;&nbsp;...</textarea></div>
+ <div class="crayon-main" style="max-height: 400px; position: relative; z-index: 1; overflow: hidden;">
+<table class="crayon-table" style="margin-left: -1px;"><tbody><tr class="crayon-row"><td class="crayon-nums " data-settings="hide">
+<div class="crayon-nums-content" style=""><div class="crayon-num" data-line="crayon-61e24324c9f9c823488488-1">1</div><div class="crayon-num" data-line="crayon-61e24324c9f9c823488488-2">2</div><div class="crayon-num" data-line="crayon-61e24324c9f9c823488488-3">3</div><div class="crayon-num" data-line="crayon-61e24324c9f9c823488488-4">4</div><div class="crayon-num" data-line="crayon-61e24324c9f9c823488488-5">5</div><div class="crayon-num" data-line="crayon-61e24324c9f9c823488488-6">6</div><div class="crayon-num" data-line="crayon-61e24324c9f9c823488488-7">7</div><div class="crayon-num" data-line="crayon-61e24324c9f9c823488488-8">8</div><div class="crayon-num" data-line="crayon-61e24324c9f9c823488488-9">9</div><div class="crayon-num" data-line="crayon-61e24324c9f9c823488488-10">10</div><div class="crayon-num" data-line="crayon-61e24324c9f9c823488488-11">11</div><div class="crayon-num" data-line="crayon-61e24324c9f9c823488488-12">12</div><div class="crayon-num" data-line="crayon-61e24324c9f9c823488488-13">13</div><div class="crayon-num" data-line="crayon-61e24324c9f9c823488488-14">14</div><div class="crayon-num" data-line="crayon-61e24324c9f9c823488488-15">15</div><div class="crayon-num" data-line="crayon-61e24324c9f9c823488488-16">16</div><div class="crayon-num" data-line="crayon-61e24324c9f9c823488488-17">17</div><div class="crayon-num" data-line="crayon-61e24324c9f9c823488488-18">18</div><div class="crayon-num" data-line="crayon-61e24324c9f9c823488488-19">19</div><div class="crayon-num" data-line="crayon-61e24324c9f9c823488488-20">20</div><div class="crayon-num" data-line="crayon-61e24324c9f9c823488488-21">21</div><div class="crayon-num" data-line="crayon-61e24324c9f9c823488488-22">22</div></div>
+</td>
+<td class="crayon-code"><div class="crayon-pre" style=" -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-61e24324c9f9c823488488-1"><span class="crayon-ta">&lt;?php</span></div><div class="crayon-line" id="crayon-61e24324c9f9c823488488-2"><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-i">Magento</span><span class="crayon-sy">\</span><span class="crayon-i">Customer</span><span class="crayon-sy">\</span><span class="crayon-i">Api</span><span class="crayon-sy">\</span><span class="crayon-i">Data</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-61e24324c9f9c823488488-3">&nbsp;</div><div class="crayon-line" id="crayon-61e24324c9f9c823488488-4"><span class="crayon-t">interface</span><span class="crayon-h"> </span><span class="crayon-e">CustomerInterface</span><span class="crayon-h"> </span><span class="crayon-r">extends</span><span class="crayon-h"> </span><span class="crayon-sy">\</span><span class="crayon-e">Magento</span><span class="crayon-sy">\</span><span class="crayon-e">Framework</span><span class="crayon-sy">\</span><span class="crayon-e">Api</span><span class="crayon-sy">\</span><span class="crayon-e">CustomAttributesDataInterface</span></div><div class="crayon-line" id="crayon-61e24324c9f9c823488488-5"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-61e24324c9f9c823488488-6">&nbsp;&nbsp;&nbsp;<span class="crayon-sy">.</span><span class="crayon-sy">.</span><span class="crayon-sy">.</span></div><div class="crayon-line" id="crayon-61e24324c9f9c823488488-7">&nbsp;&nbsp;&nbsp;<span class="crayon-m">const</span><span class="crayon-h"> </span><span class="crayon-cn">FIRSTNAME</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-s">'firstname'</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-61e24324c9f9c823488488-8">&nbsp;&nbsp;&nbsp;<span class="crayon-sy">.</span><span class="crayon-sy">.</span><span class="crayon-sy">.</span></div><div class="crayon-line" id="crayon-61e24324c9f9c823488488-9">&nbsp;&nbsp;&nbsp;<span class="crayon-c">/**</span></div><div class="crayon-line" id="crayon-61e24324c9f9c823488488-10"><span class="crayon-c">&nbsp;&nbsp;&nbsp;&nbsp;* Get first name</span></div><div class="crayon-line" id="crayon-61e24324c9f9c823488488-11"><span class="crayon-c">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div><div class="crayon-line" id="crayon-61e24324c9f9c823488488-12"><span class="crayon-c">&nbsp;&nbsp;&nbsp;&nbsp;* @return string</span></div><div class="crayon-line" id="crayon-61e24324c9f9c823488488-13"><span class="crayon-c">&nbsp;&nbsp;&nbsp;&nbsp;*/</span></div><div class="crayon-line" id="crayon-61e24324c9f9c823488488-14">&nbsp;&nbsp;&nbsp;<span class="crayon-m">public</span><span class="crayon-h"> </span><span class="crayon-t">function</span><span class="crayon-h"> </span><span class="crayon-e">getFirstname</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-61e24324c9f9c823488488-15">&nbsp;&nbsp;&nbsp;<span class="crayon-c">/**</span></div><div class="crayon-line" id="crayon-61e24324c9f9c823488488-16"><span class="crayon-c">&nbsp;&nbsp;&nbsp;&nbsp;* Set first name</span></div><div class="crayon-line" id="crayon-61e24324c9f9c823488488-17"><span class="crayon-c">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div><div class="crayon-line" id="crayon-61e24324c9f9c823488488-18"><span class="crayon-c">&nbsp;&nbsp;&nbsp;&nbsp;* @param string $firstname</span></div><div class="crayon-line" id="crayon-61e24324c9f9c823488488-19"><span class="crayon-c">&nbsp;&nbsp;&nbsp;&nbsp;* @return $this</span></div><div class="crayon-line" id="crayon-61e24324c9f9c823488488-20"><span class="crayon-c">&nbsp;&nbsp;&nbsp;&nbsp;*/</span></div><div class="crayon-line" id="crayon-61e24324c9f9c823488488-21">&nbsp;&nbsp;&nbsp;<span class="crayon-m">public</span><span class="crayon-h"> </span><span class="crayon-t">function</span><span class="crayon-h"> </span><span class="crayon-e">setFirstname</span><span class="crayon-sy">(</span><span class="crayon-v">$firstname</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-61e24324c9f9c823488488-22">&nbsp;&nbsp;&nbsp;<span class="crayon-sy">.</span><span class="crayon-sy">.</span><span class="crayon-sy">.</span></div></div></td>
+</tr></tbody></table></div>
+</div>
+
+<p><br>
+To implement &nbsp;CRUD in Magento 2, we need to describe the repository interface and implement it. We can take the Customer Repository Interface as an example, which describes the methods of working with the customer object. As you can see, this implementation simplifies the work with different versions of the module, since we have one entry point through the API and the implementation is separated. If a new mandatory field is added to the entity, it is going to be an exceptional case.<br></p><div class="content_sales_info" style="background-image: url(https://belvg.com/blog/wp-content/uploads/2019/03/Sales_background.png);">
+<img src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/Andrey_Dubina.png" alt="Andrey_Dubina">
+<div class="content_part">
+<h3 class="title"> Partner With Us </h3>
+<span class="sales_content_text">Let's discuss how to grow your business. Get a Free Quote.</span>
+</div>
+<a href="https://belvg.com/contact?utm_source=blog&amp;utm_campaign=sales_block&amp;utm_content=middle" class="contact_with_sales call-to-action" target="_blank">Talk to Andrey</a>
+</div>
+<p></p>
+<div id="crayon-61e24324c9f9f843555698" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style="margin-top: 20px; margin-bottom: 20px; height: auto;">
+<div class="crayon-toolbar" data-settings=" mouseover hide delay" style="margin-top: -18px; display: none; z-index: 4;"><span class="crayon-title"></span>
+<div class="crayon-tools" style=""><div class="crayon-button crayon-nums-button" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div><span class="crayon-language">PHP</span></div></div>
+<div class="crayon-info" style=""></div>
+<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly="" style="tab-size: 4; z-index: 0; opacity: 0; overflow: hidden;">&lt;?php
+/**
+*
+* Copyright (c) Magento, Inc. All rights reserved.
+* See COPYING.txt for license details.
+*/
+namespace Magento\Customer\Api;
+/**
+* Customer CRUD interface.
+* @api
+* @since 100.0.2
+*/
+interface CustomerRepositoryInterface
+{
+&nbsp;&nbsp;&nbsp;/**
+&nbsp;&nbsp;&nbsp;&nbsp;* Create or update a customer.
+&nbsp;&nbsp;&nbsp;&nbsp;*
+&nbsp;&nbsp;&nbsp;&nbsp;* @param \Magento\Customer\Api\Data\CustomerInterface $customer
+&nbsp;&nbsp;&nbsp;&nbsp;* @param string $passwordHash
+&nbsp;&nbsp;&nbsp;&nbsp;* @return \Magento\Customer\Api\Data\CustomerInterface
+&nbsp;&nbsp;&nbsp;&nbsp;* @throws \Magento\Framework\Exception\InputException If bad input is provided
+&nbsp;&nbsp;&nbsp;&nbsp;* @throws \Magento\Framework\Exception\State\InputMismatchException If the provided email is already used
+&nbsp;&nbsp;&nbsp;&nbsp;* @throws \Magento\Framework\Exception\LocalizedException
+&nbsp;&nbsp;&nbsp;&nbsp;*/
+&nbsp;&nbsp;&nbsp;public function save(\Magento\Customer\Api\Data\CustomerInterface $customer, $passwordHash = null);
+...</textarea></div>
+<div class="crayon-main" style="max-height: 400px; position: relative; z-index: 1; overflow: hidden;">
+<table class="crayon-table" style="margin-left: -1px;"><tbody><tr class="crayon-row"><td class="crayon-nums " data-settings="hide">
+<div class="crayon-nums-content" style=""><div class="crayon-num" data-line="crayon-61e24324c9f9f843555698-1">1</div><div class="crayon-num" data-line="crayon-61e24324c9f9f843555698-2">2</div><div class="crayon-num" data-line="crayon-61e24324c9f9f843555698-3">3</div><div class="crayon-num" data-line="crayon-61e24324c9f9f843555698-4">4</div><div class="crayon-num" data-line="crayon-61e24324c9f9f843555698-5">5</div><div class="crayon-num" data-line="crayon-61e24324c9f9f843555698-6">6</div><div class="crayon-num" data-line="crayon-61e24324c9f9f843555698-7">7</div><div class="crayon-num" data-line="crayon-61e24324c9f9f843555698-8">8</div><div class="crayon-num" data-line="crayon-61e24324c9f9f843555698-9">9</div><div class="crayon-num" data-line="crayon-61e24324c9f9f843555698-10">10</div><div class="crayon-num" data-line="crayon-61e24324c9f9f843555698-11">11</div><div class="crayon-num" data-line="crayon-61e24324c9f9f843555698-12">12</div><div class="crayon-num" data-line="crayon-61e24324c9f9f843555698-13">13</div><div class="crayon-num" data-line="crayon-61e24324c9f9f843555698-14">14</div><div class="crayon-num" data-line="crayon-61e24324c9f9f843555698-15">15</div><div class="crayon-num" data-line="crayon-61e24324c9f9f843555698-16">16</div><div class="crayon-num" data-line="crayon-61e24324c9f9f843555698-17">17</div><div class="crayon-num" data-line="crayon-61e24324c9f9f843555698-18">18</div><div class="crayon-num" data-line="crayon-61e24324c9f9f843555698-19">19</div><div class="crayon-num" data-line="crayon-61e24324c9f9f843555698-20">20</div><div class="crayon-num" data-line="crayon-61e24324c9f9f843555698-21">21</div><div class="crayon-num" data-line="crayon-61e24324c9f9f843555698-22">22</div><div class="crayon-num" data-line="crayon-61e24324c9f9f843555698-23">23</div><div class="crayon-num" data-line="crayon-61e24324c9f9f843555698-24">24</div><div class="crayon-num" data-line="crayon-61e24324c9f9f843555698-25">25</div><div class="crayon-num" data-line="crayon-61e24324c9f9f843555698-26">26</div></div>
+</td>
+<td class="crayon-code"><div class="crayon-pre" style=" -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-61e24324c9f9f843555698-1"><span class="crayon-ta">&lt;?php</span></div><div class="crayon-line" id="crayon-61e24324c9f9f843555698-2"><span class="crayon-c">/**</span></div><div class="crayon-line" id="crayon-61e24324c9f9f843555698-3"><span class="crayon-c">*</span></div><div class="crayon-line" id="crayon-61e24324c9f9f843555698-4"><span class="crayon-c">* Copyright (c) Magento, Inc. All rights reserved.</span></div><div class="crayon-line" id="crayon-61e24324c9f9f843555698-5"><span class="crayon-c">* See COPYING.txt for license details.</span></div><div class="crayon-line" id="crayon-61e24324c9f9f843555698-6"><span class="crayon-c">*/</span></div><div class="crayon-line" id="crayon-61e24324c9f9f843555698-7"><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-i">Magento</span><span class="crayon-sy">\</span><span class="crayon-i">Customer</span><span class="crayon-sy">\</span><span class="crayon-i">Api</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-61e24324c9f9f843555698-8"><span class="crayon-c">/**</span></div><div class="crayon-line" id="crayon-61e24324c9f9f843555698-9"><span class="crayon-c">* Customer CRUD interface.</span></div><div class="crayon-line" id="crayon-61e24324c9f9f843555698-10"><span class="crayon-c">* @api</span></div><div class="crayon-line" id="crayon-61e24324c9f9f843555698-11"><span class="crayon-c">* @since 100.0.2</span></div><div class="crayon-line" id="crayon-61e24324c9f9f843555698-12"><span class="crayon-c">*/</span></div><div class="crayon-line" id="crayon-61e24324c9f9f843555698-13"><span class="crayon-t">interface</span><span class="crayon-h"> </span><span class="crayon-e">CustomerRepositoryInterface</span></div><div class="crayon-line" id="crayon-61e24324c9f9f843555698-14"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-61e24324c9f9f843555698-15">&nbsp;&nbsp;&nbsp;<span class="crayon-c">/**</span></div><div class="crayon-line" id="crayon-61e24324c9f9f843555698-16"><span class="crayon-c">&nbsp;&nbsp;&nbsp;&nbsp;* Create or update a customer.</span></div><div class="crayon-line" id="crayon-61e24324c9f9f843555698-17"><span class="crayon-c">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div><div class="crayon-line" id="crayon-61e24324c9f9f843555698-18"><span class="crayon-c">&nbsp;&nbsp;&nbsp;&nbsp;* @param \Magento\Customer\Api\Data\CustomerInterface $customer</span></div><div class="crayon-line" id="crayon-61e24324c9f9f843555698-19"><span class="crayon-c">&nbsp;&nbsp;&nbsp;&nbsp;* @param string $passwordHash</span></div><div class="crayon-line" id="crayon-61e24324c9f9f843555698-20"><span class="crayon-c">&nbsp;&nbsp;&nbsp;&nbsp;* @return \Magento\Customer\Api\Data\CustomerInterface</span></div><div class="crayon-line" id="crayon-61e24324c9f9f843555698-21"><span class="crayon-c">&nbsp;&nbsp;&nbsp;&nbsp;* @throws \Magento\Framework\Exception\InputException If bad input is provided</span></div><div class="crayon-line" id="crayon-61e24324c9f9f843555698-22"><span class="crayon-c">&nbsp;&nbsp;&nbsp;&nbsp;* @throws \Magento\Framework\Exception\State\InputMismatchException If the provided email is already used</span></div><div class="crayon-line" id="crayon-61e24324c9f9f843555698-23"><span class="crayon-c">&nbsp;&nbsp;&nbsp;&nbsp;* @throws \Magento\Framework\Exception\LocalizedException</span></div><div class="crayon-line" id="crayon-61e24324c9f9f843555698-24"><span class="crayon-c">&nbsp;&nbsp;&nbsp;&nbsp;*/</span></div><div class="crayon-line" id="crayon-61e24324c9f9f843555698-25">&nbsp;&nbsp;&nbsp;<span class="crayon-m">public</span><span class="crayon-h"> </span><span class="crayon-t">function</span><span class="crayon-h"> </span><span class="crayon-e">save</span><span class="crayon-sy">(</span><span class="crayon-sy">\</span><span class="crayon-i">Magento</span><span class="crayon-sy">\</span><span class="crayon-i">Customer</span><span class="crayon-sy">\</span><span class="crayon-i">Api</span><span class="crayon-sy">\</span><span class="crayon-i">Data</span><span class="crayon-sy">\</span><span class="crayon-i">CustomerInterface</span><span class="crayon-h"> </span><span class="crayon-v">$customer</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">$passwordHash</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-t">null</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-61e24324c9f9f843555698-26"><span class="crayon-sy">.</span><span class="crayon-sy">.</span><span class="crayon-sy">.</span></div></div></td>
+</tr></tbody></table></div>
+</div>
+
+<p><br>
+Service layer also includes Management interfaces, which provide management functions, not associated with the repositories. They do not perform any operations to change the data. Let’s consider the example of Account Management Interface:<br></p>
+<div id="crayon-61e24324c9fa1896673092" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style="margin-top: 20px; margin-bottom: 20px; height: auto;">
+<div class="crayon-toolbar" data-settings=" mouseover hide delay" style="margin-top: -18px; display: none; z-index: 4;"><span class="crayon-title"></span>
+<div class="crayon-tools" style=""><div class="crayon-button crayon-nums-button" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div><span class="crayon-language">PHP</span></div></div>
+<div class="crayon-info" style=""></div>
+<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly="" style="tab-size: 4; z-index: 0; opacity: 0; overflow: hidden;">&lt;?php
+/**
+*
+* Copyright (c) Magento, Inc. All rights reserved.
+* See COPYING.txt for license details.
+*/
+namespace Magento\Customer\Api;
+/**
+* Interface for managing customers accounts.
+* @api
+* @since 100.0.2
+*/
+interface AccountManagementInterface
+{
+&nbsp;&nbsp;....
+&nbsp;&nbsp;&nbsp;/**
+&nbsp;&nbsp;&nbsp;&nbsp;* Check if customer can be deleted.
+&nbsp;&nbsp;&nbsp;&nbsp;*
+&nbsp;&nbsp;&nbsp;&nbsp;* @api
+&nbsp;&nbsp;&nbsp;&nbsp;* @param int $customerId
+&nbsp;&nbsp;&nbsp;&nbsp;* @return bool
+&nbsp;&nbsp;&nbsp;&nbsp;* @throws \Magento\Framework\Exception\NoSuchEntityException If group is not found
+&nbsp;&nbsp;&nbsp;&nbsp;* @throws \Magento\Framework\Exception\LocalizedException
+&nbsp;&nbsp;&nbsp;&nbsp;*/
+&nbsp;&nbsp;&nbsp;public function isReadonly($customerId);
+&nbsp;&nbsp;....</textarea></div>
+<div class="crayon-main" style="max-height: 400px; position: relative; z-index: 1; overflow: hidden;">
+<table class="crayon-table" style="margin-left: -1px;"><tbody><tr class="crayon-row"><td class="crayon-nums " data-settings="hide">
+<div class="crayon-nums-content" style=""><div class="crayon-num" data-line="crayon-61e24324c9fa1896673092-1">1</div><div class="crayon-num" data-line="crayon-61e24324c9fa1896673092-2">2</div><div class="crayon-num" data-line="crayon-61e24324c9fa1896673092-3">3</div><div class="crayon-num" data-line="crayon-61e24324c9fa1896673092-4">4</div><div class="crayon-num" data-line="crayon-61e24324c9fa1896673092-5">5</div><div class="crayon-num" data-line="crayon-61e24324c9fa1896673092-6">6</div><div class="crayon-num" data-line="crayon-61e24324c9fa1896673092-7">7</div><div class="crayon-num" data-line="crayon-61e24324c9fa1896673092-8">8</div><div class="crayon-num" data-line="crayon-61e24324c9fa1896673092-9">9</div><div class="crayon-num" data-line="crayon-61e24324c9fa1896673092-10">10</div><div class="crayon-num" data-line="crayon-61e24324c9fa1896673092-11">11</div><div class="crayon-num" data-line="crayon-61e24324c9fa1896673092-12">12</div><div class="crayon-num" data-line="crayon-61e24324c9fa1896673092-13">13</div><div class="crayon-num" data-line="crayon-61e24324c9fa1896673092-14">14</div><div class="crayon-num" data-line="crayon-61e24324c9fa1896673092-15">15</div><div class="crayon-num" data-line="crayon-61e24324c9fa1896673092-16">16</div><div class="crayon-num" data-line="crayon-61e24324c9fa1896673092-17">17</div><div class="crayon-num" data-line="crayon-61e24324c9fa1896673092-18">18</div><div class="crayon-num" data-line="crayon-61e24324c9fa1896673092-19">19</div><div class="crayon-num" data-line="crayon-61e24324c9fa1896673092-20">20</div><div class="crayon-num" data-line="crayon-61e24324c9fa1896673092-21">21</div><div class="crayon-num" data-line="crayon-61e24324c9fa1896673092-22">22</div><div class="crayon-num" data-line="crayon-61e24324c9fa1896673092-23">23</div><div class="crayon-num" data-line="crayon-61e24324c9fa1896673092-24">24</div><div class="crayon-num" data-line="crayon-61e24324c9fa1896673092-25">25</div><div class="crayon-num" data-line="crayon-61e24324c9fa1896673092-26">26</div></div>
+</td>
+<td class="crayon-code"><div class="crayon-pre" style=" -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-61e24324c9fa1896673092-1"><span class="crayon-ta">&lt;?php</span></div><div class="crayon-line" id="crayon-61e24324c9fa1896673092-2"><span class="crayon-c">/**</span></div><div class="crayon-line" id="crayon-61e24324c9fa1896673092-3"><span class="crayon-c">*</span></div><div class="crayon-line" id="crayon-61e24324c9fa1896673092-4"><span class="crayon-c">* Copyright (c) Magento, Inc. All rights reserved.</span></div><div class="crayon-line" id="crayon-61e24324c9fa1896673092-5"><span class="crayon-c">* See COPYING.txt for license details.</span></div><div class="crayon-line" id="crayon-61e24324c9fa1896673092-6"><span class="crayon-c">*/</span></div><div class="crayon-line" id="crayon-61e24324c9fa1896673092-7"><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-i">Magento</span><span class="crayon-sy">\</span><span class="crayon-i">Customer</span><span class="crayon-sy">\</span><span class="crayon-i">Api</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-61e24324c9fa1896673092-8"><span class="crayon-c">/**</span></div><div class="crayon-line" id="crayon-61e24324c9fa1896673092-9"><span class="crayon-c">* Interface for managing customers accounts.</span></div><div class="crayon-line" id="crayon-61e24324c9fa1896673092-10"><span class="crayon-c">* @api</span></div><div class="crayon-line" id="crayon-61e24324c9fa1896673092-11"><span class="crayon-c">* @since 100.0.2</span></div><div class="crayon-line" id="crayon-61e24324c9fa1896673092-12"><span class="crayon-c">*/</span></div><div class="crayon-line" id="crayon-61e24324c9fa1896673092-13"><span class="crayon-t">interface</span><span class="crayon-h"> </span><span class="crayon-e">AccountManagementInterface</span></div><div class="crayon-line" id="crayon-61e24324c9fa1896673092-14"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-61e24324c9fa1896673092-15">&nbsp;&nbsp;<span class="crayon-sy">.</span><span class="crayon-sy">.</span><span class="crayon-sy">.</span><span class="crayon-sy">.</span></div><div class="crayon-line" id="crayon-61e24324c9fa1896673092-16">&nbsp;&nbsp;&nbsp;<span class="crayon-c">/**</span></div><div class="crayon-line" id="crayon-61e24324c9fa1896673092-17"><span class="crayon-c">&nbsp;&nbsp;&nbsp;&nbsp;* Check if customer can be deleted.</span></div><div class="crayon-line" id="crayon-61e24324c9fa1896673092-18"><span class="crayon-c">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div><div class="crayon-line" id="crayon-61e24324c9fa1896673092-19"><span class="crayon-c">&nbsp;&nbsp;&nbsp;&nbsp;* @api</span></div><div class="crayon-line" id="crayon-61e24324c9fa1896673092-20"><span class="crayon-c">&nbsp;&nbsp;&nbsp;&nbsp;* @param int $customerId</span></div><div class="crayon-line" id="crayon-61e24324c9fa1896673092-21"><span class="crayon-c">&nbsp;&nbsp;&nbsp;&nbsp;* @return bool</span></div><div class="crayon-line" id="crayon-61e24324c9fa1896673092-22"><span class="crayon-c">&nbsp;&nbsp;&nbsp;&nbsp;* @throws \Magento\Framework\Exception\NoSuchEntityException If group is not found</span></div><div class="crayon-line" id="crayon-61e24324c9fa1896673092-23"><span class="crayon-c">&nbsp;&nbsp;&nbsp;&nbsp;* @throws \Magento\Framework\Exception\LocalizedException</span></div><div class="crayon-line" id="crayon-61e24324c9fa1896673092-24"><span class="crayon-c">&nbsp;&nbsp;&nbsp;&nbsp;*/</span></div><div class="crayon-line" id="crayon-61e24324c9fa1896673092-25">&nbsp;&nbsp;&nbsp;<span class="crayon-m">public</span><span class="crayon-h"> </span><span class="crayon-t">function</span><span class="crayon-h"> </span><span class="crayon-e">isReadonly</span><span class="crayon-sy">(</span><span class="crayon-v">$customerId</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-61e24324c9fa1896673092-26">&nbsp;&nbsp;<span class="crayon-sy">.</span><span class="crayon-sy">.</span><span class="crayon-sy">.</span><span class="crayon-sy">.</span></div></div></td>
+</tr></tbody></table></div>
+</div>
+
+<p><br>
+Service layer also includes Metadata interfaces. Metadata is data, that describes other data. To see the example of this interface, let’s look at the Address Metadata Interface:<br></p>
+<div id="crayon-61e24324c9fa2187154120" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style="margin-top: 20px; margin-bottom: 20px; height: auto;">
+<div class="crayon-toolbar" data-settings=" mouseover hide delay" style="margin-top: -18px; display: none; z-index: 4;"><span class="crayon-title"></span>
+<div class="crayon-tools" style=""><div class="crayon-button crayon-nums-button" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div><span class="crayon-language">PHP</span></div></div>
+<div class="crayon-info" style=""></div>
+<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly="" style="tab-size: 4; z-index: 0; opacity: 0; overflow: hidden;">&lt;?php
+/**
+* Copyright (c) Magento, Inc. All rights reserved.
+* See COPYING.txt for license details.
+*/
+namespace Magento\Customer\Api;
+/**
+* Interface for retrieval information about customer address attributes metadata.
+* @api
+* @since 100.0.2
+*/
+interface AddressMetadataInterface extends MetadataInterface
+{
+&nbsp;&nbsp;&nbsp;const ATTRIBUTE_SET_ID_ADDRESS = 2;
+&nbsp;&nbsp;&nbsp;const ENTITY_TYPE_ADDRESS = 'customer_address';
+&nbsp;&nbsp;&nbsp;const DATA_INTERFACE_NAME = \Magento\Customer\Api\Data\AddressInterface::class;
+}</textarea></div>
+<div class="crayon-main" style="max-height: 400px; position: relative; z-index: 1; overflow: hidden;">
+<table class="crayon-table" style="margin-left: -1px;"><tbody><tr class="crayon-row"><td class="crayon-nums " data-settings="hide">
+<div class="crayon-nums-content" style=""><div class="crayon-num" data-line="crayon-61e24324c9fa2187154120-1">1</div><div class="crayon-num" data-line="crayon-61e24324c9fa2187154120-2">2</div><div class="crayon-num" data-line="crayon-61e24324c9fa2187154120-3">3</div><div class="crayon-num" data-line="crayon-61e24324c9fa2187154120-4">4</div><div class="crayon-num" data-line="crayon-61e24324c9fa2187154120-5">5</div><div class="crayon-num" data-line="crayon-61e24324c9fa2187154120-6">6</div><div class="crayon-num" data-line="crayon-61e24324c9fa2187154120-7">7</div><div class="crayon-num" data-line="crayon-61e24324c9fa2187154120-8">8</div><div class="crayon-num" data-line="crayon-61e24324c9fa2187154120-9">9</div><div class="crayon-num" data-line="crayon-61e24324c9fa2187154120-10">10</div><div class="crayon-num" data-line="crayon-61e24324c9fa2187154120-11">11</div><div class="crayon-num" data-line="crayon-61e24324c9fa2187154120-12">12</div><div class="crayon-num" data-line="crayon-61e24324c9fa2187154120-13">13</div><div class="crayon-num" data-line="crayon-61e24324c9fa2187154120-14">14</div><div class="crayon-num" data-line="crayon-61e24324c9fa2187154120-15">15</div><div class="crayon-num" data-line="crayon-61e24324c9fa2187154120-16">16</div><div class="crayon-num" data-line="crayon-61e24324c9fa2187154120-17">17</div></div>
+</td>
+<td class="crayon-code"><div class="crayon-pre" style=" -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-61e24324c9fa2187154120-1"><span class="crayon-ta">&lt;?php</span></div><div class="crayon-line" id="crayon-61e24324c9fa2187154120-2"><span class="crayon-c">/**</span></div><div class="crayon-line" id="crayon-61e24324c9fa2187154120-3"><span class="crayon-c">* Copyright (c) Magento, Inc. All rights reserved.</span></div><div class="crayon-line" id="crayon-61e24324c9fa2187154120-4"><span class="crayon-c">* See COPYING.txt for license details.</span></div><div class="crayon-line" id="crayon-61e24324c9fa2187154120-5"><span class="crayon-c">*/</span></div><div class="crayon-line" id="crayon-61e24324c9fa2187154120-6"><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-i">Magento</span><span class="crayon-sy">\</span><span class="crayon-i">Customer</span><span class="crayon-sy">\</span><span class="crayon-i">Api</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-61e24324c9fa2187154120-7"><span class="crayon-c">/**</span></div><div class="crayon-line" id="crayon-61e24324c9fa2187154120-8"><span class="crayon-c">* Interface for retrieval information about customer address attributes metadata.</span></div><div class="crayon-line" id="crayon-61e24324c9fa2187154120-9"><span class="crayon-c">* @api</span></div><div class="crayon-line" id="crayon-61e24324c9fa2187154120-10"><span class="crayon-c">* @since 100.0.2</span></div><div class="crayon-line" id="crayon-61e24324c9fa2187154120-11"><span class="crayon-c">*/</span></div><div class="crayon-line" id="crayon-61e24324c9fa2187154120-12"><span class="crayon-t">interface</span><span class="crayon-h"> </span><span class="crayon-e">AddressMetadataInterface</span><span class="crayon-h"> </span><span class="crayon-r">extends</span><span class="crayon-h"> </span><span class="crayon-e">MetadataInterface</span></div><div class="crayon-line" id="crayon-61e24324c9fa2187154120-13"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-61e24324c9fa2187154120-14">&nbsp;&nbsp;&nbsp;<span class="crayon-m">const</span><span class="crayon-h"> </span><span class="crayon-cn">ATTRIBUTE_SET_ID_ADDRESS</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-cn">2</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-61e24324c9fa2187154120-15">&nbsp;&nbsp;&nbsp;<span class="crayon-m">const</span><span class="crayon-h"> </span><span class="crayon-cn">ENTITY_TYPE_ADDRESS</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-s">'customer_address'</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-61e24324c9fa2187154120-16">&nbsp;&nbsp;&nbsp;<span class="crayon-m">const</span><span class="crayon-h"> </span><span class="crayon-cn">DATA_INTERFACE_NAME</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-sy">\</span><span class="crayon-i">Magento</span><span class="crayon-sy">\</span><span class="crayon-i">Customer</span><span class="crayon-sy">\</span><span class="crayon-i">Api</span><span class="crayon-sy">\</span><span class="crayon-i">Data</span><span class="crayon-sy">\</span><span class="crayon-e">AddressInterface::</span><span class="crayon-t">class</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-61e24324c9fa2187154120-17"><span class="crayon-sy">}</span></div></div></td>
+</tr></tbody></table></div>
+</div>
+
+<p><br>
+Service layer is not mandatory, however, Magento developers recommend it for developing your modules. Magento developers plan to convert all their internal modules to using this layer. Its usage leads to a slight loss of productivity, which is insignificant compared to the advantages of this approach.</p>
+</div>
+<div class="after_content_sales_info" style="background-image: url(https://belvg.com/blog/wp-content/uploads/2019/03/Sales_background.png);">
+<img width="135px" height="135px" src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/Andrey-Dubina1.png" alt="Andrey Dubina">
+<div class="content_part">
+<h3 class="title"> Partner With Us </h3>
+<span class="sales_after_content_text">Looking for a partner to grow your business? We are the right company to bring your webstore to success.</span>
+<a href="https://belvg.com/contact?utm_source=blog&amp;utm_campaign=sales_block&amp;utm_content=bottom" class="contact_with_sales call-to-action" target="_blank">Talk to Andrey</a>
+</div>
+</div>
+<div class="cat-tags-single-bottom"><span id="ArticleRead">Tags:</span> <ul class="post-categories">
+<li><a href="https://belvg.com/ecommerce" rel="category tag">ECOMMERCE</a></li>
+<li><a href="https://belvg.com/magento2-development" rel="category tag">Magento 2 Development</a></li>
+<li><a href="https://belvg.com/magento-speed-optimization" rel="category tag">Magento Speed Optimization</a></li></ul><div class="heateor_sss_sharing_container heateor_sss_horizontal_sharing" ss-offset="0" heateor-sss-data-href="https://belvg.com/blog/magento-2-architecture-how-is-it-used-in-magento-2-application.html"><ul class="heateor_sss_sharing_ul"><li class="heateorSssSharingRound"><i style="width:100px;height:40px;border-radius:6px;" alt="Facebook" title="Facebook" class="heateorSssSharing heateorSssFacebookBackground" onclick="heateorSssPopup(&quot;https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fbelvg.com%2Fblog%2Fmagento-2-architecture-how-is-it-used-in-magento-2-application.html&quot;)"><ss style="display:block;" class="heateorSssSharingSvg heateorSssFacebookSvg"></ss></i></li><li class="heateorSssSharingRound"><i style="width:100px;height:40px;border-radius:6px;" alt="Twitter" title="Twitter" class="heateorSssSharing heateorSssTwitterBackground" onclick="heateorSssPopup(&quot;http://twitter.com/intent/tweet?text=Magento%202%20Architecture.%20Service%20Layer&amp;url=https%3A%2F%2Fbelvg.com%2Fblog%2Fmagento-2-architecture-how-is-it-used-in-magento-2-application.html&quot;)"><ss style="display:block;" class="heateorSssSharingSvg heateorSssTwitterSvg"></ss></i></li><li class="heateorSssSharingRound"><i style="width:100px;height:40px;border-radius:6px;" alt="Linkedin" title="Linkedin" class="heateorSssSharing heateorSssLinkedinBackground" onclick="heateorSssPopup(&quot;http://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fbelvg.com%2Fblog%2Fmagento-2-architecture-how-is-it-used-in-magento-2-application.html&amp;title=Magento%202%20Architecture.%20Service%20Layer&quot;)"><ss style="display:block;" class="heateorSssSharingSvg heateorSssLinkedinSvg"></ss></i></li><li class="heateorSssSharingRound"><i style="width:100px;height:40px;border-radius:6px;" alt="Instagram" title="Instagram" class="heateorSssSharing heateorSssInstagramBackground"><a href="https://www.instagram.com/belvg_team" rel="nofollow noopener" target="_blank"><ss style="display:block;" class="heateorSssSharingSvg heateorSssInstagramSvg"></ss></a></i></li><li class="heateorSssSharingRound"><i style="width:100px;height:40px;border-radius:6px;" alt="Email" title="Email" class="heateorSssSharing heateorSssEmailBackground" onclick="window.location.href = &#39;mailto:?subject=&#39; + decodeURIComponent(&#39;Magento%202%20Architecture.%20Service%20Layer&#39; ).replace(&#39;&amp;&#39;, &#39;%26&#39;) + &#39;&amp;body=&#39; + decodeURIComponent(&#39;https%3A%2F%2Fbelvg.com%2Fblog%2Fmagento-2-architecture-how-is-it-used-in-magento-2-application.html&#39; )"><ss style="display:block" class="heateorSssSharingSvg heateorSssEmailSvg"></ss></i></li><li class="heateorSssSharingRound"><i style="width:100px;height:40px;border-radius:6px;" alt="Pinterest" title="Pinterest" class="heateorSssSharing heateorSssPinterestBackground" onclick="javascript:void( (function() {var e=document.createElement(&#39;script&#39; );e.setAttribute(&#39;type&#39;,&#39;text/javascript&#39; );e.setAttribute(&#39;charset&#39;,&#39;UTF-8&#39; );e.setAttribute(&#39;src&#39;,&#39;//assets.pinterest.com/js/pinmarklet.js?r=&#39;+Math.random()*99999999);document.body.appendChild(e)})());"><ss style="display:block;" class="heateorSssSharingSvg heateorSssPinterestSvg"></ss></i></li><li class="heateorSssSharingRound"><i style="width:100px;height:40px;border-radius:6px;" alt="Reddit" title="Reddit" class="heateorSssSharing heateorSssRedditBackground" onclick="heateorSssPopup(&quot;http://reddit.com/submit?url=https%3A%2F%2Fbelvg.com%2Fblog%2Fmagento-2-architecture-how-is-it-used-in-magento-2-application.html&amp;title=Magento%202%20Architecture.%20Service%20Layer&quot;)"><ss style="display:block;" class="heateorSssSharingSvg heateorSssRedditSvg"></ss></i></li></ul><div class="heateorSssClear"></div></div></div>
+</article> 
+</div>
+<div class="sidebar_container">
+<div>
+<div class="nav-by-hooks" style="display:none">
+<h4 class="nav-by-hooks-title">Table of contents:</h4>
+</div>
+<div class="sales_info_container" style="margin-top: 0px;">
+<img width="65px" height="65px" src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/Andrey_Dubina.png" alt="Andrey_Dubina">
+<h3 class="title"> Partner With Us </h3>
+<span class="sidebar_sales_text">Let's discuss how to grow your business. Get a Free Quote.</span>
+<a class="call-to-action" href="https://belvg.com/contact?utm_source=blog&amp;utm_campaign=sales_block&amp;utm_content=right" target="_blank">Talk to Andrey</a>
+</div>
+</div>
+</div>
+</div>
+</div> 
+<div class="related-articles-container"><div class="posts-list-holder inner related-articles full"><h3 class="related-articles">Related articles</h3><div class="posts-list bw-over"><article class="article thumb post-20443 post type-post status-publish format-image has-post-thumbnail hentry category-ecommerce category-hybris-to-magento-migration category-magento category-magento-2 category-magento-erp-integration category-magento-marketplace-integration category-magento-payment-gateways-integration category-magento-pos-integration category-magento-social-media-integration category-marketing category-oscommerce-to-magento-migration category-salesforce-to-magento-migration category-web-design category-web-design-from-scratch post_format-post-format-image">
+<div class="article-content list">
+<div class="article-title">
+<h3 class="bb"><a href="https://belvg.com/blog/how-much-does-magento-cost-get-answers-now.html">How Much Does Magento Cost</a></h3>
+<div class="cat-tags-list font-16">
+Dec 13, 2021<span class="post-views"><span class="views-count">2458</span></span><a href="https://belvg.com/blog/author/tanya-shyrma" class="post-by-author">Tanya Shyrma</a> <div class="ghost"></div>
+</div>
+</div>
+<div class="article-header">
+<a href="https://belvg.com/blog/how-much-does-magento-cost-get-answers-now.html">
+<div class="article-thumb">
+<div class="image-hide">
+<div class="image-wrap">
+<picture>
+<source srcset="https://belvg.com/blog/wp-content/uploads/2019/03/How-mach-magento-cost-main-480x256.jpg 480w" media="(max-width:480px)">
+<source srcset="https://belvg.com/blog/wp-content/uploads/2019/03/How-mach-magento-cost-main-700x373.jpg 700w" media="(min-width: 480px)">
+<img class="lazy" width="700" height="373" data-src="https://belvg.com/blog/wp-content/uploads/2019/03/How-mach-magento-cost-main-700x373.jpg " src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/pixel.png" alt="How Much Does Magento Cost">
+</picture>
+</div>
+</div>
+<span class="over"></span>
+</div>
+</a>
+</div> </div>
+</article> <article class="article thumb post-26413 post type-post status-publish format-image has-post-thumbnail hentry category-ecommerce category-magento-ups-integration category-magento-usps-integration category-marketing post_format-post-format-image">
+<div class="article-content list">
+<div class="article-title">
+<h3 class="bb"><a href="https://belvg.com/blog/shipping-methods-ecommerce.html">Different Shipping Methods &amp; Carriers in Ecommerce</a></h3>
+<div class="cat-tags-list font-16">
+Oct 21, 2021<span class="post-views"><span class="views-count">4688</span></span><a href="https://belvg.com/blog/author/tanya-shyrma" class="post-by-author">Tanya Shyrma</a> <div class="ghost"></div>
+</div>
+</div>
+<div class="article-header">
+<a href="https://belvg.com/blog/shipping-methods-ecommerce.html">
+<div class="article-thumb">
+<div class="image-hide">
+<div class="image-wrap">
+<picture>
+<source srcset="https://belvg.com/blog/wp-content/uploads/2020/07/Different-shipping-methods-and-carriers-in-ecommerce-480x256.png 480w" media="(max-width:480px)">
+<source srcset="https://belvg.com/blog/wp-content/uploads/2020/07/Different-shipping-methods-and-carriers-in-ecommerce-700x373.png 700w" media="(min-width: 480px)">
+<img class="lazy" width="700" height="373" data-src="https://belvg.com/blog/wp-content/uploads/2020/07/Different-shipping-methods-and-carriers-in-ecommerce-700x373.png " src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/pixel.png" alt="Different Shipping Methods &amp; Carriers in Ecommerce">
+</picture>
+</div>
+</div>
+<span class="over"></span>
+</div>
+</a>
+</div> </div>
+</article> <article class="article thumb post-15857 post type-post status-publish format-image has-post-thumbnail hentry category-ecommerce category-magento category-magento-seo category-magento-speed-optimization category-magento-theme post_format-post-format-image">
+<div class="article-content list">
+<div class="article-title">
+<h3 class="bb"><a href="https://belvg.com/blog/magento-2-edition-differences-open-source-vs-commerce.html">Magento Open Source vs Commerce: Feature Comparison</a></h3>
+<div class="cat-tags-list font-16">
+Oct 5, 2021<span class="post-views"><span class="views-count">3485</span></span><a href="https://belvg.com/blog/author/tanya-shyrma" class="post-by-author">Tanya Shyrma</a> <div class="ghost"></div>
+</div>
+</div>
+<div class="article-header">
+<a href="https://belvg.com/blog/magento-2-edition-differences-open-source-vs-commerce.html">
+<div class="article-thumb">
+<div class="image-hide">
+<div class="image-wrap">
+<picture>
+<source srcset="https://belvg.com/blog/wp-content/uploads/2021/10/Magento_open_source_vs_commerce-480x256.jpg 480w" media="(max-width:480px)">
+<source srcset="https://belvg.com/blog/wp-content/uploads/2021/10/Magento_open_source_vs_commerce-700x373.jpg 700w" media="(min-width: 480px)">
+<img class="lazy" width="700" height="373" data-src="https://belvg.com/blog/wp-content/uploads/2021/10/Magento_open_source_vs_commerce-700x373.jpg " src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/pixel.png" alt="Magento Open Source vs Commerce: Feature Comparison">
+</picture>
+</div>
+</div>
+<span class="over"></span>
+</div>
+</a>
+</div> </div>
+</article> </div></div></div>
+<div id="comments" class="comments-area">
+<script type="module">
+    					jQuery(function() {
+        					jQuery('#submit').on('click', function() {
+            					jQuery('#commentform').attr('action', 'https://belvg.com/blog/wp-comments-post.php');
+            					jQuery(this).attr('type', 'submit').trgger('click');
+        					})
+    					});
+					</script>
+<div id="respond" class="comment-respond">
+<h3 id="reply-title" class="comment-reply-title">Post a new comment <small><a rel="nofollow" id="cancel-comment-reply-link" href="https://belvg.com/blog/magento-2-architecture-how-is-it-used-in-magento-2-application.html#respond" style="display:none;">Cancel</a></small></h3> <form action="https://belvg.com/blog/wp-comments-post-tmp.php" method="post" id="commentform" class="comment-form" novalidate="" data-hs-cf-bound="true">
+<div class="custom-comment-form"><p class="comment-form-author"><label class="about-field"><span class="field-text-required field-text">Your Name</span><br></label><input id="author" name="author" type="text" value="" size="30"></p>
+<p class="comment-form-email"><label class="about-field"><span class="field-text-required field-text">Email</span><br></label><input id="email" name="email" type="text" value="" size="30"></p></div>
+<div class="comment-area"><label class="about-field"><span class="field-text-required field-text">Your message</span><br></label><textarea id="comment" name="comment" cols="45" rows="12" aria-required="true"></textarea></div><p class="form-submit"><input name="submit" type="submit" id="submit" class="submit call-to-action" value="Submit"> <input type="hidden" name="comment_post_ID" value="15644" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+</p> </form>
+</div>
+</div>
+<script>window.ID_CUSTOM_NEWSLETTER_POPUP = 1;</script><style type="text/css">
+				
+				.sg-popup-overlay-1,
+				.sg-popup-content-1 {
+					z-index: 99999999 !important;
+				}
+				#sg-popup-content-wrapper-1 {
+					padding: 0px !important;
+				}
+			</style><script type="text/javascript">SG_POPUP_DATA[1] ={"id":"1","title":"Subscribe custom popup in post(single) page","type":"shortcode","effect":"sgpb-bounceIn","0":"width","1":"","height":"","delay":0,"duration":1,"2":"initialWidth","3":"","initialHeight":"","width":"","escKey":"on","isActiveStatus":"on","scrolling":"on","disable-page-scrolling":"on","scaling":"on","reposition":"","overlayClose":"","reopenAfterSubmission":"","contentClick":"","content-click-behavior":"close","click-redirect-to-url":"","redirect-to-new-tab":"","opacity":"0.8","popup-background-opacity":"1","sgOverlayColor":"","sg-content-background-color":"","popupFixed":"on","fixedPostion":"5","popup-dimension-mode":"customMode","popup-responsive-dimension-measure":"auto","maxWidth":"590","maxHeight":"","initialWidth":"","closeButton":"on","theme":"colorbox7.css","sgTheme3BorderColor":"","sgTheme3BorderRadius":"0","onScrolling":"","inActivityStatus":"","inactivity-timout":"0","beforeScrolingPrsent":0,"forMobile":"","openMobile":"","repeatPopup":"","popup-appear-number-limit":"1","save-cookie-page-level":"","autoClosePopup":"","countryStatus":"","showAllPages":"all","allPagesStatus":"","allPostsStatus":"","allCustomPostsStatus":"","allSelectedPages":"","showAllPosts":"all","showAllCustomPosts":"all","allSelectedPosts":"","allSelectedCustomPosts":"","posts-all-categories":"","all-custom-posts":"","sg-user-status":"","loggedin-user":"true","popup-timer-status":"","popup-schedule-status":"","popup-start-timer":"Aug 10 17 14:48","popup-finish-timer":"","schedule-start-weeks":"","schedule-start-time":"14:48","schedule-end-time":"","allowCountries":"","countryName":"","countryIso":"","disablePopup":"","disablePopupOverlay":"","popupClosingTimer":"","yesButtonLabel":"","noButtonLabel":"","restrictionUrl":"","yesButtonBackgroundColor":"","noButtonBackgroundColor":"","yesButtonTextColor":"","noButtonTextColor":"","yesButtonRadius":0,"noButtonRadius":0,"sgRestrictionExpirationTime":0,"restrictionCookeSavingLevel":"","pushToBottom":"","onceExpiresTime":"7","sgOverlayCustomClasss":"sg-popup-overlay","sgContentCustomClasss":"sg-popup-content","popup-z-index":"99999999","popup-content-padding":"0","theme-close-text":"Close","socialButtons":"{\u0022sgTwitterStatus\u0022:\u0022\u0022,\u0022sgFbStatus\u0022:\u0022\u0022,\u0022sgEmailStatus\u0022:\u0022\u0022,\u0022sgLinkedinStatus\u0022:\u0022\u0022,\u0022sgGoogleStatus\u0022:\u0022\u0022,\u0022sgPinterestStatus\u0022:\u0022\u0022,\u0022pushToBottom\u0022:\u0022\u0022}","socialOptions":"{\u0022sgSocialTheme\u0022:\u0022\u0022,\u0022sgSocialButtonsSize\u0022:\u0022\u0022,\u0022sgSocialLabel\u0022:\u0022\u0022,\u0022sgSocialShareCount\u0022:\u0022\u0022,\u0022sgRoundButton\u0022:\u0022\u0022,\u0022fbShareLabel\u0022:\u0022\u0022,\u0022lindkinLabel\u0022:\u0022\u0022,\u0022sgShareUrl\u0022:null,\u0022shareUrlType\u0022:\u0022\u0022,\u0022googLelabel\u0022:\u0022\u0022,\u0022twitterLabel\u0022:\u0022\u0022,\u0022pinterestLabel\u0022:\u0022\u0022,\u0022sgMailSubject\u0022:\u0022\u0022,\u0022sgMailLable\u0022:\u0022\u0022}","countdownOptions":"{\u0022pushToBottom\u0022:\u0022\u0022,\u0022countdownNumbersBgColor\u0022:\u0022\u0022,\u0022countdownNumbersTextColor\u0022:\u0022\u0022,\u0022sg-due-date\u0022:\u0022\u0022,\u0022countdown-position\u0022:\u0022\u0022,\u0022counts-language\u0022:\u0022\u0022,\u0022sg-time-zone\u0022:\u0022\u0022,\u0022sg-countdown-type\u0022:\u0022\u0022,\u0022countdown-autoclose\u0022:\u0022\u0022}","exitIntentOptions":"{\u0022exit-intent-type\u0022:\u0022\u0022,\u0022exit-intent-expire-time\u0022:\u0022\u0022,\u0022exit-intent-alert\u0022:\u0022\u0022}","videoOptions":"{\u0022video-autoplay\u0022:\u0022\u0022}","fblikeOptions":"{\u0022fblike-like-url\u0022:null,\u0022fblike-layout\u0022:\u0022\u0022}","repetitivePopup":"","repetitivePopupPeriod":"60","randomPopup":"","html":"\u003Cdiv\u003E\u003Cform class=\u0022es_shortcode_form\u0022\u003E\u003Cdiv class=\u0022es_title_belvg\u0022\u003EBelVG Newsletter\u003C\/div\u003E\u003Cdiv class=\u0022es_caption\u0022\u003ESubscribe to our mailing list and get interesting stuff and updates to your email inbox.\u003C\/div\u003E\u003Cdiv class=\u0022es_msg\u0022\u003E\u003Cspan id=\u0022es_msg_pg\u0022\u003E\u003C\/span\u003E\u003C\/div\u003E\u003Cdiv class=\u0022es_lablebox\u0022\u003EEmail *\u003C\/div\u003E\u003Cdiv class=\u0022es_textbox\u0022\u003E\u003Cinput placeholder=\u0022Your Email\u0022 class=\u0022es_textbox_class\u0022 name=\u0022es_txt_email_pg\u0022 id=\u0022es_txt_email_pg\u0022 onkeypress=\u0022if(event.keyCode==13) es_submit_pages(\u0027https:\/\/belvg.com\/blog\u0027)\u0022 value=\u0022\u0022 maxlength=\u0022225\u0022 type=\u0022text\u0022\u003E\u003C\/div\u003E\u003Cdiv class=\u0022es_button\u0022\u003E\u003Cinput class=\u0022es_textbox_button\u0022 name=\u0022es_txt_button_pg\u0022 id=\u0022es_txt_button_pg\u0022 onClick=\u0022return es_submit_pages(\u0027https:\/\/belvg.com\/blog\u0027)\u0022 value=\u0022Subscribe\u0022 type=\u0022button\u0022\u003E\u003C\/div\u003E\u003Cdiv class=\u0022hide-popup\u0022\u003E\u003Cbutton type=\u0022button\u0022 class=\u0022js-force-close-popup hide-popup__btn\u0022\u003EAlready subscribed\u003C\/button\u003E\u003C\/div\u003E\u003Cinput name=\u0022es_txt_name_pg\u0022 id=\u0022es_txt_name_pg\u0022 value=\u0022\u0022 type=\u0022hidden\u0022\u003E\u003Cinput name=\u0022es_txt_group_pg\u0022 id=\u0022es_txt_group_pg\u0022 value=\u0022Public\u0022 type=\u0022hidden\u0022\u003E\u003C\/form\u003E\u003C\/div\u003E","customEvent":"0"};</script><script type="module">
+			sgAddEvent(window, 'load',function() {
+				var sgPoupFrontendObj = new SGPopup();
+				sgPoupFrontendObj.popupOpenIfPostEnd(1)
+			});
+		</script>
+</div>
+
+<footer id="footer" class="font-16">
+<div class="sales">
+<picture>
+<source srcset="https://belvg.com/blog/wp-content/uploads/2020/07/small-devices-sales.jpg" media="(max-width: 640px)">
+<source srcset="https://belvg.com/blog/wp-content/uploads/2015/11/pm-dubina.jpg" media="(min-width: 641px)">
+<img width="2560" height="564" src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/pm-dubina.jpg" alt="">
+</picture>
+<div class="container">
+<div class="sales-block-inner">
+<img width="135px" height="135px" src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/Andrey-Dubina1.png" alt="Andrey Dubina">
+<h2 class="sales-title">Let’s connect</h2>
+<div class="sales-content quote"><p>Have a project? Fill out the form and we’ll reach out to you. Get a free proposal now.</p>
+</div>
+<a href="https://belvg.com/contact" class="sales-contact call-to-action" target="_blank">Get started </a>
+</div>
+</div>
+</div>
+<div class="footer-section-gray">
+<div class="container">
+<div class="row">
+<div class="col-md-6 col-xs-12 footer-services">
+<span class="title">Services</span>
+<div class="row"> <div class="col-md-6 col-xs-12"> <div class="execphpwidget"><ul class="navbar-nav"><li id="menu-item-24496" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-24496"><a href="https://belvg.com/magento-development">Magento Development</a></li>
+<li id="menu-item-24497" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-24497"><a href="https://belvg.com/magento2-development">Magento 2 Development</a></li>
+<li id="menu-item-24498" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-24498"><a href="https://belvg.com/migration-to-magento-2">Magento Migration</a></li>
+<li id="menu-item-24499" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-24499"><a href="https://belvg.com/magento-webdesign">Magento Webdesign</a></li>
+<li id="menu-item-24500" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-24500"><a href="https://belvg.com/magento-custom-development">Magento Custom Development</a></li>
+<li id="menu-item-24501" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-24501"><a href="https://belvg.com/magento-integration">Magento Integration</a></li>
+<li id="menu-item-24502" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-24502"><a href="https://belvg.com/magento-support">Magento Support</a></li>
+<li id="menu-item-24503" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-24503"><a href="https://belvg.com/magento-audit">Magento Audit</a></li>
+</ul></div>
+</div>
+<div class="col-md-6 col-xs-12"> <div class="execphpwidget"><ul class="navbar-nav"><li id="menu-item-24488" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-24488"><a href="https://belvg.com/prestashop-development">PrestaShop Development</a></li>
+<li id="menu-item-24489" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-24489"><a href="https://belvg.com/prestashop-theme">Prestashop Theme Development</a></li>
+<li id="menu-item-24490" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-24490"><a href="https://belvg.com/prestashop-upgrade">PrestaShop Upgrade &amp; Migration Services</a></li>
+<li id="menu-item-24491" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-24491"><a href="https://belvg.com/prestashop-support">PrestaShop Support &amp; Maintenance</a></li>
+<li id="menu-item-24492" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-24492"><a href="https://belvg.com/prestashop-dedicated-developer">Dedicated PrestaShop Developers</a></li>
+<li id="menu-item-24493" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-24493"><a href="https://belvg.com/prestashop-modules">PrestaShop Addon Development</a></li>
+<li id="menu-item-24494" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-24494"><a href="https://belvg.com/ecommerce-development">Ecommerce Development</a></li>
+<li id="menu-item-24495" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-24495"><a href="https://belvg.com/web-development">Web Development</a></li>
+</ul></div>
+</div>
+</div></div>
+<div class="col-md-3 col-xs-12 footer-links">
+<span class="title">Stores</span>
+<div class="textwidget custom-html-widget"><ul>
+<li>
+<a href="https://store.belvg.com/">Magento Extensions</a>
+</li>
+<li><a href="https://module-presta.com/">PrestaShop Modules</a></li>
+</ul></div> </div>
+<div class="col-md-3 col-xs-12 footer-links footer-company">
+<span class="title">Company</span>
+<div class="textwidget custom-html-widget"></div> <div class="execphpwidget"><ul class="navbar-nav"><li id="menu-item-24483" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-24483"><a href="https://belvg.com/about">About us</a></li>
+<li id="menu-item-24484" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-24484"><a href="https://belvg.com/team">Team</a></li>
+<li id="menu-item-24485" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-24485"><a href="https://belvg.com/contact">Contacts</a></li>
+<li id="menu-item-24486" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-24486"><a href="https://belvg.com/blog/">Blog</a></li>
+<li id="menu-item-25131" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-25131"><a href="https://belvg.com/tutorial">Tutorial</a></li>
+<li id="menu-item-24487" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-24487"><a href="https://belvg.com/sitemap">Sitemap</a></li>
+</ul></div>
+</div>
+</div>
+<address class="contacts">
+<div class="contact-info"> <div class="textwidget custom-html-widget"> <a href="tel:+16503532301">US Phone: 1 650 353 2301</a>
+<a href="tel:+442081236486">UK Phone: 44 20 8123 6486	</a>
+<a href="mailto:contact@belvg.com">Email: contact@belvg.com</a></div></div>
+<div class="social-links"> <div class="textwidget custom-html-widget"><span>Follow us</span>
+<ul>
+<li><a href="https://www.facebook.com/BelVGcom/" aria-label="Facebook BelVG"><i class="fab fa-facebook-f"></i></a></li>
+<li><a href="https://twitter.com/BelVG_com" aria-label="Twitter BelVG"><i class="fab fa-twitter"></i></a></li>
+<li><a href="https://www.instagram.com/belvg_team/" aria-label="Instagram BelVG"><i class="fab fa-instagram"></i></a></li>
+<li><a href="https://www.linkedin.com/company/belvg/" aria-label="Linkedin BelVG"><i class="fab fa-linkedin-in"></i></a></li>
+<li><a href="https://www.youtube.com/channel/UC9Mxa-oBFNji1p0Pi7wjGvg" aria-label="Youtube BelVG"><i class="fab fa-youtube"></i></a></li>
+<li><a href="https://www.behance.net/belvg" aria-label="Behance BelVG"><i class="fab fa-behance"></i></a></li>
+</ul></div></div>
+</address>
+</div>
+</div>
+<div class="copyright">
+<div class="container">
+<div class="textwidget custom-html-widget"><p>
+<a href="https://belvg.com/privacy-policy">Privacy policy</a>
+</p>
+<p>
+Copyright BelVG
+</p>
+</div> </div>
+</div>
+</footer>
+<span class="clear"></span>
+<div style="display:none"><div id="sg-popup-content-wrapper-1"><div><form class="es_shortcode_form" data-hs-cf-bound="true"><div class="es_title_belvg">BelVG Newsletter</div><div class="es_caption">Subscribe to our mailing list and get interesting stuff and updates to your email inbox.</div><div class="es_msg"><span id="es_msg_pg"></span></div><div class="es_lablebox">Email *</div><div class="es_textbox"><input placeholder="Your Email" class="es_textbox_class" name="es_txt_email_pg" id="es_txt_email_pg" onkeypress="if(event.keyCode==13) es_submit_pages(&#39;https://belvg.com/blog&#39;)" value="" maxlength="225" type="text"></div><div class="es_button"><input class="es_textbox_button" name="es_txt_button_pg" id="es_txt_button_pg" onclick="return es_submit_pages(&#39;https://belvg.com/blog&#39;)" value="Subscribe" type="button"></div><div class="hide-popup"><button type="button" class="js-force-close-popup hide-popup__btn">Already subscribed</button></div><input name="es_txt_name_pg" id="es_txt_name_pg" value="" type="hidden"><input name="es_txt_group_pg" id="es_txt_group_pg" value="Public" type="hidden"></form></div></div></div><script type="module">function salesgo(){if(jQuery(".sales_info_container").length && window.location.hash.substr(1)=="talk-to"){var banner=jQuery(".sales_info_container").wrap("<p/>").parent().html();var width=jQuery(window).width();var height=jQuery(window).height();for(var i=0;i<60;i++){jQuery("body").append(banner);}jQuery(".sales_info_container").each(function(){var item=jQuery(this);setTimeout(function(){var right=Math.floor((Math.random()*(width))+1);var top=Math.floor((Math.random()*(height))+1);jQuery(item).css({"display":"flex", "position":"fixed", "width":"300px", "height":"300px", "top":top+"px", "right":right+"px", "background":"#fff", "z-index":10000});},Math.floor((Math.random()*4000)+800));}).on("mouseover",function(){jQuery(this).animate({"top":Math.floor((Math.random()*(height))+1)+"px","right":Math.floor((Math.random()*(width))+1)+"px"});})}}jQuery(function(){jQuery(window).on("hashchange",function(){salesgo();});salesgo();});</script><script type="text/javascript">//JS for wp-team-list plugin
+function show_authors() {
+    var a = $('#WT-action');
+    if (a.hasClass('show_authors')) {
+        a.removeClass('show_authors').addClass('hide_authors').text('View less');
+        $(".WT-hidden-avatar").each(function (index) {
+            $(this).show();
+        });
+    } else {
+        a.removeClass('hide_authors').addClass('show_authors').text('View more');
+        $(".WT-hidden-avatar").each(function (index) {
+            $(this).hide();
+        });
+    }
+}</script><link data-wpacu-style-handle="sg_animate" rel="stylesheet" id="sg_animate-css" href="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/animate.css" type="text/css" media="all">
+<link data-wpacu-style-handle="sg_colorbox_theme" rel="stylesheet" id="sg_colorbox_theme-css" href="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/sgthemes.css" type="text/css" media="all">
+<link data-wpacu-style-handle="heateor_sss_frontend_css" rel="stylesheet" id="heateor_sss_frontend_css-css" href="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/sassy-social-share-public.css" type="text/css" media="all">
+<link data-wpacu-style-handle="heateor_sss_sharing_default_svg" rel="stylesheet" id="heateor_sss_sharing_default_svg-css" href="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/sassy-social-share-svg.css" type="text/css" media="all">
+<script type="text/javascript">
+/* <![CDATA[ */
+var es_widget_notices = {"es_email_notice":"Please enter email address.","es_incorrect_email":"Please provide a valid email address.","es_load_more":"Please, wait...","es_ajax_error":"Cannot create XMLHTTP instance","es_success_message":"Subscribed successfully.","es_success_notice":"You have successfully subscribed to the newsletter.<br\/> You will receive a confirmation email in a few minutes. Please follow the link in it to confirm your subscription. If the email takes more than 15 minutes to appear in your mailbox, please check your spam folder.","es_email_exists":"Email Address already exists.","es_error":"Oops.. Unexpected error occurred.","es_invalid_email":"Invalid email address.","es_try_later":"Please try after some time.","es_problem_request":"There was a problem with the request."};
+/* ]]> */
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var es_widget_page_notices = {"es_email_notice":"Please enter email address.","es_incorrect_email":"Please provide a valid email address.","es_load_more":"loading...","es_ajax_error":"Cannot create XMLHTTP instance","es_success_message":"Subscribed successfully.","es_success_notice":"You have successfully subscribed to the newsletter.<br\/> You will receive a confirmation email in a few minutes. Please follow the link in it to confirm your subscription. If the email takes more than 15 minutes to appear in your mailbox, please check your spam folder.","es_email_exists":"Email Address already exists.","es_error":"Oops.. Unexpected error occurred.","es_invalid_email":"Invalid email address.","es_try_later":"Please try after some time.","es_problem_request":"There was a problem with the request."};
+/* ]]> */
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var pvcArgsFrontend = {"mode":"ajax","requestURL":"https:\/\/belvg.com\/blog\/wp-content\/plugins\/post-views-counter\/includes\/ajax.php","postID":"15644","nonce":"31371e5ea5"};
+/* ]]> */
+</script>
+<script defer="defer" type="text/javascript" src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/saved_resource(1)"></script>
+<script data-wpacu-script-handle="affix" type="text/javascript" src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/affix.js.download" defer="defer"></script>
+<script data-wpacu-script-handle="load-underscore" type="text/javascript" src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/underscore-min.js(1).download" async="async"></script>
+<script defer="defer" type="text/javascript" src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/saved_resource(2)"></script>
+<span style="display: none;" data-name="wpacu-delimiter" data-content="ASSET CLEANUP NOSCRIPT FOR ASYNC PRELOADS"></span><span style="display: none;" data-name="wpacu-delimiter" content="ASSET CLEANUP NOSCRIPT WEB FONT LOADER"></span>
+
+<script type="text/javascript" id="hs-script-loader" async="" defer="" src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/6182881.js(2).download"></script>
+
+
+
+<iframe owner="archetype" title="archetype" style="display: none; visibility: hidden;" src="./Describing the Layers of Magento 2 Architecture _ BelVG Blog_files/saved_resource.html"></iframe></body></html>

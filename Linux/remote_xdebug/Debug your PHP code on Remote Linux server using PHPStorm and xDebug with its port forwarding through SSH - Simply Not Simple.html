@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<!-- saved from url=(0129)https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh -->
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="pingback" href="https://popovserhii.com/xmlrpc.php">
+
+<title>Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple</title>
+
+<!-- This site is optimized with the Yoast SEO plugin v11.5 - https://yoast.com/wordpress/plugins/seo/ -->
+<link rel="canonical" href="https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh">
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple">
+<meta property="og:description" content="Table of Content One e-commerce site had a very strange issue, it stop working as expected after cache cleaning. This">
+<meta property="og:url" content="https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh">
+<meta property="og:site_name" content="Simply Not Simple">
+<meta property="article:section" content="Linux">
+<meta property="article:published_time" content="2020-01-31T22:02:38+00:00">
+<meta property="article:modified_time" content="2020-04-12T16:09:58+00:00">
+<meta property="og:updated_time" content="2020-04-12T16:09:58+00:00">
+<meta property="og:image" content="https://popovserhii.com/wp-content/uploads/2020/01/image-1580504892012.png">
+<meta property="og:image:secure_url" content="https://popovserhii.com/wp-content/uploads/2020/01/image-1580504892012.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:description" content="Table of Content One e-commerce site had a very strange issue, it stop working as expected after cache cleaning. This">
+<meta name="twitter:title" content="Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple">
+<meta name="twitter:image" content="https://popovserhii.com/wp-content/uploads/2020/01/image-1580504892012.png">
+<script async="" src="./Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple_files/analytics.js.download"></script><script type="application/ld+json" class="yoast-schema-graph yoast-schema-graph--main">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://popovserhii.com/#organization","name":"","url":"https://popovserhii.com/","sameAs":[]},{"@type":"WebSite","@id":"https://popovserhii.com/#website","url":"https://popovserhii.com/","name":"Simply Not Simple","publisher":{"@id":"https://popovserhii.com/#organization"},"potentialAction":{"@type":"SearchAction","target":"https://popovserhii.com/?s={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"ImageObject","@id":"https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#primaryimage","url":"/wp-content/uploads/2020/01/image-1580504892012.png"},{"@type":"WebPage","@id":"https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#webpage","url":"https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh","inLanguage":"en-US","name":"Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple","isPartOf":{"@id":"https://popovserhii.com/#website"},"primaryImageOfPage":{"@id":"https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#primaryimage"},"datePublished":"2020-01-31T22:02:38+00:00","dateModified":"2020-04-12T16:09:58+00:00","breadcrumb":{"@id":"https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#breadcrumb"}},{"@type":"BreadcrumbList","@id":"https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"WebPage","@id":"https://popovserhii.com/","url":"https://popovserhii.com/","name":"Home"}},{"@type":"ListItem","position":2,"item":{"@type":"WebPage","@id":"https://popovserhii.com/category/linux","url":"https://popovserhii.com/category/linux","name":"Linux"}},{"@type":"ListItem","position":3,"item":{"@type":"WebPage","@id":"https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh","url":"https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh","name":"Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH"}}]},{"@type":"Article","@id":"https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#article","isPartOf":{"@id":"https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#webpage"},"author":{"@id":"https://popovserhii.com/author/popov#author"},"headline":"Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH","datePublished":"2020-01-31T22:02:38+00:00","dateModified":"2020-04-12T16:09:58+00:00","commentCount":"1","mainEntityOfPage":{"@id":"https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#webpage"},"publisher":{"@id":"https://popovserhii.com/#organization"},"image":{"@id":"https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#primaryimage"},"articleSection":"Linux,PHP"},{"@type":["Person"],"@id":"https://popovserhii.com/author/popov#author","name":"Popov Serhii","image":{"@type":"ImageObject","@id":"https://popovserhii.com/#authorlogo","url":"https://secure.gravatar.com/avatar/f84a9621daf5607282dadc139ebc1840?s=96&d=mm&r=g","caption":"Popov Serhii"},"sameAs":[]}]}</script>
+<!-- / Yoast SEO plugin. -->
+
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com/">
+<link rel="dns-prefetch" href="https://s.w.org/">
+<link rel="alternate" type="application/rss+xml" title="Simply Not Simple » Feed" href="https://popovserhii.com/feed">
+<link rel="alternate" type="application/rss+xml" title="Simply Not Simple » Comments Feed" href="https://popovserhii.com/comments/feed">
+<link rel="alternate" type="application/rss+xml" title="Simply Not Simple » Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH Comments Feed" href="https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh/feed">
+<!-- This site uses the Google Analytics by ExactMetrics plugin v6.0.2 - Using Analytics tracking - https://www.exactmetrics.com/ -->
+<script type="text/javascript" data-cfasync="false">
+	var em_version         = '6.0.2';
+	var em_track_user      = true;
+	var em_no_track_reason = '';
+	
+	var disableStr = 'ga-disable-UA-113885941-2';
+
+	/* Function to detect opted out users */
+	function __gaTrackerIsOptedOut() {
+		return document.cookie.indexOf(disableStr + '=true') > -1;
+	}
+
+	/* Disable tracking if the opt-out cookie exists. */
+	if ( __gaTrackerIsOptedOut() ) {
+		window[disableStr] = true;
+	}
+
+	/* Opt-out function */
+	function __gaTrackerOptout() {
+	  document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+	  window[disableStr] = true;
+	}
+
+	if ( 'undefined' === typeof gaOptout ) {
+		function gaOptout() {
+			__gaTrackerOptout();
+		}
+	}
+	
+	if ( em_track_user ) {
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','__gaTracker');
+
+window.ga = __gaTracker;		__gaTracker('create', 'UA-113885941-2', 'auto');
+		__gaTracker('set', 'forceSSL', true);
+		__gaTracker('send','pageview');
+		__gaTracker( function() { window.ga = __gaTracker; } );
+	} else {
+		console.log( "" );
+		(function() {
+			/* https://developers.google.com/analytics/devguides/collection/analyticsjs/ */
+			var noopfn = function() {
+				return null;
+			};
+			var noopnullfn = function() {
+				return null;
+			};
+			var Tracker = function() {
+				return null;
+			};
+			var p = Tracker.prototype;
+			p.get = noopfn;
+			p.set = noopfn;
+			p.send = noopfn;
+			var __gaTracker = function() {
+				var len = arguments.length;
+				if ( len === 0 ) {
+					return;
+				}
+				var f = arguments[len-1];
+				if ( typeof f !== 'object' || f === null || typeof f.hitCallback !== 'function' ) {
+					console.log( 'Not running function __gaTracker(' + arguments[0] + " ....) because you are not being tracked. " + em_no_track_reason );
+					return;
+				}
+				try {
+					f.hitCallback();
+				} catch (ex) {
+
+				}
+			};
+			__gaTracker.create = function() {
+				return new Tracker();
+			};
+			__gaTracker.getByName = noopnullfn;
+			__gaTracker.getAll = function() {
+				return [];
+			};
+			__gaTracker.remove = noopfn;
+			window['__gaTracker'] = __gaTracker;
+			window.ga = __gaTracker;		})();
+		}
+</script>
+<!-- / Google Analytics by ExactMetrics -->
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/popovserhii.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.9.8"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55358,56760,9792,65039],[55358,56760,8203,9792,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script src="./Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple_files/wp-emoji-release.min.js.download" type="text/javascript" defer=""></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="maxwell-custom-fonts-css" href="./Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple_files/custom-fonts.css" type="text/css" media="all">
+<style id="md-style-inline-css" type="text/css">
+ .gfm-task-list { border: 1px solid transparent; list-style-type: none; } .gfm-task-list input { margin-right: 10px !important; } code.kb-btn { display: inline-block; color: #666; font: bold 9pt arial; text-decoration: none; text-align: center; padding: 2px 5px; margin: 0 5px; background: #eff0f2; -moz-border-radius: 4px; border-radius: 4px; border-top: 1px solid #f5f5f5; -webkit-box-shadow: inset 0 0 20px #e8e8e8, 0 1px 0 #c3c3c3, 0 1px 0 #c9c9c9, 0 1px 2px #333; -moz-box-shadow: inset 0 0 20px #e8e8e8, 0 1px 0 #c3c3c3, 0 1px 0 #c9c9c9, 0 1px 2px #333; box-shadow: inset 0 0 20px #e8e8e8, 0 1px 0 #c3c3c3, 0 1px 0 #c9c9c9, 0 1px 2px #333; text-shadow: 0px 1px 0px #f5f5f5; } .copy-button { cursor: pointer; border: 0; font-size: 12px; text-transform: uppercase; font-weight: 500; padding: 3px 6px 3px 6px; background-color: rgba(255, 255, 255, 0.6); position: absolute; overflow: hidden; top: 5px; right: 5px; border-radius: 3px; } .copy-button:before { content: ""; display: inline-block; width: 16px; height: 16px; margin-right: 3px; background-size: contain; background-image: url("data:image/svg+xml,%3Csvg version=\'1.1\' xmlns=\'http://www.w3.org/2000/svg\' xmlns:xlink=\'http://www.w3.org/1999/xlink\' x=\'0px\' y=\'0px\' width=\'16px\' height=\'16px\' viewBox=\'888 888 16 16\' enable-background=\'new 888 888 16 16\' xml:space=\'preserve\'%3E %3Cpath fill=\'%23333333\' d=\'M903.143,891.429c0.238,0,0.44,0.083,0.607,0.25c0.167,0.167,0.25,0.369,0.25,0.607v10.857 c0,0.238-0.083,0.44-0.25,0.607s-0.369,0.25-0.607,0.25h-8.571c-0.238,0-0.44-0.083-0.607-0.25s-0.25-0.369-0.25-0.607v-2.571 h-4.857c-0.238,0-0.44-0.083-0.607-0.25s-0.25-0.369-0.25-0.607v-6c0-0.238,0.06-0.5,0.179-0.786s0.262-0.512,0.428-0.679 l3.643-3.643c0.167-0.167,0.393-0.309,0.679-0.428s0.547-0.179,0.786-0.179h3.714c0.238,0,0.44,0.083,0.607,0.25 c0.166,0.167,0.25,0.369,0.25,0.607v2.929c0.404-0.238,0.785-0.357,1.143-0.357H903.143z M898.286,893.331l-2.67,2.669h2.67V893.331 z M892.571,889.902l-2.669,2.669h2.669V889.902z M894.321,895.679l2.821-2.822v-3.714h-3.428v3.714c0,0.238-0.083,0.441-0.25,0.607 s-0.369,0.25-0.607,0.25h-3.714v5.714h4.571v-2.286c0-0.238,0.06-0.5,0.179-0.786C894.012,896.071,894.155,895.845,894.321,895.679z M902.857,902.857v-10.286h-3.429v3.714c0,0.238-0.083,0.441-0.25,0.607c-0.167,0.167-0.369,0.25-0.607,0.25h-3.714v5.715H902.857z\' /%3E %3C/svg%3E"); background-repeat: no-repeat; position: relative; top: 3px; } pre { position: relative; } pre:hover .copy-button { background-color: rgba(255, 255, 255, 0.9); } .md-widget-toc { padding: 15px; } .md-widget-toc a { color: #333333; } .post-toc-header { font-weight: 600; margin-bottom: 10px; } .md-post-toc { font-size: 0.9em; } .post h2 { overflow: hidden; } .post-toc-block { margin: 0 10px 20px 10px; overflow: hidden; } .post-toc-block.with-border { border: 1px #dddddd solid; padding: 10px; } .post-toc-block.float-right { max-width: 320px; float: right; } .post-toc-block.float-left { max-width: 320px; float: left; } .md-widget-toc ul, .md-widget-toc ol, .md-post-toc ul, .md-post-toc ol { padding-left: 15px; margin: 0; } .md-widget-toc ul ul, .md-widget-toc ul ol, .md-widget-toc ol ul, .md-widget-toc ol ol, .md-post-toc ul ul, .md-post-toc ul ol, .md-post-toc ol ul, .md-post-toc ol ol { padding-left: 2em; } .md-widget-toc ul ol, .md-post-toc ul ol { list-style-type: lower-roman; } .md-widget-toc ul ul ol, .md-widget-toc ul ol ol, .md-post-toc ul ul ol, .md-post-toc ul ol ol { list-style-type: lower-alpha; } .md-widget-toc ol ul, .md-widget-toc ol ol, .md-post-toc ol ul, .md-post-toc ol ol { padding-left: 2em; } .md-widget-toc ol ol, .md-post-toc ol ol { list-style-type: lower-roman; } .md-widget-toc ol ul ol, .md-widget-toc ol ol ol, .md-post-toc ol ul ol, .md-post-toc ol ol ol { list-style-type: lower-alpha; } 
+</style>
+<link rel="stylesheet" id="maxwell-stylesheet-css" href="./Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple_files/style.css" type="text/css" media="all">
+<link rel="stylesheet" id="maxwell-safari-flexbox-fixes-css" href="./Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple_files/safari-flexbox-fixes.css" type="text/css" media="all">
+<link rel="stylesheet" id="genericons-css" href="./Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple_files/genericons.css" type="text/css" media="all">
+<link rel="stylesheet" id="themezee-related-posts-css" href="./Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple_files/themezee-related-posts.css" type="text/css" media="all">
+<link rel="stylesheet" id="prism-css-0-css" href="./Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple_files/prism-tomorrow.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="prism-css-1-css" href="./Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple_files/prism-line-numbers.min.css" type="text/css" media="all">
+<script type="text/javascript">
+/* <![CDATA[ */
+var exactmetrics_frontend = {"js_events_tracking":"true","download_extensions":"zip,mp3,mpeg,pdf,docx,pptx,xlsx,rar","inbound_paths":"[{\"path\":\"\\\/go\\\/\",\"label\":\"affiliate\"},{\"path\":\"\\\/recommend\\\/\",\"label\":\"affiliate\"}]","home_url":"https:\/\/popovserhii.com","hash_tracking":"false"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple_files/frontend.js.download"></script>
+<!--[if lt IE 9]>
+<script type='text/javascript' src='https://popovserhii.com/wp-content/themes/maxwell/assets/js/html5shiv.min.js?ver=3.7.3'></script>
+<![endif]-->
+<script type="text/javascript" src="./Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple_files/jquery.js.download"></script>
+<script type="text/javascript" src="./Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple_files/jquery-migrate.min.js.download"></script>
+<script type="text/javascript" src="./Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple_files/svgxuse.min.js.download"></script>
+<script type="text/javascript" src="./Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple_files/jquery.toc.min.js.download"></script>
+<link rel="https://api.w.org/" href="https://popovserhii.com/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://popovserhii.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://popovserhii.com/wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 4.9.8">
+<link rel="shortlink" href="https://popovserhii.com/?p=546">
+<link rel="alternate" type="application/json+oembed" href="https://popovserhii.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fpopovserhii.com%2Fdebug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh">
+<link rel="alternate" type="text/xml+oembed" href="https://popovserhii.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fpopovserhii.com%2Fdebug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh&amp;format=xml">
+</head>
+
+<body class="post-template-default single single-post postid-546 single-format-standard post-layout-one-column date-hidden author-hidden">
+
+	
+	<div id="page" class="hfeed site">
+
+		<a class="skip-link screen-reader-text" href="https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#content">Skip to content</a>
+
+		<header id="masthead" class="site-header clearfix" role="banner">
+
+			<div class="header-main container clearfix">
+
+				<div id="logo" class="site-branding clearfix">
+
+										
+			<p class="site-title"><a href="https://popovserhii.com/" rel="home">Simply Not Simple</a></p>
+
+							
+			<p class="site-description">Perfectionism is bad but I do it… sometimes</p>
+
+		
+				</div><!-- .site-branding -->
+
+				<div class="header-widgets clearfix">
+
+					
+				</div><!-- .header-widgets -->
+
+			</div><!-- .header-main -->
+
+			
+
+	<div id="main-navigation-wrap" class="primary-navigation-wrap">
+
+		
+		<button class="primary-menu-toggle menu-toggle" aria-controls="primary-menu" aria-expanded="false">
+			<svg class="icon icon-menu" aria-hidden="true" role="img"> <use xlink:href="https://popovserhii.com/wp-content/themes/maxwell/assets/icons/genericons-neue.svg#menu"></use> </svg><svg class="icon icon-close" aria-hidden="true" role="img"> <use xlink:href="https://popovserhii.com/wp-content/themes/maxwell/assets/icons/genericons-neue.svg#close"></use> </svg>			<span class="menu-toggle-text">Navigation</span>
+		</button>
+
+		<div class="primary-navigation">
+
+			<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="Primary Menu">
+
+				<ul id="primary-menu" class="menu"><li id="menu-item-191" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-191"><a href="http://popovserhii.com/">Home</a></li>
+</ul>			</nav><!-- #site-navigation -->
+
+		</div><!-- .primary-navigation -->
+
+	</div>
+
+
+
+		</header><!-- #masthead -->
+
+		
+		<div id="content" class="site-content container clearfix">
+
+			
+	<section id="primary" class="content-single content-area">
+		<main id="main" class="site-main" role="main">
+				
+		
+<article id="post-546" class="post-546 post type-post status-publish format-standard hentry category-linux category-php">
+
+	
+	<header class="entry-header">
+
+		<div class="entry-meta"><span class="meta-date"><a href="https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh" title="00:02" rel="bookmark"><time class="entry-date published updated" datetime="2020-02-01T00:02:38+00:00">01.02.2020</time></a></span><span class="meta-category"> <a href="https://popovserhii.com/category/linux" rel="category tag">Linux</a> / <a href="https://popovserhii.com/category/php" rel="category tag">PHP</a></span></div>
+		<h1 class="entry-title">Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH</h1>
+		
+	</header><!-- .entry-header -->
+
+	<div class="entry-content clearfix">
+
+		<div class="post-toc-block float-default with-border"> 
+					<div class="post-toc-header">Table of Content</div>
+					<nav id="md-post-toc" class="md-post-toc"><ol><li><a href="https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#toc-0">Remote Server’s steps</a><ol><li><ol><li><a href="https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#toc-1">Install xDebug</a></li><li><a href="https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#toc-2">Check port availability</a></li><li><a href="https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#toc-3">Configure xDebug:</a></li><li><a href="https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#toc-4">Configure PHP_IDE_CONFIG through Nginx</a></li><li><a href="https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#toc-5">Restart the services:</a></li><li><a href="https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#toc-6">Enable SSH Port Forwarding</a></li></ol></li></ol></li><li><a href="https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#toc-7">Local Machine’s steps</a><ol><li><ol><li><a href="https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#toc-8">Setup PHPStorm</a></li><li><a href="https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#toc-9">Create PHP Remote Debug</a></li><li><a href="https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#toc-10">Port forwarding</a></li><li><a href="https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#toc-11">Run Debug</a></li></ol></li><li><a href="https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#toc-12">Diving deeper</a><ol><li><a href="https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#toc-13">tcpdump showing xDebug activity</a></li></ol></li><li><a href="https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#toc-14">Useful links:</a></li></ol></li><li><a href="https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#toc-15">Post navigation</a><ol><li><a href="https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#toc-16">Restore MySQL dump on AWS RDS through Bastion host</a></li><li><a href="https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#toc-17">How to test AWS Lambda function</a></li></ol></li></ol></nav>
+					</div><p>One e-commerce site had a very strange issue, it stop working as expected after cache cleaning. This issue appeared only on production server and couldn’t be reproduced on local machine. So there wasn’t another solution how debug problem directly on the server.</p>
+<p>It’s really important to closely check all configuration because one little mistake and you will spend hours or days to find out a problem. I spent 2 days, before I clarified that port on the server had been used by another process.</p>
+<p>This tutorial will explain steps by steps how to debug PHP codes on remote Ubuntu 64-bit Server with PHP-FPM (FastCGI Process Manager), PHP 7.2 and Nginx.</p>
+<h2 id="toc-0">Remote Server’s steps</h2>
+<h4 id="toc-1">Install xDebug</h4>
+<pre class="line-numbers  language-bash"><code class="  language-bash"><span class="token function">sudo</span> apt <span class="token function">install</span> php-xdebug<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code><button class="copy-button">Copy</button></pre>
+<h4 id="toc-2">Check port availability</h4>
+<p>xDebug will need a port (usually its port 9000). To make sure the port that we will use for xDebug is available, lets check which ports are in use:</p>
+<pre class="line-numbers  language-bash"><code class="  language-bash"><span class="token function">lsof</span> -i:9000<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code><button class="copy-button">Copy</button></pre>
+<p>It will display something like this:</p>
+<pre><code>COMMAND     PID USER   FD   TYPE  DEVICE SIZE/OFF NODE NAME
+php-fpm7. 15224 root   12u  IPv4 7878655      0t0  TCP localhost.localdomain:9000 (LISTEN)</code></pre>
+<p>Since port 9000 is already used (by PHP-FPM pool), we will use port 9005 for our xDebug.</p>
+<h4 id="toc-3">Configure xDebug:</h4>
+<pre class="line-numbers  language-bash"><code class="  language-bash"><span class="token function">sudo</span> <span class="token function">vi</span> /etc/php/7.2/mods-available/xdebug.ini<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code><button class="copy-button">Copy</button></pre>
+<p>Add the following code into it:</p>
+<pre class="line-numbers  language-ini"><code class="  language-ini"><span class="token comment">; Enable xdebug extension module</span>
+<span class="token constant">zend_extension</span><span class="token attr-value"><span class="token punctuation">=</span>xdebug.so</span>
+<span class="token constant">xdebug.idekey</span> <span class="token attr-value"><span class="token punctuation">=</span> PHPSTORM</span>
+
+<span class="token constant">xdebug.default_enable</span><span class="token attr-value"><span class="token punctuation">=</span>1</span>
+<span class="token constant">xdebug.remote_autostart</span> <span class="token attr-value"><span class="token punctuation">=</span> 0</span>
+<span class="token constant">xdebug.remote_enable</span> <span class="token attr-value"><span class="token punctuation">=</span> 1</span>
+<span class="token constant">xdebug.remote_handler</span> <span class="token attr-value"><span class="token punctuation">=</span> dbgp</span>
+<span class="token constant">xdebug.remote_host</span> <span class="token attr-value"><span class="token punctuation">=</span> 127.0.0.1</span>
+<span class="token constant">xdebug.remote_log</span> <span class="token attr-value"><span class="token punctuation">=</span> /tmp/xdebug_remote.log</span>
+<span class="token constant">xdebug.remote_mode</span> <span class="token attr-value"><span class="token punctuation">=</span> req</span>
+<span class="token constant">xdebug.remote_port</span> <span class="token attr-value"><span class="token punctuation">=</span> 9005 # if you want to change the port you can change</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code><button class="copy-button">Copy</button></pre>
+<h4 id="toc-4">Configure <code>PHP_IDE_CONFIG</code> through Nginx</h4>
+<p>Open configuration file of your site and add next line:</p>
+<pre><code>location / {
+  ...
+  include /etc/nginx/fastcgi_params;
+  fastcgi_param SCRIPT_FILENAME $document_root/index.php;
+  fastcgi_param SCRIPT_NAME /index.php;
+  # this line is important if want to use custom configuration name instead of site domain
+  fastcgi_param PHP_IDE_CONFIG "serverName=print-machine";
+  ...
+}</code></pre>
+<p>We will use this value <code>serverName=print-machine</code> when will configure PHPStorm.</p>
+<blockquote>
+<p>NOTE: This step can be omitted, but in that case PHPStorm will automatically create configuration on first request, you’ll need just press "Apply" in popup window.</p>
+</blockquote>
+<h4 id="toc-5">Restart the services:</h4>
+<pre class="line-numbers  language-bash"><code class="  language-bash"><span class="token function">sudo</span> systemctl restart php-fpm
+<span class="token function">sudo</span> systemctl restart nginx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code><button class="copy-button">Copy</button></pre>
+<h4 id="toc-6">Enable SSH Port Forwarding</h4>
+<p>Make sure that Allow TCP forwarding is enabled in your SSH server settings:</p>
+<pre class="line-numbers  language-bash"><code class="  language-bash"><span class="token function">vi</span> /etc/ssh/sshd_config<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code><button class="copy-button">Copy</button></pre>
+<p>Look for:</p>
+<pre><code>AllowTcpForwarding yes</code></pre>
+<p>Restart the SSH service:</p>
+<pre class="line-numbers  language-bash"><code class="  language-bash"><span class="token function">sudo</span> systemctl restart sshd<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code><button class="copy-button">Copy</button></pre>
+<h2 id="toc-7">Local Machine’s steps</h2>
+<h4 id="toc-8">Setup PHPStorm</h4>
+<p>Click <em>"File" &gt; "Settings…" &gt; "Languages &amp; Frameworks" &gt; "PHP" &gt; "Debug"</em>. Under "Xdebug" change the "Debug port" to your desired port. In out case we leave it default <strong>9000</strong>.<br>
+<img src="./Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple_files/image-1580504892012.png" alt="file"></p>
+<p>Click <em>Servers</em> next to <em>Debug</em> and create new Server configuration.<br>
+<strong>Name</strong> and <strong>Host</strong> must be the same as we write in Nginx configuration <code>PHP_IDE_CONFIG "serverName=print-machine"</code>. Don’t forget enable file mapping: left side – path to local project, right side – path to code on the server.<br>
+<img src="./Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple_files/image-1580506220183.png" alt="file"></p>
+<h4 id="toc-9">Create <code>PHP Remote Debug</code></h4>
+<p>Click <em>"Run" &gt; "Edit configuration…"</em>, create new <code>PHP Remote Debug</code>. In <strong>Server</strong> select server which we created previously, <strong>IDE key (session id)</strong> should be <em>PHPSTORM</em>:<br>
+<img src="./Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple_files/image-1580507061753.png" alt="file"></p>
+<h4 id="toc-10">Port forwarding</h4>
+<p>We will use SSH tunnel port forwarding for connecting to xDebug from PHPStorm.</p>
+<p>Execute the following command in terminal:</p>
+<pre class="line-numbers  language-bash"><code class="  language-bash"><span class="token function">ssh</span> -R 9005:localhost:9000 <span class="token operator">&lt;</span>remote_user<span class="token operator">&gt;</span>@<span class="token operator">&lt;</span>remote_server_ip<span class="token operator">&gt;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code><button class="copy-button">Copy</button></pre>
+<p>Where:</p>
+<ul>
+<li><code>-R</code> 9005:127.0.0.1:9000 opens up port 9005 as we set the server’s xDebug’s <code>xdebug.remote_port</code> to <strong>9005</strong> earlier, then forwarded to <strong>localhost:9000</strong> where PHPStorm is listening</li>
+<li><code>&lt;remote_user&gt;@&lt;remote_server_ip&gt;</code> are the username and hostname of the server</li>
+</ul>
+<p>Nothing special you won’t see, it’ll open new session, connect to remote server and do port forwarding. Vualia!</p>
+<p>Now, to test if the SSH tunnel port forwarding works, run the following command inside your SSH prompt on remove server:</p>
+<pre class="line-numbers  language-bash"><code class="  language-bash"><span class="token function">lsof</span> -i:9005<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code><button class="copy-button">Copy</button></pre>
+<p>You should see something like this as response:</p>
+<pre><code>COMMAND   PID          USER   FD   TYPE  DEVICE SIZE/OFF NODE NAME
+sshd    30935 print-machine    9u  IPv6 7824135      0t0  TCP ip6-localhost:9005 (LISTEN)
+sshd    30935 print-machine   10u  IPv4 7824136      0t0  TCP localhost.localdomain:9005 (LISTEN)</code></pre>
+<h4 id="toc-11">Run Debug</h4>
+<ol>
+<li>
+<p>In your PhpStorm, click <em>"Run" &gt; "Break at first line in PHP scripts"</em>. This is optional, it is just to ensure that the PHPStorm will trigger when we started to debug our site. To start the PHPStorm listening to xDebug, click <em>"Run" &gt; "Start Listening for PHP Debug Connections"</em>.</p>
+</li>
+<li>
+<p>Open your favorite web browser and visit your site. This should pop a window at PHPStorm that there’s incoming connection from xDebug, just click the "Accept" button.</p>
+</li>
+<li>
+<p>Your PHPStorm will trigger to stop and highlight at the first line in your site’s PHP script.</p>
+</li>
+</ol>
+<h3 id="toc-12">Diving deeper</h3>
+<p>If still having problems you can use following tools in order to find the point where it fails:</p>
+<h4 id="toc-13"><code>tcpdump</code> showing xDebug activity</h4>
+<p>You can use <code>tcpdump</code> command in order to verify if xDebug is even trying to connect to local machine — and if it does — which target it is trying to connect to.</p>
+<pre class="line-numbers  language-bash"><code class="  language-bash"><span class="token function">sudo</span> tcpdump -vv -nn -i any dst port 9000<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code><button class="copy-button">Copy</button></pre>
+<pre><code>tcpdump: listening on any, link-type LINUX_SLL (Linux cooked), capture size 262144 bytes
+23:50:31.531794 IP (tos 0x0, ttl 64, id 9877, offset 0, flags [DF], proto TCP (6), length 60)
+    127.0.0.1.45240 &gt; 127.0.0.1.9000: Flags [S], cksum 0xfe30 (incorrect -&gt; 0x6efe), seq 3410588541, win 65495, options [mss 65495,sackOK,TS val 3683447502 ecr 0,nop,wscale 7], length 0
+</code></pre>
+<p>This log shows that xDebug on the remote server (127.0.0.1) connects to my host machine (127.0.0.1) on port 9000. This information is very helpful to get a starting point for further debugging.</p>
+<p>With the <code>nc</code> command you can debug connectivity issues:</p>
+<pre class="line-numbers  language-bash"><code class="  language-bash">nc -w5 -z -v 127.0.0.1 9000
+Connection to 127.0.0.1 9000 port <span class="token punctuation">[</span>tcp/*<span class="token punctuation">]</span> succeeded<span class="token operator">!</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code><button class="copy-button">Copy</button></pre>
+<p><code>nc</code> connecting from within the remote server to the host machine at port 9000<br>
+With this we have verified that there is no connectivity issue due to wrong configuration or network restrictions.</p>
+<h3 id="toc-14">Useful links:</h3>
+<ul>
+<li><a href="https://medium.com/@hciftci/debugging-xdebug-15cbf0648f9c" rel="noopener noreferrer" target="_blank">Getting xdebug to work</a></li>
+<li><a href="https://www.webfoobar.com/index.php/node/93" rel="noopener noreferrer" target="_blank">Remote Linux server PHP debugging using PhpStorm Xdebug with its port forwarded through SSH tunnel</a></li>
+</ul>
+
+		
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer">
+
+						
+	<nav class="navigation post-navigation" role="navigation">
+		<h2 class="screen-reader-text" id="toc-15">Post navigation</h2>
+		<div class="nav-links"><div class="nav-previous"><a href="https://popovserhii.com/restore-mysql-dump-on-aws-rds-through-bastion-host" rel="prev"><span class="nav-link-text">Previous Post</span><h3 class="entry-title" id="toc-16">Restore MySQL dump on AWS RDS through Bastion host</h3></a></div><div class="nav-next"><a href="https://popovserhii.com/how-to-test-aws-lambda-function" rel="next"><span class="nav-link-text">Next Post</span><h3 class="entry-title" id="toc-17">How to test AWS Lambda function</h3></a></div></div>
+	</nav>
+	</footer><!-- .entry-footer -->
+
+</article>
+
+<div id="comments" class="comments-area">
+
+	
+	
+		<header class="comments-header">
+
+			<h2 class="comments-title">
+				One comment			</h2>
+
+		</header><!-- .comment-header -->
+
+		
+		<ol class="comment-list">
+					<li id="comment-186" class="comment even thread-even depth-1">
+			<article id="div-comment-186" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt="" src="./Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple_files/70b82bfbf350c3cc871dc2f0d5b40197.png" srcset="https://secure.gravatar.com/avatar/70b82bfbf350c3cc871dc2f0d5b40197?s=112&amp;d=mm&amp;r=g 2x" class="avatar avatar-56 photo" height="56" width="56">						<b class="fn">Nessuno</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#comment-186">
+							<time datetime="2020-07-19T01:33:39+00:00">
+								19.07.2020 at 01:33							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Thank You !</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel="nofollow" class="comment-reply-link" href="https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#comment-186" onclick="return addComment.moveForm( &quot;div-comment-186&quot;, &quot;186&quot;, &quot;respond&quot;, &quot;546&quot; )" aria-label="Reply to Nessuno">Reply</a></div>			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		</ol><!-- .comment-list -->
+
+		
+	
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title"><span>Leave a Reply</span> <small><a rel="nofollow" id="cancel-comment-reply-link" href="https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh#respond" style="display:none;">Cancel reply</a></small></h3>			<form action="https://popovserhii.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate="">
+				<p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span></p><p class="comment-form-comment"><label for="comment">Comment</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" required="required"></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes" required="required"></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="url" value="" size="30" maxlength="200"></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment"> <input type="hidden" name="comment_post_ID" value="546" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="61a07f24f0"></p><p style="display: none;"></p>			<input type="hidden" id="ak_js" name="ak_js" value="1636463316011"></form>
+			</div><!-- #respond -->
+	
+</div><!-- #comments -->
+		
+		</main><!-- #main -->
+	</section><!-- #primary -->
+	
+	
+	<section id="secondary" class="sidebar widget-area clearfix" role="complementary">
+
+		<aside id="search-3" class="widget widget_search clearfix">
+<form role="search" method="get" class="search-form" action="https://popovserhii.com/">
+	<label>
+		<span class="screen-reader-text">Search for:</span>
+		<input type="search" class="search-field" placeholder="Search …" value="" name="s" title="Search for:">
+	</label>
+	<button type="submit" class="search-submit">
+		<span class="genericon-search"></span>
+		<span class="screen-reader-text">Search</span>
+	</button>
+</form>
+</aside>		<aside id="recent-posts-3" class="widget widget_recent_entries clearfix">		<div class="widget-header"><h3 class="widget-title">Recent Posts</h3></div>		<ul>
+											<li>
+					<a href="https://popovserhii.com/migrate-from-ssd-m2-nvme">Migrate from a smaller M2 SSD to a bigger one</a>
+									</li>
+											<li>
+					<a href="https://popovserhii.com/configure-development-server-with-docker">Configure development server with Docker</a>
+									</li>
+											<li>
+					<a href="https://popovserhii.com/validate-uploaded-file-with-symfony-constraints">Validate uploaded file with Symfony Constraints</a>
+									</li>
+											<li>
+					<a href="https://popovserhii.com/magento-translation">Magento translation</a>
+									</li>
+											<li>
+					<a href="https://popovserhii.com/magmi-how-to-import-images-to-magento">Magmi: How to import images to Magento</a>
+									</li>
+					</ul>
+		</aside><aside id="tag_cloud-2" class="widget widget_tag_cloud clearfix"><div class="widget-header"><h3 class="widget-title">Tags</h3></div><div class="tagcloud"><a href="https://popovserhii.com/tag/aws" class="tag-cloud-link tag-link-38 tag-link-position-1" style="font-size: 18.181818181818pt;" aria-label="AWS (4 items)">AWS</a>
+<a href="https://popovserhii.com/tag/certbot" class="tag-cloud-link tag-link-59 tag-link-position-2" style="font-size: 8pt;" aria-label="Certbot (1 item)">Certbot</a>
+<a href="https://popovserhii.com/tag/cloud-watch" class="tag-cloud-link tag-link-50 tag-link-position-3" style="font-size: 8pt;" aria-label="cloud-watch (1 item)">cloud-watch</a>
+<a href="https://popovserhii.com/tag/csv-file" class="tag-cloud-link tag-link-56 tag-link-position-4" style="font-size: 8pt;" aria-label="csv file (1 item)">csv file</a>
+<a href="https://popovserhii.com/tag/docker" class="tag-cloud-link tag-link-35 tag-link-position-5" style="font-size: 22pt;" aria-label="Docker (6 items)">Docker</a>
+<a href="https://popovserhii.com/tag/doctrine" class="tag-cloud-link tag-link-27 tag-link-position-6" style="font-size: 8pt;" aria-label="Doctrine (1 item)">Doctrine</a>
+<a href="https://popovserhii.com/tag/ecs" class="tag-cloud-link tag-link-39 tag-link-position-7" style="font-size: 8pt;" aria-label="ECS (1 item)">ECS</a>
+<a href="https://popovserhii.com/tag/file-transfer" class="tag-cloud-link tag-link-46 tag-link-position-8" style="font-size: 8pt;" aria-label="file transfer (1 item)">file transfer</a>
+<a href="https://popovserhii.com/tag/graphql" class="tag-cloud-link tag-link-28 tag-link-position-9" style="font-size: 8pt;" aria-label="GraphQL (1 item)">GraphQL</a>
+<a href="https://popovserhii.com/tag/grub" class="tag-cloud-link tag-link-62 tag-link-position-10" style="font-size: 8pt;" aria-label="grub (1 item)">grub</a>
+<a href="https://popovserhii.com/tag/iam" class="tag-cloud-link tag-link-40 tag-link-position-11" style="font-size: 8pt;" aria-label="IAM (1 item)">IAM</a>
+<a href="https://popovserhii.com/tag/image" class="tag-cloud-link tag-link-55 tag-link-position-12" style="font-size: 8pt;" aria-label="image (1 item)">image</a>
+<a href="https://popovserhii.com/tag/import" class="tag-cloud-link tag-link-57 tag-link-position-13" style="font-size: 8pt;" aria-label="import (1 item)">import</a>
+<a href="https://popovserhii.com/tag/kubernetes" class="tag-cloud-link tag-link-43 tag-link-position-14" style="font-size: 12.581818181818pt;" aria-label="kubernetes (2 items)">kubernetes</a>
+<a href="https://popovserhii.com/tag/lambda" class="tag-cloud-link tag-link-48 tag-link-position-15" style="font-size: 8pt;" aria-label="Lambda (1 item)">Lambda</a>
+<a href="https://popovserhii.com/tag/linux" class="tag-cloud-link tag-link-18 tag-link-position-16" style="font-size: 18.181818181818pt;" aria-label="Linux (4 items)">Linux</a>
+<a href="https://popovserhii.com/tag/magento" class="tag-cloud-link tag-link-23 tag-link-position-17" style="font-size: 8pt;" aria-label="Magento (1 item)">Magento</a>
+<a href="https://popovserhii.com/tag/magmi" class="tag-cloud-link tag-link-54 tag-link-position-18" style="font-size: 8pt;" aria-label="Magmi (1 item)">Magmi</a>
+<a href="https://popovserhii.com/tag/migrate" class="tag-cloud-link tag-link-60 tag-link-position-19" style="font-size: 8pt;" aria-label="migrate (1 item)">migrate</a>
+<a href="https://popovserhii.com/tag/minikube" class="tag-cloud-link tag-link-44 tag-link-position-20" style="font-size: 8pt;" aria-label="MiniKube (1 item)">MiniKube</a>
+<a href="https://popovserhii.com/tag/nginx" class="tag-cloud-link tag-link-17 tag-link-position-21" style="font-size: 12.581818181818pt;" aria-label="Nginx (2 items)">Nginx</a>
+<a href="https://popovserhii.com/tag/node-js" class="tag-cloud-link tag-link-52 tag-link-position-22" style="font-size: 8pt;" aria-label="node.js (1 item)">node.js</a>
+<a href="https://popovserhii.com/tag/phpstorm" class="tag-cloud-link tag-link-37 tag-link-position-23" style="font-size: 8pt;" aria-label="PHPStorm (1 item)">PHPStorm</a>
+<a href="https://popovserhii.com/tag/posts" class="tag-cloud-link tag-link-33 tag-link-position-24" style="font-size: 12.581818181818pt;" aria-label="Posts (2 items)">Posts</a>
+<a href="https://popovserhii.com/tag/rds" class="tag-cloud-link tag-link-51 tag-link-position-25" style="font-size: 8pt;" aria-label="rds (1 item)">rds</a>
+<a href="https://popovserhii.com/tag/seo" class="tag-cloud-link tag-link-5 tag-link-position-26" style="font-size: 8pt;" aria-label="Seo (1 item)">Seo</a>
+<a href="https://popovserhii.com/tag/ssd" class="tag-cloud-link tag-link-61 tag-link-position-27" style="font-size: 8pt;" aria-label="SSD (1 item)">SSD</a>
+<a href="https://popovserhii.com/tag/symfony" class="tag-cloud-link tag-link-58 tag-link-position-28" style="font-size: 8pt;" aria-label="Symfony (1 item)">Symfony</a>
+<a href="https://popovserhii.com/tag/terraform" class="tag-cloud-link tag-link-49 tag-link-position-29" style="font-size: 8pt;" aria-label="terraform (1 item)">terraform</a>
+<a href="https://popovserhii.com/tag/xdebug" class="tag-cloud-link tag-link-36 tag-link-position-30" style="font-size: 8pt;" aria-label="xDebug (1 item)">xDebug</a>
+<a href="https://popovserhii.com/tag/zf3" class="tag-cloud-link tag-link-26 tag-link-position-31" style="font-size: 8pt;" aria-label="zf3 (1 item)">zf3</a></div>
+</aside><aside id="archives-2" class="widget widget_archive clearfix"><div class="widget-header"><h3 class="widget-title">Archives</h3></div>		<ul>
+			<li><a href="https://popovserhii.com/2021/08">August 2021</a></li>
+	<li><a href="https://popovserhii.com/2021/06">June 2021</a></li>
+	<li><a href="https://popovserhii.com/2021/02">February 2021</a></li>
+	<li><a href="https://popovserhii.com/2020/08">August 2020</a></li>
+	<li><a href="https://popovserhii.com/2020/07">July 2020</a></li>
+	<li><a href="https://popovserhii.com/2020/06">June 2020</a></li>
+	<li><a href="https://popovserhii.com/2020/05">May 2020</a></li>
+	<li><a href="https://popovserhii.com/2020/04">April 2020</a></li>
+	<li><a href="https://popovserhii.com/2020/02">February 2020</a></li>
+	<li><a href="https://popovserhii.com/2020/01">January 2020</a></li>
+	<li><a href="https://popovserhii.com/2019/12">December 2019</a></li>
+	<li><a href="https://popovserhii.com/2019/11">November 2019</a></li>
+	<li><a href="https://popovserhii.com/2019/08">August 2019</a></li>
+	<li><a href="https://popovserhii.com/2019/07">July 2019</a></li>
+	<li><a href="https://popovserhii.com/2019/06">June 2019</a></li>
+	<li><a href="https://popovserhii.com/2019/05">May 2019</a></li>
+	<li><a href="https://popovserhii.com/2018/11">November 2018</a></li>
+	<li><a href="https://popovserhii.com/2018/10">October 2018</a></li>
+	<li><a href="https://popovserhii.com/2018/09">September 2018</a></li>
+	<li><a href="https://popovserhii.com/2018/06">June 2018</a></li>
+	<li><a href="https://popovserhii.com/2018/05">May 2018</a></li>
+	<li><a href="https://popovserhii.com/2018/02">February 2018</a></li>
+	<li><a href="https://popovserhii.com/2016/11">November 2016</a></li>
+	<li><a href="https://popovserhii.com/2016/10">October 2016</a></li>
+	<li><a href="https://popovserhii.com/2016/08">August 2016</a></li>
+	<li><a href="https://popovserhii.com/2016/06">June 2016</a></li>
+	<li><a href="https://popovserhii.com/2016/05">May 2016</a></li>
+	<li><a href="https://popovserhii.com/2016/04">April 2016</a></li>
+	<li><a href="https://popovserhii.com/2016/03">March 2016</a></li>
+	<li><a href="https://popovserhii.com/2016/01">January 2016</a></li>
+	<li><a href="https://popovserhii.com/2015/12">December 2015</a></li>
+	<li><a href="https://popovserhii.com/2015/11">November 2015</a></li>
+	<li><a href="https://popovserhii.com/2015/10">October 2015</a></li>
+	<li><a href="https://popovserhii.com/2015/09">September 2015</a></li>
+	<li><a href="https://popovserhii.com/2015/07">July 2015</a></li>
+	<li><a href="https://popovserhii.com/2015/06">June 2015</a></li>
+	<li><a href="https://popovserhii.com/2015/05">May 2015</a></li>
+	<li><a href="https://popovserhii.com/2015/04">April 2015</a></li>
+	<li><a href="https://popovserhii.com/2015/03">March 2015</a></li>
+	<li><a href="https://popovserhii.com/2015/02">February 2015</a></li>
+	<li><a href="https://popovserhii.com/2014/12">December 2014</a></li>
+	<li><a href="https://popovserhii.com/2014/11">November 2014</a></li>
+	<li><a href="https://popovserhii.com/2014/10">October 2014</a></li>
+	<li><a href="https://popovserhii.com/2014/09">September 2014</a></li>
+	<li><a href="https://popovserhii.com/2014/08">August 2014</a></li>
+	<li><a href="https://popovserhii.com/2014/07">July 2014</a></li>
+	<li><a href="https://popovserhii.com/2014/05">May 2014</a></li>
+	<li><a href="https://popovserhii.com/2014/04">April 2014</a></li>
+	<li><a href="https://popovserhii.com/2014/02">February 2014</a></li>
+	<li><a href="https://popovserhii.com/2014/01">January 2014</a></li>
+	<li><a href="https://popovserhii.com/2013/12">December 2013</a></li>
+	<li><a href="https://popovserhii.com/2013/10">October 2013</a></li>
+		</ul>
+		</aside><aside id="categories-2" class="widget widget_categories clearfix"><div class="widget-header"><h3 class="widget-title">Categories</h3></div>		<ul>
+	<li class="cat-item cat-item-2"><a href="https://popovserhii.com/category/apache">Apache</a>
+</li>
+	<li class="cat-item cat-item-41"><a href="https://popovserhii.com/category/aws">AWS</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="https://popovserhii.com/category/centos">CentOS</a>
+</li>
+	<li class="cat-item cat-item-22"><a href="https://popovserhii.com/category/css">CSS</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://popovserhii.com/category/cygwin">Cygwin</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="https://popovserhii.com/category/dev">Development</a>
+</li>
+	<li class="cat-item cat-item-34"><a href="https://popovserhii.com/category/docker">Docker</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="https://popovserhii.com/category/doctrine">Doctrine</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="https://popovserhii.com/category/git">Git</a>
+</li>
+	<li class="cat-item cat-item-30"><a href="https://popovserhii.com/category/php/zend/jqgrid">jqGrid</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="https://popovserhii.com/category/js">JS</a>
+</li>
+	<li class="cat-item cat-item-42"><a href="https://popovserhii.com/category/kubernetes">Kubernetes</a>
+</li>
+	<li class="cat-item cat-item-32"><a href="https://popovserhii.com/category/linux">Linux</a>
+</li>
+	<li class="cat-item cat-item-10"><a href="https://popovserhii.com/category/magento">Magento</a>
+</li>
+	<li class="cat-item cat-item-11"><a href="https://popovserhii.com/category/magento/magmi">Magmi</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="https://popovserhii.com/category/mongo">Mongo</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="https://popovserhii.com/category/mysql">MySQL</a>
+</li>
+	<li class="cat-item cat-item-31"><a href="https://popovserhii.com/category/js/node-js">Node.JS</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="https://popovserhii.com/category/php">PHP</a>
+</li>
+	<li class="cat-item cat-item-29"><a href="https://popovserhii.com/category/js/react">React</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="https://popovserhii.com/category/sphinx">Sphinx</a>
+</li>
+	<li class="cat-item cat-item-45"><a href="https://popovserhii.com/category/php/symfony">Symfony</a>
+</li>
+	<li class="cat-item cat-item-47"><a href="https://popovserhii.com/category/terraform">Terraform</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="https://popovserhii.com/category/web">Web-технології</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="https://popovserhii.com/category/php/zend">Zend</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="https://popovserhii.com/category/news">Новини</a>
+</li>
+		</ul>
+</aside>
+	</section><!-- #secondary -->
+
+	
+
+	</div><!-- #content -->
+
+	
+	<div id="footer" class="footer-wrap">
+
+		<footer id="colophon" class="site-footer container clearfix" role="contentinfo">
+
+			
+			<div id="footer-text" class="site-info">
+				
+	<span class="credit-link">
+		WordPress Theme: Maxwell by <a href="https://themezee.com/" target="_blank" rel="nofollow">ThemeZee</a>.	</span>
+
+				</div><!-- .site-info -->
+
+		</footer><!-- #colophon -->
+
+	</div>
+
+</div><!-- #page -->
+
+<script type="text/javascript">
+/* <![CDATA[ */
+var maxwellScreenReaderText = {"expand":"Expand child menu","collapse":"Collapse child menu","icon":"<svg class=\"icon icon-expand\" aria-hidden=\"true\" role=\"img\"> <use xlink:href=\"https:\/\/popovserhii.com\/wp-content\/themes\/maxwell\/assets\/icons\/genericons-neue.svg#expand\"><\/use> <\/svg>"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple_files/navigation.min.js.download"></script>
+<script type="text/javascript" src="./Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple_files/comment-reply.min.js.download"></script>
+<script type="text/javascript" src="./Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple_files/prism-core.min.js.download"></script>
+<script type="text/javascript" src="./Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple_files/prism.min.js.download"></script>
+<script type="text/javascript" src="./Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple_files/prism-line-numbers.min.js.download"></script>
+<script type="text/javascript" src="./Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple_files/prism-autoloader.min.js.download"></script>
+<script type="text/javascript" src="./Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple_files/clipboard.min.js.download"></script>
+<script type="text/javascript" src="./Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple_files/wp-embed.min.js.download"></script>
+<script async="async" type="text/javascript" src="./Debug your PHP code on Remote Linux server using PHPStorm and xDebug with its port forwarding through SSH - Simply Not Simple_files/form.js.download"></script>
+ <script id="auto_loader_config_scripts"> Prism.plugins.autoloader.languages_path = "https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/"; </script>  <script id="module-prism-line-number"> (function($) { $(function() { $("code").each(function() { var parent_div = $(this).parent("pre"); var pre_css = $(this).attr("class"); if (typeof pre_css !== "undefined" && -1 !== pre_css.indexOf("language-")) { parent_div.addClass("line-numbers"); } }); }); })(jQuery); </script>  <script id="module-toc"> (function($) { $(function() { $("#md-post-toc").initTOC({ selector: "h2, h3, h4, h5, h6", scope: ".post", }); $("#md-post-toc a").click(function(e) { e.preventDefault(); var aid = $( this ).attr( "href" ); $( "html, body" ).animate( { scrollTop: $(aid).offset().top - 80 }, "slow" ); }); $("#md-widget-toc").initTOC({ selector: "h2, h3, h4, h5, h6", scope: ".post", }); $("#md-widget-toc a").click(function(e) { e.preventDefault(); var aid = $( this ).attr( "href" ); $( "html, body" ).animate( { scrollTop: $(aid).offset().top - 80 }, "slow" ); }); }); })(jQuery); </script>  <script id="module-clipboard"> (function($) { $(function() { var pre = document.getElementsByTagName("pre"); var pasteContent = document.getElementById("paste-content"); var hasLanguage = false; for (var i = 0; i < pre.length; i++) { var codeClass = pre[i].children[0].className; var isLanguage = codeClass.indexOf("language-"); var excludedCodeClassNames = [ "language-katex", "language-seq", "language-sequence", "language-flow", "language-flowchart", "language-mermaid", ]; var isExcluded = excludedCodeClassNames.indexOf(codeClass); if (isExcluded !== -1) { isLanguage = -1; } if (isLanguage !== -1) { var button = document.createElement("button"); button.className = "copy-button"; button.textContent = "Copy"; pre[i].appendChild(button); hasLanguage = true; } }; if (hasLanguage) { var copyCode = new ClipboardJS(".copy-button", { target: function(trigger) { return trigger.previousElementSibling; } }); copyCode.on("success", function(event) { event.clearSelection(); event.trigger.textContent = "Copied"; window.setTimeout(function() { event.trigger.textContent = "Copy"; }, 2000); }); } }); })(jQuery); </script> 
+
+
+</body></html>

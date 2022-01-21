@@ -8,6 +8,7 @@
 	https://marketplace.magento.com/dhl-shipping-m2.html
 	https://devdocs.magento.com/extensions/install/
 	composer require dhl/shipping-m2:2.0.1
+	composer require dhl/shipping-m2:2.2.0 (l-carb-shop)
 	
 	php bin/magento module:enable Netresearch_ShippingCore --clear-static-content
 	php bin/magento module:enable Dhl_UnifiedTracking
@@ -62,3 +63,22 @@
    https://docs.m2epro.com/help/m2/install-upgrade-m2e-pro/from-magento-marketplace-v-2-4-via-command-line
 6.  mageware/smtp
 	https://github.com/mageware/magento2-smtp-mailer
+	
+	
+--------------------------------
+m2.l-carb-shop
+
+1. composer require dhl/shipping-m2:2.2.0
+2. composer require owebia/magento2-module-advanced-shipping:^2.8.9
+3. m2epro
+	m2e/ebay-amazon-magento2
+	composer require m2e/ebay-amazon-magento2:1.14.3
+4. composer require mageplaza/magento-2-german-language-pack:dev-master
+5. FireGento/MageSetup
+	https://github.com/firegento/firegento-magesetup2
+	
+	composer require firegento/magesetup2
+	php bin/magento module:enable FireGento_MageSetup
+	php bin/magento setup:upgrade
+	php bin/magento magesetup:setup:run de
+	

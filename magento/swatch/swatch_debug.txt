@@ -1,0 +1,31 @@
+E:\PHP\Darscrubs\master_cloud\live\vendor\magento\module-configurable-product\Block\Product\View\Type\Configurable.php :: 223 :: getJsonConfig
+
+	:: 259 :: getOptionImages
+	
+E:\PHP\Darscrubs\master_cloud\live\vendor\magento\module-configurable-product\Model\Product\Type\Configurable.php :: 1291 :: getUsedProducts
+
+E:\PHP\Darscrubs\master_cloud\live\vendor\magento\module-swatches\Block\Product\Renderer\Configurable.php :: 176 :: getJsonSwatchConfig
+
+swatch image
+E:\PHP\Darscrubs\master_cloud\live\vendor\magento\module-swatches\Block\Product\Renderer\Configurable.php :: 283 :: addSwatchDataForAttribute
+	:: 292 ::addAdditionalMediaData
+	
+--------------------------------------
+color swatch
+	
+	SELECT * FROM eav_attribute WHERE attribute_code='color'
+		>> attribute_id = 93, backend_type=int
+	SELECT * FROM catalog_product_entity_int WHERE attribute_id=93 AND row_id=65037
+		>> value=27
+	SELECT * FROM eav_attribute_option WHERE attribute_id=93
+		>> ...
+		>> option_id=27, sort_order=119
+	SELECT * FROM eav_attribute_option_value WHERE option_id=27
+		>> value_id=1958, value="WHITE"
+	SELECT * FROM eav_attribute_option_swatch WHERE option_id=27
+		>> swatch_id=13, type=3, value="#ffffff"
+	
+	export color swatch
+	
+	    SELECT s.*,m.value as color FROM eav_attribute_option_swatch as s left join eav_attribute_option_value as m ON s.option_id=m.option_id
+        inner join (SELECT * FROM eav_attribute_option WHERE attribute_id=93) as ms ON ms.option_id=s.option_id order by m.value asc

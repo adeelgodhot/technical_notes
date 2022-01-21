@@ -1,0 +1,9 @@
+E:\PHP\Darscrubs\master_cloud\live\vendor\firebear\importexport\Setup\EavSetup.php
+	:: 273 :: 
+		$data = ['option_id' => $intOptionId, 'store_id' => 0, 'value' => $optionData['swatch']];
+		=>
+		$data = ['option_id' => $intOptionId, 'store_id' => 0, 'value' => $optionData['swatch'], 'type' => $optionData['swatch_type']];
+		
+E:\PHP\Darscrubs\master_cloud\live\vendor\firebear\importexport\Model\Import\Attribute.php
+	:: 1074
+	$rowData['option']['swatch_type'] = $rowData[self::COLUMN_SWATCH_ATTRIBUTE_TYPE];

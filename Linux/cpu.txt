@@ -1,0 +1,106 @@
+1. ahmed 16
+	vendor_id       : GenuineIntel
+	cpu family      : 6
+	model           : 158
+	model name      : Intel(R) Xeon(R) E-2288G CPU @ 3.70GHz
+	stepping        : 13
+	microcode       : 0xea
+	cpu MHz         : 4699.975
+	cache size      : 16384 KB
+	physical id     : 0
+	siblings        : 16
+	core id         : 7
+	cpu cores       : 8
+	apicid          : 15
+	initial apicid  : 15
+	fpu             : yes
+	fpu_exception   : yes
+	cpuid level     : 22
+	wp              : yes
+	flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch epb invpcid_single intel_pt ssbd ibrs ibpb stibp ibrs_enhanced tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed adx smap clflushopt xsaveopt xsavec xgetbv1 dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp md_clear spec_ctrl intel_stibp flush_l1d arch_capabilities
+	bogomips        : 7392.00
+	clflush size    : 64
+	cache_alignment : 64
+	address sizes   : 39 bits physical, 48 bits virtual
+	power management:
+2. Calvo Dev Server 8
+	vendor_id       : GenuineIntel
+	cpu family      : 6
+	model           : 85
+	model name      : Intel(R) Xeon(R) Platinum 8124M CPU @ 3.00GHz
+	stepping        : 4
+	microcode       : 0x2006906
+	cpu MHz         : 3400.867
+	cache size      : 25344 KB
+	physical id     : 0
+	siblings        : 8
+	core id         : 3
+	cpu cores       : 4
+	apicid          : 7
+	initial apicid  : 7
+	fpu             : yes
+	fpu_exception   : yes
+	cpuid level     : 13
+	wp              : yes
+	flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch invpcid_single pti fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx avx512f avx512dq rdseed adx smap clflushopt clwb avx512cd avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves ida arat pku ospke
+	bugs            : cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs taa itlb_multihit
+	bogomips        : 5999.99
+	clflush size    : 64
+	cache_alignment : 64
+	address sizes   : 46 bits physical, 48 bits virtual
+	power management:
+3. Darscrubs Live 16
+	vendor_id       : GenuineIntel
+	cpu family      : 6
+	model           : 79
+	model name      : Intel(R) Xeon(R) CPU E5-2686 v4 @ 2.30GHz
+	stepping        : 1
+	microcode       : 0xb000038
+	cpu MHz         : 2348.687
+	cache size      : 46080 KB
+	physical id     : 0
+	siblings        : 16
+	core id         : 15
+	cpu cores       : 16
+	apicid          : 30
+	initial apicid  : 30
+	fpu             : yes
+	fpu_exception   : yes
+	cpuid level     : 13
+	wp              : yes
+	flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq monitor est ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch cpuid_fault invpcid_single pti fsgsbase bmi1 hle avx2 smep bmi2 erms invpcid rtm rdseed adx xsaveopt ida
+	bugs            : cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs taa itlb_multihit
+	bogomips        : 4600.16
+	clflush size    : 64
+	cache_alignment : 64
+	address sizes   : 46 bits physical, 48 bits virtual
+	power management:
+4. Darscrubs dev 2
+	
+	vendor_id       : AuthenticAMD
+	cpu family      : 23
+	model           : 1
+	model name      : AMD EPYC Processor (with IBPB)
+	stepping        : 2
+	microcode       : 0x1000065
+	cpu MHz         : 2350.000
+	cache size      : 512 KB
+	physical id     : 0
+	siblings        : 2
+	core id         : 1
+	cpu cores       : 2
+	apicid          : 1
+	initial apicid  : 1
+	fpu             : yes
+	fpu_exception   : yes
+	cpuid level     : 13
+	wp              : yes
+	flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm rep_good nopl cpuid extd_apicid tsc_known_freq pni pclmulqdq ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm cmp_legacy cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw topoext ssbd ibpb vmmcall fsgsbase tsc_adjust bmi1 avx2 smep bmi2 rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 virt_ssbd arat umip
+	bugs            : fxsave_leak sysret_ss_attrs spectre_v1 spectre_v2 spec_store_bypass
+	bogomips        : 4700.00
+	TLB size        : 1024 4K pages
+	clflush size    : 64
+	cache_alignment : 64
+	address sizes   : 48 bits physical, 48 bits virtual
+	power management:
+

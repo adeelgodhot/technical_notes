@@ -229,6 +229,7 @@ dc ps
    
    docker exec -it magento-docker_frontend_1 /bin/bash
    docker exec -it magento-docker_redis_1 /bin/bash
+   docker exec -it magento-docker_ssl-term_1 /bin/bash
    
    ---------------------
    docker container dump
@@ -236,6 +237,10 @@ dc ps
    
    docker cp bf991795b7f0:/ nginx_dump/
    bf991795b7f0: container id
+   
+   docker cp 982f7e433cd4:/etc/nginx/cert/server_crt.pem ssl/server_crt.pem
+   docker cp 982f7e433cd4:/etc/nginx/cert/server_key.pem ssl/server_key.pem
+   docker cp 982f7e433cd4:/etc/nginx/cert/scandipwa-fullchain.pem ssl/scandipwa-fullchain.pem
    
    --------------------------
    docker cp magento-docker_nginx_1:/etc/nginx/conf.d/cache-router.conf cache_router.conf

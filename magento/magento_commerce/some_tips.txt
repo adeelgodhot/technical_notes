@@ -1,0 +1,124 @@
+abdulrahmanalselim@AbdulramansiMac ~ % mgc  route:list\
+> 
+Enter a number to choose a project:
+  [0] Darscrubs (62gm6c43tjfa4)
+ > 0
+
+Enter a number to choose an environment:
+Default: master
+  [0] b2b
+  [1] Development
+  [2] Master (master)
+  [3] Staging
+ > 2
+
+Routes on the project Darscrubs (62gm6c43tjfa4), environment Master (master):
++------------------------+----------+----------------------------+
+| Route                  | Type     | To                         |
++------------------------+----------+----------------------------+
+| https://{default}/     | upstream | mymagento                  |
+| https://{all}/         | upstream | mymagento                  |
+| https://www.{default}/ | redirect | https://www.darscrubs.com/ |
+| http://{all}/          | redirect | https://darscrubs.com/     |
+| http://{default}/      | redirect | https://www.darscrubs.com/ |
+| http://www.{default}/  | redirect | https://www.darscrubs.com/ |
++------------------------+----------+----------------------------+
+
+To view a single route, run: magento-cloud route:get <route>
+abdulrahmanalselim@AbdulramansiMac ~ % mgc  db:sql     
+Enter a number to choose a project:
+  [0] Darscrubs (62gm6c43tjfa4)
+ > 0
+
+Enter a number to choose an environment:
+Default: master
+  [0] b2b
+  [1] Development
+  [2] Master (master)
+  [3] Staging
+ > 2
+
+Enter a number to choose a relationship:
+  [0] mbi (mbi@mbi.internal)
+  [1] database (mysql@database.internal)
+ > 1
+
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 799123
+Server version: 10.3.21-MariaDB-1:10.3.21+maria~jessie mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [main]> 
+I have confirmed that your MySQL instance is currently accessible via the password configured. To correctly access it, you must SSH to your cloud server, then you may use the following commands:
+
+Find your login credentials with:
+php -r 'print_r(json_decode(base64_decode($_ENV["MAGENTO_CLOUD_RELATIONSHIPS"])));'
+Then connect to the instance with:
+mysql -h database.internal -u <username> -p
+And enter the password retrieved from the first output when prompted.
+
+This will connect you successfully:
+web@mymagento.0:~$ mysql -h database.internal -u mysql -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 798795
+Server version: 10.3.21-MariaDB-1:10.3.21+maria~jessie mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]>
+MariaDB [(none)]> use main;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MariaDB [main]>
+
+Please find the following documentation as reference of this: https://devdocs.magento.com/cloud/project/services-mysql.html#connect-to-the-database.
+
+Let me know if you have any trouble or further questions or kindly confirm that the solution provided to you has resolved the reported issue. Support requests will be set to solved if no response is received within 3 days following this notification.
+
+Kind Regards,
+Christopher Carliell
+
+
+Set up MySQL service | Adobe Commerce Developer Guide
+https://devdocs.magento.com
+
+
+581654db36b4cae1b312dc9034f635b4
+
+   [database] => Array
+        (
+            [0] => stdClass Object
+                (
+                    [username] => mysql
+                    [scheme] => mysql
+                    [service] => mysql
+                    [fragment] =>
+                    [ip] => 169.254.190.217
+                    [hostname] => uoyr5myhxgxpuxypsuo6qd2oiy.mysql.service._.magentosite.cloud
+                    [public] =>
+                    [cluster] => 62gm6c43tjfa4-master-7rqtwti
+                    [host] => database.internal
+                    [rel] => mysql
+                    [query] => stdClass Object
+                        (
+                            [is_master] => 1
+                        )
+
+                    [path] => main
+                    [password] => 581654db36b4cae1b312dc9034f635b4
+                    [type] => mysql:10.3
+                    [port] => 3306
+                    [host_mapped] =>
+                )
+
+        )
+
+)

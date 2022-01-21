@@ -1,0 +1,69 @@
+https://www.cignex.com/blog/magento-performance-tuning-guidelines
+https://devdocs.magento.com/guides/v2.4/install-gde/prereq/mysql.html
+https://onilab.com/blog/magento-2-mysql-optimization-and-database-performance-tuning/
+
+Reindexing on MariaDB 10.4 takes more time compared to other MariaDB or MySQL versions. 
+As a workaround, we suggest modifying the default MariaDB configuration and setting the following parameters:
+
+optimizer_switch='rowid_filter=off'
+optimizer_use_condition_selectivity = 1
+
+Indexers require higher tmp_table_size and max_heap_table_size values (e.g., 64M). 
+If you configure the batch_size parameter, 
+you can adjust that value along with the table size settings to improve indexer performance. 
+Refer to the Magento Optimization Guide for more information.
+	[mysqld]
+	tmp_table_size		= 64M
+	max_heap_table_size	= 64M
+	max_allowed_packet   = 64MB
+	innodb_buffer_pool_size	= 2016M
+	innodb_buffer_pool_size	= 4230M
+SHOW VARIABLES LIKE 'max_allowed_packet';
+SHOW VARIABLES LIKE 'innodb_buffer_pool_size';
+SHOW VARIABLES LIKE 'tmp_table_size';
+
+The most important setting (for performance) is innodb_buffer_pool_size; 
+it should be set to about 70% of available memory. 
+Almost everything else (there are hundreds of "variables") does not need changing without a good reason.
+
+SET GLOBAL optimizer_switch = 'rowid_filter=off';
+SET GLOBAL optimizer_use_condition_selectivity = 1;
+SET GLOBAL tmp_table_size = 67108864;
+SET GLOBAL max_heap_table_size = 67108864;
+SET GLOBAL max_allowed_packet = 67108864;
+SET GLOBAL innodb_buffer_pool_size = 2113929216;
+
+SET GLOBAL optimizer_switch = 'rowid_filter=off';
+SET GLOBAL optimizer_use_condition_selectivity = 1;
+SET GLOBAL tmp_table_size = 67108864;
+SET GLOBAL max_heap_table_size = 67108864;
+SET GLOBAL max_allowed_packet = 67108864;
+SET GLOBAL innodb_buffer_pool_size = 4435476480;
+
+SET optimizer_switch = 'rowid_filter=off';
+SET optimizer_use_condition_selectivity = 1;
+SET tmp_table_size = 67108864;
+SET max_heap_table_size = 67108864;
+SET max_allowed_packet = 67108864;
+SET innodb_buffer_pool_size = 2113929216;
+
+optimizer_switch='rowid_filter=off'
+optimizer_use_condition_selectivity = 1
+tmp_table_size		= 64M
+max_heap_table_size	= 64M
+max_allowed_packet      = 64M
+innodb_buffer_pool_size	= 2016M
+log_bin_trust_function_creators = 1
+
+optimizer_switch='rowid_filter=off'
+optimizer_use_condition_selectivity = 1
+tmp_table_size		= 64M
+max_heap_table_size	= 64M
+max_allowed_packet      = 64M
+innodb_buffer_pool_size	= 20000M
+log_bin_trust_function_creators = 1
+
+MariaDB [(none)]> SET max_allowed_packet = 67108864;
+ERROR 1621 (HY000): SESSION variable 'max_allowed_packet' is read-only. Use SET GLOBAL to assign the value
+MariaDB [(none)]> SET innodb_buffer_pool_size = 2113929216;
+ERROR 1229 (HY000): Variable 'innodb_buffer_pool_size' is a GLOBAL variable and should be set with SET GLOBAL

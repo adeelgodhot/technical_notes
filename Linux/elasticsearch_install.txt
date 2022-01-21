@@ -22,3 +22,43 @@ network.host: 0.0.0.0
 network.bind_host: 0.0.0.0
 network.publish_host: 0.0.0.0
 discovery.seed_hosts: ["0.0.0.0", "[::0]"]
+-------------------------
+
+sudo apt-get install elasticsearch=7.10.1
+sudo systemctl start elasticsearch
+curl http://localhost:9200/
+
+-------------------------
+configurations files:
+
+/etc/elasticsearch/
+/etc/default/elasticsearch
+base path(bins and libs and ...):
+
+/usr/share/elasticsearch/
+data path (can be configured in /etc/elasticsearc/elasticsearch.yml):
+
+/var/lib/elasticsearch
+log path (can be configured in /etc/elasticsearc/elasticsearch.yml):
+
+/var/log/elasticsearch/
+service files:
+
+/etc/init.d/elasticsearch
+/etc/systemd/system/multi-user.target.wants/elasticsearch.service
+/usr/lib/systemd/system/elasticsearch.service
+
+-------------------------
+Unisntall elasticsearch
+
+apt-get --purge autoremove elasticsearch
+
+------------------------------
+
+Failed to start elasticsearch
+
+	"sudo service elasticsearch start" doesn't provide the enough information about details.
+	
+	/usr/share/elasticsearch/bin/elasticsearch will give the error details
+	
+	

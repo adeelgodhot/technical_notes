@@ -1,0 +1,36 @@
+E:\PHP\Darscrubs\master_cloud\live\vendor\firebear\importexport\Model\Import\Product\UrlKeyManager.php :: 73
+
+	SELECT `attr`.`value` AS `url_key`, `cpe`.`sku` FROM `catalog_product_entity_varchar` AS `attr`
+ LEFT JOIN `catalog_product_entity` AS `cpe` ON cpe.row_id = attr.row_id AND (cpe.created_in <= 1 AND cpe.updated_in > 1) WHERE (attribute_id = ('126'))
+ 
+ 
+ E:\PHP\Darscrubs\master_cloud\live\vendor\firebear\importexport\Model\Import\Product.php :: 4902
+ 
+ 
+ E:\PHP\Darscrubs\master_cloud\dev\vendor\magento\module-catalog-import-export\Model\Import\Product.php :: 2655
+ 
+ E:\PHP\Darscrubs\master_cloud\dev\vendor\firebear\importexport\Model\Import\Product.php :: saveProducts :: 1409
+ 
+ E:\PHP\Darscrubs\master_cloud\dev\vendor\firebear\importexport\Model\Import\Product\Type\Configurable.php
+
+ 
+E:\PHP\Darscrubs\master_cloud\live\vendor\firebear\importexport\Model\Import\Product.php :: 2806 
+	:: 3121 :: insertNewSwatchOption
+	
+	
+Import Attribute
+	E:\PHP\Darscrubs\master_cloud\live\vendor\firebear\importexport\Model\Import\Attribute.php :: 1006 :: _prepareDataForUpdate
+	
+	E:\PHP\Darscrubs\master_cloud\live\vendor\firebear\importexport\Setup\EavSetup.php :: 82 :: addAttribute , 136-139
+		:: 200 :: addAttributeOption
+		:: 254-257 for swatch import
+		
+		
+---------------------------------------------
+Link child To configurable product
+	E:\PHP\Darscrubs\master_cloud\live\vendor\firebear\importexport\Model\Import\Product.php
+		:: saveCollectData
+		
+		:: saveConfigurationVariations
+		
+		:: $this->prepareConfigurableVariation($rowData, $configurableData); :: 1448

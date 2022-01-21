@@ -1,0 +1,66 @@
+https://ecommerce.axtrics.com/lightning-fast-lamp-environment-on-aws-ec2-for-magento-2-3-with-varnish-haproxy/
+
+You can locate the PHP-FPM configuration file in /etc/php/7.4/fpm/pool.d/www.conf
+
+Open the file and make the following changes
+
+pm = dynamic
+pm.max_children = 50
+pm.start_servers = 8
+pm.min_spare_servers = 4
+pm.max_spare_servers = 16
+pm.max_requests = 2000
+
+You can use the following method to figure out the correct values
+
+	Check Avg. Memory Consumption by Single PHP-FPM Process
+	sudo ps -ylC php-fpm7.4 --sort:rss
+	ps -ef | grep '[f]'pm
+	ps axc | grep '[f]'pm
+
+	
+	The column RSS contains the avg. memory usage per process in Kilobytes
+	
+	
+	THE consuming memeory of php-fpm processor  = 223904 ~ 200MB
+	Available memeory = 27687 M
+	
+	---------------------------------
+	Let’s say we have approx. 7GB of available RAM on Server, So to calculate the max_children we will use the following formulae:
+
+	27687/200 = 138.
+
+	Let’s go with 50 max_children
+	---------------------------------
+	
+	
+	--------------------------
+	darscrubs dev
+	THE consuming memeory of php-fpm processor  = 223904 ~ 200MB
+	Available memeory = 27687 M
+	
+	27687/200 = 138.
+
+	Let’s go with 120 max_children
+	
+	pm = dynamic
+	pm.max_children = 120
+	pm.start_servers = 110
+	pm.min_spare_servers = 100
+	pm.max_spare_servers = 120
+	pm.max_requests = 2000
+	
+	pm.max_children = 500
+	pm.start_servers = 150
+	pm.min_spare_servers = 100
+	pm.max_spare_servers = 200
+	pm.max_requests = 2000
+
+--------------------------
+set slow log
+https://bobcares.com/blog/php-fpm-tuning-high-load/
+https://serverfault.com/questions/968089/how-to-know-how-many-children-and-servers-set-on-php-fpm
+
+www.conf
+request_slowlog_timeout = 6s
+slowlog = /var/log/php-fpm/slowlog-site.log

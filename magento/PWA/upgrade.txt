@@ -3,3 +3,18 @@ https://docs.scandipwa.com/getting-started-1/depricated-docker-setup/migrating-f
 https://docs.scandipwa.com/introduction/cma-csa-and-scandipwa
 
 https://docs.create-scandipwa-app.com/themes/extensions-and-themes
+
+
+overriding
+
+https://docs.scandipwa.com/developing-with-scandi/override-mechanism
+
+------------------------------------------
+	Extending container
+	
+	https://docs.scandipwa.com/developing-with-scandi/override-mechanism/extending-javascript/overriding-non-classes
+
+-----------------------------------------
+DOs and DONTs
+
+https://medium.com/progressivewebapps/21-ways-to-not-break-your-scandipwa-theme-aacd57f436c1

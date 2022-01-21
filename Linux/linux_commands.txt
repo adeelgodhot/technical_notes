@@ -33,6 +33,9 @@ tar --exclude='pub/media/catalog/product' --exclude='pub/static' --exclude='pub/
 
 *********** copy **********
 cp -i /home/levan/kdenlive/untitelds.mpg /media/sda3/SkyDrive/
+
+copy but no override
+	sudo cp -n -R p/a/* a/
 ***************************
 
 *************mysql*************
@@ -132,7 +135,7 @@ https://cloudwafer.com/blog/installing-multiple-versions-of-php-on-ubuntu/
 	--------------------------
 	Switch from 7.4 to 7.3
 	sudo systemctl stop php7.4-fpm
-	sudo systemctl stop php7.3-fpm
+	sudo systemctl start php7.3-fpm
 	sudo a2dismod php7.4
 	sudo a2enmod php7.3
 	sudo systemctl restart apache2
@@ -140,7 +143,7 @@ https://cloudwafer.com/blog/installing-multiple-versions-of-php-on-ubuntu/
 	
 	Switch from 7.3 to 7.4
 	sudo systemctl stop php7.3-fpm
-	sudo systemctl stop php7.4-fpm
+	sudo systemctl start php7.4-fpm
 	sudo a2dismod php7.3
 	sudo a2enmod php7.4
 	sudo systemctl restart apache2
@@ -404,12 +407,28 @@ CHECK SSL
   
   1. apt install certbot python3-certbot-nginx 
   2. certbot --nginx -d dev2.evape.com -d www.dev2.evape.com
+  
+  certbot --nginx -d staging.darscrubs.com
   https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-20-04
   https://www.digitalocean.com/community/tutorials/how-to-secure-apache-with-let-s-encrypt-on-ubuntu-20-04
+  
+  sudo certbot --nginx -d 15.185.117.186
   ------------- cpu ------------
   cat /proc/cpuinfo
   ------------- memory ---------
+  https://linuxize.com/post/free-command-in-linux/
   free
+  free -h
+  
+	Here’s what each column mean:
+		total - This number represents the total amount of memory that can be used by the applications.
+		used - Used memory. It is calculated as: used = total - free - buffers - cache
+		free - Free / Unused memory.
+		shared - This column can be ignored as it has no meaning. It is here only for backward compatibility.
+		buff/cache - The combined memory used by the kernel buffers and page cache and slabs. 
+					This memory can be reclaimed at any time if needed by the applications. 
+					If you want buffers and cache to be displayed in two separate columns, use the -w option.
+		available - An estimate of the amount of memory that is available for starting new applications, without swapping
   ------------ backup -----------
   rsync -a /etc/nginx/ /etc/nginx_bkp/
   ------------ /etc/apt/sources.list--------
@@ -714,6 +733,7 @@ ServerName localhost
 --------------------------------------------
 uninstall node js
 apt-get purge --auto-remove nodejs
+apt-get purge --auto-remove npm
 
 symlink issue bypass  when npm install
 npm install --no-bin-links
@@ -816,6 +836,15 @@ Adding your SSH key to the ssh-agent
 	
 	Add the SSH key to your account on GitHub. For more information, see "Adding a new SSH key to your GitHub account."
 
+	Register SSH key for remote connection
+	eval "$(ssh-agent -s)"
+	ssh-add ~/.ssh/2/id_rsa
+	
+	remove key from memory
+	ssh-add -D ~/.ssh/2/id_rsa
+		>>>>>>>>>> 
+		All identities removed.
+		>>>>>>>>>>
 ---------------------------------------------
 check folder owner/group
 ls -l {folder} 
@@ -946,6 +975,15 @@ setfacl -R -f d:www-data:rwx directory
 504 gateway timeout in Apache
 Edit apache.conf like this : Timeout 300 => 3000 
 -----------------------------------
+OPcache
+https://ma.ttias.be/how-to-clear-php-opcache/
+
+curl -sO http://gordalina.github.io/cachetool/downloads/cachetool.phar
+Next, use that phar to send commands to your PHP-FPM daemon.
+
+$ php cachetool.phar opcache:reset --fcgi=127.0.0.1:9000
+$ php cachetool.phar opcache:reset --fcgi=/var/run/php/php7.4-fpm.sock
+
 cachetool opcache:reset
 ------------------------
 change root password
@@ -977,6 +1015,7 @@ add bash to cronjob
 check process running commands
 
 ps -fU $(whoami)
+ps faux (performance)
 ------------------------------
 set java home
 
@@ -1010,3 +1049,162 @@ https://pingvinus.ru/note/dpkg-lock
 		sudo rm /var/lib/dpkg/lock-frontend
 		
 		sudo dpkg --configure -a
+		
+--------------------------------------
+mysql windows xampp
+
+how to change password
+	https://kinsta.com/knowledgebase/xampp-mysql-password/
+	
+	1. To get started, launch your XAMPP Control Panel and click on the Shell button on the right-hand side.
+		This will open up a new window with a command prompt. Enter the following command and press the Enter/Return key:
+		mysqladmin -u root password
+-------------------------------
+PORT SCAN
+
+https://www.yougetsignal.com/tools/open-ports/
+
+-------------------------------
+Remote xdebug
+https://popovserhii.com/debug-your-php-code-on-remote-linux-server-using-phpstorm-and-xdebug-with-its-port-forwarding-through-ssh
+
+ssh -R 9000:localhost:9000 darscrubs@184.168.125.174
+--------------------------------
+install phpmyadmin with nginx
+https://linuxize.com/post/how-to-install-phpmyadmin-with-nginx-on-ubuntu-18-04/
+
+sudo apt update
+sudo apt install phpmyadmin
+
+You can now add the following line to each domain’s server block where you want to access phpMyAdmin using: domain.com/phpmyadmin
+
+include snippets/phpmyadmin.conf;
+
+-------------------------------
+add sudo user
+
+sudo usermod -aG sudo newuser
+
+------------------------------
+check ssd or hdd
+
+lsblk -d -o name,rota
+	>>>>>>>>>>>>>>>>>>>>>> For SSD
+	NAME    ROTA
+	loop0      0
+	loop1      0
+	loop2      0
+	loop3      0
+	loop4      0
+	>>>>>>>>>>>>>>>>>>>>>>
+	
+	>>>>>>>>>>>>>>>>>>>>>> For HDD
+	NAME    ROTA
+	loop0      1
+	loop1      1
+	loop2      1
+	loop3      1
+	loop4      1
+	>>>>>>>>>>>>>>>>>>>>>>
+	
+check disk model
+lsblk -d -e 7 -o NAME,ROTA,DISC-MAX,MODEL
+	>>>>>>>>>>>>>>>>>
+	NAME    ROTA DISC-MAX MODEL
+	nvme0n1    0       0B Amazon Elastic Block Store
+	>>>>>>>>>>>>>>>>>
+------------------------------
+create symlink folder
+	sudo ln -s /home/darscrubs/Dropbox /home/darscrubs/public_html/master/pub/media/dropbox
+	
+	sudo ln -s /home/darscrubs/Dropbox /home/darscrubs/public_html/master/pub/media/dropbox
+------------------------------
+Install dropbox on ubuntu
+https://www.linuxbabe.com/ubuntu/install-dropbox-headless-ubuntu-server
+
+	Install Dropbox on Ubuntu Server
+	First, SSH into your Ubuntu Server. Then download Dropbox using the following command. It will be saved as dropbox-linux.tar.gz.
+
+	64 bit
+
+	wget https://www.dropbox.com/download?plat=lnx.x86_64 -O dropbox-linux.tar.gz
+	32 bit
+
+	wget https://www.dropbox.com/download?plat=lnx.x86 -O dropbox-linux.tar.gz
+	Create a directory in /opt and extract Dropbox to /opt/dropbox/.
+
+	sudo mkdir /opt/dropbox/
+
+	sudo tar xvf dropbox-linux.tar.gz --strip 1 -C /opt/dropbox
+	Install dependency packages for Dropbox.
+
+	sudo apt install libc6 libglapi-mesa libxdamage1 libxfixes3 libxcb-glx0 libxcb-dri2-0 libxcb-dri3-0 libxcb-present0 libxcb-sync1 libxshmfence1 libxxf86vm1
+	Now you can run the Dropbox daemon.
+
+	/opt/dropbox/dropboxd
+	It will ask you to visit a web address in order to link your Ubuntu server with your Dropbox account.
+
+	This computer isn't linked to any Dropbox account...
+	Please visit https://www.dropbox.com/cli_link_nonce?nonce=d8b8aear73fawe4fbd0154443 to link this device.
+	Copy and paste the link in your web browser, log into your Dropbox account and click the Connect button to link your Ubuntu server with your Dropbox account.
+
+	
+	https://www.dropbox.com/cli_link_nonce?nonce=9b1f2376055c21ec8f1799d111849765
+	
+	
+	Would you like to connect the computer ip-184-168-125-174.ip.secureserver.net to your Dropbox account (yanaivashkoweb@gmail.com)? If you didn’t request this, please click cancel.
+	
+	Once the link is complete, return to the terminal window and press Ctrl+C to temporarily stop Dropbox daemon because it by default runs in the foreground and you can’t run other commands. The Dropbox sync folder appears in your home directory.
+	
+	sudo nano /etc/systemd/system/dropbox.service
+	
+	[Unit]
+	Description=Dropbox Daemon
+	After=network.target
+
+	[Service]
+	Type=simple
+	User=darscrubs
+	ExecStart=/opt/dropbox/dropboxd
+	ExecStop=/bin/kill -HUP $MAINPID
+	Restart=always
+
+	[Install]
+	WantedBy=multi-user.target
+	
+	
+	
+	sudo systemctl start dropbox
+	sudo systemctl enable dropbox
+
+
+---------------------------------------
+convert CRLF to LF
+dos2unix 
+
+------------------------------
+remove npm module
+
+npm uninstall <name>
+npm uninstall -g <name>
+npm uninstall <name> --save also removes it from dependenciesin package.json
+
+----------------------------
+How do I provide a username and password to wget?
+https://askubuntu.com/questions/29079/how-do-i-provide-a-username-and-password-to-wget
+wget --user user --password pass http://example.com/
+
+		yanaivashkoweb@gmail.com
+		EvenDorksLicksQualms
+wget --user yanaivashkoweb@gmail.com --password EvenDorksLicksQualms https://dcee8e9227.nxcli.net/pub/static/app.tar.gz
+
+-------------------------------
+Could not get lock /var/lib/apt/lists/lock - open when apt install
+https://itsfoss.com/could-not-get-lock-error/
+
+sudo nano /etc/apt/apt.conf.d/20auto-upgrades
+	APT::Periodic::Update-Package-Lists "0";
+	APT::Periodic::Unattended-Upgrade "0";
+-------------------------------
+ps aux | grep -i apt
+

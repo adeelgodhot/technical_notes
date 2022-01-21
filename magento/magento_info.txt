@@ -427,3 +427,49 @@ E:\PHP\Darscrubs\site\composer\src\Composer\Installer\LibraryInstaller.php :: do
 E:\PHP\Darscrubs\site\composer\src\Composer\Downloader\DownloadManager.php :: $handleError :: 157 :: 189
 
 E:\PHP\Darscrubs\site\composer\src\Composer\Downloader\FileDownloader.php :: 81 :: download :: 213
+
+------------------------------------------------------------
+
+shared-catalog magento cloud
+
+E:\PHP\Darscrubs\master_cloud\live\vendor\magento\module-negotiable-quote-shared-catalog\Plugin\Catalog\Api\ProductRepositoryApplyFilter.php :: 88 :: afterGetById
+
+E:\PHP\Darscrubs\master_cloud\live\vendor\magento\module-negotiable-quote-shared-catalog\Plugin\Catalog\Api\ProductRepositoryApplyFilter.php :: 120 :: applyFilter
+
+--------------------------------------------
+sales order items in admin
+
+E:\PHP\Darscrubs\master_cloud\live\vendor\magento\module-sales\view\adminhtml\templates\order\view\items\renderer\default.phtml
+E:\PHP\Darscrubs\master_cloud\live\vendor\magento\module-sales\Block\Adminhtml\Order\View\Items\Renderer\DefaultRenderer.php :: 272 :: getColumnHtml
+Magento\Sales\Block\Adminhtml\Items\Column\Name
+E:\PHP\Darscrubs\master_cloud\live\vendor\magento\module-sales\view\adminhtml\templates\items\column\name.phtml
+
+E:\PHP\Darscrubs\master_cloud\live\vendor\magento\module-sales\Block\Adminhtml\Items\Column\DefaultColumn.php :: 69 :: getOrderOptions
+
+ if product is configurable, then this item is rendered instead of child item.
+ 
+-------------------------------
+product delete
+
+E:\PHP\Darscrubs\master_cloud\live\vendor\magento\module-staging\Model\Operation\Delete.php :: 119 :: execute
+E:\PHP\Darscrubs\master_cloud\live\vendor\magento\framework\EntityManager\EntityManager.php :: 127 :: delete
+E:\PHP\Darscrubs\master_cloud\live\vendor\magento\module-catalog\Model\ResourceModel\Product.php :: 369 :: delete
+E:\PHP\Darscrubs\master_cloud\live\vendor\magento\module-catalog\Model\ProductRepository.php :: 585 :: delete
+
+-------------------------------
+shipment save
+
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-shipping\Controller\Adminhtml\Order\Shipment\Save.php :: 85 :: _saveShipment
+	save shipment + order
+	>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	$transaction->addObject(
+            $shipment
+        )->addObject(
+            $shipment->getOrder()
+        )->save();
+	>>>>>>>>>>>>>>>>>>>>>>>>>>>
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\framework\DB\Transaction.php :: 122 :: save
+			foreach ($this->_objects as $object) {
+                $object->save();
+            }
+

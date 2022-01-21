@@ -1,3 +1,5 @@
+tutorial
+	https://amasty.com/blog/how-to-use-ui-components-in-magento-2/
 https://devdocs.magento.com/guides/v2.4/ui_comp_guide/concepts/ui_comp_uielement_concept.html
 
 The main difference between observe() and track() is that observe() is mainly used without first boolean argument. So it really converts properties to observable functions. It changes how property can be accessed. Otherwise track() uses property accessors. So property access remains the same.

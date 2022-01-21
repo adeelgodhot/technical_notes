@@ -1,0 +1,6 @@
+When to use a View Model?
+A view model should be used every time you have to pass data from storage or the other object to a template for rendering. It includes calculation logic, data lookups, object fetches and so on.
+
+A view model has to be used instead of a block, so your code will be less dependent on block changes in the Magento 2 framework.
+
+##Conclusion A view model in Magento 2 is a powerful mechanism that allows us to represent and provide data ready for rendering in a template. It provides a simple tool that is recommended to use every time a UI customization should be added.

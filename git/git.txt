@@ -1,6 +1,18 @@
 ---------------------------------------
 git ignore
 
+ignore pattern
+https://linuxize.com/post/gitignore-ignoring-files-in-git/
+
+Slash
+The slash symbol (/) represents a directory separator. The slash at the beginning of a pattern is relative to the directory where the .gitignore resides.
+If the pattern starts with a slash, it matches files and directories only in the repository root.
+
+If the pattern doesn’t start with a slash, it matches files and directories in any directory or subdirectory.
+
+If the pattern ends with a slash, it matches only directories. When a directory is ignored, all of its files and subdirectories are also ignored.
+------------------------------------------------------------------------------------------------------
+
 https://www.atlassian.com/git/tutorials/saving-changes/gitignore
 https://firedev.com/posts/git-ignore-deleted-files/
 git update-index --assume-unchanged .ruby-version
@@ -44,6 +56,7 @@ git remote set-url origin ...
 	https://github.com/settings/tokens
 	git remote add origin https://[USERNAME]:[NEW TOKEN]@github.com/[USERNAME]/[REPO].git
 	git remote set-url origin https://adeelgodhot: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@github.com/adeelgodhot/personal_data.git
+	git remote set-url origin https://adeelgod@bitbucket.org/lcarbshop/hermes.git
 
 https://docs.github.com/en/github/getting-started-with-github/managing-remote-repositories
 ----------------------
@@ -105,4 +118,6 @@ git reset --hard
 git push origin main --force
 
 ----------------------------	
+	How do I make Git ignore file mode (chmod) changes?
 	
+	git config core.fileMode false

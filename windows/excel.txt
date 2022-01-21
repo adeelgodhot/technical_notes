@@ -1,0 +1,74 @@
+1. Extract hyperlink from LInk using macro
+	https://spreadsheetplanet.com/extract-url-from-hyperlinks-excel/
+	
+	File/Optinos/Customize Ribbons/Developer
+	switch to macro: alt+F11
+2. select cells up to end
+	ctrl+shift+end
+3. STripe quotes
+	'843515364676'
+	
+4. LOOKUP
+
+	https://support.microsoft.com/en-us/office/xlookup-function-b7fd680e-6d10-43e6-84f9-88eae8bf5929
+	
+	=IF(VLOOKUP(Y2,'no-child'!B:B,1,0)!="#N/A","1","0")
+	
+	=XLOOKUP(Y2,'no-child'!B:B,1,0)
+	
+	=COUNTIF(A:B,C3)
+	A B C  RESULT
+	1   3  2
+	2
+	3
+	3
+	
+	
+	=XLOOKUP(L2,files!A1:files!A1941,files!A1:files!A1941)
+	=XLOOKUP(L2,files!A1:A1941,files!A1:A1941)
+	
+5 =ISNUMBER(SEARCH(D326,key!A$1))
+
+
+---------------------
+=GetFiles(L2, files!A$1:A$1941)
+=GetFiles(L944, files!A$1:A$1941)
+=GetFiles(L9101, files!A$1:A$1941)
+=GetBaseFile(L2, files!A$1:A$1941)
+
+
+
+Function GetFiles(fCell As Range, rng As Range) As String
+
+Dim result As String
+
+For Each c In rng.Cells
+    Dim i As Integer
+    i = InStr(1, c.Value, fCell.Value, 1)
+    
+    If i = 1 Then
+        result = result + "," + c.Value
+    End If
+Next
+
+GetFiles = result
+End Function
+
+Function GetBaseFile(fCell As Range, rng As Range) As String
+
+Dim result As String
+
+For Each c In rng.Cells
+    Dim i As Integer
+    i = InStr(1, c.Value, fCell.Value, 1)
+    
+    If i = 1 Then
+        GetBaseFile = c.Value
+        Exit Function
+    End If
+Next
+
+GetBaseFile = ""
+End Function
+
+

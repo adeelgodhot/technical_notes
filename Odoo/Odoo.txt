@@ -1,0 +1,7 @@
+Community version and EE version
+
+    major version and minor version
+	14,13,12....
+	saas-14.1, and saas-14.2 on GitHub
+	
+Runbot is Odoo's automated testing environment.

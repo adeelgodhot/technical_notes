@@ -1,0 +1,91 @@
+PHPFPM + NGINX
+
+1. Check port availability
+	sudo lsof -i:9005
+2. Configure xDebug:
+	zend_extension=xdebug.so
+	xdebug.idekey = PHPSTORM
+
+	xdebug.default_enable=1
+	xdebug.remote_autostart = 0
+	xdebug.remote_enable = 1
+	xdebug.remote_handler = dbgp
+	xdebug.remote_host = 127.0.0.1
+	xdebug.remote_log = /tmp/xdebug_remote.log
+	xdebug.remote_mode = req
+	xdebug.remote_port = 9005 # if you want to change the port you can change
+3. Configure PHP_IDE_CONFIG through Nginx
+	>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	location / {
+	  ...
+	  include /etc/nginx/fastcgi_params;
+	  fastcgi_param SCRIPT_FILENAME $document_root/index.php;
+	  fastcgi_param SCRIPT_NAME /index.php;
+	  # this line is important if want to use custom configuration name instead of site domain
+	  fastcgi_param PHP_IDE_CONFIG "serverName=print-machine";
+	  ...
+	}
+	>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+	ngix.cnf in magento root
+
+	>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	# PHP entry point for main application
+	location ~ ^/(index|get|static|errors/report|errors/404|errors/503|health_check)\.php$ {
+		try_files $uri =404;
+		fastcgi_pass   fastcgi_backend;
+		fastcgi_buffers 16 16k;
+		fastcgi_buffer_size 32k;
+		fastcgi_param PHP_IDE_CONFIG "serverName=print-machine";
+
+		fastcgi_param  PHP_FLAG  "session.auto_start=off \n suhosin.session.cryptua=off";
+		fastcgi_param  PHP_VALUE "memory_limit=756M \n max_execution_time=18000";
+		fastcgi_read_timeout 600s;
+		fastcgi_connect_timeout 600s;
+
+		fastcgi_index  index.php;
+		fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+		include        fastcgi_params;
+	}
+	
+	*** We will use this value serverName=print-machine when will configure PHPStorm.
+4. Restart the services:
+	sudo systemctl restart php-fpm
+	sudo systemctl restart nginx
+5. Enable SSH Port Forwarding
+	--- Make sure that Allow TCP forwarding is enabled in your SSH server settings:
+		vi /etc/ssh/sshd_config
+		look for AllowTcpForwarding yes
+	--- Restart the SSH service:
+		sudo systemctl restart sshd
+6. Local Machine’s steps
+	Click "File" > "Settings…" > "Languages & Frameworks" > "PHP" > "Debug". Under "Xdebug" change the "Debug port" to your desired port. In out case we leave it default 9000.
+	Click Servers next to Debug and create new Server configuration.
+	Name and Host must be the same as we write in Nginx configuration PHP_IDE_CONFIG "serverName=print-machine". 
+	Don’t forget enable file mapping: left side – path to local project, right side – path to code on the server.
+7. Create PHP Remote Debug
+	Click "Run" > "Edit configuration…", create new PHP Remote Debug. In Server select server which we created previously, IDE key (session id) should be PHPSTORM:
+8. Port forwarding
+	We will use SSH tunnel port forwarding for connecting to xDebug from PHPStorm.
+
+	
+	
+	Execute the following command in terminal (opening up git bash terminal):
+		ssh -R 9005:localhost:9000 <remote_user>@<remote_server_ip>
+		ssh -R 9000:localhost:9000 darscrubs@184.168.125.174
+		ssh -i magento.pem -R 9000:localhost:9000 ubuntu@15.185.117.186
+		
+		>>>>>>>>>>>>>>>>>>>>>
+		-R 9005:127.0.0.1:9000 opens up port 9005 as we set the server’s xDebug’s xdebug.remote_port to 9005 earlier, then forwarded to localhost:9000 where PHPStorm is listening
+		<remote_user>@<remote_server_ip> are the username and hostname of the server
+		>>>>>>>>>>>>>>>>>>>>>>
+		
+		sudo tcpdump -vv -nn -i any dst port 9000
+		
+		Nothing special you won’t see, it’ll open new session, connect to remote server and do port forwarding. Vualia!
+9. Now, to test if the SSH tunnel port forwarding works, run the following command inside your SSH prompt on remove server
+	sudo lsof -i:9005
+	COMMAND   PID          USER   FD   TYPE  DEVICE SIZE/OFF NODE NAME
+	sshd    30935 print-machine    9u  IPv6 7824135      0t0  TCP ip6-localhost:9005 (LISTEN)
+	sshd    30935 print-machine   10u  IPv4 7824136      0t0  TCP localhost.localdomain:9005 (LISTEN)
+10. Run debug like normal what you do on local.

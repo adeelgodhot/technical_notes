@@ -1,0 +1,5 @@
+e2esoft vcam6.4
+
+Nox player:  540 * 960
+e2esoft: 640 * 480
+

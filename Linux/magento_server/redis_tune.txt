@@ -1,0 +1,10 @@
+https://devdocs.magento.com/guides/v2.4/config-guide/redis/config-redis.html
+
+/etc/redis/redis.conf
+
+lazyfree-lazy-eviction yes
+lazyfree-lazy-expire yes
+lazyfree-lazy-server-del yes
+replica-lazy-flush yes
+
+lazyfree-lazy-user-del yes

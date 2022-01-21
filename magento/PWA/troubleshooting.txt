@@ -52,3 +52,18 @@ translation issue in OMAN Store
 
 php bin/spuo
 -------------------------------------------
+Product Base image issue when migrating to another server
+
+	it's to do with settings of etc/view.xml
+
+	In old server,
+		<image id="scandipwa_media_base" type="image">
+                <width>1024</width>
+            </image>
+	In new server,
+		<image id="scandipwa_media_base" type="image">
+                <width>650</width>
+            </image>
+	
+	Soution : 650 -> 1024
+	

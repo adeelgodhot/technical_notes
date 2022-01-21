@@ -1,0 +1,29 @@
+https://ecommerce.axtrics.com/lightning-fast-lamp-environment-on-aws-ec2-for-magento-2-3-with-varnish-haproxy/
+
+PHP Opcache
+	Opcache is a caching extension in PHP that stores precompiled scripts in shared memory. 
+	So, it eliminates the process of compilation on each request as it is reading the precompiled script bytecode from Memory
+
+	Let us first start by enabling Opcache. Open php.ini available at the following location:
+
+	/etc/php/7.2/fpm/php.ini
+
+	Remove Semicolon in front of opcache.enable=1
+
+	Following are some recommended PHP Opcache settings for Magento 2:
+
+	opcache.memory_consumption=512
+	opcache.interned_strings_buffer=48
+	opcache.max_accelerated_files=100000
+	opcache.revalidate_freq=4
+	
+	Save the file and restart PHP FPM
+
+	sudo systemctl reload php7.4-fpm.service
+	
+	
+	curl -sO http://gordalina.github.io/cachetool/downloads/cachetool.phar
+	Next, use that phar to send commands to your PHP-FPM daemon.
+
+	$ php cachetool.phar opcache:reset --fcgi=127.0.0.1:9000
+	$ php cachetool.phar opcache:reset --fcgi=/var/run/php5-fpm.sock

@@ -1,0 +1,5 @@
+1. Advanced  Bundling
+2. Moving JS to Bottom
+	Improved factors:
+		First Contentful Paint
+ 

@@ -10,3 +10,107 @@ https://devdocs.magento.com/guides/v2.4/frontend-dev-guide/responsive-web-design
 https://devdocs.magento.com/guides/v2.4/frontend-dev-guide/responsive-web-design/rwd-breakpoints.html
 
 https://inchoo.net/magento-2/css-media-queries-magento-2/
+
+-----------------------------
+@media-common - Why do we need to use this?
+
+https://magento.stackexchange.com/questions/112715/media-common-why-do-we-need-to-use-this
+
+Magento 2 follows Mobile First approach and @media-common = true was designed to define styles that are base (mobile) 
+and must be present in styles-m.css. If you drop this declaration styles will be outputted both to styles-m.css and styles-l.css files.
+
+Because not using media-common:true will output the style to both styles-l.less and styles-m.less. 
+While with using media-common:true it will output style in style-m but it will be actually applied to both mobile and desktop!
+
+And this follows the magento claim for a mobile first design, any styles in the .media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {} 
+media query will not load in styles-m.css, reducing the weight of the total css files.
+-----------------------------
+https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/responsive-web-design/rwd_css.html
+
+Mobile first
+In the Blank and Luma themes, a “mobile first” approach is used. The order is:
+
+Mobile
+Tablet
+Desktop
+This means that the styles for mobile devices (screen width less than 768px) are extended by the styles for the higher breakpoints. As the result, the extra styles are never loaded when a store is viewed on a mobile device.
+
+The mobile and desktop styles are defined in separate files:
+
+styles-l.less is used to generate desktop-specific styles (768px and higher).
+styles-m.less is used to generate basic and mobile-specific styles.
+------------------------------
+The approach implemented in the Magento UI library, uses @media-common style group separation 
+and .media-width() mixins which can be used in any .less file in a theme, as many times as needed, 
+but it is invoked only once, in lib/web/css/source/lib/_responsive.less. The resulting styles-m.css 
+and styles-l.css both have only one call of each media query with all the rules there, instead of multiple calls for the same query.
+
+Media queries @media-common, max screen__s and max screen__m will be added to styles-m.css.
+Media queries min screen__m and min screen__l will be added to styles-l.css
+------------------------------
+
+
+& when (@media-target = 'mobile'), (@media-target = 'all') {
+
+    @media only screen and (max-width: @screen__m) {
+        .media-width('max', (@screen__m + 1));
+    }
+
+    @media only screen and (max-width: (@screen__m - 1)) {
+        .media-width('max', @screen__m);
+    }
+
+    @media only screen and (max-width: (@screen__s - 1)) {
+        .media-width('max', @screen__s);
+    }
+
+    @media only screen and (max-width: (@screen__xs - 1)) {
+        .media-width('max', @screen__xs);
+    }
+
+    @media only screen and (max-width: (@screen__xxs - 1)) {
+        .media-width('max', @screen__xxs);
+    }
+
+    @media all and (min-width: @screen__s) {
+        .media-width('min', @screen__s);
+    }
+
+}
+
+//
+//  Style groups for 'desktop' devices
+//  ---------------------------------------------
+
+& when (@media-target = 'desktop'), (@media-target = 'all') {
+
+    @media all and (min-width: @screen__m),
+    print {
+        .media-width('min', @screen__m);
+    }
+
+    @media all and (min-width: (@screen__m + 1)),
+    print {
+        .media-width('min', (@screen__m + 1));
+    }
+
+    @media all and (min-width: @screen__l),
+    print {
+        .media-width('min', @screen__l);
+    }
+
+    @media all and (min-width: @screen__xl),
+    print {
+        .media-width('min', @screen__xl);
+    }
+}
+
+
+
+& when (@media-common = true) {
+    .adobe-login-container {
+	}
+}
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+}

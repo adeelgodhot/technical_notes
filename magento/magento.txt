@@ -88,6 +88,28 @@ https://www.minitool.com/backup-tips/windows-defender-not-turning-on.html
 	$logger = new \Zend\Log\Logger();
 	$logger->addWriter($writer);
 	$logger->info('Your text message');
+	
+	
+	Psr\Log\LoggerInterface
+	-------------------------------
+	magento logging
+	https://inchoo.net/magento-2/magento-2-logging/
+	
+	$this->_logger-> emergency($message, array $context = array());  //saved in var/log/system.log
+ 
+	$this->_logger-> alert($message, array $context = array())  //saved in var/log/system.log
+	 
+	$this->_logger-> critical($message, array $context = array())  //saved in var/log/system.log
+	 
+	$this->_logger-> error($message, array $context = array())  //saved in var/log/system.log
+	 
+	$this->_logger-> warning($message, array $context = array())  //saved in  var/log/system.log
+	 
+	$this->_logger-> notice($message, array $context = array())  //saved in var/log/system.log
+	 
+	$this->_logger-> info($message, array $context = array())  //saved in var/log/system.log
+	 
+	$this->_logger-> debug($message, array $context = array())  //saved in var/log/debug.log (does not work in production mode)
 ***************
 
 *******************************************
@@ -107,11 +129,13 @@ https://www.minitool.com/backup-tips/windows-defender-not-turning-on.html
 	     
 	     rm -rf pub/static/adminhtml/ && rm -rf pub/static/_cache/ && rm -rf pub/static/frontend/ && rm -rf pub/static/frontend/deployed_version.txt && rm -rf var/view_preprocessed/
 		 rm -rf pub/static/frontend/Scandiweb/ && rm -rf var/view_preprocessed/pub/static/frontend/Scandiweb
+		 rm -rf pub/static/frontend/scandipwa/ && rm -rf var/view_preprocessed/pub/static/frontend/scandipwa
 		 rm -rf pub/static/frontend/Lenehans/ && rm -rf var/view_preprocessed/pub/static/frontend/Lenehans
 		 rm -rf pub/static/frontend/appmedia/ && rm -rf var/view_preprocessed/pub/static/frontend/appmedia
 		 rm -rf pub/static/frontend/Danielschaaf/ && rm -rf var/view_preprocessed/pub/static/frontend/Danielschaaf
 		 rm -rf pub/static/frontend/MageBig/martfury_lenehans/ && rm -rf var/view_preprocessed/pub/static/frontend/MageBig/martfury_lenehans
 		 rm -rf pub/static/frontend/Pearl/weltpixel_custom_luxushair && rm -rf var/view_preprocessed/pub/static/frontend/Pearl/weltpixel_custom_luxushair
+		 rm -rf pub/static/frontend/Pearl/weltpixel_custom && rm -rf var/view_preprocessed/pub/static/frontend/Pearl/weltpixel_custom
 		 rm -rf pub/static/frontend/Smartwave/porto_child && rm -rf var/view_preprocessed/pub/static/frontend/Smartwave/porto_child
 		 rm -rf pub/static/frontend/Olegnax/a2_child && rm -rf var/view_preprocessed/pub/static/frontend/Olegnax/a2_child
 		 rm -rf pub/static/frontend/Mgs/ninth && rm -rf var/view_preprocessed/pub/static/frontend/Mgs/ninth
@@ -136,12 +160,15 @@ php bin/magento cache:flush
 	  php bin/magento setup:static-content:deploy -f en_US ar_SA
 	  php bin/magento setup:static-content:deploy -f en_GB -t appmedia/holfordirect
 	  php bin/magento setup:static-content:deploy -f en_US
-	  magento setup:static-content:deploy -f en_US ar_SA -t Scandiweb/pwa
+	  php bin/magento setup:static-content:deploy -f en_US ar_SA -t Scandiweb/pwa
+	  php bin/magento setup:static-content:deploy -f en_US ar_SA -t scandipwa/calvo-app
 	  magento setup:static-content:deploy -f en_US en_IE -t Lenehans/lenehans
 	  magento setup:static-content:deploy -f de_DE -t Danielschaaf/crunchyx
 	  magento setup:static-content:deploy -f en_IE -t MageBig/martfury_lenehans
 	  magento setup:static-content:deploy -f nb_NO -t Pearl/weltpixel_custom_luxushair
-	  magento setup:static-content:deploy -f en_US -t Olegnax/a2_child
+	  php bin/magento setup:static-content:deploy -f en_US -t Pearl/weltpixel_custom
+	  php bin/magento setup:static-content:deploy -f -t Pearl/weltpixel_custom
+	  php bin/magento setup:static-content:deploy -f en_US -t Olegnax/a2_child
 	  magento setup:static-content:deploy -f en_GB -t Mgs/ninth
 	  
 	  php bin/magento se:s:d -f en_IE en_US --theme Magento/backend --area adminhtml
@@ -172,6 +199,7 @@ INSERT INTO setup_module VALUES('Mageplaza_DeleteOrders','1.0.0','1.0.0');
 		  https://devdocs.magento.com/guides/v2.4/config-guide/cli/config-cli-subcommands-static-view.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=static%20deploy
 	      ** php bin/magento setup:static-content:deploy en_GB --exclude-theme Magento/backend
 		  ** php bin/magento setup:static-content:deploy -f de_DE --theme Magento/backend --area adminhtml
+		  php bin/magento setup:static-content:deploy -f --theme Magento/backend --area adminhtml
 		  ** php bin/magento setup:static-content:deploy --theme Magento/luma --area frontend --no-javascript --no-misc --no-html-minify --no-html --no-images
 		  ** php bin/magento setup:static-content:deploy -f en_GB --exclude-area adminhtml
 		  ** php bin/magento setup:static-content:deploy -f en_GB --theme Pearl/weltpixel_custom --area frontend --no-css --no-less --no-images --no-fonts --no-html --no-misc --no-html-minify
@@ -179,11 +207,26 @@ INSERT INTO setup_module VALUES('Mageplaza_DeleteOrders','1.0.0','1.0.0');
 	  9. php bin/magento maintenance:disable
 	  10. purge the varnish cache
 *******************************************
+https://devdocs.magento.com/guides/v2.4/config-guide/cli/config-cli-subcommands-config-mgmt-set.html
 
    config 
    php bin/magento config:set dev/js/minify_files 1
+   php bin/magento config:show dev/js/minify_files
+   
+   php bin/magento config:set dev/css/minify_files 1
+   php bin/magento config:show dev/css/minify_files
+   
+   php bin/magento config:set dev/css/merge_css_files 1
+   php bin/magento config:show dev/css/merge_css_files
+   
+   
+   php bin/magento config:show web/secure/base_url
+   
    php bin/magento setup:store-config:set --base-url="http://trade-technik.de/"
    php bin/magento setup:store-config:set --base-url-secure="http://trade-technik.de/"
+   
+   bin/magento config:sensitive:set [--scope="..."] [--scope-code="..."] path value
+
 
    ---------------------------------
    select scope,scope_id, path, value from core_config_data where path like '%merge%';
@@ -345,6 +388,10 @@ A. Node Install
 	2. apt-get install -y nodejs
 	3. apt-get install -y build-essential
 	4. node --version
+	
+	1. curl -sL https://rpm.nodesource.com/setup_12.x | sudo bash -
+	2. sudo yum install nodejs
+	
 B. Grunt Install
 	1. npm install -g grunt-cli
 	From the <Magento_root> directory, copy and paste the contents of the following files:
@@ -1133,7 +1180,10 @@ create admin user
 bin/magento admin:user:create
 
 php bin/magento admin:user:create --admin-user=adeel --admin-password=admin123! --admin-email=adeelgod@hotmail.com --admin-firstname=Adeel --admin-lastname=G
+php bin/magento admin:user:create --admin-user=mage --admin-password=admin123BA --admin-email=adeelgod@hotmail.com --admin-firstname=Mage --admin-lastname=G
 php bin/magento admin:user:create --admin-user=yana --admin-password=admin123! --admin-email=yanaivashkoweb@gmail.com --admin-firstname=Y --admin-lastname=I
+
+php bin/magento admin:user:create --admin-user=mage --admin-password=admin123 --admin-email=adeelgod@hotmail.com --admin-firstname=Mage --admin-lastname=G
 ---------------------------
 language pack
 
@@ -1237,6 +1287,7 @@ Step 4: Refresh the page.
 get stock table linked to website
 
 SELECT `inventory_stock_sales_channel`.`stock_id` FROM `inventory_stock_sales_channel` WHERE (type = 'website') AND (code = 'diydirect_ie')
+SELECT `inventory_stock_sales_channel`.`stock_id` FROM `inventory_stock_sales_channel` WHERE (type = 'website') AND (code = 'base')
 ----------------------------
 default stock
 
@@ -1385,6 +1436,13 @@ How to add the attribute to customer address
 	('adminhtml_customer_address',19),
 	('adminhtml_customer_address',20),
 	>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+---------------------------------------
+what is base, small, thumbnail , swtch images?
+
+https://www.ostraining.com/blog/magento/magento-images/
+
+small: product list in category page or search page
+thumbnail: gallery image of products or image in the shopping cart
 ----------------------------------------------
 	color swatch
 	
@@ -1399,7 +1457,295 @@ How to add the attribute to customer address
 		>> value_id=1958, value="WHITE"
 	SELECT * FROM eav_attribute_option_swatch WHERE option_id=27
 		>> swatch_id=13, type=3, value="#ffffff"
+	
+	export color swatch
+	
+	    SELECT s.*,m.value as color FROM eav_attribute_option_swatch as s left join eav_attribute_option_value as m ON s.option_id=m.option_id
+        inner join (SELECT * FROM eav_attribute_option WHERE attribute_id=93) as ms ON ms.option_id=s.option_id order by m.value asc
 ----------------------------------------------
 Import / Export Products
 
 https://firebearstudio.com/blog/magento-2-import-and-export-guide-list.html
+https://firebearstudio.com/blog/improved-import-magento-2-extension-manual.html
+
+googlesheet setup
+https://firebearstudio.com/blog/how-to-export-magento-2-to-google-sheets.html
+
+--------------------------------
+theme version
+
+composer.json
+	>>>>>>>>>>>>>>>>>>
+		"type": "magento2-theme",
+		"version": "101.10.17",
+    >>>>>>>>>>>>>>>>>>
+	
+--------------------------------
+install mageplaza german language pack
+
+https://www.mageplaza.com/magento-2-german-language-pack.html
+
+composer require mageplaza/magento-2-german-language-pack:dev-master
+php bin/magento setup:static-content:deploy de_DE
+
+-----------------------------------
+magefan blog
+
+https://magefan.com/blog/magento-2-blog-extension-documentation?all_documentation_print=1#blog/magento2-blog-extension-installation
+
+
+-----------------------------------
+image delete / image remove / correctly
+
+    You should set the correct of store view before deleting the image.
+---------------------------------------
+SVG to background url
+
+--------------------------------------------
+How to get the parent product from child in configurable product
+
+	https://magento.stackexchange.com/questions/277877/how-to-get-parent-product-data-from-parent-id-for-configurable-products
+
+	use \Magento\Catalog\Model\ProductRepository;
+	use \Magento\ConfigurableProduct\Model\Product\Type\Configurable;
+	
+	public function __construct(ProductRepository $_productloader,Configurable $configurable) {
+		$this->configurable=$configurable;
+		$this->_productloader=$_productloader;
+	}
+	
+	$parentId=$this->configurable->getParentIdsByChild($productId);
+	$parentProductData=$this->_productloader->getById($parentId[0]);
+	
+How to get child products
+	$_product->getTypeInstance()->getUsedProductIds($_product);
+Delete product
+	$this->productRepository->delete($product);
+	
+How to get all configurable products
+	https://magento.stackexchange.com/questions/317553/how-to-get-enabled-configurable-products-which-has-associate-products-without-in
+	
+	$state->setAreaCode('frontend');
+	$productCollection = $objectManager->create('Magento\Catalog\Model\ResourceModel\Product\CollectionFactory');
+	$collection = $productCollection->create();
+	$collection->setFlag('has_stock_status_filter', true);
+	$collection =
+			$collection->addAttributeToSelect('*')
+	->addAttributeToSort('created_at', 'DESC')
+	->joinField('qty',
+			'cataloginventory_stock_item',
+			'qty',
+			'product_id=entity_id',
+			'{{table}}.stock_id=1',
+			'left'
+		)->joinTable('cataloginventory_stock_item', 'product_id=entity_id', ['stock_status' => 'is_in_stock'])
+		->addAttributeToSelect('stock_status')
+		->addFieldToFilter('stock_status', ['eq' => 0])
+		->addAttributeToFilter('status', \Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED)
+		->addAttributeToFilter('type_id', ['eq' => 'configurable'])->load();
+
+	foreach ($collection as $product) {
+		echo 'Config Product SKU: '.$product->getSku()."\n\n";
+	}
+--------------------------------------------
+attribute used for config products
+
+	SELECT `main_table`.* FROM `catalog_product_super_attribute` AS `main_table` WHERE (((((`product_id` = '66369'))))) ORDER BY position  ASC;
+	catalog_product_super_attribute_label
+		product_suer_attribute_id store_id value
+		
+	SELECT `entity`.`sku`, `product_entity`.`entity_id` AS `product_id`, `attribute`.`attribute_code`, `entity_value`.`value` AS `value_index`, `attribute_label`.`value` AS `super_attribute_label` FROM `catalog_product_super_attribute` AS `super_attribute`
+ INNER JOIN `catalog_product_entity` AS `product_entity` ON product_entity.row_id = super_attribute.product_id AND (product_entity.created_in <= 1 AND product_entity.updated_in > 1)
+ INNER JOIN `catalog_product_super_link` AS `product_link` ON product_link.parent_id = super_attribute.product_id
+ INNER JOIN `eav_attribute` AS `attribute` ON attribute.attribute_id = super_attribute.attribute_id
+ INNER JOIN `catalog_product_entity` AS `entity` ON entity.entity_id = product_link.product_id AND (entity.created_in <= 1 AND entity.updated_in > 1)
+ INNER JOIN `catalog_product_entity_int` AS `entity_value` ON entity_value.attribute_id = super_attribute.attribute_id AND entity_value.store_id = 0 AND entity_value.row_id = entity.row_id
+ LEFT JOIN `catalog_product_super_attribute_label` AS `attribute_label` ON super_attribute.product_super_attribute_id = attribute_label.product_super_attribute_id AND attribute_label.store_id = 0
+ LEFT JOIN `eav_attribute_option` AS `attribute_option` ON attribute_option.option_id = entity_value.value WHERE (super_attribute.product_id = 66369) AND (attribute.attribute_id = '93') ORDER BY `attribute_option`.`sort_order` ASC
+
+	E:\PHP\Darscrubs\master_cloud\live\vendor\magento\module-configurable-product\Model\Product\Type\VariationMatrix.php :: 47
+	E:\PHP\Darscrubs\master_cloud\live\vendor\magento\module-configurable-product\Model\Product\Type\Configurable\Attribute.php
+	E:\PHP\Darscrubs\master_cloud\live\vendor\magento\module-configurable-product\Model\ResourceModel\Product\Type\Configurable\Attribute\Collection.php
+	E:\PHP\Darscrubs\master_cloud\live\vendor\magento\module-configurable-product\Model\ResourceModel\Product\Type\Configurable.php
+	E:\PHP\Darscrubs\master_cloud\live\vendor\magento\module-configurable-product\Model\AttributeOptionProvider.php :: 53
+	
+	
+--------------------------------------------
+How to add new Option to drop down attributes magento2
+
+https://magento.stackexchange.com/questions/232686/how-to-add-new-option-to-drop-down-attributes-magento2
+	
+	protected $eavAttributeFactory;
+	protected $attributeOptionManagement;
+
+	public function __construct(
+		\Magento\Eav\Model\Entity\AttributeFactory $eavAttributeFactory,
+		\Magento\Eav\Api\AttributeOptionManagementInterface $attributeOptionManagement
+	) {
+
+		$this->eavAttributeFactory = $eavAttributeFactory;
+		$this->attributeOptionManagement = $attributeOptionManagement;
+	}
+	
+	$magentoAttribute = $this->eavAttributeFactory->create()->loadByCode('catalog_product', 'test_attribute');
+
+	$attributeCode = $magentoAttribute->getAttributeCode();
+	$magentoAttributeOptions = $this->attributeOptionManagement->getItems(
+		'catalog_product',
+		$attributeCode
+	);
+	$attributeOptions = ['Test2', 'Test3'];
+	
+	if(count($newOptions)) {
+		$magentoAttribute->setOption($newOptions)->save();
+	}
+	
+--------------------------------------------------------
+Add command
+
+https://devdocs.magento.com/guides/v2.4/extension-dev-guide/cli-cmds/cli-howto.html
+	1. Create a Command class (the recommended location is <your component root dir>/Console/Command).
+	2. Declare your Command class in Magento\Framework\Console\CommandListInterface and configure the command name using dependency injection (<your component root dir>/etc/di.xml):
+		<type name="Magento\Framework\Console\CommandListInterface">
+			<arguments>
+				<argument name="commands" xsi:type="array">
+					<item name="reindex" xsi:type="object">Magento\Indexer\Console\Command\IndexerReindexCommand</item>
+				</argument>
+			</arguments>
+		</type>
+		
+---------------------------------------------------------
+Shared catalogs
+
+	https://docs.magento.com/user-guide/catalog/catalog-shared.html
+	
+--------------------------------
+status vs state in order
+
+https://magecomp.com/blog/difference-magento-order-status-order-state-magento-2/
+https://docs.magento.com/user-guide/sales/order-status.html
+	>>>>>>>>>>>>>>>>>>>>>>>>>
+	Remember that you can create any number of order statuses but not the order states.
+	>>>>>>>>>>>>>>>>>>>>>>>>>
+	
+	>>>>>>>>>>>>>>>>>>>>>>>>>
+	Following list of order states are predefined by the Magento to understand and process orders in a defined flow,
+
+	New
+	Processing
+	Complete
+	Pending Payment
+	Canceled
+	Closed
+	Payment Review
+	On hold
+	
+	>>>>>>>>>>>>>>>>>>>>>>>>>
+-------------------------------------------
+Now let’s look at how to assign and unassign an order status to an ordered state.
+
+	1. From the sidebar of the admin login panel, go to Stores>Settings>Order Status.
+
+	2. Next, to Create New Order Status, you will find Assign Status to State. Click on that button.
+------------------------------------------
+order state checker
+
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-sales\Model\ResourceModel\Order.php :: 176 :: save
+		>>>>>>>>>>>>>>>>
+		$this->stateHandler->check($object);
+		>>>>>>>>>>>>>>>>
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-sales\Model\ResourceModel\Order\Handler\State.php :: 24 :: check
+-----------------------------------------
+events
+
+https://www.mageplaza.com/magento-2-module-development/magento-2-events.html
+
+--------------------------------------
+	import additionl images
+	
+	If importing multiple images for a single sku, insert the images in a column named additional_images (add the column if not already added), separated by commas: image02.jpg,image03.jpg
+	
+---------------------------------------
+Block IPs 
+
+https://bobcares.com/blog/magento-block-ip-address/
+	>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	$banned = array('129.xxx.1.1');
+	if(in_array($_SERVER['REMOTE_ADDR'], $banned))
+	{
+	exit();
+	}
+	>>>>>>>>>>>>>>>>>>>>>>>
+	htaccess
+	<Directory>
+	order deny,allow
+	deny from  125.xx.10x.11x
+	</Directory>
+	>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	
+----------------------------
+lazyload for div using weltpixel lazy load
+
+NOTE: please set "event" to special value like "scroll.video" other than "special.lazyload"
+
+	require(['jquery', 'WeltPixel_LazyLoading/js/jquery_lazyload'],function ($) {
+		$(".wistia_embed").lazyload({
+			effect: "fadeIn",
+			effectspeed: 0,
+			imageloader: "https://staging-vdt2zeq-62gm6c43tjfa4.eu-6.magentosite.cloud/media/logo/stores/1/Logo.png",
+			threshold: 0,
+			event: "scroll.video",
+			appear: function (elements_left, settings) {
+				alert('bbb');
+			}
+        });
+-------------------------------------
+Add meta for robots
+
+	<head>
+        <meta name="robots" content="INDEX,FOLLOW"/>
+    </head>
+	
+--------------------------------------
+Get product collection with stock status
+	cataloginventory/options/show_out_of_stock
+
+	E:\PHP\Sami\local\vendor\magento\module-catalog-inventory\Model\AddStockStatusToCollection.php
+			$this->stockHelper->addIsInStockFilterToCollection($productCollection);
+				>>>>>>>>>>>>>>>>>>>>>>
+				$stockFlag = 'has_stock_status_filter';
+				if (!$collection->hasFlag($stockFlag)) {
+					$isShowOutOfStock = $this->scopeConfig->getValue(
+						\Magento\CatalogInventory\Model\Configuration::XML_PATH_SHOW_OUT_OF_STOCK,
+						\Magento\Store\Model\ScopeInterface::SCOPE_STORE
+					);
+					$resource = $this->getStockStatusResource();
+					$resource->addStockDataToCollection(
+						$collection,
+						!$isShowOutOfStock
+					);
+					$collection->setFlag($stockFlag, true);
+				}
+				>>>>>>>>>>>>>>>>>>>>>>>>
+				
+-----------------------------------------------------
+Unit Test
+
+	php bin/magento dev:tests:run unit
+
+	This one liner will let you run an individual test
+	
+		a. create symlink
+			ln -s ./vendor/phpunit/phpunit/phpunit ./vendor/bin/phpunit
+	
+		php vendor/bin/phpunit -c dev/tests/unit/phpunit.xml.dist path/to/Test/Unit/SomeTest.php
+	
+		php ./vendor/bin/phpunit -c dev/tests/unit/phpunit.xml.dist vendor/magento/module-cms/Test/Unit/Controller/Page/PostDataProcessorTest.php
+	
+		php ./vendor/phpunit/phpunit/phpunit -c dev/tests/unit/phpunit.xml.dist vendor/magento/module-cms/Test/Unit/Controller/Page/PostDataProcessorTest.php
+		php ./vendor/phpunit/phpunit/phpunit -c dev/tests/unit/phpunit.xml.dist vendor/magento/module-sales/Test/Unit/Model/OrderTest.php
+		php ./vendor/phpunit/phpunit/phpunit -c dev/tests/unit/phpunit.xml.dist vendor/magento/module-sales/Test/Unit/Plugin/Model/Service/Invoice/AddTransactionCommentAfterCaptureTest.php
+		
+------------------------------------------------------
+set no folow for link
+	<a rel="nofollow"></a>

@@ -5,6 +5,8 @@ https://www.mexbs.com/magento-blog/developing-on-the-magento-cloud-a-step-by-ste
 https://cloud.magento.com/project/3217/develop/devworkflow
 CLI : https://devdocs.magento.com/cloud/env/environments-start.html
 https://devdocs.magento.com/cloud/reference/cli-ref-topic.html
+https://devdocs.magento.com/cloud/project/magento-app-properties.html (magento app yaml)
+https://devdocs.magento.com/guides/v2.4/reference/cli/magento-cloud.html (All CLI Commands)
 https://devdocs.magento.com/cloud/live/live-sanity-check.html (How to build)
 https://devdocs.magento.com/cloud/live/sens-data-over.html (Configuration management for store settings, app/etc/config.php)
 https://devdocs.magento.com/cloud/howtos/install-components.html (Install & Upgrade extension)
@@ -12,6 +14,12 @@ https://devdocs.magento.com/cloud/project/project-webint-snap.html#restore-snaps
 https://devdocs.magento.com/cloud/project/project-patch.html (Apply Patch)
 https://devdocs.magento.com/cloud/deploy/cloud-deployment-process.html (Optimize development)
 https://devdocs.magento.com/cloud/deploy/scenario-based-deployment.html (Scenario-based deployment)
+https://support.magento.com/hc/en-us/articles/360003254334-Create-database-dump-on-Adobe-Commerce-on-cloud-infrastructure (DB Dump, vendor/bin/ece-tools db-dump)
+https://devdocs.magento.com/cloud/reference/ece-tools-reference.html (ece-tools)
+https://github.com/magento-notes/magento2-cloud-developer-notes/blob/master/7.%20Development.md (overview tutorial)
+https://devdocs.magento.com/cloud/project/magento-env-yaml.html
+https://support.magento.com/hc/en-us/articles/360050422532--magento-env-yaml-changes-not-shown-in-env-php-after-deploy (.magento.env.yaml changes not shown in env.php after deploy)
+https://devdocs.magento.com/cloud/project/project-multi-sites.html ( multiple-websites )
 
 	magento-cloud project:list
 	magento-cloud environment:list (It is important to use the magento-cloud environment:list command because it displays environment hierarchies, whereas the git branch command does not.)
@@ -27,6 +35,7 @@ https://devdocs.magento.com/cloud/deploy/scenario-based-deployment.html (Scenari
 		git pull origin <environment-ID>
 	(Optional) Create a snapshot of the environment as a backup
 		magento-cloud snapshot:create -e <environment-ID>
+		magento-cloud snapshot:create -e master
 
 Merge a branch
 	After completing development, you can merge this branch to the parent:
@@ -49,6 +58,8 @@ Merge a branch
 2. Login 
    magento-cloud auth:api-token-login
    
+   API Token: a8db6fee827bc46deeafec463eb3ba4ec13971ad for darscrubs
+   
    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
    Please enter an API token:
 	>
@@ -67,9 +78,15 @@ Merge a branch
 4. Register SSH key for remote connection
 	eval "$(ssh-agent -s)"
 	ssh-add ~/.ssh/2/id_rsa
+	ssh-add -D ~/.ssh/2/id_rsa
+	ssh-add -D ~/ssh_cloud/id_rsa
+	
+	ssh-add /var/www/darscrubs/ssh/adeel/id_rsa
+	ssh-add ~/ssh_cloud/id_rsa_adeel
 5. Update Cloud environments with a new SSH key
 	After you add an SSH key, redeploy each active Cloud environment to upload the new key
 	magento-cloud redeploy --project 62gm6c43tjfa4 --environment b2b
+	magento-cloud redeploy --project 62gm6c43tjfa4 --environment master
 6. Enter to SSH & extract DB details
 	magento-cloud ssh
 	php -r 'print_r(json_decode(base64_decode($_ENV["MAGENTO_CLOUD_RELATIONSHIPS"]))->database);'
@@ -104,6 +121,7 @@ Merge a branch
 	composer --no-ansi --no-interaction install --no-progress --prefer-dist --optimize-autoloader
 8. Create a snapshot of the environment.
 	magento-cloud snapshot:create -e b2b
+	magento-cloud snapshot:create -e master
 		>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		Creating a snapshot of b2b
 		Waiting for the activity oykszfc64r2na (yanaivashkoweb created a backup of b2b):
@@ -138,4 +156,176 @@ Merge a branch
 	https://devdocs.magento.com/cloud/project/project-webint-snap.html
 	magento-cloud snapshot:list
 	magento-cloud snapshot:restore 7ow3aswqfzla7wplmbaibynmca
+	magento-cloud snapshot:restore xmjpiiaydly662n6ybqgdzpgxq
+14. clear composer cache
+	magento-cloud project:clear-build-cache [-p|--project PROJECT] [--host HOST]
+	magento-cloud project:clear-build-cache -p 62gm6c43tjfa4
+	
+15 DB Dump
+		magento-cloud db:dump
+16. Create configuration file from CLI
+	https://devdocs.magento.com/cloud/project/magento-env-yaml.html
+17  set variable
+	If you need to change the Admin URL after installation, 
+	use the "magento-cloud variable:set" command-line tool to change the URL. For example, 
+	to set the Admin URL to magento_A8v10, use:
+	
+	magento-cloud variable:set ADMIN_URL magento_A8v10 -e master
+18 create .magento.env.yaml
+	ssh 62gm6c43tjfa4-master-7rqtwti--mymagento@ssh.eu-6.magento.cloud "php vendor/bin/ece-tools cloud:config:create '{\"stage\":{\"build\":{\"SKIP_SCD\":true}, \"deploy\":{\"SKIP_SCD\":true}}}'"
+	php vendor/bin/ece-tools cloud:config:create '{"stage":{"build":{"SKIP_SCD":true}, "deploy":{"SKIP_SCD":true}}}'
+
+19. Installing and using Composer 2
+	https://devdocs.magento.com/cloud/project/magento-app-properties.html#installing-and-using-composer-2
+	
+	>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	To install and use Composer 2.x in your Starter and Pro projects, you need to make three changes to your .magento.app.yaml configuration:
+
+	Remove composer as the build: flavor: and add none. This change prevents Cloud from using the default 1.x version of Composer to run build tasks.
+	Add composer/composer: '^2.0' as a php dependency to install Composer 2.x.
+	Add the composer build tasks to a build hook to run the build tasks using Composer 2.x.
+	Use the following configuration fragments in your own .magento.app.yaml configuration:
+		====================================================
+			# 1. Change flavor to none.
+			build:
+				flavor: none
+
+			# 2. Add composer ^2.0 as a php dependency.
+			dependencies:
+				php:
+					composer/composer: '^2.0'
+
+			# 3. Add a build hook to run the build tasks using Composer 2.x.
+			hooks:
+				build: |
+					set -e
+					composer --no-ansi --no-interaction install --no-progress --prefer-dist --optimize-autoloader
+		======================================================
+
+	>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+20. upgrade redis
+	https://devdocs.magento.com/cloud/project/services-redis.html
+	https://devdocs.magento.com/cloud/project/services.html
+	https://magento.stackexchange.com/questions/322434/how-to-upgrade-redis-and-elasticsearch-in-magento-cloud 
+
+	It depends if you're on Magento Starter or Magento Pro.
+
+	Updating the services.yaml file will update your development environments, and production if you're using Magento Starter. 
+	That will let you verify that your Magento code and any custom extensions play nicely with the new versions.
+
+	If you're on Magento Pro, then to update your staging and production environments, open a support ticket and the support team can take care of it. 
+	Redis should be easy, but Elasticsearch will take some coordination as it will need to have the index rebuild after the upgrade. The support team can help schedule that with you.	
+	
+21. check services
+	magento-cloud services
+22 Force a redeployment
+	Make a commit (this might be an empty commit, although we do not recommend it) and push it to the server to trigger redeploy:
+
+	git commit --allow-empty -m "<message>" && git push <origin> <branch>
+	
+	git commit --allow-empty -m "force redeployment" && git push magento master
+	git commit --allow-empty -m "force redeployment" && git push magento Staging
+23. enter to mysql cli
+    mgc  db:sql
+24. xdebug on branch
+	https://www.solutiontutorials.com/development/configure-xdebug-magento-cloud/#magento_cloud_xdebug
+25. Delete the environment branch
+	https://devdocs.magento.com/cloud/env/environments-start.html
+	
+	magento-cloud environment:delete <environment-ID>
+	magento-cloud environment:delete dev
+	magento-cloud environment:delete staging
+	magento-cloud environment:delete Staging
+26. ssh key gen
+	ssh-keygen -t rsa -b 4096 -C "adeelgod@hotmail.com"
+27. Shared access
+	Dear Adeel,
+
+	Abdulrahman Alselim has invited you to share their Magento Commerce account
+
+	To access shared sections, login to your account and click the "shared accounts" link on the top right-hand corner of your screen. Once you have logged in, you'll be able to access any sections of Abdulrahman Alselim's account that you have been provided access to use.
+28. multi-website
+    1. Please add the domain to the Domains tab of your Cloud Project at https://eu-6.magento.cloud/projects/<project-key>/edit
+	2. Submit ticket
+		>>>>>>>>>>>>>>>>>>>
+		For the multiple websites, we need to add the new domain (scrubslab.com) to our magento instance.
+		Could you add this domain to Fastly, please?
+		>>>>>>>>>>>>>>>>>>>
 		
+		>>>>> response >>>>>
+		The domain has been added to your Fastly service. Please add the following DNS records for SSL validation:
+		
+		_acme-challenge.scrubslab.com CNAME fevp5i6npoq26z5zlnu5n7rjvld5qplfnewef55qdrdix5gqtqba.validation.magento.cloud
+
+		_acme-challenge.www.scrubslab.com CNAME dnfsrlb3wlibolkbfg7jss3xhrzkv5gxfv32kp4didb3q6ftlpkq.validation.magento.cloud.
+		>>>>>>>>>>>>>>>>>>>>
+	3. magento-vars.php	
+		if (isHttpHost("scrubslab.com")) {
+			$_SERVER["MAGE_RUN_CODE"] = "scrubslab";
+			$_SERVER["MAGE_RUN_TYPE"] = "store";
+		}
+29.  Changing HTML / CSS / JS settings in Magento Commerce Cloud (B2B)
+	https://support.weltpixel.com/hc/en-us/articles/360007311554-How-to-minify-merge-bundle-of-HTML-CSS-JS-Magento-Cloud-vs-Magento-Admin
+	
+	In Magento Cloud Environments, the process of configuring minify, merge and bundling is slightly different than configuration from Magento Admin settings.
+	
+30. nodejs
+	
+	
+	For dependieces, use .magento.app.yaml
+	https://devdocs.magento.com/cloud/project/magento-app-properties.html#dependencies
+		dependencies:
+			ruby:
+				sass: "3.4.7"
+			nodejs:
+				grunt-cli: "~0.1.13"
+31. node update
+	Can you please perform the following steps: (please see the below documentation as a reference - https://support.magento.com/hc/en-us/articles/360022507012-Configure-NPM-to-be-able-to-use-PWA-Studio):
+
+	1) Modify the build hooks in .magento.app.yaml:
+	hooks:
+		build: |
+			unset NPM_CONFIG_PREFIX
+			curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
+			export NVM_DIR="$HOME/.nvm"
+			[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+			nvm current
+			nvm install <version>
+		deploy: |
+			unset NPM_CONFIG_PREFIX
+			nvm use <version>
+	2) Create a .environment file in the root of your project with the following content and commit it to GIT:
+	# This is necessary for npm to work
+	unset NPM_CONFIG_PREFIX
+	# Disable npm update notifier
+	export NO_UPDATE_NOTIFIER=1 
+	# loads nvm for general usage:
+	export NVM_DIR="$PLATFORM_APP_DIR/.nvm"
+	[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+	You may substitute the versions to your specific needs, let me know if you have any questions or concerns, or kindly confirm that the solution provided to you has resolved the reported issue.
+	
+	PS: NOTE: Please make sure .environment is LF other than CRLF
+
+32. cron enable/disable
+
+		When you need the cron to run, just perform it manually:
+		php vendor/bin/ece-tools cron:enable
+
+		php bin/magento cron:run
+
+
+		Then disable it once it's done.
+		php vendor/bin/ece-tools cron:disable
+--------------------------------------------------------------------------------------
+Magento cloud
+
+https://devdocs.magento.com/cloud/docker/docker-development.html
+
+export COMPOSER_AUTH='{"http-basic":{"repo.magento.com": {"username": "76bc6dfa7fa9ba21f73a5b269a3defe7", "password": "7675e7ac3aa948fd25e3cc8cc02acc26"}}}'
+1. composer create-project --repository-url=https://repo.magento.com/ magento/project-enterprise-edition=2.4.1 public_html
+
+---------------------------------------------------------------------------------------
+Minify CSS in magento cloud
+
+https://support.weltpixel.com/hc/en-us/articles/360007311554-How-to-minify-merge-bundle-of-HTML-CSS-JS-Magento-Cloud-vs-Magento-Admin

@@ -1,0 +1,3 @@
+.swatch-attribute {
+      &:extend(.abs-visually-hidden-desktop-s all);
+}

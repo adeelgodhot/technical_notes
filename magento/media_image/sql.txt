@@ -1,0 +1,71 @@
+			SELECT * FROM eav_attribute WHERE attribute_code='image'
+				>> attribute_id = 87
+			SELECT * FROM eav_attribute WHERE attribute_code='small_image'
+				>> attribute_id = 88
+			SELECT * FROM eav_attribute WHERE attribute_code='thumbnail'
+				>> attribute_id = 89
+			SELECT * FROM catalog_product_entity_media_gallery WHERE VALUE='/a/7/a7a4febc236252179f5c27d517d698b133ad70eaa1bbd05809af741fe228e896.jpeg';
+			SELECT * FROM catalog_product_entity_media_gallery WHERE VALUE='/b/a/barco_skechers_sk0112_male_top.jpeg';
+				value_id=242460 attribute_id=90 media_type=image disabled=0
+				
+			SELECT * FROM eav_attribute WHERE attribute_code='status'
+				>> attribute_id = 97
+			select * from catalog_product_entity_int as m where m.attribute_id=97;
+				
+			SELECT row_id from catalog_product_entity_varchar where attribute_id=87 and value like '%placeholder%';
+			
+			SELECT * from catalog_product_entity_varchar where attribute_id=87 and row_id=115775;
+			SELECT * from catalog_product_entity_varchar where attribute_id=88 and row_id=115775;
+			SELECT * from catalog_product_entity_varchar where attribute_id=89 and row_id=115775;
+			
+			SELECT * from catalog_product_entity_varchar where attribute_id=87 and row_id=79876;
+			SELECT * from catalog_product_entity_varchar where attribute_id=88 and row_id=79876;
+			SELECT * from catalog_product_entity_varchar where attribute_id=89 and row_id=79876;
+			
+			SELECT * FROM catalog_product_entity_media_gallery WHERE VALUE='/b/a/barco_skechers_sk0112_male_top.jpeg';
+				value_id[auto_inc]=242460 attribute_id=90 media_type=image disabled=0
+			SELECT value_id FROM catalog_product_entity_media_gallery_value WHERE row_id=79876;
+				value_id=242460 store_id=0 record_id[auto_inc]=650407 position=1 label=null
+			SELECT * FROM catalog_product_entity_media_gallery_value_to_entity WHERE row_id=79876;
+				value_id=242460
+			DELETE FROM catalog_product_entity_media_gallery_value WHERE row_id=79876;
+			DELETE FROM catalog_product_entity_media_gallery_value_to_entity WHERE row_id=79876;
+			DELETE FROM catalog_product_entity_media_gallery WHERE value_id=242460;
+			UPDATE catalog_product_entity_media_gallery SET value="/a/7/a7a4febc236252179f5c27d517d698b133ad70eaa1bbd05809af741fe228e896.jpeg" WHERE value_id=242460;
+			UPDATE catalog_product_entity_media_gallery SET value="/b/a/barco_skechers_sk0112_male_top.jpeg" WHERE value_id=242460;
+				
+				
+			delete from catalog_product_entity_varchar where value_id=2910455;
+			INSERT INTO catalog_product_entity_varchar (value_id, attribute_id, store_id, value, row_id)
+			VALUES (2910455, 87, 1, "/a/7/a7a4febc236252179f5c27d517d698b133ad70eaa1bbd05809af741fe228e896.jpeg", 79876);
+			UPDATE catalog_product_entity_varchar SET value="/a/7/a7a4febc236252179f5c27d517d698b133ad70eaa1bbd05809af741fe228e896.jpeg" WHERE value_id="880861";
+			UPDATE catalog_product_entity_varchar SET value="/b/a/barco_skechers_sk0112_male_top.jpeg" WHERE value_id="880861";
+			UPDATE catalog_product_entity_varchar SET value="/a/7/a7a4febc236252179f5c27d517d698b133ad70eaa1bbd05809af741fe228e896.jpeg" WHERE value_id="880862";
+			UPDATE catalog_product_entity_varchar SET value="/a/7/a7a4febc236252179f5c27d517d698b133ad70eaa1bbd05809af741fe228e896.jpeg" WHERE value_id="880863";
+			
+			delete from catalog_product_entity_varchar where value_id=2910456;
+			
+			SELECT count(*) from catalog_product_entity_varchar where attribute_id=87 and store_id=1;
+			
+			
+			>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			INSERT image to gallery
+			
+			INSERT INTO catalog_product_entity_media_gallery (attribute_id, value, media_type, disabled) VALUES (90, "/a/7/a7a4febc236252179f5c27d517d698b133ad70eaa1bbd05809af741fe228e896.jpeg", "image", 0);
+			SELECT * FROM catalog_product_entity_media_gallery WHERE VALUE='/a/7/a7a4febc236252179f5c27d517d698b133ad70eaa1bbd05809af741fe228e896.jpeg';
+				>> value_id=242460
+				
+			INSERT INTO catalog_product_entity_media_gallery_value (value_id, store_id, position, disabled, row_id)	VALUES (242460, 0, 1, 0, 79876);
+			INSERT INTO catalog_product_entity_media_gallery_value_to_entity (value_id, row_id) VALUES (242460, 79876);
+			
+			
+			SELECT value_id FROM catalog_product_entity_media_gallery_value WHERE row_id=68286;
+			select * from catalog_product_entity_media_gallery where value_id IN (92590, 194209);
+			--------------------------------------
+			
+			check missing images
+			
+			store 0, store 1
+			image0, image1
+			
+			check catalog_product_entity_media_gallery_value_to_entity where 

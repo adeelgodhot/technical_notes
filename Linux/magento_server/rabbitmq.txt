@@ -1,0 +1,65 @@
+https://devdocs.magento.com/guides/v2.4/install-gde/prereq/install-rabbitmq.html
+
+https://www.dckap.com/blog/rabbitmq-configuration-with-magento2/
+
+https://blogs.perficient.com/2021/03/09/rabbitmq-integration-with-magento-2-4/
+
+1. Install
+
+sudo apt install -y rabbitmq-server
+
+sudo service rabbitmq-server status
+sudo rabbitmqctl "report"
+sudo rabbitmqctl "reset"
+
+php bin/magento queue:consumers:list
+php bin/magento queue:consumers:start sales.rule.update.coupon.usage
+
+2. Connect RabbitMQ to Magento Open Source or Adobe Commerce
+	If you already had Magento installed and you want to connect it to RabbitMQ, 
+	add a queue section in the <install_directory>/app/etc/env.php file so that it is similar to the following:
+
+	'queue' =>
+	  array (
+		'amqp' =>
+		array (
+		  'host' => '15.185.117.186',
+		  'port' => '5672',
+		  'user' => 'calvo',
+		  'password' => 'magento',
+		  'virtualhost' => '/'
+		 ),
+	  ),
+3. bin/magento setup:upgrade
+
+4. 
+
+Add RabbitMQ user
+
+	Run the below command to set the RabbitMQ user.
+
+	Syntax : sudo rabbitmqctl add_user {user_name} {passwd}
+
+	Sample: sudo rabbitmqctl add_user test magento
+	
+	sudo rabbitmqctl add_user calvo magento
+
+Set RabbitMQ user Role
+
+	Run the below command to set the RabbitMQ user role.
+
+	Syntax : sudo rabbitmqctl set_user_tags {user_name} administrator
+
+	Sample: sudo rabbitmqctl set_user_tags test administrator
+	
+	sudo rabbitmqctl set_user_tags calvo administrator
+	
+Set RabbitMQ User Role Permissions
+
+	Run the below command to set the RabbitMQ user role permissions.
+
+	Syntax : sudo rabbitmqctl set_permissions -p / {user_name} “.*” “.*” “.*”
+
+	Sample: sudo rabbitmqctl set_permissions -p /  test “.*” “.*” “.*”
+	
+	sudo rabbitmqctl set_permissions -p /  calvo “.*” “.*” “.*”

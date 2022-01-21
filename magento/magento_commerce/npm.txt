@@ -1,0 +1,29 @@
+There is one correction to the instructions, please replace PLATFORM_APP_DIR with MAGENTO_CLOUD_APP_DIR in your .environment file to fix the issue.
+ I am reposting the full instructions below:
+
+Step 1 - Modifying your build hooks:
+hooks:
+    build: |
+        unset NPM_CONFIG_PREFIX
+        curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | dash
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+        nvm current
+        nvm install 9.5.0
+    deploy: |
+        unset NPM_CONFIG_PREFIX
+        nvm use 9.5.0
+Step 2 - Modifying your .environment file:
+	In a .environment file in the root of your project:
+
+	This is necessary for nvm to work.
+	unset NPM_CONFIG_PREFIX
+
+	Disable npm update notifier; being a read-only system it will probably annoy you.
+	export NO_UPDATE_NOTIFIER=1
+
+	This loads nvm for general usage.
+	export NVM_DIR="$MAGENTO_CLOUD_APP_DIR/.nvm"
+	[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+	Note: the example above is using 9.5.0 as a version, you would want to update that to your desired version.

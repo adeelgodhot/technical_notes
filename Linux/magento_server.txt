@@ -12,6 +12,7 @@
 	usermod -a -G www-data calvo
 5.  configure nginx
 	sudo ln -s /etc/nginx/sites-available/calvo /etc/nginx/sites-enabled/calvo
+	sudo ln -s /etc/nginx/sites-available/dropbox /etc/nginx/sites-enabled/dropbox
 6. Install php-fpm
 	sudo apt install php7.4-fpm
 7. download magento
@@ -32,7 +33,10 @@
 	sudo apt install -y php7.4-xsl
 	sudo apt install -y php7.4-zip
 	sudo apt install -y php7.4-gd
-9. install MariaDB 10.4
+	sudo apt install -y php7.4-xdebug
+	sudo apt-get install php7.4-imagick
+	sudo apt install -y php7.4-bcmath php7.4-curl php7.4-dom php7.4-intl php7.4-pdo-mysql php7.4-simplexml php7.4-soap php7.4-xmlwriter php7.4-xsl php7.4-zip php7.4-gd
+9. install MariaDB 10.4 
 	sudo apt install mariadb-client-core-10.3
 	https://computingforgeeks.com/how-to-install-mariadb-on-ubuntu/
 	Step 1: Install software-properties-common if missing:

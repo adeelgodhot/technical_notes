@@ -3,7 +3,7 @@ https://docs.scandipwa.com/getting-started-1/magento-theme-mode
 1. Install node
 
   sudo apt update
-  curl -fsSL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+  sudo curl -fsSL https://deb.nodesource.com/setup_12.x | sudo -E bash -
   sudo apt-get install -y nodejs
 2.Linux requirements
   A. Install platform-specific dependencies
@@ -98,6 +98,7 @@ https://docs.scandipwa.com/getting-started-1/magento-theme-mode
 			add it to .bashrc
 3. Creating an App
 	npx create-magento-app app-backend
+	npx create-magento-app public_html
 	
     cma.json
 	change port
@@ -107,11 +108,13 @@ https://docs.scandipwa.com/getting-started-1/magento-theme-mode
 	cd my-app & npm run start -- --debug
 	npm run stop
 4. npx create-scandipwa-app my-app
+   npx create-scandipwa-app calvo-app
 5. Link Magento App with ScandiPWA 
 	The Create Magento App (CMA) comes with a built-in mechanism for ScandiPWA theme linking. 
 	In order to link a ScandiPWA theme with CMA project, execute the following command from CMA project root:
 	
 	npm run link -- /var/www/cma/my-app
+	npm run link -- /home/calvo/calvo-app
 6. Run ScandiPWA App in Magento mode
 	Run the command below from your ScandiPWA App directory:
 	
@@ -136,3 +139,9 @@ https://docs.scandipwa.com/getting-started-1/magento-theme-mode
 9. create extension
 
    https://docs.scandipwa.com/developing-with-scandi/extensions/creating-an-extension
+10. install extension
+`   https://docs.scandipwa.com/developing-with-scandi/extensions/installing-an-extension
+11 import db
+    npm run import-db ./db.sql
+12. npm run exec mysql 
+12. npm run exec nginx service nginx status

@@ -35,7 +35,7 @@ Enjoy the power of composer.lock file!
 3. php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 4. php composer-setup.php --install-dir /usr/bin --filename composer
    or php composer-setup.php --install-dir=/usr/bin --filename=composer --version=1.10.6
-   php composer-setup.php --install-dir=/usr/bin --filename=composer --version=2.1.9
+   php composer-setup.php --install-dir=/usr/bin --filename=composer2 --version=2.1.9
    
  php -r '$phar = new Phar("composer.phar"); $phar->extractTo("./composer");'
 ---------------------------
@@ -51,6 +51,7 @@ composer install
 composer require-commerce magento/product-community-edition 2.4.3 --no-update
 	--no-update means "(Required) Disables the automatic update of the dependencies"
 
+composer update firebear/importexport box/spout
 ----------------------------------------
    composer
    php -d memory_limit=-1 composer.phar --no-plugins
@@ -67,6 +68,7 @@ composer require-commerce magento/product-community-edition 2.4.3 --no-update
  composer upgrading
  composer self-update --2
 
+ sudo ln -s /var/www/darscrubs_site/composer/bin/composer.php /usr/bin/composer2
 ------------------------------------------------------
 composer update
 

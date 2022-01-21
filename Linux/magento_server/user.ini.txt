@@ -1,0 +1,11 @@
+memory_limit = 8192M
+max_execution_time = 21600
+session.auto_start = Off
+display_errors = Off
+max_input_time = 1200
+max_input_vars = 100000
+post_max_size = 2G
+session.gc_maxlifetime = 14400
+session.save_path = "/var/cpanel/php/sessions/ea-php73"
+upload_max_filesize = 2G
+zlib.output_compression = On

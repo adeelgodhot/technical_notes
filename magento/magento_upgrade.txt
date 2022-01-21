@@ -5,4 +5,19 @@ cd /var/www/html
 4. php composer-setup.php --install-dir=/usr/bin --filename=composer --version=1.10.6
 5. composer require magento/composer-root-update-plugin=~1.0 --no-update 
    this does something like this: composer.json <- require <- magento/composer-root-update-plugin=~1.0
+6. composer require magento/product-community-edition=2.4.3-p1 --no-update
 5. composer update
+
+
+-----------------------------------
+Upgrade commerce to 2.4.3
+
+https://devdocs.magento.com/guides/v2.4/comp-mgr/cli/cli-upgrade.html
+	>>>>>>>>>>>>>>
+	The following instructions show you how to upgrade Magento using Composer. 
+	Magento 2.4.2 introduced support for Composer 2. If you are attempting to upgrade from Magento <2.4.1, 
+	you must first upgrade to a version of Magento that is compatible with Composer 2 (for example, 2.4.2) using Composer 1 before upgrading to Composer 2 for Magento >2.4.2 upgrades. 
+	In addition, you must be running a supported version of PHP.
+	>>>>>>>>>>>>>
+https://devdocs.magento.com/guides/v2.4/comp-mgr/bk-compman-upgrade-guide.html
+For example, you cannot use Magento Open Source authentication keys to update or upgrade Adobe Commerce or vice versa. You also cannot use another user’s authentication keys or Shared account authentication keys.
