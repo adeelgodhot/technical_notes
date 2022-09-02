@@ -132,6 +132,7 @@ https://www.minitool.com/backup-tips/windows-defender-not-turning-on.html
 		 rm -rf pub/static/frontend/scandipwa/ && rm -rf var/view_preprocessed/pub/static/frontend/scandipwa
 		 rm -rf pub/static/frontend/Lenehans/ && rm -rf var/view_preprocessed/pub/static/frontend/Lenehans
 		 rm -rf pub/static/frontend/appmedia/ && rm -rf var/view_preprocessed/pub/static/frontend/appmedia
+		 rm -rf pub/static/frontend/Adeel/ && rm -rf var/view_preprocessed/pub/static/frontend/Adeel
 		 rm -rf pub/static/frontend/Danielschaaf/ && rm -rf var/view_preprocessed/pub/static/frontend/Danielschaaf
 		 rm -rf pub/static/frontend/MageBig/martfury_lenehans/ && rm -rf var/view_preprocessed/pub/static/frontend/MageBig/martfury_lenehans
 		 rm -rf pub/static/frontend/Pearl/weltpixel_custom_luxushair && rm -rf var/view_preprocessed/pub/static/frontend/Pearl/weltpixel_custom_luxushair
@@ -165,6 +166,7 @@ php bin/magento cache:flush
 	  magento setup:static-content:deploy -f en_US en_IE -t Lenehans/lenehans
 	  magento setup:static-content:deploy -f de_DE -t Danielschaaf/crunchyx
 	  magento setup:static-content:deploy -f en_IE -t MageBig/martfury_lenehans
+	  magento setup:static-content:deploy -f en_IE -t MageBig/martfury_lenehans02
 	  magento setup:static-content:deploy -f nb_NO -t Pearl/weltpixel_custom_luxushair
 	  php bin/magento setup:static-content:deploy -f en_US -t Pearl/weltpixel_custom
 	  php bin/magento setup:static-content:deploy -f -t Pearl/weltpixel_custom
@@ -698,6 +700,11 @@ return array (
     'key' => '525701df74e6cba74d5e9a1bb3d935ad', //cryptographic salt
   ),
   ...
+  
+  
+ https://magento.stackexchange.com/questions/321125/magento1-9-to-magento2-4-customer-password-migration 
+ upgrade hash
+ customer:hash:upgrade
 <<<<<<<<<<<<<<<<<<<<
 
 ---------------------------------------
@@ -1000,29 +1007,10 @@ cms_page_view_selectable_<customer-service>_<ChatTool>.xml
 -------------------------------------------
 add column to order grid
 https://www.mageworx.com/blog/how-to-add-column-with-filter-to-magento-2-orders-grid/	
-
+---------------------
+array value merge
+array_merge(...array_values($this->configPaths));
 -------------------------------------------
-   elastic search issue
-   
-   >>>>>>>>>>>>>>>>>>>>>>>>>>
-		Catalog Search index process unknown error:
-		{"error":{"root_cause":[{"type":"cluster_block_exception","reason":"index [magento2_product_1_v144] blocked by: [FORBIDDEN/12/index read-only / allow delete (api)];"}],"type":"cluster_block_exception","reason":"index [magento2_product_1_v144] blocked by: [FORBIDDEN/12/index read-only / allow delete (api)];"},"status":403}
-		
-		curl -XPUT -H "Content-Type: application/json" http://localhost:9200/_all/_settings -d '{"index.blocks.read_only_allow_delete": null}'
-		curl -XPUT -H "Content-Type: application/json" http://localhost:9200/_all/_settings -d '{"index.blocks.read_only_allow_delete": null}'
-		curl -XPUT -H "Content-Type: application/json" http://localhost:9200/_all/_settings -d '{"index.blocks.read_only_allow_delete": null}'
-		
-		
-   >>>>>>>>>>>>>>>>>>>>>>>>>>
-   show indexes
-   curl --silent -X GET localhost:9200/_cat/indices?v
-   >>>>>>>>>>>>>>
-   curl -X GET "localhost:9200/_cluster/health?pretty"
-   remove all indexer
-   curl -X DELETE 'http://localhost:9200/_all'
-   
-   https://mirasvit.com/blog/magento-2-and-elasticsearch.html
-   https://firebearstudio.com/blog/how-to-restore-green-elasticsearch-index-status-in-magento-2.html
    
  ---------------------
   product collection
@@ -1179,24 +1167,43 @@ php bin/magento config:set admin/captcha/enable 0
 create admin user
 bin/magento admin:user:create
 
-php bin/magento admin:user:create --admin-user=adeel --admin-password=admin123! --admin-email=adeelgod@hotmail.com --admin-firstname=Adeel --admin-lastname=G
-php bin/magento admin:user:create --admin-user=mage --admin-password=admin123BA --admin-email=adeelgod@hotmail.com --admin-firstname=Mage --admin-lastname=G
+php bin/magento admin:user:create --admin-user=orce --admin-password=admin123! --admin-email=orce@hotmail.com --admin-firstname=Orce --admin-lastname=G
+php bin/magento admin:user:create --admin-user=mage_api --admin-password=admin123 --admin-email=mage@hotmail.com --admin-firstname=Mage --admin-lastname=G
 php bin/magento admin:user:create --admin-user=yana --admin-password=admin123! --admin-email=yanaivashkoweb@gmail.com --admin-firstname=Y --admin-lastname=I
 
 php bin/magento admin:user:create --admin-user=mage --admin-password=admin123 --admin-email=adeelgod@hotmail.com --admin-firstname=Mage --admin-lastname=G
 ---------------------------
 language pack
 
-https://www.mageplaza.com/magento-2-german-language-pack.html
+	https://www.mageplaza.com/magento-2-german-language-pack.html
 
-bin/magento i18n:pack [-m|--mode={merge|replace}] [-d|--allow-duplicates] <source> <locale>
+	bin/magento i18n:pack [-m|--mode={merge|replace}] [-d|--allow-duplicates] <source> <locale>
 
 
-wget https://github.com/mageplaza/magento-2-german-language-pack/raw/master/de_DE.csv
-php bin/magento i18n:pack -m replace -d de_DE.csv de_DE
-php bin/magento setup:static-content:deploy de_DE
-php bin/magento cache:flush
+	wget https://github.com/mageplaza/magento-2-german-language-pack/raw/master/de_DE.csv
+	php bin/magento i18n:pack -m replace -d de_DE.csv de_DE
+	php bin/magento setup:static-content:deploy de_DE
+	php bin/magento cache:flush
 
+	-----------------------
+	create language pack
+	https://aureatelabs.com/magento-2/how-to-create-and-use-language-package-component-in-magento-2/
+	1. app/i18n/Lcarbshop/de_de
+		Lcarbshop: vendor [shouldn't contain "_, -", first letter should be uppercase]
+		de_de : package    [all should be lowercase]
+		
+	2. language.xml	
+		<?xml version="1.0"?>
+		<language xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/Language/package.xsd">
+			<code>de_DE</code>
+			<vendor>lcarbshop</vendor>
+			<package>de_de</package>
+			<use vendor="mageplaza" package="de_de"/>  // inherit the language pack
+		</language>
+	3. registration.php
+	4. composer.json
+		
+	
 --------------------------------
 add custom cache
 
@@ -1332,11 +1339,11 @@ Here is what you need to do:
 	
 	>>>>>>>>>>>>>>>>>
 	To enable the profiler using type html and create a flagfile:
-
 	bin/magento dev:profiler:enable html
+	
 	To enable the profiler using type csvfile and create a flagfile:
-
 	bin/magento dev:profiler:enable csvfile
+	
 	The output will be saved to <project_root>/var/log/profiler.csv. The profiler.csv will be overridden on each page refresh.
 
 	To disable the profiler and remove the flagfile:
@@ -1749,3 +1756,152 @@ Unit Test
 ------------------------------------------------------
 set no folow for link
 	<a rel="nofollow"></a>
+--------------------------------------------
+Terms and Conditions
+
+https://docs.magento.com/user-guide/sales/terms-and-conditions.html
+
+---------------------
+mobile
+
+/iPhone|iPod|BlackBerry|Palm|Googlebot-Mobile|Mobile|mobile|mobi|Windows Mobile|Safari Mobile|Android|Opera Mini/
+
+--------------------
+master knockoutjs
+https://bsscommerce.com/confluence/magento-2-knockout-js/
+
+--------------------------
+magento 1
+UPDATE admin_user SET password = CONCAT(MD5('$SALT$PASSWORD'), ':$SALT') WHERE username = '$USERNAME';
+
+df65a9ef7a05b6678505824350973b20:wYqM0x043vLGfewUduSzJ31zewDpY5iZ
+UPDATE admin_user SET password = CONCAT(MD5('abcadmin123'), ':abc') WHERE username = 'unboundvr';
+
+----------------------
+set column width ui listing 
+
+	https://magento.stackexchange.com/questions/152285/magento-2-change-admin-grid-column-width
+
+	<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Ui/etc/ui_configuration.xsd">
+		<columns name="columns">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="resizeConfig" xsi:type="array">
+						<item name="enabled" xsi:type="boolean">true</item><!-- This is required configuration -->
+					</item>
+				</item>
+			</argument>
+			<column name="column_name">
+				<argument name="data" xsi:type="array">
+					<item name="config" xsi:type="array">
+						<item name="resizeEnabled" xsi:type="boolean">false</item><!-- "true" allows admin user to change column width (default value); "false" - disallows admin user to change column width -->
+						<item name="resizeDefaultWidth" xsi:type="number">100</item><!-- needed column width in pixels -->
+					</item>
+				</argument>
+			</column>
+		</columns>
+	</listing>
+-----------------------
+sort false ui listing
+	<item name="config" xsi:type="array">
+		<item name="sortable" xsi:type="boolean">false</item>
+		
+------------------------
+email css
+
+https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/templates/template-email.html
+
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\theme-frontend-blank\web\css\email-inline.less
+
+		/**
+		 * Copyright © Magento, Inc. All rights reserved.
+		 * See COPYING.txt for license details.
+		 */
+
+		//
+		//  Styles for emails
+		//  _____________________________________________
+
+		//  See comments in source/_email-base.less for explanation of email styles
+
+		@import 'source/lib/_lib.less'; // Global lib
+		@import 'source/lib/variables/_email.less'; // Global email variables
+		@import 'source/_theme.less'; // Global variables override
+		@import 'source/_variables.less'; // Local theme variables
+		@import 'source/_email-variables.less'; // Theme variables for emails
+
+		//
+		//  Styles for emails
+		//  ---------------------------------------------
+
+		@import 'source/_email-base.less'; // Contains primary email styles
+		@import 'source/_email-extend.less'; // Contains theme-specific adjustments to email styles
+
+		//
+		//  Module-specific styles for emails
+		//  ---------------------------------------------
+
+		//@magento_import 'source/_email.less';
+		
+==================================================
+Customization Shipment Email
+	https://magento.stackexchange.com/questions/165458/how-to-add-tracking-url-in-shipment-email-for-customer-in-magento-2
+	
+	
+=========================================
+shipping database
+	sales_order
+		shipping_method: tablerate_bestway
+		shipping description: Standard Delivery - Delivery
+	sales_shipment_track
+		track_number: 21564863039
+		title: Gls Ireland - Standard
+		carrier_code: custom
+
+
+
+198890
+=================================
+get store specific category url in magento 1
+
+	protected function _getCategoryUrl($category)
+    {
+        $urlModelInstance = Mage::getSingleton('catalog/factory')
+            ->getCategoryUrlInstance();
+        $urlModelInstance->getUrlInstance()
+            ->setStore($category->getStoreId());
+        return $urlModelInstance->getCategoryUrl($category);
+    }
+=====================
+add body class
+	<body>
+		<attribute name="class" value="my-css-class"/>
+=====================
+cronjob debug in m1
+	php cron.php -mdefault
+===============
+db_schema_whitelist.json magento 2
+	https://devdocs.magento.com/guides/v2.3/extension-dev-guide/declarative-schema/db-schema.html
+	https://meetanshi.com/blog/create-db-schema-whitelist-json-in-magento-2/
+	https://inchoo.net/magento-2/declarative-schema/
+	https://www.mageplaza.com/magento-2-module-development/magento-2-how-to-create-sql-setup-script.html
+	https://techflarestudio.com/install-scripts-vs-db_schema-in-magento-2/
+	
+	Practically, this means that if you disable a module which uses declarative schema and run bin/magento setup:upgrade, its database tables will be dropped (see more details and discussion at https://github.com/magento/magento2/issues/24926). 
+	Please consider using setup:upgrade --safe-mode=1 in order to create a database backup after disabling a module and then eventually setup:upgrade --data-restore=1 if you enable the module back and wish to restore from that backup.
+	
+	why we need dbschema whitelist?
+		Because traditional scripting methods can still be used alongside decalrative schemas it is recommended to generate a schema whitelist. 
+		When dropping tables or columns the declarative schema does not do this automatically in case they are declared somewhere else, such as an UpgradeSchema.php file.
+		
+		In order to allow deleting the defined columns or constraints you have to let Magento know that the fields were created through declarative schema. 
+		This is because during this transition period columns can be created from various tables and deleting everything that does not fit the declared schema would not be the correct behavior.
+		
+		Magento recommends that as a best practice, you should generate a new whitelist file for each release, and you must generate the whitelist in any release that contains changes in the db_schema.xml file.
+	
+	Migrate install/upgrade scripts to declarative schema
+		https://devdocs.magento.com/guides/v2.3/extension-dev-guide/declarative-schema/migration-commands.html
+		https://devdocs.magento.com/guides/v2.3/extension-dev-guide/declarative-schema/data-patches.html
+=================================
+content staging
+	https://experienceleague.adobe.com/docs/commerce-admin/content-design/staging/content-staging-scheduled-update.html

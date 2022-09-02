@@ -30,3 +30,71 @@ catalog.leftnav [Magento\LayeredNavigation\Block\Navigation\Category]
 				<block class="Magento\CatalogInventory\Block\Qtyincrements" name="product.info.extrahint.qtyincrements" template="Magento_CatalogInventory::qtyincrements.phtml"/>
 			</referenceContainer>
 			>>>>>>>>>>>>>>>>>>>>
+
+---------------------------------
+price render
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-catalog\Block\Product\ListProduct.php
+		------------------------------------------------
+		public function getProductPrice(Product $product)
+		{
+			$priceRender = $this->getPriceRender();
+
+			$price = '';
+			if ($priceRender) {
+				$price = $priceRender->render(
+					FinalPrice::PRICE_CODE,
+					$product,
+					[
+						'include_container' => true,
+						'display_minimal_price' => true,
+						'zone' => Render::ZONE_ITEM_LIST,
+						'list_category_page' => true
+					]
+				);
+			}
+
+			return $price;
+		}
+		------------------------------------------------
+		protected function getPriceRender()
+		{
+			return $this->getLayout()->getBlock('product.price.render.default')
+				->setData('is_product_list', true);
+		}
+		------------------------------------------------
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-catalog\view\base\layout\default.xml
+		------------------------------------------------
+		<body>
+			<block class="Magento\Framework\Pricing\Render" name="product.price.render.default">
+				<arguments>
+					<argument name="price_render_handle" xsi:type="string">catalog_product_prices</argument>
+					<argument name="use_link_for_as_low_as" xsi:type="boolean">true</argument>
+					<!-- set "override" configuration settings here -->
+				</arguments>
+			</block>
+		</body>
+		------------------------------------------------
+		
+	Solution: 
+	1:
+		<?php
+			$clonedProduct = clone $_product;
+			$clonedProduct->setData('price', $_product->getPricePerKg());
+			$clonedProduct->setData('final_price', $_product->getPricePerKg());
+			$clonedProduct->setData('minimal_price', $_product->getPricePerKg());
+			$clonedProduct->setData('min_price', $_product->getPricePerKg());
+			$clonedProduct->setData('max_price', $_product->getPricePerKg());
+			
+			$block->getProductPrice($clonedProduct)
+		?>
+		
+		NOTE: Above code should be before "$block->getProductPrice($_product)" because $product->_priceInfo is realized with original price and will be static.
+			E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-catalog\Model\Product.php :: getPriceInfo
+				public function getPriceInfo()
+				{
+					if (!$this->_priceInfo) {
+						$this->_priceInfo = $this->_catalogProductType->getPriceInfo($this);
+					}
+					return $this->_priceInfo;
+				}
+	2: $this->helper('Magento\Framework\Pricing\Helper\Data')->currency(number_format(50,2),true,false);

@@ -1,0 +1,58 @@
+At the moment on each page, the browser is downloading and parsing quite a large CSS file.
+In Chrome devtools, there's a tool called coverage which can show us how much of this is unused.
+Here, we can see that in style.css, 93.3% of CSS styles aren't being used, which is crazy! Let's remove unused CSS from our stylesheet, so each page only downloads what it actually needs.
+Each page is going to need its own CSS file, as the CSS one page uses is going to be different to the next.
+We'll name each CSS file according to the page it's used for, so for index.html, there would be an index.css for example.
+Begin with installing and then importing this dependency - gulp-data.
+We're going to use this in our Nunjucks task to pass the template its own file name.
+Then in the head template, replace the reference to style.css with this filename variable.
+This means, on compile, the page will look for a CSS file matching its own name.
+Next, we need to create the CSS files. At the moment, our compileSASS function is only creating one - style.css.
+We need to duplicate this for each page.
+This can be done using the glob function, which we're using here to grab all of our HTML files.
+We're then looping through them and for each one compiling a CSS file and then naming it after the current page in the loop.
+Now, on build, it's generating multiple CSS files, currently all the same.
+All that remains is that for each page's CSS file, we remove any CSS which isn't being used.
+We can automate this process using a module called PurgeCSS.
+Start by installing and importing like usual.
+And then create a new gulp task called removeUnusedCSS.
+Like before, we need to grab our HTML files using glob and loop through them.
+Here, we'll use the PurgeCSSmodule like so.
+For each CSS file in the root directory, we're passing it to PurgeCSS and then pointing it towards its corresponding HTML file, which has the same file name.
+The module then uses this link to determine which CSS is being used and updates the CSS file accordingly.
+Let's add this to the build task like so and then run.
+Right, this doesn't look good.
+What is happening here is that the removeUnusedCSS task is trying to run whilst the criticalCSS task is still in progress. At the moment, I haven't found a genuine fix for this, as I am by no means a gulp expert.
+I have found a workaround though.
+Remove the unused CSS task from gulp build and then import it into its own separate task here.
+Next, open up package.json.
+We'll create an NPM script here to alias our build task.
+Think of these as shortcuts which you can create to run other commands.
+We can check it's linking OK by running 'npm run build' in the command line.
+Now, create a new and NPM script called postbuild.
+By naming this after the build task, with post as a prefix, it will automatically fire afterwards.
+In here, we'll run the unused CSS task.
+Now, run the build task again.
+Brilliant.
+Yes, it's a bit of a hack, but it's the only way to get the modules to behave themselves and run sequentially.
+Looking at the CSS in our root directory, it's being cut down in size significantly.
+Let's check the web site.
+That's not good.
+The carousel is broken and these drop downs are missing their transitions.
+What's happening here is that because PurgeCSS only looks at the raw HTML, rather than the rendered web page, dynamic classes normally inserted into the DOM by JavaScript are being incorrectly flagged as unused and thus removed.
+We need to revisit the removeUnusedCSS gulp task and get to the module to ignore these dynamic classes.
+This can be done through PurgeCSS's safelist property, which accepts an array of regex patterns.
+As each page is different, we'll need a separate safe list for each page. Create an object called safelist up here and then pass it to the safelist property like so.
+This means as the purgeCSS cycles through each of our HTML files, it will look for a safe list matching the filename.
+Only the home page has dynamic elements on it, so only 1 safelist is needed, like this.
+Now, when we run PurgeCSS, CSS classes on the home page matching these patterns will be ignored.
+So when we revisit the page, it's all then looks normal again because the wrong CSS classes haven't been removed.
+Before this home page was at 93.3% unused.
+Now it's at 44%, which is a big improvement.
+Remember, this is never going to be 0 as some styles are only ever used at mobile resolutions for example, which is fine.
+How does this affect the performance?
+There's no real change to the rendering performance as the CSS we're filtering is no longer blocking.
+A millisecond here or there isn't anything to worry about.
+The biggest change is here though, Bytes Downloaded and then Fully Loaded, as the amount of CSS downloaded has been reduced by quite a bit.
+Finally on Google Lighthouse, we've achieved a performance score of above 90.
+Hitting the green was one of our key goals in this practical section, so it's nice to finally achieve it.

@@ -1,0 +1,4 @@
+regedit/
+HKEY_USERS > S1-....-500_classes > WOW6432Node > CLSID > 
+	and then remove 0799AC3-0588...CA7
+	and then restart PC

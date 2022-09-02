@@ -1,0 +1,58 @@
+If we look at MLE Power in waterfall view, CSS is now the only remaining render blocking resource preventing the critical rendering path from completing immediately.
+This is CSS's default behavior, as if page render wasn't blocking until CSS is downloaded and parsed, the page would render before the browser knows how to style it and you would experience what's called flash of unstyled content.
+However, there's a way to stop CSS blocking page render and sidestep the flash of unstyled content issue.
+They 'have your cake and eat it' approach is done by determining the bare minimum CSS required to style the content in the initial viewport, as that's all the user sees as the page is loading.
+We then separate this critical CSS from the rest and display it inline in the HTML document directly.
+The remaining non-critical CSS stays where it is, in the CSS file, which is still cachable by the browser.
+Now the browser has everything it needs to render at least the viewport content correctly, without having to download any additional CSS files.
+This will solve the flash of unstyled content problem, at least from the user's perspective.
+The remaining non-critical CSS is then loaded asynchronously at a later stage, which, like with async or defer on script elements, removes CSS from the critical rendering path entirely, solving the render blocking problem.
+So, how do we separate critical CSS from noncritical and make the latter loaded asynchronously?
+Thankfully, there's an NPM package called Critical which can automate this for us.
+Remember to then import it into the gulpfile.
+And now he's the task.
+First off, we used a glob function to grab all of our compiled HTML files from the root directory as one page's critical CSS is different to the next.
+This gives us an array of paths to loop through, however, because the critical module doesn't expect paths, only filenames, we have to use a native node module called Path to separate these.
+This is imported the same as any other module, but because it's native to node, we don't need to install it as a dependency first.
+We then run the critical function and pass it some data.
+Inline is set to true, which tells the function we'd like to inline the critical CSS in the HTML for us. False on the other hand, tells the function we'd just like the critical CSS by itself.
+We set base to the root www directory.
+Source refers to the HTML which we'd like to generate critical CSS for, in this case the current page in the loop.
+And target is where the output of all of this should be sent to.
+Again, the HTML.
+Next, there's the width and height properties.
+These correspond to the dimensions of the browser window for when critical CSS is captured.
+Here, it's set to desktop level sizes, but because the CSS is written mobile first, critical CSS for mobile will also be captured as well.
+So all device levels are covered.
+Finally, there's Ignore, which gives the function a list of CSS which it should not extract.
+Included here is font-face, because we're currently using Google Fonts, which has its own third party CSS. 
+If the function were to extract CSS from here, because it's hosted externally, it wouldn't be able to remove the critical CSS from the original file, so you'd have duplicate rulesets.
+Just need to add it to the build task and away we go.
+Now if we go to the compiled index.html, here's the inline critical CSS, now separate from the rest of the CSS, which is still loaded here as before.
+Well, not quite as before, as some additional properties have been added, which we'll get to shortly.
+But first, if we open this in the browser, everything looks fine, which is good.
+Next, back in the HTML, delete this link element temporarily. When I reload the page, again, everything still looks fine.
+However, when I scroll, suddenly everything goes wrong. This is because the only CSS loaded now is the critical CSS and the critical CSS only contains styles which are needed for the initial viewport.
+The remaining CSS is noncritical, which we're now loading in a non-blocking manner, thanks to these attributes which have been added by the critical function. Essentially, this is a bit of a hack.
+We're telling the browser here that the CSS should only be applied when the webpage is printed, like out of a printer... to paper.
+Therefore, it doesn't consider the CSS important enough to wait around for, whilst it's downloading, as it styles wouldn't be visible on screen anyway.
+Then, when the stylesheet is downloaded, having not blocked rendering, it's onload attribute is used to switch its media attribute to 'all'. The browser spots this, so then applies the CSS styles to the elements on the page.
+It's an ingenious little technique,
+so let's see how much of an impact it makes to performance.
+Basically, it makes a huge difference. Start render is nearly a second and a half faster, you can see why in the waterfall.
+Comparing the 2 views, HTML is now the only remaining render blocking resource, with everything else loading asynchronously as the HTML parser discovers it.
+It's not all good news though, it still takes 4 seconds to display the logo, the hamburger icon, and then the first carousel slide,
+so for most of the loading time we gained, the user is sat staring at what amounts to the website's scaffolding.
+Let's use the Preload resource hint to force the browser to load these critical images sooner.
+That way, we should be able to improve our website's perceived performance, even if it doesn't impact the actual performance at all.
+We'll preload the logo and the mobile hamburger icon in the head partial, as these are shared across all pages.
+As for the carousel slide, this is only needed on the home page, so in the page template, we need to add a Nunjucks head block containing the preload, like so.
+Because there's 2 variants of the slide, a smaller one for mobile and a regular sized one for desktop, we can add a media attribute so the browser knows when to preload each.
+Now, with the preloads in place, let's do another comparison.
+Much better, the logo loads first followed quickly by the hamburger icon and the carousel slide.
+So in terms of perceived performance, instead of feeling complete at 4.1 seconds, this has now been pushed forward to 2.9 seconds, which is a significant jump.
+Even though the visually complete metrics are a little slower, when you see the comparison video, it doesn't feel like it, does it?
+Think back to the Amazon video from the earlier perceived performance video.
+This is the same kind of thing, albeit on a much smaller scale.
+By removing CSS from the critical rendering path and giving the browser just enough inline CSS to render the initial viewport, we've made huge improvements to our rendering times and flown past our 3 second goal.
+Given this, I would have thought we'd see an improvement Time to Interactive as well. Perhaps we've reduced this as much as we're able to now through improvements to rendering speed alone.

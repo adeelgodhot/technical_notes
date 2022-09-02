@@ -155,3 +155,10 @@ sudo update-alternatives --config python3
 
 sudo pip3 install setuptools-rust
 sudo pip3 install --upgrade pip
+
+sudo apt purge python3-pip python3-dev
+
+sudo apt install python3.6
+
+export PYTHONHOME=/usr/local
+env | grep PYTHONHOME

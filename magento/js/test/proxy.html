@@ -1,0 +1,36 @@
+<!DOCTYPE html>  
+<html>  
+  
+<head>  
+<title> jQuery $.proxy() method </title>  
+  
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> </script>  
+  
+<script>  
+$(document).ready(function() {  
+var student = {  
+	name: "John",  
+	age: 23,  
+	rollno: 11,  
+	standard: "Post-Graduate",  
+	demo: function(){  
+		$("p").append("Name: " + this.name + "<br> Age: " + this.age + "<br> Roll.no: " + this.rollno + "<br> Standard: " + this.standard);  
+		console.log(this);
+	}   
+};  
+//$("button").click($.proxy(student, "demo"));
+  var s = new student();
+$("button").click(s.demo);  
+});  
+</script>  
+</head>  
+  
+<body>  
+<h3> It is an example of using the $.proxy() method. </h3>  
+<div> Click the below button to see the effect </div>  
+</br>  
+<button> Click me </button>  
+<p></p>  
+</body>  
+  
+</html> 

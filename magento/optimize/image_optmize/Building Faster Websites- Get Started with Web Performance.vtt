@@ -1,0 +1,21 @@
+If we think back to the "How Browsers Load Websites" video, we learned that as part of the critical rendering path, 
+the HTML parser builds the DOM, if during this process it finds a script element linking to a JavaScript file, parsing is paused until this request is completed and the script executed.
+This makes JavaScript a blocking resource as it delays rendering.
+We can see this on the website's waterfall here.
+All the JavaScript, these yellow bars, are downloaded and executed before we reach this green horizontal line - start render.
+Thankfully, modern browsers provide us with 2 attributes to tackle this issue.
+The first, defer, delays JavaScript execution until after the HTML has been fully parsed.
+This means the HTML parser pause is no longer required, meaning the script is no longer render blocking.
+The second, async, is very similar, except that JavaScript execution happens as soon as it's able to,parallel to the HTML parsing.
+Async is best suited for JavaScript which doesn't require a complete DOM or JavaScript without a dependency on other scripts having loaded.
+Let's remove the render blocking JavaScript from MLE power.
+Open the head template partial, these scripts all manipulate the DOM in some way or are dependencies of cripts which do, so we'll set these to defer.
+This one, which injects a cookie banner, can be set to async. It only adds to the DOM, rather than interacting with existing elements, so doesn't require it to be complete.
+Whilst this one, within the layout partial, contains miscellaneous DOM interactions which are scattered across all pages.
+Prior to async and defer, its placement here would be valid.
+However, now we can control when JavaScript is executed, we can safely append this to the head and set it too to defer.
+I'm mainly expecting to see improvements to the initial rendering, which looks to have happened.
+With JavaScript no longer blocking the critical rendering path, it's able to complete much sooner.
+Nearly 20% sooner for Start Render, First Contentful Paint and Largest Contentful Paint.
+And as we know, where rendering metrics go, Time to Interactive follows. We're seeing a 34% increase here, which is definitely welcome.
+Finally, a nice boost of 17 has been added to our Lighthouse score.

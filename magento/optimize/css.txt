@@ -1,0 +1,36 @@
+Critical resources
+Critical bytes
+
+browser rendering pipeline. 
+
+Style
+	HTML -> DOM
+					=> Render tree
+	CSS -> CSSOM
+
+Layout
+   it's to calculate the position and dimension of each element.
+   
+Paint
+   All of the relative measurements like percentages ems, or rems are converted into absolute units
+    - the pixels.
+	Each element will be drawn on the screen one by one.
+	
+compositing layers
+	Your application can have multiple layers
+	The browser can paint each of the layers individually.
+	The process of handling these layers is called a compositing layers.
+	
+======================================
+HTML parsing algorithm
+it has 4 steps: conversion, tokenizing, lexing and building the DOM tree.
+
+Conversion
+	Bytes => Characters
+Tokenizing
+    => Tokens
+Lexing
+	=> Nodes
+DOM tree
+	=> DOM
+	

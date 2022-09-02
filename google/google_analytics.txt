@@ -1,0 +1,7 @@
+https://www.lovesdata.com/blog/upgrade-google-analytics-4
+
+
+upgrading from Google Analytics Enhanced Ecommerce to GA4 Ecommerce.
+	https://www.simoahava.com/analytics/google-analytics-4-ecommerce-guide-google-tag-manager/#migrating-from-enhanced-ecommerce
+
+Measure ecommerce For GA4

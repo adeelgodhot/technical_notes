@@ -1,3 +1,7 @@
+https://www.jetbrains.com/help/phpstorm/remote-debugging-via-ssh-tunnel.html#ad98df7a
+https://gist.github.com/ankurk91/22e4a07be552790a9d6a063ee1bace05
+https://www.webfoobar.com/node/93
+
 PHPFPM + NGINX
 
 1. Check port availability
@@ -89,3 +93,46 @@ PHPFPM + NGINX
 	sshd    30935 print-machine    9u  IPv6 7824135      0t0  TCP ip6-localhost:9005 (LISTEN)
 	sshd    30935 print-machine   10u  IPv4 7824136      0t0  TCP localhost.localdomain:9005 (LISTEN)
 10. Run debug like normal what you do on local.
+
+
+=============================
+remote xdebug for apache
+
+https://www.webfoobar.com/node/93
+
+1. putty
+   connection > SSH > tunnels
+		Source port: 6001 (remote server port)
+		Destination port: localhost:9000 (local port)
+		Please tick : "Remote" 
+		add and then save in session and open
+2. others is almost same.
+    NOTE: we don't need "PHP_IDE_CONFIG" LIKE nginx
+	NOTE: please take care about version of Xdebug is 3 or 2.
+	      xdebug.ini depends on version
+	PHPSTOM: port: 9000  
+    XDEBUG 3
+		zend_extension=xdebug.so
+		xdebug.start_with_request = yes
+		xdebug.mode=debug
+
+		xdebug.client_host = 127.0.0.1
+		xdebug.client_port = 6001 #if you want to change the port you can change 
+		xdebug.log = /tmp/xdebug_remote.log
+		xdebug.max_nesting_level = 10000
+		xdebug.idekey = PHPSTORM
+	XDEBUG 2
+			zend_extension=xdebug.so
+			xdebug.idekey = PHPSTORM
+
+			xdebug.default_enable=1
+			xdebug.remote_autostart = 0
+			xdebug.remote_enable = 1
+			xdebug.remote_handler = dbgp
+			xdebug.remote_host = 127.0.0.1
+			xdebug.remote_log = /tmp/xdebug_remote.log
+			xdebug.remote_mode = req
+			xdebug.remote_port = 6001 # if you want to change the port you can change
+
+
+		

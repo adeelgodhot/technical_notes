@@ -1,0 +1,4 @@
+1. there shouldn't be backspace on the ruby installation path like c:\Program Files.
+2. gem install tzinfo-data
+3. Be sure to add it to your Gemfile:
+	gem 'tzinfo-data'

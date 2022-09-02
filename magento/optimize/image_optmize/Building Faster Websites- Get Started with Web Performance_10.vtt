@@ -1,0 +1,49 @@
+So far, we focused exclusively on the loading performance of the website's first load.
+So now, for the final video in the practical segment, we'll briefly touch upon the repeat load.
+One way to improve the loading performance of repeat loads is to cache our static assets more effectively.
+And by effectively, I mean indefinitely.
+Let's make changes so our browser only ever needs to redownload an asset if that asset has changed.
+Caching behavior is server led, so to change this, we have to open the htaccess file and add this ruleset.
+We first check if Apache's mod_headers package is available.
+If yes, then the contents of this block are set.
+This line sets a keep alive header on requests from browser to server, this makes sure connections between the 2 remain open, reducing the time needed to serve files via reducing the number of TCP and TLS connections.
+This line removes the ETag header, which stops caches and browsers from being able to validate files, which forces them to rely on the cache control policy we're defining here.
+Finally, for the file extensions defined here, we give the cached files a very long max age via a cache-control header.
+This value, defined in seconds, informs the browser for how long the cache should be considered fresh.
+When this time has passed, then the browser would typically dump this cache and re download the asset.
+Here, we've set it to a whole year.
+Next, we set the assets to immutable, which indicates to the browser that these assets won't change.
+So basically, with all of this, we're telling the browser that once you've cached the file, that's it, it's not going to change.
+So make sure to hang on to it for as long as you're able to, up to a year.
+If you open the website in Chrome's devtools and check the network tab, you can confirm these changes are working by enabling the cache control header like this.
+So what happens if our files do change?
+This is obviously something which is extremely likely to happen.
+We'll deal with this using static asset revisioning.
+Static asset revisioning means appending a hash of the file's contents to its file name, like so.
+This hash is completely unique to the file, so when it changes, so too does the hash.
+Therefore, as far as the browser is concerned, this is a brand new file which should be downloaded and cached.
+This approach allows us to cache files indefinitely, but also download updates as they are deployed.
+Install these new dependencies the usual way and import them into the gulp file.
+Create a new gulp task called revision like this.
+First, we grab all of the static assets we want to revise.
+Here, we were on the revision module, which generates the content hash and appends it to the filename.
+This module then deletes the original unhashed variants of the file as we don't want duplicates.
+Our hashed files are then sent back to the www root directory.
+Next, we use the rev module to generate a manifest file, which is just a JSON object of key/value pairs, which match files to their post revision file names.
+This, too, is then sent to the root www directory, ready for use in the next step.
+Create a new global task called rewriteRefs, the purpose of this will be to scan HTML and CSS files for references to our now revised static assets and update them to the correct paths.
+The task looks like this.
+First, we grab the manifest JSON generated from the previous revision task, as this will allow us to match each static asset's original filename with their new hashed filename.
+We then grab the HTML and CSS files, pass them to the revRewrite module we've installed, before sending them back to their original location.
+Because we want our content hashes to be as accurate as possible, this revision and rewrite process should only be run once everything else is completed.
+Therefore let's export these two functions from gulp and then in our package.json file , append them here, so they run after the last build task runs.
+Before we test these, as we're also applying our caching strategy to fonts, we should move them from the root www directory to the src directory.
+Otherwise, as asset revisioning is applied over and over as builds are run, the filenames will grow like this, which isn't correct.
+This requires another gulp task to copy these files from src to root, which we should append to our build task.
+Now we've got everything in place, let's give the build a spin.
+Notice how, thanks to the first task, our static assets now have hashes in their filenames, then inside the HTML and CSS, thanks to the second task, the paths are updated to the new filenames.
+Here on out, if we change a file, even just a single character, then rebuild everything, the hash is now different, forcing the browser to redownload the file and discard the cache of the prior version.
+Before we finish up, we need to do a quick tweak to our htaccess file. Back when we were optimizing images, we set up this rule which swaps JPGs for a WebP of the same name if it exists and the browser supports the format.
+However, with hashes now being applied to file names, you're never going to have a JPG and a WebP named the same.
+Therefore, we just need to tweak this regex here, so it only uses the first part when looking for a matching WebP file.
+With this new caching strategy in place, on repeat views, over a much longer period than before, browsers will only spend time redownloading assets now if new versions are available.

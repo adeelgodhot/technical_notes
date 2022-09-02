@@ -1,0 +1,19 @@
+https://www.windowscentral.com/how-enable-ntfs-treat-folders-case-sensitive-windows-10
+
+
+How to enable case sensitivity support on Windows 10
+Starting with Windows 10 version 1803, you can enable case sensitivity at the folder level using these steps:
+
+Open Start.
+Search for Command Prompt, right-click the top result, and select Run as administrator.
+Type the following command to enable NTFS to treat the folder's content as case sensitive and press Enter:
+
+fsutil.exe file SetCaseSensitiveInfo C:\folder\path enable
+
+In the command, remember to include the path to the folder you want to enable case sensitivity.
+
+
+In  Windows Powershell., Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+fsutil.exe file SetCaseSensitiveInfo e:\PHP\Remco\site enable
+fsutil.exe file SetCaseSensitiveInfo e:\PHP\Remco\unboundvr-production enable
+e:\PHP\Remco\site\

@@ -1,0 +1,41 @@
+username: 1c1aaf5520723e7d676b52f604f7d601
+pwd     : 024790dcac1517c0a00f968b2e321d38
+
+a0c9cbe3abec457cb040289bdd317e28
+4bd69c1426f0493710ac165c27a36869
+
+
+How to setup extension via composer:
+
+auth.json
+{
+    "http-basic": {
+       ...
+    },
+    "github-oauth": {
+        "github.com": "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"
+    }
+}
+=============================================================================
+
+1. Add composer repository.
+	Community edition:
+	composer config repositories.firebear composer https://firebearstudio.com/composer/download/package/type/ce/user/1c1aaf5520723e7d676b52f604f7d601/password/024790dcac1517c0a00f968b2e321d38/
+	composer config repositories.firebear composer https://firebearstudio.com/composer/download/package/type/ce/user/a0c9cbe3abec457cb040289bdd317e28/password/4bd69c1426f0493710ac165c27a36869/
+	
+	Enterprise edition:
+	composer config repositories.firebear composer https://firebearstudio.com/composer/download/package/type/ee/user/1c1aaf5520723e7d676b52f604f7d601/password/024790dcac1517c0a00f968b2e321d38/
+	composer config repositories.firebear composer https://firebearstudio.com/composer/download/package/type/ee/user/a0c9cbe3abec457cb040289bdd317e28/password/4bd69c1426f0493710ac165c27a36869/
+	
+2. Setup extension.
+	composer require firebear/importexport
+	composer require firebear/importexport-msi
+	composer require firebear/configurableproducts
+
+composer update firebear/importexport
+
+============ for manual upgrade from 3.5.1 to 3.8.0=========================
+composer require microsoft/microsoft-graph:^1.25
+composer require guzzlehttp/psr7:^1.7
+composer require league/oauth2-client:^2.4
+composer require openspout/openspout:^3.7.4

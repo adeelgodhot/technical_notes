@@ -1,0 +1,2 @@
+ AWS NodeJS backends built using the Serverless Framework
+	https://www.serverless.com/blog/serverless-microservice

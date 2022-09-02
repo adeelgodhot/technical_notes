@@ -1,0 +1,25 @@
+revalidate
+	https://nextjs.org/docs/basic-features/data-fetching/incremental-static-regeneration
+	
+	--------------------
+	When a request is made to a page that was pre-rendered at build time, it will initially show the cached page.
+
+	Any requests to the page after the initial request and before 10 seconds are also cached and instantaneous.
+	After the 10-second window, the next request will still show the cached (stale) page
+	Next.js triggers a regeneration of the page in the background.
+	Once the page generates successfully, Next.js will invalidate the cache and show the updated page. If the background regeneration fails, the old page would still be unaltered.-
+	--------------------------------
+
+App vs Document
+	https://ihatetomatoes-nextjs-101.vercel.app/post/app-and-document
+	
+	App
+		_app.js is a special component that is used to initialize every page. 
+		This is a place where you would do anything that needs to affect all pages, eg. load a global stylesheet.
+		
+	Document
+		_document.js forms the overall structure of the HTML. If you need need to modify the html or body tags, _document.js is the place to do this.
+
+		If you are chasing the perfect Lighthouse score, you will need to add the lang attribute to the html tag.
+
+		We will also change the page background color here. Set the className for body to bg-gray-100.

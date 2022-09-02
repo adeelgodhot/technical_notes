@@ -1,0 +1,116 @@
+What is priceValidUntil?
+
+The warning missing field “ priceValidUntil “ occurs in Google Search Console when a product has no sale price set. The priceValidUntil property only makes sense for products on sale. This value is optional, and not adding it will not harm your product's appearance in the search results.
+
+
+https://feedarmy.com/kb/understanding-warning-pricevaliduntil-in-the-structured-data-data-testing-tool/
+{
+  "@context": "http://schema.org/",
+  "@type": "Product",
+  "name": "MY TITLE",
+  "url": "https://www.example.com/products/my-title.html",
+  "sku": "MY SKU",
+  "gtin13": 123456789,
+  "productID": "517672730687",
+  "brand": {
+    "@type": "Thing",
+    "name": "MY BRAND NAME"
+  },
+  "description": "MY DESCRIPTION",
+  "image": "https://cdn.example.com/s/files/1/1520/5044/products/myimage.jpg?v=1571461056",
+  "offers": 
+      {
+        "@type" : "Offer",
+        "priceCurrency": "GBP",
+        "price": "16.10",
+	"priceValidUntil": "2021-08-09"
+        "itemCondition" : "http://schema.org/NewCondition",
+        "availability" : "http://schema.org/OutOfStock",
+        "url" : "https://www.example.com/products/my-title.html?variant=6848129007679",
+		"image": "https://cdn.example.com/s/files/1/1520/5044/products/myimage.jpg?v=1571461056",
+		"name" : "MY TITLE",
+		"gtin13": 123456789,
+		"sku": "811533B979S",
+		"description" : "MY DESCRIPTION"
+      }
+}
+
+============================
+TEST
+	https://search.google.com/test/rich-results?utm_campaign=devsite&utm_medium=jsonld&utm_source=recipe
+
+Structured Data Markup Helper
+	https://www.google.com/webmasters/markup-helper/
+=========================
+System/configuration/MageWorks/SEO Suite/SEO Markup
+	Use Special Price functionality for Price Valid Until:
+	Price Valid Until Default Value:
+	
+======================
+
+https://www.searchenginejournal.com/google-updates-product-structured-data-guidance/455951/#close
+
+======================
+	Google Rich Snippets in E-commerce Category Pages
+https://moz.com/community/q/topic/55674/google-rich-snippets-in-e-commerce-category-pages
+	MichaelC-15022 
+	I generally recommend putting basic Product markup (name, price, maybe image, URL pointing to the single product page) at that level.  
+	The idea here is to let Google understand that that page contains a big list of products that fit the category as seen in the page title.
+
+	DO NOT put reviews at this level--I saw something from Google recently that says they consider that to be a spammy attempt to get ratings snippets in the results for that page.  
+	Put the reviews only at the single product page level.
+	
+========================
+Rich Snippet Markup Changed: Your Ecommerce Site Can Leverage It
+https://www.v9digital.com/insights/rich-snippet-markup-changed-ecommerce-site-can-leverage/
+
+=====================
+Schema markup concerning category pages on an ecommerce site
+
+https://moz.com/community/q/topic/63613/schema-markup-concerning-category-pages-on-an-ecommerce-site/7
+	I haven't heard of using product markup on category pages until reading your question. 
+	It's a good idea and while researching I came across this other thread from a couple years ago: https://moz.com/community/q/google-rich-snippets-in-e-commerce-category-pages
+
+	My main concern is that most ecomm category pages have a lot of products showing by default, 
+	and if you've got a snippet of JSON+LD for each of those, you're going to hurt your page speeds. 
+	Just something to be mindful of and monitor if you do decide to go this route.
+	
+==========================
+Adding Schema Markup
+Ecommerce Category Pages SEO: 8 Tips to Optimise
+	https://searcht.au/blog/ecommerce-category-pages-seo/
+	
+	Note that Google in their “General structured data guidelines” recommends focusing on adding Schema markup to product pages instead of category pages.
+	
+===========================
+Technical guidelines 
+	https://developers.google.com/search/docs/advanced/structured-data/product#:~:text=We%20recommend%20focusing%20on%20adding%20markup%20to%20product%20pages%20instead%20of%20pages%20that%20list%20products%20or%20a%20category%20of%20products.
+	
+	Technical guidelines 
+	Use markup for a specific product, not a category or list of products. 
+	For example, "shoes in our shop" is not a specific product. 
+	Currently, product rich results only support pages that focus on a single product. 
+	This includes product variants where each product variant has a distinct URL.
+	We recommend focusing on adding markup to product pages instead of pages that list products or a category of products.
+	If you add a review for the product, the reviewer's name must be a valid name for a Person or Team.
+	Not recommended: 50% off on Black Friday
+
+	Recommended: "James Smith" or "CNET Reviewers"
+	
+==============================
+SCHEMA for category pages
+https://salience.co.uk/insight/magazine/schema-for-ecommerce-sites/
+
+==========================
+https://hash.ai/@schema/schemas/OfferCatalog
+https://support.google.com/webmasters/thread/156204378/product-schema-markup-on-category-pages?hl=en
+	I follow the carousel guidelines for marking up lists of things:
+ 
+	https://developers.google.com/search/docs/advanced/structured-data/carousel
+	 
+	First, lists of products are not yet supported. 
+	 
+	If they were, a category page would be classed as a "Summary page and multiple detail pages", which means you should not mark up product entities on the page.
+	You should list only the URLs for each product on the page, which leads Google to the product pages with the detailed markup.
+
+https://developers.google.com/search/docs/advanced/structured-data/carousel

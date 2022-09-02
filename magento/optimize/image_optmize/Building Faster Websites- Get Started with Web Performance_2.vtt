@@ -1,0 +1,16 @@
+When text assets like HTML, CSS and JavaScript are sent from the server to the browser as the website is being loaded, you can compress these files using special file formats.
+The oldest and most widely used of these is GZIP, which has been around since the earliest days of the web.
+The other widely used format is Brotli, which was developed by Google and allows you to achieve even greater levels of compression.
+Typically, the larger the file, the higher the compression level.
+You can see if a resource is being compressed in devtools.
+WebPageTest also shows you here.
+If you on shared hosting like MLE Power, the chances are good these will already be enabled.
+If you manage your own hosting infrastructure, then both GZIP and Brotli are supported by server software like Apache and nginX.
+How much of a difference does compassion make to the loading of a website? We can find out using WebPageTest where we'll run 2 performance audits on our website, one with compassion enabled and one without.
+I can disable compression by setting this header on all HTTP requests.
+So here's the comparison, the uncompressed variant takes around a second longer to start render, and much, much longer to fully load.
+You can see by comparing the waterfalls, that things are just generally taking longer to complete.
+This is reflected in these timings here where many of the key metrics are as much as 50% faster when text assets are being compressed.
+And this is why. Going from compressed with GZIP and Brotli to uncompressed means 275% more bytes are being transferred on page load.
+This is best seen in video form, where the large gaps between the 2 are pretty evident.
+With JavaScript accounting for the bulk of the bytes here, imagine if it were still blocking.

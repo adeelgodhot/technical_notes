@@ -1,0 +1,22 @@
+Google Fonts is the most popular way of including non-standard fonts on a website. Out of the box, in 2020, its performance is already quite good.
+You add them to a website through a script like this.
+Looking at our website's waterfall, we can see the request here, which has already been made non-blocking automatically by the critical module from the previous video.
+The request returned CSS font-face rules, which the browser can then use to download WOFF2 files, which on modern browsers, is the format most commonly used for web fonts.
+These are then applied to the pages text, provided the correct font-family CSS is in place.
+Still, there's a bit of room for improvement.
+The Google Font files are what's called the late discovered resources.
+This is because currently the browser has to wait until the Google Font'ss CSS is downloaded and parsed before it discovers that the font files even exist.
+Whilst we can't preload the WOFF2 files directly, as the file names will change often as the fonts are updated by Google, we can at least Preconnect to the domain, which won't change, to get the network negotiation
+out of the way as early as possible.
+The WOFF2 fonts come from a domain called fonts.gstatic.com.
+Lets Preconnect to this.
+Now, looking at the waterfall, with the change in place, it doesn't seem to be doing anything.
+This, it turns out, is because when Preconnecting to font resources, you need a crossorigin attribute on the link element to satisfy the font face specification.
+Now if we look at the waterfall again, the Preconnect looks to be working and compared to before the fonts starts downloading immediately once the Google Fonts CSS is downloaded, meaning those web fonts will appear on the page much sooner.
+Another popular recommendation to speed up Google Fonts is to preload the initial CSS like so.
+In this case however, if we compare the waterfall with and without Preload, there's little difference.
+This is because the only blocking resource here is HTML,
+so any subsequent requests are fired as soon as the HTML parser discovers them.
+So essentially, there's nothing to Preload as the browser in this instance is already downloading this resource immediately.
+It's worth remembering, though, that MLE power is still only a relatively simple test website. 
+On much bigger and more complicated websites, preloading Google Fonts will likely make a difference.

@@ -1,0 +1,52 @@
+Currently, the website's CSS and JavaScript is split across multiple files.
+By bundling these into single files, we'll help the browser to download them faster.
+This is because compression formats like gzip and Brotli work better on larger files, so even though we're downloading the same code either way, our bundled files will still be a fewer in bytes.
+At the moment, our third party files are sitting in the root www directory.
+Where possible, we'll swap these for NPM packages, which in the long term is better for things like version control.
+We'll make sure to install the same package versions as we are currently using to make sure the code is exactly the same.
+To bundle our CSS into a single file, we'll be using SASS, the CSS preprocessor, which extends the language with more programmatic capabilities.
+Create a new directory in src called scss, and style.css from the root directory to here.
+Rename it to style.scss, which is the typical SASS file extension.
+Inside the file, we can import the CSS components for Bootstrap like this.
+Because SASS is a preprocessor language, it needs to be compiled into CSS.
+Thankfully, this kind of thing is what gulp was made for.
+In the command line, we need to install the SASS dependencies,
+then in the gulpfile, let's import them so they're available to our gulp tasks.
+And now let's create the task itself.
+This takes the sass, which now sits in the src directory, compiles it into CSS and then drops it in the root WWW directory, where the website will expect it to be.
+The compressed setting here means SASS will remove all line breaks and white space from the CSS, which has an impact on the file size of the compiled file.
+Now, we just need to add this to the build task and we're ready to go. gulp build.
+And here's the file. Looks fine.
+Let's delete these CSS files in the root directory as they are now being imported instead. We need to remove the link elements from the HTML as well.
+One final thing. In the gulpfile, update the clean task to remove any CSS files from the root directory before a build to make sure any old files are purged.
+And then in the command line, rerun gulp build.
+Now if I view the website, everything looks the same, which is good news.
+Let's look at the amount of bytes we've saved. Before, the total weight of the then separate CSS files came to 195kb, which came down to 36kb if compressed with gzip or 24kb using Brotli.
+Now we have our bundled CSS, which weighs in at 165kb.
+If gzipped, this comes down to 32kb or with Brotli, it comes down to 22kb,
+so a saving of just a few kilobytes. It may not seem like much, but you have to think that as the website grows and develops, this gap will only widen.
+Create a new js directory in src and move global.js also cookieinfo.min.js from the root to here.
+The latter of which doesn't have an NPM package, so we're forced to use the same file. As for every other JavaScript file here, delete it.
+In the global.js file, import the other scripts at the top, including the cookieinfo script.
+Moving on, like with most things in web development, there's plenty of ways to bundle JavaScript. Here, we're going to use rollup.
+To get started, install these dependencies.
+Now open the gulpfile and import the dependencies at the top of the document along with the rest.
+And as for the gulp task itself, here's the code.
+So here, we're using rollup, the JavaScript bundler, to grab the global.js file from source.
+Next, the contents of the new file are passed to a plugin called nodeResolve, which lets us import packages from node_modules.
+Then they go to terser, which is a function that in addition to removing line breaks and whitespace renames functions and variables where possible to something shorter without changing the behavior of the code.
+This can have a huge impact on the final size of the bundle as JavaScript does have a tendency to just grow and grow in file size as websites grow and develop.
+Finally, the bundled JavaScript is sent to the root www directory.
+As before, we just need to update the clean and build tasks.
+In the HTML, we can now also remove the script elements which reference the now bundled JavaScript.
+Finally, if we run gulp build, we'll see some additional log output and then in the root directory we'll see the bundled minified JavaScript file.
+Again, let's run some basic comparisons to see how many bytes we've saved.
+So before, when each script was separate, together they came to 686kb uncompressed, 190kb with gzip or 151kb with Brotli.
+Bundled, it's 158kb uncompressed, 57kb with gzip or 48kb with Brotli.
+So, at least 50% smaller then. A big saving.
+We've changed a lot this time around.
+Instead of loading multiple smaller files, we've combined our CSS and our JavaScript into single bundles.
+Because compression formats work better on larger files, our bundled code is now able to download quicker than if it were separate, meaning the browser is able to process them much sooner.
+The same applies for Time to Interactive, which has now more than halved, beating our goal for the metric.
+If you have a fast rendering website and a faster loading JavaScript file, that's the perfect recipe for improvements here.
+Overall, the Lighthouse score has increased to 81, so we're not too far away now from the green.

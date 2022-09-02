@@ -35,3 +35,61 @@ Link child to configurable product
 		Create Configurable Products => Off (if parent already exists)
 		Product attributes for variations
 			=> color, size, length
+=====================
+Migration 1 to m2
+	Import Settings:
+		Platform: magento 1
+	To import multiple images, try duplicate row of parent: but put only the fields of sku and images, and leave the rests with blank.
+		NOTE: in that case, store shouldn't be set, that will cause the critical issue.
+		
+	the exported file from m1 contain "category_ids" with category ids
+		That should contain the list of category names instead of category ids
+		Or
+		etc/platforms.xml
+			<attribute code="category_ids" reference="categories" />
+			==>
+			<attribute code="category_ids" reference="category_ids" />
+			
+			but this work around will not import category becuase the system field for category is only "categories".
+	
+	
+	visibility: accept only number
+				
+				Catalog, Search: 4
+				Not Visible Individually : 1
+				Catalog : 2
+				Search : 3
+				Catalog, Search: 4
+	status: accept only number
+				Enabled : 1
+				Disabled: 0
+	_websites: websites
+	_store: store
+	url_key: url_path
+	
+    ----------------------------------
+	import customers using csv from m1.
+	https://docs.google.com/spreadsheets/d/13FemIzzexF5koAdQYjbcKscqoCfXyknYWkQkbSZGPsk/edit#gid=1732782711
+	
+		Amends to m1 csv
+		billing_* => _address_*
+		website   => _website
+		remove "is_subscribed","group"
+		"_address_country" => "_address_country_id"
+		
+		group_id => 6 instead of "Affliate"
+		In profile,
+			Map
+				"country_id" => '_address_country'
+				"street"     => '_address_streetfull'
+				"_address_default_billing_" => 1
+				"_address_default_shipping_" => 1
+				
+		php bin/magento customer:hash:upgrade
+	
+	export orders
+	https://github.com/firebearstudio/iimagento1
+===========================
+
+			
+			    

@@ -1,0 +1,31 @@
+<!DOCTYPE html>  
+<html>  
+  
+<head>  
+<title> jQuery $.proxy() method </title>  
+  
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> </script>  
+  
+<script>  
+$(document).ready(function() {  
+myTest = function() {  
+//$("span").click($.proxy(this.demoClick, this));  
+$("span").click(this.demoClick);  
+};  
+  
+myTest.prototype.demoClick = function(e) {  
+alert(e.currentTarget.nodeName);  
+};  
+var i = new myTest();  
+});  
+</script>  
+</head>  
+  
+<body>  
+<h3> It is an example of using the $.proxy() method. </h3>  
+<div> Click the below text to see the effect </div>  
+</br>  
+<span> Click me </span>  
+</body>  
+  
+</html>  

@@ -1,3 +1,6 @@
+Commonly used uiCollection properties
+	https://devdocs.magento.com/guides/v2.3/ui_comp_guide/concepts/ui_comp_uicollection_concept.html	
+
 
 lib/web/mage/apply/main.js ::init function
    _.toArray(nodes).map(getData).concat(virtuals)

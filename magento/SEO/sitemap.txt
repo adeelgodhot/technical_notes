@@ -1,0 +1,31 @@
+Creating sitemaps for Magento multistore instances
+
+	https://www.human-element.com/sitemaps-magento-multistore
+	
+How to Add a Sitemap to Google Search Console (Step-by-Step)
+	https://raddinteractive.com/how-to-add-a-sitemap-to-google-search-console-step-by-step/
+
+Split up your large sitemaps
+	https://developers.google.com/search/docs/advanced/sitemaps/large-sitemaps?hl=en&ref_topic=4581190&visit_id=637965546927964866-1814314253&rd=1
+	
+Guideline for sitemap
+	https://developers.google.com/search/docs/advanced/sitemaps/build-sitemap
+Dealing with Sitemap cross-submissions
+	https://developers.google.com/search/blog/2007/10/dealing-with-sitemap-cross-submissions
+Must subdomains be included in sitemap when using SearchConsole Domain property?
+	https://support.google.com/webmasters/thread/98497511/must-subdomains-be-included-in-sitemap-when-using-searchconsole-domain-property?hl=en
+Duplicate content for different subdomains for different countries that use the same language?
+	https://support.google.com/webmasters/thread/38914148/duplicate-content-for-different-subdomains-for-different-countries-that-use-the-same-language?hl=en
+=======================
+How To Implement The hreflang Element Using XML Sitemaps
+	https://searchengineland.com/how-to-implement-the-hreflang-element-using-xml-sitemaps-123030
+
+test tool
+	https://technicalseo.com/tools/hreflang/
+	https://www.coderseo.com/canonical-tag-checker
+	
+https://developers.google.com/search/docs/advanced/crawling/localized-versions?hl=en&visit_id=637964358257293164-3030048921&rd=1
+https://developers.google.com/search/docs/advanced/sitemaps/large-sitemaps?hl=en&visit_id=637974514088036773-2960082312&rd=1
+
+https://www.searchviu.com/en/hreflang-implementation-guide/ // good one
+

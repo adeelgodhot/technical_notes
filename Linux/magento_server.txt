@@ -10,9 +10,11 @@
 	pwd: calvo
 	
 	usermod -a -G www-data calvo
+	usermod -a -G www-data l-carb-shop
 5.  configure nginx
 	sudo ln -s /etc/nginx/sites-available/calvo /etc/nginx/sites-enabled/calvo
 	sudo ln -s /etc/nginx/sites-available/dropbox /etc/nginx/sites-enabled/dropbox
+	sudo ln -s /etc/nginx/sites-available/darscrubs_dev /etc/nginx/sites-enabled/darscrubs_dev
 6. Install php-fpm
 	sudo apt install php7.4-fpm
 7. download magento
@@ -35,7 +37,7 @@
 	sudo apt install -y php7.4-gd
 	sudo apt install -y php7.4-xdebug
 	sudo apt-get install php7.4-imagick
-	sudo apt install -y php7.4-bcmath php7.4-curl php7.4-dom php7.4-intl php7.4-pdo-mysql php7.4-simplexml php7.4-soap php7.4-xmlwriter php7.4-xsl php7.4-zip php7.4-gd
+	sudo apt install -y php7.4-bcmath php7.4-curl php7.4-dom php7.4-intl php7.4-pdo-mysql php7.4-simplexml php7.4-soap php7.4-xmlwriter php7.4-xsl php7.4-zip php7.4-gd php7.4-xdebug php7.4-imagick
 9. install MariaDB 10.4 
 	sudo apt install mariadb-client-core-10.3
 	https://computingforgeeks.com/how-to-install-mariadb-on-ubuntu/
@@ -134,3 +136,46 @@
 	
 
 		http://15.185.117.186/admin_r9igou
+		
+13. list apache modules
+	apachectl -M
+	
+		 core_module (static)
+		 so_module (static)
+		 watchdog_module (static)
+		 http_module (static)
+		 log_config_module (static)
+		 logio_module (static)
+		 version_module (static)
+		 unixd_module (static)
+		 access_compat_module (shared)
+		 actions_module (shared)
+		 alias_module (shared)
+		 auth_basic_module (shared)
+		 authn_core_module (shared)
+		 authn_file_module (shared)
+		 authz_core_module (shared)
+		 authz_host_module (shared)
+		 authz_user_module (shared)
+		 autoindex_module (shared)
+		 deflate_module (shared)
+		 dir_module (shared)
+		 env_module (shared)
+		 fcgid_module (shared)
+		 filter_module (shared)
+		 mime_module (shared)
+		 mpm_prefork_module (shared)
+		 negotiation_module (shared)
+		 php7_module (shared)
+		 proxy_module (shared)
+		 proxy_fcgi_module (shared)
+		 reqtimeout_module (shared)
+		 rewrite_module (shared)
+		 security2_module (shared)
+		 setenvif_module (shared)
+		 status_module (shared)
+		 unique_id_module (shared)
+	 
+	 
+	a2enmod rewrite
+	systemctl restart apache2

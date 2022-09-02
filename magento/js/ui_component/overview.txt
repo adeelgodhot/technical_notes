@@ -143,3 +143,23 @@ How to define knockout property as observable in Magento 2?
 			});
 		});
 		Using initObservable() method from the parent element.js file, you can define property as observables.
+		
+		
+============================
+load template debug
+	
+	http://dev.magento244.com/static/version1655248884/adminhtml/Magento/backend/en_US/Rahmenversand_PagebuilderFAQ/js/content-type/faq/preview.js
+
+
+	http://dev.magento243.com/static/version1655270677/adminhtml/Magento/backend/en_US/Magento_Ui/js/lib/knockout/template/engine.js :: 81
+	http://dev.magento243.com/static/version1655270677/adminhtml/Magento/backend/en_US/Magento_Ui/js/lib/knockout/template/engine.js
+		:: 173 :: RemoteTemplateEngine.prototype.makeTemplateSource
+
+	http://dev.magento243.com/static/version1655270677/adminhtml/Magento/backend/en_US/knockoutjs/knockout.js :: 6142, 6138
+		templateComputed = ko.renderTemplate(template, innerBindingContext, options, element);
+		:: 5942 :: 5957
+		
+		executeTemplate :: 5888
+
+	http://dev.magento243.com/static/version1655270677/adminhtml/Magento/backend/en_US/Magento_PageBuilder/js/content-type/preview.js :: 683
+	

@@ -6,4 +6,45 @@ E:\PHP\Darscrubs\master_cloud\live\vendor\firebear\importexport\Setup\EavSetup.p
 		
 E:\PHP\Darscrubs\master_cloud\live\vendor\firebear\importexport\Model\Import\Attribute.php
 	:: 1074
+	$rowData['option']['swatch'] = $valueSwatch;
+    unset($rowData[self::COLUMN_SWATCH_ATTRIBUTE_OPTION]);
+	=>
+	$rowData['option']['swatch'] = $valueSwatch;
 	$rowData['option']['swatch_type'] = $rowData[self::COLUMN_SWATCH_ATTRIBUTE_TYPE];
+	unset($rowData[self::COLUMN_SWATCH_ATTRIBUTE_OPTION]);
+
+	
+============================================
+3.8.0
+
+To increase max length of image path
+	1. E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\framework\File\Uploader.php
+																				:: 499 :: getCorrectFileName
+																				$maxFilenameLength = 90; => 255
+To skip the validation of image	for german
+	2. E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-catalog-import-export\Model\Import\Product\Validator\Media.php :: 93 :: isValid
+						return true;
+
+To allow sku of int
+	3. E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\firebear\importexport\Model\Import\Product.php :: 4945 :: 
+			$sku = mb_strtolower(strval($rowData[self::COL_SKU]));
+	4. etc/platforms.xml
+	
+To special price
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\firebear\importexport\Model\Source\Platform\Magento.php :: 115 :: prepareRow
+		117 - 131
+		 /* customize */
+        if (isset($rowData['special_price']) && $rowData['special_price'] === "") {
+            unset($rowData['special_price']);
+        }
+        // html decode //
+        $htmlAttrList = ['description', 'short_description', 'a99_nutrition_remarks'];
+        foreach($htmlAttrList as $htmlAttr) {
+            if (isset($rowData[$htmlAttr])) {
+                $rowData[$htmlAttr] = html_entity_decode($rowData[$htmlAttr]);
+                $rowData[$htmlAttr] = str_replace("_x000D_", "", $rowData[$htmlAttr]);
+            }
+        }
+        /* end */
+	
+	

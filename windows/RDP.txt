@@ -1,0 +1,30 @@
+change-rdp-port
+
+
+https://v2cloud.com/tutorials/change-rdp-port
+
+In this tutorial, we will learn how to change the RDP port of a Remote Desktop Service to 33091. To do it:
+
+STEP 1
+Connect to the Windows Client/Server over RDP
+
+Launch the Registry Editor (press WIN+R, type regedit, press Enter)
+
+STEP 2
+Navigate to the Remote Desktop Registry (RDP-Tcp)
+
+Go to HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp.
+
+STEP 3
+Change the default RDP port number
+
+Double-click on the PortNumber value and change the port to 33091 (Decimal).
+
+STEP 4
+Connect to the windows computer after restarting via RDP and include the new RDP port.
+net stop termservice & net
+STEP 5
+Confirm listening port for RDP
+
+Once you have successfully connected to the windows computer using the new RDP port, you can use the netstat -na | Find “List” command to confirm Remote Desktop Service is listening on the new port.
+

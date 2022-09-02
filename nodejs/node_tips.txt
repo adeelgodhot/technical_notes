@@ -1,0 +1,94 @@
+1. REPL
+2. nodemon
+	npm install nodemon
+3. 
+	typeof strVal
+	3**4=81
+	
+	arr1.concat(arr2)
+	
+	myArray.forEach((val) => {
+	})
+	
+	for(key in myObj) {
+		console.log(myObj[key])
+	}
+	
+	---------------------
+	The Object.entries() method returns an array of a given object's own enumerable string-keyed property [key, value] pairs.
+	
+	Object.entries(myObj).forEach(([key, value])=>{
+	})
+	---------------------
+	Object.keys(myObj)
+	Object.values(myObj)
+	
+	------------------------
+	Template literals
+	const v1 = 2;
+	const val = `
+	     
+		${v1} ${5+6} ${func1(5, 10)}
+		single 1
+		single 2
+		
+	`
+	
+	----------------------------
+	Math
+	Math.random() * 100
+	Math.floor()
+	Math.ceil()
+	----------------------
+	setImmediate((val)=>{
+		console.log(val)
+	}, "Hello World")
+	------------------
+	Promise
+	
+		**************************
+		const Pro1 = new Promise((resolve, reject)=>{
+			resolve('success');
+			reject('reject')
+		});
+		Pro1.then(
+			(val) => { console.log(`TRUE : ${val}`) },
+			(err) => { console.lg(`ERROR!! ${error}`) }
+		);
+		***************************
+		
+		let counter = 0;
+		async function hello(mes){
+		   console.log(mes);
+		   counter++;
+		   let pro1 = new Promise((res,rej)=>{
+			 setTimeout(res("workstest"), 2000);
+		   });
+		   let result = await pro1;
+		   return `${mes} ${counter} ${result}`;
+		}
+
+		hello('Hello World').then((val)=>{
+		   console.log(val);
+		})
+
+	
+		***********************
+		const Pro1 = new Promise((resolve, reject)=>{
+			setTimeout(()=>{
+				reject('Timed out') // won't be called because it's already executed
+			}, 1000)
+
+			reject('reject')
+		});
+		
+		if resolve is executed first, then reject isn't canceled.
+		************************
+	---------------------------------------
+	emiter=events.EventEmitter();
+	emiter.on('', ()=>{})
+	emiter.emit('')
+	
+	------------------
+	module.filename
+	exports.test1 = test1

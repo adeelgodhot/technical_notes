@@ -1,0 +1,77 @@
+https://www.searchenginejournal.com/google-structured-data-preference/297479/#close
+https://support.google.com/merchants/answer/6386198?hl=en
+https://developers.google.com/search/docs/advanced/structured-data/product
+
+What is JSON-LD?
+	JSON-LD is a scripting language that allows publishers to communicate important information to search engines.
+
+What is Microdata Structured Data?
+	Microdata structured data communicates the same information that JSON-LD does, but it is embedded within the HTML of the website. In my opinion, this could complicate the addition and removal of structured data.
+
+Which Type of Structured Data does Google Prefer?
+
+	Google Prefers JSON-LD Structured Data
+	Google’s John Mueller made it clear that Google preferred JSON-LD structured data. Personally, I prefer it as well because it’s easier to implement. The scripting language follows a set of easily learned rules and can easily be added or removed from a site.
+	
+// brand //////////
+     	"brand": {
+			"@type": "Brand",
+			"name": "manufacturer name"
+		  }
+
+		  Google expect brand to be of the schema.org type Brand, so you would need to change that to:
+ 
+		<div class="EanCode" itemprop="brand" itemtype="https://schema.org/Brand" itemscope>
+			<meta itemprop="name" content="TopQ" />TopQ
+		</div>
+///////////////////
+https://schema.org/docs/gs.html
+
+//////////////////
+What is priceValidUntil?
+
+The warning missing field “ priceValidUntil “ occurs in Google Search Console when a product has no sale price set. The priceValidUntil property only makes sense for products on sale. This value is optional, and not adding it will not harm your product's appearance in the search results.
+
+
+https://feedarmy.com/kb/understanding-warning-pricevaliduntil-in-the-structured-data-data-testing-tool/
+{
+  "@context": "http://schema.org/",
+  "@type": "Product",
+  "name": "MY TITLE",
+  "url": "https://www.example.com/products/my-title.html",
+  "sku": "MY SKU",
+  "gtin13": 123456789,
+  "productID": "517672730687",
+  "brand": {
+    "@type": "Thing",
+    "name": "MY BRAND NAME"
+  },
+  "description": "MY DESCRIPTION",
+  "image": "https://cdn.example.com/s/files/1/1520/5044/products/myimage.jpg?v=1571461056",
+  "offers": 
+      {
+        "@type" : "Offer",
+        "priceCurrency": "GBP",
+        "price": "16.10",
+	"priceValidUntil": "2021-08-09"
+        "itemCondition" : "http://schema.org/NewCondition",
+        "availability" : "http://schema.org/OutOfStock",
+        "url" : "https://www.example.com/products/my-title.html?variant=6848129007679",
+		"image": "https://cdn.example.com/s/files/1/1520/5044/products/myimage.jpg?v=1571461056",
+		"name" : "MY TITLE",
+		"gtin13": 123456789,
+		"sku": "811533B979S",
+		"description" : "MY DESCRIPTION"
+      }
+}
+
+============================
+TEST
+	https://search.google.com/test/rich-results?utm_campaign=devsite&utm_medium=jsonld&utm_source=recipe
+
+Structured Data Markup Helper
+	https://www.google.com/webmasters/markup-helper/
+=========================
+System/configuration/MageWorks/SEO Suite/SEO Markup
+	Use Special Price functionality for Price Valid Until:
+	Price Valid Until Default Value:

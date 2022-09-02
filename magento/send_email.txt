@@ -74,3 +74,4 @@ class Email extends \Magento\Framework\App\Helper\AbstractHelper
             $transport->sendMessage();
             $this->inlineTranslation->resume();
 >>>>>>>>>>>>>>>>>>>>>
+

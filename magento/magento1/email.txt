@@ -1,0 +1,7 @@
+E:\PHP\Remco\site\app\code\core\Mage\Core\Model\Email\Template.php
+	:: 408
+		$text = $this->getProcessedTemplate($variables, true);
+		echo $text;exit;
+		
+E:\PHP\Remco\site\app\code\core\Mage\Sales\Block\Order\Totals.php :: 286 :: getTotals
+E:\PHP\Remco\site\app\design\frontend\base\default\template\sales\order\totals.phtml

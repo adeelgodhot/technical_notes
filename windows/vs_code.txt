@@ -8,3 +8,55 @@ https://code.visualstudio.com/docs/remote/troubleshooting#_installing-a-supporte
 
 3. material icon
 4. prettier 
+
+
+---------------------------------
+DEBUG NODE IN VSCODE
+
+https://code.visualstudio.com/docs/nodejs/nodejs-debugging
+
+--------------------------
+troubleshooting 
+Error: No such file (sftp liximomo extension)
+
+https://stackoverflow.com/questions/67506693/error-no-such-file-sftp-liximomo-extension
+
+------------------
+nextjs debugging
+https://nextjs.org/docs/advanced-features/debugging
+
+-------------------
+ruby on rails debugging
+
+	https://rahul-arora.medium.com/debugging-ruby-on-rails-server-in-vs-code-819b45113e78
+	
+	First, to enable debugging for Ruby, install Ruby extension
+	Next, we need to install gems that actually do the debugging
+		# for Ruby 2.x
+		$ gem install ruby-debug-ide
+		$ gem install debase
+		
+	So go to the debug tab on the left in VS Code. Create a launch.json file for Ruby if don’t already have it else click on the gear icon at the top to open it. Then click ‘Add configuration’ and select ‘Ruby: Rails server’ option. It will add config something like this:
+		{
+			"name": "Rails server",
+			"type": "Ruby",
+			"request": "launch",
+			"program": "${workspaceRoot}/bin/rails",
+			"args": [
+				"server"
+			]
+		}
+		If you want to use port other than default port (3000) for the rails server then you can specify that in arguments like this
+		"args": [
+			"server",
+			"-p",
+			"3100"
+		]
+		
+----------------------------
+configure vs code for rails with 2 spaces
+https://www.codegrepper.com/code-examples/javascript/configure+vs+code+for+rails+with+2+spaces
+
+	"editor.insertSpaces": true,
+    "editor.tabSize": 2,
+----------------------------

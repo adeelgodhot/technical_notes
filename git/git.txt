@@ -121,3 +121,91 @@ git push origin main --force
 	How do I make Git ignore file mode (chmod) changes?
 	
 	git config core.fileMode false
+	
+---------------------------
+how to change commit author for already commited 
+https://confluence.atlassian.com/bitbucketserverkb/how-do-you-make-changes-on-a-specific-commit-779171729.html
+git commit --amend -C HEAD --reset-author
+git commit --amend --author="orce-mage"
+
+git filter-branch --env-filter '
+WRONG_EMAIL="adeelgod@hotmail.com"
+NEW_NAME="orce-mage"
+NEW_EMAIL="nikolovorce2@gmail.com"
+
+if [ "$GIT_COMMITTER_EMAIL" = "$WRONG_EMAIL" ]
+then
+    export GIT_COMMITTER_NAME="$NEW_NAME"
+    export GIT_COMMITTER_EMAIL="$NEW_EMAIL"
+fi
+if [ "$GIT_AUTHOR_EMAIL" = "$WRONG_EMAIL" ]
+then
+    export GIT_AUTHOR_NAME="$NEW_NAME"
+    export GIT_AUTHOR_EMAIL="$NEW_EMAIL"
+fi
+' --tag-name-filter cat -- --branches --tags
+------------------------------------
+"Out of memory - malloc failed"
+
+In .git/config file
+[pack]
+threads = 1
+deltaCacheSize = 128m
+packSizeLimit = 128m
+windowMemory = 128m
+[core]
+packedGitLimit = 128m
+packedGitWindowSize = 128m
+
+resolves this issue.
+
+----------------------------
+git config http.postBuffer 4294967296
+git config http.postBuffer 3221225472
+git config http.postBuffer 3865470566
+git config http.postBuffer 3650722201
+
+--------------------------
+git clone --mirror https://github.com/mage-oc-star/CalvoCover.git
+java -jar bfg.jar --strip-blobs-bigger-than 50M CalvoCover.git
+
+--------------------
+create branch
+
+git branch {b}
+git checkout -b {b}
+
+---------------------
+How to Delete a Local Branch in Git
+
+	git branch -d  local_branch_name
+	
+	git branch -D local_branch_name
+		The -D flag, with a capital D (which is an alias for -- delete --force), forcefully deletes the local branch, regradless of its merged status.
+
+---------------------
+How to Delete a Remote Branch in Git
+
+	git push remote_name -d remote_branch_name
+	
+---------------------
+To view any remote branches, you use this command:
+
+	git branch -a
+	
+-------------------------
+
+git checkout staging
+git cherry-pick [commit_number]
+-------------------------
+git ignore
+https://www.atlassian.com/git/tutorials/saving-changes/gitignore
+
+/app/*/ means allowing the only directories just under app folder. like app/etc, app/code, app/design, but not files.
+app/code/**
+it allows all files under code directory.
+
+to select vendor: 
+	/vendor
+	/vendor/**
+	only "/vendor/**" doesn't work because the point cannot cross against vendor.

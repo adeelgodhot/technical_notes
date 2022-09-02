@@ -26,3 +26,37 @@
                         <argument name="sort_order" xsi:type="string">20</argument>
                     </arguments>
                 </block>
+4. 
+	<move element="minicart" destination="header.panel" />
+        <move element="top.search" destination="sidebar.additional" />
+        <move element="breadcrumbs" destination="header.panel" />
+		
+5. Links
+	\Magento\Framework\View\Element\Html\Link
+	
+	<referenceContainer name="header.panel">
+		<block class="Magento\Framework\View\Element\Html\Links" name="header.links">
+			<arguments>
+				<argument name="css_class" xsi:type="string">header links</argument>
+			</arguments>
+		</block>
+	</referenceContainer>
+	
+	<block class="Magento\Customer\Block\Account\RegisterLink" name="register-link">
+		<arguments>
+			<argument name="label" xsi:type="string" translate="true">Create an Account</argument>
+		</arguments>
+	</block>
+	
+	<referenceBlock name="header.links">
+		<block class="Magento\Checkout\Block\Link" name="checkout.link" before="-">
+			<arguments>
+				<argument name="label" xsi:type="string" translate="true">Checkout</argument>
+			</arguments>
+		</block>
+		<block class="Magento\Checkout\Block\Cart\Link" name="cart.link" before="checkout.link">
+			<arguments>
+				<argument name="label" xsi:type="string" translate="true">My Cart</argument>
+			</arguments>
+		</block>
+	</referenceBlock>

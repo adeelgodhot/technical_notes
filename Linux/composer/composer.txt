@@ -3,6 +3,7 @@ composer install
 Check for composer.lock file
 If not, auto generate composer.lock file (Using composer update)
 Install the specified versions recorded in the composer.lock file
+
 composer update
 
 Go through the composer.json file
@@ -100,3 +101,20 @@ When to install and when to update
 
 	composer update is mostly used in the 'development phase', to upgrade our project packages according to what we have specified in the composer.json file,
 	composer install is primarily used in the 'deploying phase' to install our application on a production server or on a testing environment, using the same dependencies stored in the composer.lock file created by composer update.
+	
+=====================================
+install composer package from local repo
+
+https://getcomposer.org/doc/05-repositories.md
+	Artifact#
+
+root dir: /var/www/daniel_m2_l_carb_shop/
+1. /var/www/repo/firebear_importexport_ce_v3.8.0.zip
+2. composer.json	
+	"repositories": [
+        {
+            "type": "artifact",
+            "url": "../repo/"
+        }
+    ],
+3. composer require firebear/importexport

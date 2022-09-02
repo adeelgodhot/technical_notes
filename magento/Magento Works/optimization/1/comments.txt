@@ -1,0 +1,50 @@
+-----------------------------
+About Project
+
+ABOUT THE CLIENT
+Our client is a Germany-based company that sells jewelry online. Like with any other e-commerce business, the client’s revenue directly depends on the quality of user experience that customers get when visiting its internet store. However, the problem was that the site was loading incredibly slowly. Additionally, the checkout performance was sluggish, too. So, the client reached-out to us with a request to fix these issues and optimize the website for speed.
+
+-----------------------------
+Challenges
+To increase the page speed of the client’s website, we had to optimize its front-end and back-end performance. However, when our team reviewed the source code, they found out that its quality was rather poor. Besides, previous developers left a number of security vulnerabilities unaddressed. So, we had to eliminate these critical issues before proceeding to the site optimization.
+
+On top of that, the client’s online store was based on Magento 2.2.7 which is an outdated version of the platform. This was an additional challenge for our engineers.
+-----------------------------
+
+Work stages
+
+To make the client’s site faster, we applied a number of standard optimization techniques. Here’s what we did:
+
+Implemented lazy loading to load large-size media elements after the main content of the site and only when a user scrolls down to them.
+
+Optimized JavaScript and CSS to clean up unnecessary characters (e.g., spaces) from the code and reduce the number and size of server requests for JavaScript files.
+
+Added auto height for a homepage slider to improve the site’s responsiveness
+
+Optimized font delivery to allow web texts to load in default system fonts first
+
+Removed unused Magento modules to decrease the code maintenance work, lower security risks, and made platform structure more lightweight
+
+Added Critical CSS so that pages would render content faster, especially on mobile devices
+
+Our team spent approximatly 70 hours completing this project. This time covers the work required to optimize the website, rewrite JavaScript and CSS, and fix major security vulnerabilities. As a result, we considerably reduced the page load time, making the client’s website much faster and user-friendly.
+
+
+===================================
+PLATFORM
+Magento 2.0
+
+CLIENT INDUSTRY
+e-commerce (jewelry segment)
+
+CLIENT LOCATION
+Germany
+
+TEAM SIZE
+3 team members (DevOps, PM, and developer)
+
+PARTNERSHIP PERIOD
+one month
+
+TECHNOLOGIES
+Magento 2 JavaScript bundling with MagePack

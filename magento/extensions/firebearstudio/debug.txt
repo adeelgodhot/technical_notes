@@ -34,3 +34,29 @@ Link child To configurable product
 		:: saveConfigurationVariations
 		
 		:: $this->prepareConfigurableVariation($rowData, $configurableData); :: 1448
+		
+		
+	========================
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\firebear\importexport\Traits\Import\Map.php :: 31
+
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\firebear\importexport\Model\Import.php :: prepareMap :: 267
+
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\firebear\importexport\etc\platforms.xml
+
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\firebear\importexport\Model\Import\Source\Xlsx.php :: 183 :: current
+
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\firebear\importexport\Model\Source\Platform\Magento.php :: 532 :: saveValidatedBunches
+																											:: 115 :: prepareRow
+																											:: 614
+																												$prevData = $this->mergeData($rowData, $prevData, $separator);
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-catalog-import-export\Model\Import\Product\Validator\Media.php :: 93 :: isValid
+
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\firebear\importexport\Model\Import\Product\ImageProcessor.php :: 353 :: processMediaGalleryRows		
+																													:: getUploader :: 933
+																												343 :: 	
+																													
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\firebear\importexport\Model\Import\Uploader.php :: 144 : move	
+
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\framework\File\Uploader.php
+																				:: 499 :: getCorrectFileName
+																				$maxFilenameLength = 90;

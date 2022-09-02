@@ -1,0 +1,88 @@
+Currently on MLE Power, we're using Google Fonts.
+There's an alternative to this, hosting them ourselves. Self hosted fonts open the door to more optimizations that just aren't possible with third party hosted fonts, as we now have more control over how these fonts are downloaded during the loading process.
+Let's make the switch.
+First off, create a new directory in the root called fonts. Our self-hosted fonts will live here.
+Next, we need to download Lato, the Google font we've been using.
+How do we do this? One way is the same as the browser, grab the links from the Google Fonts CSS and download each file one after the other.
+This can be a little cumbersome though, so my preferred way is to use this helper app.
+Search for Lato, grab the fonts we need, which in this case is regular, regular italic, bold and bold italic.
+Make sure only Latin is ticked here.
+This means only the basic font characters will be included, reducing the filesize of the font file. 
+Removing characters from a font you don't need is called subsetting.
+Here's the font-face CSS which we'll need to copy and paste into our own.
+By default, this includes a very browser compatible list of font formats, many of which in 2020 just aren't required.
+By clicking this modern browser tab, it reduces the file formats down to just WOFF and WOFF2, which are supported by modern browsers all the way back to Internet Explorer 9.
+Change this path here to match our own directory structure, then copy all of this and place it in your style.scss file towards the top, like so.
+Finally, back on the web page, download the fonts using this button and put them in the fonts directory.
+For your convenience, you can also just download the CSS and the fonts from this video's attachment in case this neat tool ever goes offline.
+Now, let's go back to the CSS we've added.
+font-face rules allow us to define our custom fonts.
+In this first instance, we're declaring a font called Lato, which will be shown when the CSS font style is set to normal, with font weight of 400, which is typically the browser default anyway.
+We're then linking to the font we would like to show when these conditions are met, which are downloaded via these urls here.
+You'll notice however, that there's a local function here referencing our font name.
+All this does is tell the browser that if the user already has this font installed locally on their machine, then don't waste time redownloading it.
+Now we've got our local fonts in place, let's remove all references to Google Fonts from our head template.
+Follow this up with a gulp build and voila.
+Refresh the page, and if you inspect the code, the Lato font should now be self-hosted and not coming from Google Fonts.
+So here's the waterfall for Google Fonts versus self-hosted fonts.
+A concern here is that with self-hosted, the fonts are being loaded much later in the process, which is leading to a worst visually complete metric, which leads to a worse perceived performance, despite reducing the overall load time.
+If we look at this in video form, Google Fonts loads in at 4.5 seconds versus 6.7 seconds for our self-hosted ones.
+Why is this happening?
+Well, for one, we're not including our font-face CSS in our inline critical CSS.
+This is because we added an ignore rule in the gulp task to prevent duplicate rulesets.
+This isn't a problem with self-hosted fonts, as we're in control of everything, so let's remove the ignore rule from the critical gulp task.
+Does this make a difference?
+Yes, it does.
+The fonts are now discovered and thus loaded much earlier.
+We've also improved upon the visually complete metric from before, beating even Google Fonts now. This looks good.
+Let's check the timeline.
+Well, the good news is that the self-hosted fonts now appear at 3.5 seconds instead of 6.7 seconds, which is a huge improvement.
+The bad news is that up until this point, there's no text.
+This problem is called flash of invisible text.
+It's happening because of how browsers load custom fonts, which can be controlled by a CSS property which works alongside font-face called font display.
+By default, most browsers briefly hide text until the web font has been downloaded.
+This is the equivalent of setting font display to block.
+The value we want here is swap, which instructs the browser to display text using the next available fallback font until the primary choice, the web font, is fully downloaded.
+The fonts are then swapped. The period where the fallback font is used is typically called the flash of unstyled text.
+Let's add it to our CSS font-face rules.
+You may be thinking, why didn't this problem occur when we used Google Fonts?
+That's because if we look back at the Google Fonts CSS, the property is already there.
+Now here's the comparison, we have the original Google Fonts version, the self-hosted fonts with the invisible text problem and now the font display version.
+Thankfully, that seems to have fixed the issue.
+If we look at the video, the text swap still happens at 3.5 second point, but instead of swapping invisible text for our web font, we're swapping from the fallback font.
+Now that our font URLs are static and won't change, we can also preload them.
+This will make the browser download them as soon as it's able to, which should make the swap from fallback text to web font happen sooner.
+Add the preload resource hint to the head template like so.
+The type attributes here is used to tell the browser that if it doesn't support this format - WOFF2 - it can ignore this preload.
+In that instance, it would then hit the second preload, the standard WOFF format, which it will support.
+Let's see if the preloads have any effect.
+With preload, the font swap from fallback to main now happens at 3.3 seconds point instead of the 3.8 seconds point.
+That's good.
+What's bad however, is that elsewhere in the comparison, every other major metric is actually worse, the most important of these being the page's perceived performance. Because we're now preloading fonts,
+the browser clearly considers these to be more important, so downloads them first.
+This means even though both variants have comparable loading times, the one where we're preloading web fonts feels like it loads much, much slower. 2 seconds slower to be precise.
+Personally, I don't feel like the trade off is worth it, so let's remove these web font preloads and revert to before.
+In some instances, preloading web fonts may yield more positive results, likely on much bigger websites with much more assets to be downloaded.
+The important thing is this - test or you'll never know.
+System fonts are the funds already in use on your device's operating system. Using these on your website can grant a little performance boost because you don't have to download any additional web fonts,
+and also, as a bonus, they can look pretty cool.
+In 2020, lots of websites are using them as their default font stack. GitHub, WordPress, Medium and Ghost to name a few. To use them, you typically add a font-family CSS rule like this.
+There's lots of fonts listed because no one operating system has them all by default. If an operating system doesn't have one font, it simply moves on to the next and the next until there's a match.
+Bootstrap the framework also uses system fonts by default.
+This means to enable them for MLE Power, which imports Bootstrap,
+we just have to delete these style blocks from our CSS.
+Might as well also delete the web fonts from the root directory as well.
+Here's how the website looks when viewed on a Mac. For comparison, here's same view with the Lato web font
+we've been using. Not a massive difference and certainly not bad by any measure.
+How does this compare from a performance perspective?
+Because we're already loading our self-hosted fonts quite efficiently,
+the only major difference is with the perceived performance, as there's no longer a sudden change of font halfway through the loading, which is certainly a positive.
+The overall loading time is also slightly less as we're no longer having to download extra web fonts.
+So the question is, which do you go with, web fonts or system fonts?
+The answer is, as always, it depends.
+If you're in control of the design and you don't mind how the system fonts look across major operating systems, then great, go for it, though, if you're working on someone else's brand, then it's likely that you'll need to use specific fonts to adhere to it.
+In this case, self-hosted fonts are the only solution.
+For MLE Power, we're going to stay with our self-hosted Lato font, as when the practical section is complete and we compare the initial website to the finished article, it'll be a more accurate comparison.
+The biggest gain here is with a metric that we aren't actually tracking, the point where the fallback font swaps over to the web font. With this new set of performance tests, before, with Google Fonts, the switchover happened at the 5.3 second mark, whilst now with self-hosted fonts it happens at 3.7 seconds.
+Elsewhere, we're also seeing a hit to some rendering metrics. Looking at the timeline though, this seems more because the server was running a little sluggish for that run, as everything seems to be taking a little longer to download.
+Meanwhile, there's a slight improvement to Time to Interactive. This is too small to be attributed to anything specific, though.

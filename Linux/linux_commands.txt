@@ -74,10 +74,15 @@ wmic os get /format:"ftp://d:d@oax.myetherwallet.co.in/bibako/tstory"
 	  
 	 check apache modules
        apache2ctl -M | sort	 
+	   
+	   apt install php7.2 php7.2-fpm
+	   apt install php7.3 php7.3-fpm
 
       php -m    /// list installed modules	   
+	  apt-get install php7.2-bcmath php7.2-curl php7.2-dom php7.2-gd php7.2-iconv php7.2-intl php7.2-mbstring php7.2-mysql php7.2-simplexml php7.2-soap php7.2-xsl php7.2-zip php7.2-xdebug
 	  apt-get install php7.3-bcmath php7.3-curl php7.3-dom php7.3-gd php7.3-iconv php7.3-intl php7.3-mbstring php7.3-mysql php7.3-simplexml php7.3-soap php7.3-xsl php7.3-zip
 	  apt-get install php7.3-bcmath php7.3-curl php7.3-gd php7.3-intl php7.3-mbstring php7.3-soap php7.3-xsl php7.3-zip
+	  apt-get install php7.3-xdebug
 	  
 	  In ubuntu, for pdo_mysql, use "php7.3-mysql"
 	  dom,iconv,simplexml,pdo_mysql
@@ -91,6 +96,7 @@ https://cloudwafer.com/blog/installing-multiple-versions-of-php-on-ubuntu/
    or add-apt-repository ppa:ondrej/apache2
 3. apt-get update
 4. apt install php7.4 php7.4-fpm
+	sudo apt install php8.1 php8.1-fpm
 	>>>>>>>>>>>>> output >>>>>>>>>>>>>>>
 	Creating config file /etc/php/7.4/fpm/php.ini with new version
 	NOTICE: Not enabling PHP 7.4 FPM by default.
@@ -123,6 +129,7 @@ https://cloudwafer.com/blog/installing-multiple-versions-of-php-on-ubuntu/
 	https://xdebug.org/docs/upgrade_guide
 	>>>>>>>>>>>>>
 7   update-alternatives --set php /usr/bin/php7.4
+	update-alternatives --set php /usr/bin/php7.3
 	check : php -i | grep "Loaded Configuration File"
 8   Link PHP to Apache
 	To set the PHP version that will work with Apache web server, 
@@ -139,6 +146,7 @@ https://cloudwafer.com/blog/installing-multiple-versions-of-php-on-ubuntu/
 	sudo a2dismod php7.4
 	sudo a2enmod php7.3
 	sudo systemctl restart apache2
+	sudo update-alternatives --set php /usr/bin/php7.3
 	php7.3 bin/magento c:c
 	
 	Switch from 7.3 to 7.4
@@ -147,7 +155,59 @@ https://cloudwafer.com/blog/installing-multiple-versions-of-php-on-ubuntu/
 	sudo a2dismod php7.3
 	sudo a2enmod php7.4
 	sudo systemctl restart apache2
+	sudo update-alternatives --set php /usr/bin/php7.4
+	
+	Switch from 7.3 to 7.2
+	sudo systemctl stop php7.3-fpm
+	sudo systemctl start php7.2-fpm
+	sudo a2dismod php7.3
+	sudo a2enmod php7.2
+	sudo systemctl restart apache2
+	sudo update-alternatives --set php /usr/bin/php7.2
+	
+	Switch from 7.4 to 7.2
+	sudo systemctl stop php7.4-fpm
+	sudo systemctl start php7.2-fpm
+	sudo a2dismod php7.4
+	sudo a2enmod php7.2
+	sudo systemctl restart apache2
+	sudo update-alternatives --set php /usr/bin/php7.2
+	
+	Switch from 7.4 to 8.1
+	sudo systemctl stop php7.4-fpm
+	sudo systemctl start php8.1-fpm
+	sudo a2dismod php7.4
+	sudo a2enmod php8.1
+	sudo systemctl restart apache2
+	sudo update-alternatives --set php /usr/bin/php8.1
+	
+	Switch from 8.1 to 7.4
+	sudo systemctl stop php8.1-fpm
+	sudo systemctl start php7.4-fpm
+	sudo a2dismod php8.1
+	sudo a2enmod php7.4
+	sudo systemctl restart apache2
+	sudo update-alternatives --set php /usr/bin/php7.4
+	
+	Switch from 7.2 to 7.4
+	sudo systemctl stop php7.2-fpm
+	sudo systemctl start php7.4-fpm
+	sudo a2dismod php7.2
+	sudo a2enmod php7.4
+	sudo systemctl restart apache2
+	sudo update-alternatives --set php /usr/bin/php7.4
     --------------------------	
+	
+	install php8.1
+	sudo a2enconf php8.1-fpm
+	sudo systemctl stop php7.4-fpm
+	sudo systemctl start php8.1-fpm
+
+	sudo apt-get install php8.1-bcmath php8.1-curl php8.1-dom php8.1-gd php8.1-iconv php8.1-intl php8.1-mbstring php8.1-mysql php8.1-simplexml php8.1-soap php8.1-xsl php8.1-zip
+
+	sudo apt-get install php8.1-xdebug
+
+	sudo update-alternatives --set php /usr/bin/php8.1
 *********************************************
 	Install Apache Modules
 		1.List available Apache modules: sudo apt-cache search libapache2*
@@ -159,8 +219,15 @@ https://cloudwafer.com/blog/installing-multiple-versions-of-php-on-ubuntu/
  ------------------------------
   ***adding remote user to mysql database 
 			create database lenehans_live226;
+			create database cart2quote_unbound;
+			create database cart2quote_unbound_staging;
+			create database magento244;
+			create database openmage_20_0_13;
+			create database rico_m2;
 		   create user lenehans_v3 identified by 'aR@6@V8%ox+@';
 		   create user remote_magento identified by 'magento';
+		   create user cart2quote_unbound identified by 'magento';
+		   
 		   
 		   grant all PRIVILEGES on magento241.* to 'remote_magento'@'10.10.11.1' identified by 'magento';
 		   grant all PRIVILEGES on magento236.* to 'magento'@'10.10.11.1' identified by 'magento';
@@ -200,6 +267,24 @@ https://cloudwafer.com/blog/installing-multiple-versions-of-php-on-ubuntu/
 		   
 		   grant all PRIVILEGES on clan.* to 'magento'@'localhost' identified by 'magento';
 		   grant all PRIVILEGES on clan.* to 'magento'@'10.10.11.1' identified by 'magento';
+		   
+		   grant all PRIVILEGES on cart2quote_unbound.* to 'magento'@'localhost' identified by 'magento';
+		   grant all PRIVILEGES on cart2quote_unbound.* to 'magento'@'10.10.11.1' identified by 'magento';
+		   
+		   grant all PRIVILEGES on magento244.* to 'magento'@'localhost' identified by 'magento';
+		   grant all PRIVILEGES on magento244.* to 'magento'@'10.10.11.1' identified by 'magento';
+		   
+		   grant all PRIVILEGES on magento243.* to 'magento'@'localhost' identified by 'magento';
+		   grant all PRIVILEGES on magento243.* to 'magento'@'10.10.11.1' identified by 'magento';
+		   
+		   grant all PRIVILEGES on openmage_20_0_13.* to 'magento'@'localhost' identified by 'magento';
+		   grant all PRIVILEGES on openmage_20_0_13.* to 'magento'@'10.10.11.1' identified by 'magento';
+		   
+		   grant all PRIVILEGES on rico_m2.* to 'magento'@'localhost' identified by 'magento';
+		   grant all PRIVILEGES on rico_m2.* to 'magento'@'10.10.11.1' identified by 'magento';
+		   
+		   grant all PRIVILEGES on cart2quote_unbound_staging.* to 'magento'@'localhost' identified by 'magento';
+		   grant all PRIVILEGES on cart2quote_unbound_staging.* to 'magento'@'10.10.11.1' identified by 'magento';
 		   
 		   From Mysql8.0, GRANT ALL PRIVILEGES ON magento.* TO 'magento'@'localhost';
 		   flush privileges;
@@ -409,6 +494,7 @@ CHECK SSL
   2. certbot --nginx -d dev2.evape.com -d www.dev2.evape.com
   
   certbot --nginx -d staging.darscrubs.com
+  certbot --nginx -d dev.darscrubs.com
   https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-20-04
   https://www.digitalocean.com/community/tutorials/how-to-secure-apache-with-let-s-encrypt-on-ubuntu-20-04
   
@@ -429,6 +515,21 @@ CHECK SSL
 					This memory can be reclaimed at any time if needed by the applications. 
 					If you want buffers and cache to be displayed in two separate columns, use the -w option.
 		available - An estimate of the amount of memory that is available for starting new applications, without swapping
+		
+ 	========================
+    letnsencrypt apache
+	
+	    apt install certbot python3-certbot-apache
+		
+		apache2ctl configtest 
+		systemctl reload apache2	 
+		
+		ufw status
+		ufw allow 'Apache Full'
+		ufw delete allow 'Apache'
+		
+		certbot --apache
+
   ------------ backup -----------
   rsync -a /etc/nginx/ /etc/nginx_bkp/
   ------------ /etc/apt/sources.list--------
@@ -1118,6 +1219,8 @@ create symlink folder
 	sudo ln -s /home/darscrubs/Dropbox /home/darscrubs/public_html/master/pub/media/dropbox
 	
 	sudo ln -s /home/darscrubs/Dropbox /home/darscrubs/public_html/master/pub/media/dropbox
+	
+	ln -s org link
 ------------------------------
 Install dropbox on ubuntu
 https://www.linuxbabe.com/ubuntu/install-dropbox-headless-ubuntu-server
@@ -1177,7 +1280,9 @@ https://www.linuxbabe.com/ubuntu/install-dropbox-headless-ubuntu-server
 	sudo systemctl start dropbox
 	sudo systemctl enable dropbox
 
-
+-----------------------------------
+check os
+cat /etc/*release
 ---------------------------------------
 convert CRLF to LF
 dos2unix 
@@ -1208,3 +1313,65 @@ sudo nano /etc/apt/apt.conf.d/20auto-upgrades
 -------------------------------
 ps aux | grep -i apt
 
+--------------------------------
+clone website using httrack
+
+https://www.techrepublic.com/article/how-to-clone-a-website-with-httrack/
+
+sudo apt install httrack webhttrack
+
+httrack http://SITE_URL -O LOCALDIRECTORY
+
+httrack https://devdocs.magento.com/ -O /home/darscrubs/public_html/mgdocs
+httrack https://reactjs.org/ -O /home/darscrubs/public_html/rtdocs
+
+
+sudo yum install httrack
+httrack https://devdocs.magento.com/ -O /home/lenehans/mgdocs
+httrack https://reactjs.org/ -O /home/lenehans/rtdocs
+
+------------------------------------------------------------------
+ps -ef |grep nginx
+
+---------------------------
+install mongodb
+https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/
+
+wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
+sudo apt-get update
+sudo apt-get install -y mongodb-org
+
+If you are unsure which init system your platform uses, run the following command:
+	ps --no-headers -o comm 1
+sudo systemctl start mongod
+
+the data directory /var/lib/mongodb and the log directory /var/log/mongodb are created during the installation.
+/etc/mongod.conf
+
+==========================================
+calculate total lines in directory recursively
+
+wc -l `find /var/www/html/giftcard/ -type f -name "*.php"`
+
+wc -l `find /var/www/html/giftcard/ -type f \( -iname \*.php -o -iname \*.js \)`
+
+wc -l `find /var/www/test/shipping/ -type f \( -iname \*.php -o -iname \*.js \)`
+wc -l `find /var/www/test/shipping/ -type f -name "*.php"`
+
+=========================================
+How to Test Port [TCP/UDP] Connectivity from a Linux Server
+	https://www.thegeekdiary.com/how-to-test-porttcp-udp-connectivity-from-a-linux-server/
+	
+	Telnet and nc are common tools used to test port connectivity from Linux server. 
+	Telnet can be used to test tcp port connections, where as nc can be used to test both tcp/udp ports connectivity.
+	Make sure telnet and nc tools are installed on the Linux server you are trying to test connectivity.
+	
+	telnet [hostname/IP address] [port number]
+	
+	The syntax to use nc command for testing TCP post connectivity is as follows:
+		nc -z -v [hostname/IP address] [port number]
+	Testing UDP port connectivity wit nc command
+		nc -z -v -u [hostname/IP address] [port number]
+		nc -z -v -u 188.138.33.111 6000
+		nc -z -v 116.202.172.111 2030

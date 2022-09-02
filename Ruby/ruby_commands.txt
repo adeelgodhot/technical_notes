@@ -1,0 +1,441 @@
+http://www.ruby-lang.org/en/
+https://replit.com/~
+https://try.ruby-lang.org/
+https://dev.to/thomasvanholder/10-vs-code-extensions-for-ruby-on-rails-developers-89a for vscode
+	/////////////////
+	Ruby
+	Ruby Solargraph
+	Endwise
+	ERB Formatter/Beautify
+	/////////////////
+
+p 
+	: print
+reverse! vs reverse
+	 adress = [1,2,3,4]
+	if address.reverse output is [4,3,2,1] again if you type address the value will be same  output : [1,2,3,4]
+	if address.reverse! output is [4,3,2,1] again if you type address the value will be changed output [4,3,2,1]
+	So the difference is address.reverse! changes the value and assign to address variable whereas address.reverse reverse the array but doesnot change the address variable value.
+	
+	puts, p, print
+	p <=> print a 
+	      puts  (output empty string + \r\n)
+-----------------------
+	dependenciese for rails
+		node
+		yarn
+		gem -- install gems for applicatons
+		
+		-------------------
+		node --version
+		yarn --version
+		-------------------
+----------------------------------
+install rvm
+https://gist.github.com/kirkelifson/2611affe02ce56ae6b04
+
+http://cygwin.com/
+
+curl -sSL https://get.rvm.io | bash -s stable
+
+Make a 'bin' directory in your home dir $ mkdir ~/bin
+Copy setup-(x86|x86_64).exe to the new bin dir (e.g., C:/cygwin/home/user/bin)
+Add bin to your PATH $ export PATH=/home/user/bin:$PATH
+export PATH=/home/Administrator/bin:$PATH
+
+rvm install 2.6.3
+----------------------------------
+ruby -v
+ruby a.rb
+rvm list rubies
+rmv list known (list all latest version)
+gem list bundler
+gem update bundler
+gem list rails
+gem install rails
+gem install rails -v {version number}
+rails -v
+rails new {application name} to create the new rails application.
+rails _5.2.0_ new {app_name}
+
+rails s or rails server to start the rails server.
+	preview running appliactoin from AWS Cloud9
+
+	-------------------------
+	first_name + last_name
+	
+	string interpolation
+		first_name = "xxx"
+		puts "My First Name is #{first_name}"
+	irb : interactive ruby
+		> first_name = "aa"
+		
+	first_name.class
+	"aa".class
+	first_name.methods
+	10.class
+	10.to_s
+	10.to_s.class will ouput "string"
+	
+	full_name.length
+	full_name.reverse
+	full_name.capitalize
+	full_name.empty? => false
+	"".nil? => false
+	sentence.sub(org, rep)
+	
+	first_name = gets.chomp
+	gets.chomp.downcase
+		************************
+		 Calling the downcase or upcase method on a string will return the lowercase or uppercase version of the string, but the original variable won't change.
+		************************
+		
+	input = gets.chomp
+		<= 5
+	puts input * 2 => 55
+	puts input.to_i * 2 => 10
+	
+	first_number.to_f
+	
+	20.times { print "-" }
+	
+	---------compare -----------
+	10 == 10.0 => true
+	10.eql?(10.0) => false (take type into account)
+	--------------------------
+	
+	--------array----------------
+	a=[1,2,3,4,5,6]
+	a.first
+	a.last
+	a=1..100
+	a.class => Range
+	a.to_a
+	a.to_a.shuffle
+	x=a.to_a
+	x.shuffle!
+	(1..10).to_a
+	x = "a".."z"
+	a << 7 => [1,2,3,4,5,6,7]  add item to the end of the array = a.append(7)
+	a.unshift("A") => ["A",1,2,3,4,5,6] add item to the first of the array
+	a.uniq, a.uniq!
+	
+	b=[]
+	b.empty? => true
+	a.include?("A") => true
+	a.push("b") => 1,2,3,4,5,6,7,"b"
+	x=a.pop =>
+		x:"b"
+		a: 1,2,3,4,5,6,7
+	a.join("-") => 1-2-3-4-5-6-7
+	a.join <=> a.join("")
+	b=a.join(-) , b.split("=") => [1, 2, 3, 4, 5, ,6, 7]
+	
+	%w(what is my name) => ["what", "is", "my", "name"]
+	z=_   
+	   z: ["what", "is", "my", "name"]
+	for i in z
+		print i
+	end
+		=> whatismyname
+	Rub preferred way is: 
+		z.each do |food|
+		   print food + " "
+		end
+		<=> z.each {|food| print food + " " }
+		
+		a=[2,3,12,13,14,15]
+		a.select {|number| number.odd?} # selects the value and returns it only if the condition is met
+		3,13,15 
+		p a.methods
+		
+	----- hash ------
+	x = { 'a' => 1, 'b' => 2 }
+	x.class => Hash
+	x['a'] => 1
+	x.keys => ["a","b"]
+	x.values => [1, 2]
+	
+	y = { a: 1, b: 2, c:"X"}  here a:, b: Symbol
+	y[:a] => 1
+	y.keys => [:a, :b]
+	
+	y.each do |key,value|
+		p key.class
+		p value.class
+	end
+	y.each {|some_key, some_value| p "#{some_key.class}"}
+	y.select {|k,v| v.is_a?(String)}
+	y.each {|k,v| y.delete(k) if v.is_a?(String)}
+	
+	----- authentication -----
+	while attempts < 4
+		input = gets.chomp.downcase
+		break if input == "n"
+	end
+	------ loop -----------
+	loop do
+	end
+	
+	
+	--------------OOP------------
+	class Student
+	  attr_accessor :first_name, :last_name // for setter/getter
+	  attr_reader :username                 // only allow getter
+	  
+	  @first_name
+	  @last_name
+	  @username = "test"
+	  
+	  def initialize(name, email)
+		@name = name
+		@email = email
+	  end
+	  
+	  def first_name=(name)  // setter
+		@first_name=name
+	  end
+	  def first_name         // getter 
+		@first_name
+	  end
+	  
+	  def to_s
+		puts "Fist_name"
+	  end
+	  
+	  def self.test   // kind of static function
+	  end
+	end
+	s = Student.new
+	to_s: default method which is called when convert object to string
+		you can override it in class
+		
+		
+--------------------------
+	gem install bcrypt
+	
+	for repl
+		require 'bundler/inline'
+		
+		gemfile true do
+			source 'https://rubygems.org'
+			gem 'bcrypt'
+		end
+----------bcrypt-------------
+	BCrypt::Password.create(password)
+	BCrypt::Password.new(password)
+----------module-------------
+	module Crud
+		def Crud.create_hash_digest(password)
+			userList = [1,2,3,4,5]
+		end
+		
+		def Crud.verify_hash_digest(password)
+		end
+	end
+	
+	require_relative 'crud'
+	
+	$LOAD_PATH << "." // $LOAD_PATH is system variable which is kind of lib path
+	require 'crud'
+	
+	userList = Crud.create_hash_digest('123')
+--------------mixin---------------
+	module Crud
+		def create_hash_digest(password)
+			userList = [1,2,3,4,5]
+		end
+		
+		def verify_hash_digest(password)
+		end
+	end
+	-----------
+	require_relative 'crud'
+	class Student
+	  include Crud
+	  
+	  ....
+	end
+	
+	s = Student.new(...)
+	s.create_hash_digest('111')
+	
+-----------------------------
+rails generate controller pages
+-----------------------
+	root 'application#hello'
+	render html: 'Hello World'
+	rails generate controller pages
+		--------------------------------------
+		  create  app/controllers/pages_controller.rb
+		  invoke  erb
+		  create    app/views/pages
+		  invoke  test_unit
+		  create    test/controllers/pages_controller_test.rb
+		  invoke  helper
+		  create    app/helpers/pages_helper.rb
+		  invoke    test_unit
+		---------------------------------------
+----------------------------
+https://github.com/udemyrailscourse/alpha-blog-6
+
+heroku login
+
+https://devcenter.heroku.com/articles/heroku-18-stack
+heroku create
+heroku create --stack heroku-18
+	----------------------------
+	Creating app... done, ⬢ mighty-anchorage-09014
+	https://mighty-anchorage-09014.herokuapp.com/ | https://git.heroku.com/mighty-anchorage-09014.git
+	
+	Creating app... done, ⬢ pacific-cove-68641, stack is heroku-18
+	https://pacific-cove-68641.herokuapp.com/ | https://git.heroku.com/pacific-cove-68641.git
+	----------------------------
+bundle install --without production
+git push heroku master
+
+heroku stack
+heroku stack:set heroku-18
+
+-------------------
+git push heroku master
+Heroku error /node_modules/node-sass: Command failed
+	https://dev.to/axelmukwena/heroku-error-nodemodulesnode-sass-command-failed-4mn8
+
+	On 16 December 2021, Heroku changed the Node version to 16.13.1 (which was previously 12.16.2). 
+	Since we have dependencies such as node-sass v4.14.1 which requires Node v14, 
+	we need to specify the Node version Heroku should use.
+	
+	heroku buildpacks
+	heroku buildpacks:add heroku/nodejs
+	heroku buildpacks:add heroku/ruby
+	
+	Specify the 14.x Node version in package.json.
+		# In package.json
+		{
+		  # ...
+		  "engines": {
+			"node": "14.x"
+		  },
+		  # ...
+		}
+	yarn install
+	
+-------------------------
+	rails generate scaffold Article title:string description:text
+		  invoke  active_record
+		  create    db/migrate/20220418142657_create_articles.rb
+		  create    app/models/article.rb
+		  invoke    test_unit
+		  create      test/models/article_test.rb
+		  create      test/fixtures/articles.yml
+		  invoke  resource_route       
+		   route    resources :articles
+		  invoke  scaffold_controller  
+		  create    app/controllers/articles_controller.rb
+		  invoke    erb
+		  create      app/views/articles
+		  create      app/views/articles/index.html.erb
+		  create      app/views/articles/edit.html.erb
+		  create      app/views/articles/show.html.erb
+		  create      app/views/articles/new.html.erb
+		  create      app/views/articles/_form.html.erb
+		  invoke    test_unit
+		  create      test/controllers/articles_controller_test.rb
+		  create      test/system/articles_test.rb
+		  invoke    helper
+		  create      app/helpers/articles_helper.rb
+		  invoke      test_unit
+		  invoke    jbuilder
+		  create      app/views/articles/index.json.jbuilder
+		  create      app/views/articles/show.json.jbuilder
+		  create      app/views/articles/_article.json.jbuilder
+		  invoke  assets
+		  invoke    scss
+		  create      app/assets/stylesheets/articles.scss
+		  invoke  scss
+		  create    app/assets/stylesheets/scaffolds.scss
+	rails db:migrate
+	rails routes
+	rails routes --expanded
+	rails generate migration create_articles
+	rails db:rollback
+	rails generate migration add_timestamps_to_articles
+		add_column :articles, :created_at, :datetime
+		           :tablename :column name,: col type
+	rails console or rails c	
+		Article.all
+			>>>>>>>>>>>>>>>>>>>>>>>
+			(15.2ms)  SELECT sqlite_version(*)
+				  Article Load (0.4ms)  SELECT "articles".* FROM "articles" LIMIT ?  [["LIMIT", 11]]
+				=> #<ActiveRecord::Relation []>
+			>>>>>>>>>>>>>>>>>>>>>>>
+		Article.create(title: "first article", description: "desc of first article")
+	
+		another way to insert row to article
+			article = Article.new
+			article.title = "second title"
+			article.description = "desc of the second article"
+			article.save
+			
+		third way
+			article = Article.new(title: "third article", description: "desc of third article")
+			article.save
+			
+		Article.find(1)
+		Article.first
+		Article.last
+		
+		To destroy article
+			article = Article.find(id of article you want to delete)
+			article.destroy
+		reload! for changes to model to be reflected in console session
+		article.errors
+		article.errors.full_messages
+		
+		-----------------
+		active record validations
+		https://guides.rubyonrails.org/active_record_validations.html
+		-----------------
+		
+		routes
+			resources :articles, only: [:show, :index]
+				article GET    /articles/:id(.:format)                                                                  articles#show
+--------------------------------------------
+function scope variable vs instance variable
+	article vs @article
+	
+	def show
+     article = Article.find(params[:id])
+    end
+	
+	to make variable available to view
+	def show
+     @article = Article.find(params[:id])
+    end
+--------------------------------------------
+	<% %> vs <%= %>
+	= <php ?> vs <?= ?>
+--------------------------------------------
+byebug
+continue
+-------------------------------
+form helpers
+guides.rubyonrails.org/form_helpers.html
+
+form_with scope: :article, url: articles_path, local: true	
+	local:true means it specifies the post method other than remotely ajax
+------------------------------------
+article_path(@article)
+{prefix_route}_path(@article)
+-------------------------------
+render plain: @article
+render plain: @article.inspect
+@article = Article.new(params.require(:article).permit(:title, :description))
+-------------------------------
+flash: helper
+
+flash[:notice]='aaa'
+
+-------------------------------
+https://github.com/udemyrailscourse/alpha-blog-11-2017-5.1.4

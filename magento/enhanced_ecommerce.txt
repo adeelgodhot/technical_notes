@@ -1,0 +1,21 @@
+https://docs.magento.com/user-guide/marketing/google-enhanced-ecommerce.html
+
+https://developers.google.com/analytics/devguides/collection/ua/gtm/enhanced-ecommerce#macro
+https://developers.google.com/analytics/devguides/collection/analyticsjs/enhanced-ecommerce#action-data
+https://www.simoahava.com/analytics/enhanced-ecommerce-with-a-custom-javascript-variable/
+
+
+demo sites
+
+https://www.antelopeshoes.com/552-Annie
+
+grouped: 		http://dev.unboundvr.nl/virtual-reality-arcade-virtuix-omni-treadmill
+configurable:   http://dev.unboundvr.nl/gellshell-silicone-beschermhoes-htc-vive
+				http://dev.unboundvr.nl/katoenen-hoesjes-voor-oculus-htc-valve
+simple:         http://dev.unboundvr.nl/bobovr-m2-halo-strap-pro-met-batterij-voor-oculus-quest-2
+
+nikolovorce2@gmail.com
+address: Achtersteweg 25
+City : Meteren
+zip: 4194 TJ
+0657616427

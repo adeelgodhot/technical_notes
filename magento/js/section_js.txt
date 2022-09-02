@@ -1,0 +1,14 @@
+Magento_Customer/js/section-config.js :: 38 :: getAffectedSections
+
+Magento_Customer/js/customer-data.js :: 409 :: onSubmit
+	 $(document).on('submit', function (event) {
+        var sections;
+
+        if (event.target.method.match(/post|put|delete/i)) {
+            sections = sectionConfig.getAffectedSections(event.target.action);
+
+            if (sections) {
+                customerData.invalidate(sections);
+            }
+        }
+    });

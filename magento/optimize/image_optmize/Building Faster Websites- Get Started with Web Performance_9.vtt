@@ -1,0 +1,63 @@
+Now that we've removed unused CSS, we can move on to JavaScript. To keep the focus on web performance, we'll try to keep this as simple as possible and use a similar approach to the one taken with CSS, albeit a little more manual.
+Instead of having one global JS file, which every page downloads, each page will have its own file containing only what it needs.
+Let's start by creating an index.js for our homepage.
+Next, we need to split the existing scripts.js file into smaller partials organized by feature, so there can be easily imported where required.
+Create a new directory in the src/js directory called partials.
+Now back in the JavaScript file, move this header logic into its own file within the partials directory, like this.
+Then do the same for this scrolling function.
+Now we have our custom functionality all split up into separate files, let's import it. 
+In index.js we're asking the question, what does the home page need to function?
+All pages will need these, the lazy load polyfill, cookie banner logic and the header component logic.
+In fact, to save us having to import these manual for each page's file, let's create a new partial, which can be the single source of truth for these shared imports.
+This way, instead of updating every page's JS file when new shared functionality is introduced, we just need to update this shared partial with the new import.
+So, what else is needed on the home page? Well, it contains some Bootstrap components, so we'll need Popper and jQuery.
+Instead of importing the entirety of Bootstrap, let's just import what we need, a carousel and the collapse component logic. That should save a few bytes.
+We also need the scrolling function.
+That should be it for the home page, now what about everything else?
+Let's create the product pages JavaScript file and ask the question again, what does the products page need?
+Turns out not a lot.
+All it needs is the shared functionality which every page needs.
+The same is true for the rest of the website's pages actually, we'd just be duplicating this file for blog and blog post.
+Instead, we'll rename products.js into default.js and implement logic into the build system which says - if a JavaScript file named after the page doesn't exist, it should download this instead.
+Now, we need to bring all of this together and update the build tasks.
+So for each HTML page, if a JavaScript file with the same filename doesn't exist, default.js should be linked to instead.
+We first need to edit the head template and change this path to a variable called js_filename, as this is now a dynamic value.
+And in the Nunjucks task in the gulp file, we'll need to declare this variable and pass it alongside the existing filename variable like so.
+Here, we separate the filename variable and then use it as the default value of the js_filename variable, which is correct, as if a JavaScript file exists which shares its name, we want to use it.
+We do this check here using the native Node module FS, which is short for file system.
+If a source file matching our current HTML file doesn't exist, sets the js_filename variable to default, which will make the HTML request default.js instead.
+All that's left is to pass these values to Nunjucks by returning them in an object, same as before.
+Now, for example, if projects.js exists, then projects.html will request it, otherwise default.js will be requested instead, which as a bonus, will then be cached by the browser for when other barebones page require it as well.
+Let's move this existing code down a little to make some space.
+We need to grab all of the HTML files from the root directory and loop through them like we did with the CSS.
+In here, we'll separate the filename and also create a new variable called file_path, which we'll use to point gulp towards the page's JavaScript file in the src directory.
+So for example, when the loop is at index.html, file_path should point towards index.js.
+However, as we've discussed, there isn't always going to be a JavaScript file matching the current page.
+When this happens, we want both file_path and filename to match the default.js file in the src directory.
+Like in Nunjucks task, we can check if the file exists using the native FS module.
+Now let's take the old code and move it below here, pointing it towards whatever our file_path ends up being and naming it either after the current page in the loop or if required, default.js.
+At the moment, we're using Bootstrap 4, which has jQuery and also Popper as dependencies.
+This changes as a Bootstrap 5, which at the time of recording is still in alpha, but nonetheless available to import via NPM.
+With v5, you no longer need jQuery at all, as it's all been rewritten in plain JavaScript.
+And as for Popper, according to the documentation, this has only ever been required for specific Bootstrap components, none of which MLE Power is using.
+Therefore, we'll upgrade to Bootstrap 5 and eliminate these dependencies.
+In the command line, type this.
+Now we can safely remove the jQuery import, and since none of our components use it, the Popper import as well.
+On rebuild, the size of this file has dropped considerably now we've eliminated these dependencies.
+It's inevitable that you'll eventually receive a request from a stakeholder to add a tracking script to the website and another request and another.
+As a developer, it's your responsibility to police this as much as your role will allow for, as each of these tracking scripts incurs a performance cost.
+Measure the website's performance without the script, as then a cost/benefit analysis can be run to determine if the script is worth keeping.
+You can do this on a WebPageTest via the block tab, just enter the domain of the tracking script here and WebPageTest will do the rest.
+The report generated will then skip the tracking script completely, giving you an idea of what to expect if it were removed.
+Remember, with case studies like this, where Zalando saw a 0.7% increase in revenue when they shaved only 100 milliseconds off of their loading time, it's a conversation at least worth having.
+In this instance, I've spoken with the stakeholders at MLE Power about removing the HotJar script.
+It's not being used to track visitors in over six months, but I've been told it's business critical.
+Here's a performance comparison showing its impact.
+The biggest difference here is the Time to Interactive metric, which is nearly 75% faster without Hotjar.
+This means users are able to have meaningful interactions on the website sooner, which at scale may be the difference between gaining a new customer or losing one.
+Thankfully, in this case, the stakeholder agrees with my assessment, so we can safely remove Hotjar from the head template.
+Unfortunately, these conversations rarely go this smoothly in real life, but it's important to have them regardless.
+The biggest changes here are to Time to Interactive and Total Blocking Time, 2 JavaScript oriented performance metrics.
+With Time to Interactive, it's simply a matter of having less JavaScript to delay interactivity.
+Whilst with Total Blocking Time, I suspect the only remaining script which was complex enough to block the main thread was the Hotjar sript, therefore removing it has resulted in this metric going down to zero.
+And then finally, less JavaScript means we have less code to download, meaning everything is fully loaded faster.

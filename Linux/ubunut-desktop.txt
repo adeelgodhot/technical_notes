@@ -1,0 +1,84 @@
+https://linuxize.com/post/how-to-install-xrdp-on-ubuntu-20-04/
+
+sudo apt update
+sudo apt install ubuntu-desktop
+
+sudo apt install xrdp 
+	/etc/xrdp/xrdp.ini
+sudo systemctl status xrdp
+sudo adduser xrdp ssl-cert  
+sudo systemctl restart xrdp
+
+sudo ufw allow from 192.168.33.0/24 to any port 3389
+sudo ufw allow 3389
+
+username: same as SSH
+password: same as SSH
+
+==========================
+install anydesk
+
+https://computingforgeeks.com/how-to-install-anydesk-on-ubuntu/
+
+sudo dpkg -i anydesk_6.1.1-1_amd64.deb
+sudo apt-get -f install
+
+
+dpkg -i google-chrome-stable_current_amd64.deb
+google-chrome --no-sandbox
+
+=============
+speed
+
+crypt_level=none
+max_bpp = 8
+use_compression=yes
+
+======================
+xRDP – The Infamous “Authentication Required to Create Managed Color Device” Explained
+https://c-nergy.be/blog/?p=12073
+http://c-nergy.be/blog/?p=12043
+
+/etc/polkit-1/localauthority.d.conf called 02-allow-color.d.conf 
+polkit.addRule(function(action, subject) {
+if ((action.id == “org.freedesktop.color-manager.create-device” ||
+action.id == “org.freedesktop.color-manager.create-profile” ||
+action.id == “org.freedesktop.color-manager.delete-device” ||
+action.id == “org.freedesktop.color-manager.delete-profile” ||
+action.id == “org.freedesktop.color-manager.modify-device” ||
+action.id == “org.freedesktop.color-manager.modify-profile”) &&
+subject.isInGroup(“{users}”)) {
+return polkit.Result.YES;
+}
+});
+-----------------------------
+/etc/polkit-1/localauthority/50-local.d/45-allow-colord.pkla
+[Allow Colord all Users]
+Identity=unix-user:*
+Action=org.freedesktop.color-manager.create-device;org.freedesktop.color-manager.create-profile;org.freedesktop.color-manager.delete-device;org.freedesktop.color-manager.delete-profile;org.freedesktop.color-manager.modify-device;org.freedesktop.color-manager.modify-profile
+ResultAny=no
+ResultInactive=no
+ResultActive=yes
+------------
+sudo rm /var/crash/*
+
+-------------
+install openvpn client
+	https://tecadmin.net/install-openvpn-client-on-ubuntu/
+	https://ubuntu.com/server/docs/service-openvpn
+	
+	Step 1 – Install OpenVPN Client
+	sudo apt update
+	sudo apt install openvpn -y
+
+	Step 2 – Connect to OpenVPN Server
+		//openvpn --config client.ovpn
+		sudo cp /usr/share/doc/openvpn/examples/sample-config-files/client.conf /etc/openvpn/
+		
+		sudo systemctl start openvpn@client
+		sudo openvpn --config /etc/openvpn/client.conf
+	
+	Step 3 – Verify Connection
+	ip a show tun0 or tail -f /var/log/openvpn.log 
+	
+	

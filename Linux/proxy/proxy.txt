@@ -1,0 +1,22 @@
+https://www.digitalocean.com/community/tutorials/how-to-set-up-wireguard-on-ubuntu-20-04
+
+
+
+https://computingforgeeks.com/how-to-set-system-wide-proxy-on-ubuntu-debian/
+
+
+# set proxy config via profie.d - should apply for all users
+# 
+export http_proxy="http://209.127.186.235:80/"
+export https_proxy="http://209.127.186.235:80/"
+export ftp_proxy="http://209.127.186.235:80/"
+export no_proxy="127.0.0.1,localhost"
+
+# For curl
+export HTTP_PROXY="http://209.127.186.235:80/"
+export HTTPS_PROXY="http://209.127.186.235:80/"
+export FTP_PROXY="http://209.127.186.235:80/"
+export NO_PROXY="127.0.0.1,localhost"
+
+
+source /etc/profile.d/proxy.sh

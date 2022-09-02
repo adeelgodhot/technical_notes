@@ -1,0 +1,41 @@
+By default, when this image heavy products page is downloaded, so too are all of these images, whether the user sees them or not.
+This is definitely a big waste of bytes. The solution is lazy loading.
+Lazy loading allows us to defer the loading of assets until they're in the viewport and visible to the user.
+This means we only download what we need, like in this example, where we can see each image request firing as I scroll down the page and discover new images.
+Making an image lazy load in Chrome, Edge and Firefox is as simple as adding the loading attribute and setting it to lazy like this.
+Now, if I reload the products page following a build, I can see in the network tab that these product images are now only being downloaded as they approach the viewport, which is good.
+What about other browsers?
+This is where it starts to get a little complicated.
+Native lazy loading at the time of recording is only supported by Chromium browsers and Firefox.
+This means for Safari and older browsers, you can either not implement lazy loading and have it just fail gracefully to a regular load or implement lazy loading via a polyfill.
+If you select the second option, it's currently not possible to polyfill this functionality 100%.
+The closest we can get is by using this polyfill, which uses the browser Intersection Observer API to reproduce the functionality,
+which itself needs a polyfill if you're needing to support Internet Explorer.
+Install the lazy load polyfill as an NPM module like so, then import into our global JavaScript file.
+Back on the products page, to get the polyfill to work on browsers like Safari, the images need to be wrapped in a noscript element like so.
+Now, if I rebuild and then reload the page in Safari, there we go - lazy loading.
+iFrames can also be lazy loaded. On the homepage way at the bottom, there's a Google Maps embed which uses an iFrame.
+Normally, the scripts which power this would always be downloaded and executed, even if the user never sees it.
+Using the same attributes as with images, followed by a rebuild and a reload, these scripts are now only loaded as the iFrame itself is about to appear within the viewport. Like with images, this has the potential to really minimize the amount of bytes downloaded on first load.
+It's worth noting that only Chromium browser's currently support this, as Firefox only supports lazy loading for images.
+Thankfully, the polyfill we're including also takes care of this for us.
+One thing noticeable, especially on slow networks, is the amount of judder as images are loaded in, lazy or otherwise.
+The rate of shifting elements can be measured using the Cumulative Layout Shift metric, which was first mentioned way back in the loading performance metrics video.
+To stabilize this, we can add width and height attributes to our website image elements, like so. 
+In modern browsers, in addition to setting size, these attributes are now used to calculate an aspect ratio so the image element can be appropriately sized ahead of the image loading.
+These values may not represent the exact size of an image, but ultimately it doesn't matter anyway.
+200 pixels by 100 pixels on mobile or 500 pixels by 250 pixels on desktop, the aspect ratio is the same.
+Though a minor bug - notice how the image size is now warping as the browser scales down.
+This is due to the absence of a generic CSS height rule on image elements, making the browser use the height attribute instead.
+Add width and height attributes to the rest of the website's images.
+In Chrome, you can easily discover the pixel values like so.
+This layout issue also applies to video elements as well, so make sure to give them width and height attributes.
+Let's finish off by doing a comparison before and after lazy load and size attributes. 
+We'll test the products page, which is image heavy, so stands to gain the most from these changes.
+Right away, in the waterfall, look how fewer image requests there are when lazy load is active.
+The overall low time is reduced, as is the number of requests and bytes loaded, that's to be expected.
+There isn't much in the way of Cumulative Layout Shifting, this could be because the layout is quite simple.
+If we run the same kind of comparison on the homepage, which has elements positioned in more complex layouts, you see a different story.
+Far fewer layout shifts were recorded when images had width and height attributes, which is why it's dropped to almost zero.
+We've also cut a significant chunk from the bytes downloaded metric here aswell, as we're not immediately downloading all of our images now or the contents of the Google Maps iframe.
+So then, it's clear that lazy loading and setting width and height attributes has a positive effect on aspects of the performance. Apart from the overall Lighthouse score, which now sits at 82, we've now also hit all of our performance goals.

@@ -473,3 +473,236 @@ E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\framework\DB\Transaction.
                 $object->save();
             }
 
+------------------------------------------
+payment
+
+Magento_Checkout/js/model/place-order.js
+	return function (serviceUrl, payload, messageContainer) {
+            var headers = {};
+
+            fullScreenLoader.startLoader();
+            _.each(hooks.requestModifiers, function (modifier) {
+                modifier(headers, payload);
+            });
+
+            return storage.post(
+                serviceUrl, JSON.stringify(payload), true, 'application/json', headers
+            ).fail(
+                function (response) {
+                    errorProcessor.process(response, messageContainer);
+                }
+            ).done(
+
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-webapi\Controller\Rest\SynchronousRequestProcessor.php :: 83 :: process
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-payment\Model\Checks\Composite.php
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-payment\Model\MethodList.php
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-payment\Model\PaymentMethodList.php
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-checkout\Model\ShippingInformationManagement.php :: saveAddressInformation
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-quote\Model\PaymentMethodManagement.php :: getList
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-checkout\Model\PaymentInformationManagement.php :: savePaymentInformation
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-quote\Model\PaymentMethodManagement.php :: 52 :: set
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-quote\Model\QuoteManagement.php :: 368 :: placeOrder
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-quote\Model\QuoteManagement.php :: 498 :: submitQuote
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-sales\Model\Service\OrderService.php :: 206 :: place
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-sales\Model\Order.php :: 1211: place
+	990 :: $this->_placePayment();
+		$this->getPayment()->place();
+		
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-sales\Model\Order\Payment.php :: 352 :: place
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-sales\Model\Order\Payment\Processor.php :: 70 :: authorize
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-sales\Model\Order\Payment\Operations\AuthorizeOperation.php :: 23 :; authorize
+
+[capture]
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-sales\Model\Order\Payment\Operations\CaptureOperation.php
+		:: 65
+		$invoice = $this->invoice($payment);
+		
+		E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-sales\Model\Order\Payment\Operations\AbstractOperation.php :: 66 :: invoice
+			:: 73
+			$invoice->capture();
+			
+			E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-sales\Model\Order\Invoice.php :: 344 :: capture
+			$this->getOrder()->getPayment()->capture($this); [E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-sales\Model\Order\Payment.php :: capture($invoice), NOTE: $invoice is not null]
+			
+			E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-sales\Model\Order\Payment\Operations\CaptureOperation.php
+				:: 73 :: capture
+				return $this->processInvoiceOperation->execute($payment, $invoice, 'capture');
+				
+				E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-sales\Model\Order\Payment\Operations\ProcessInvoiceOperation.php :: execute
+					:: 83
+					$method->$operationMethod($payment, $amountToCapture); [$operationMethod: 'capture']
+-----------------------------------
+
+Error Message
+
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\framework\Webapi\ErrorProcessor.php :: 112 :: maskException
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-checkout\Model\PaymentInformationManagement.php :: 126
+
+-----------------------------------
+	theme agent
+	
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-theme\Plugin\LoadDesignPlugin.php :: 50 :: beforeExecute
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\framework\View\DesignLoader.php :: 51 :: load
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\framework\App\Area.php :: 154 :: detectDesign
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\framework\App\Area.php :: 174 :: _applyUserAgentDesignException
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\framework\View\DesignExceptions.php :: 68 :: getThemeByRequest
+
+==========================================
+full page cache
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-page-cache\Model\App\FrontController\BuiltinPlugin.php :: 64 :: aroundDispatch
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\framework\App\PageCache\Identifier.php :: 51 :: getValue()
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\framework\App\Http\Context.php ::: 111 :: getVaryString
+
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\framework\Cache\Frontend\Decorator\TagScope.php :: save :: 49
+E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\framework\Cache\Core.php :: 68 :: save
+
+============================
+invoice collect totals in magento 1
+
+E:\PHP\Remco\site\app\code\core\Mage\Sales\Model\Order\Invoice.php :: 520 :: collectTotals
+E:\PHP\Remco\site\app\code\core\Mage\Sales\Model\Order\Invoice.php
+	return Mage::getSingleton('sales/order_invoice_config'); :: 256
+	
+				"subtotal": {
+					"class": "postnl_payment\/order_invoice_total_subtotal"
+				},
+				"discount": {
+					"class": "sales\/order_invoice_total_discount",
+					"after": "subtotal"
+				},
+				"shipping": {
+					"class": "sales\/order_invoice_total_shipping",
+					"after": "subtotal,discount",
+					"before": "grand_total,tax"
+				},
+				"tax": {
+					"class": "sales\/order_invoice_total_tax",
+					"after": "subtotal"
+				},
+				"grand_total": {
+					"class": "sales\/order_invoice_total_grand",
+					"after": "shipping"
+				},
+				"cost_total": {
+					"class": "sales\/order_invoice_total_cost",
+					"after": "discount",
+					"before": "grand_total"
+				},
+				"weee": {
+					"class": "weee\/total_invoice_weee",
+					"after": "subtotal,tax,discount,grand_total,cost_total,shipping"
+				},
+				"postnl_cod_fee": {
+					"class": "postnl_payment\/order_invoice_total_codFee",
+					"after": "subtotal,discount,shipping",
+					"before": "tax,grand_total"
+				},
+				"postnl_cod_fee_tax": {
+					"class": "postnl_payment\/order_invoice_total_codFeeTax",
+					"after": "subtotal,discount,shipping,tax",
+					"before": "grand_total"
+				},
+				"md_bundlediscount": {
+					"class": "md_bundlediscount\/order_invoice_total_bundles"
+				},
+				"payment_charge": {
+					"class": "pay_payment\/sales_order_invoice_total_paymentcharge"
+				}
+E:\PHP\Remco\site\app\code\core\Mage\Sales\Model\Order\Total\Config\Base.php :: 86 :: getTotalModels
+E:\PHP\Remco\site\app\code\core\Mage\Sales\Model\Quote\Address.php :: 1267 :: addTotalAmount
+
+tax in magento 1
+	E:\PHP\Remco\site\app\code\core\Mage\Tax\Model\Sales\Total\Quote\Subtotal.php :: 130 :: collect
+		689 :: _sameRateAsStore
+			_areTaxRequestsSimilar
+			$storeRate = $this->_calculator->getStoreRate($request, $this->_store);
+	E:\PHP\Remco\site\app\code\core\Mage\Tax\Model\Sales\Total\Quote\Tax.php :: 157 :: collect :: 
+		1100 :: _aggregateTaxPerRate
+	E:\PHP\Remco\site\app\code\core\Mage\Tax\Model\Calculation.php :: 665 :: calcTaxAmount
+	
+	
+discount in magento 1
+	E:\PHP\Remco\site\app\code\core\Mage\SalesRule\Model\Quote\Discount.php :: 58 :: collect
+cross_border_trade_enabled in magento 1
+	Mage_Tax_Model_Config :: 
+	E:\PHP\Remco\site\app\code\core\Mage\Tax\Model\Config.php :: crossBorderTradeEnabled :: 40
+--------------------------------------
+op:image in magento 2
+
+	E:\PHP\Mark\remote_athlete\vendor\magento\module-catalog\view\frontend\layout\catalog_product_opengraph.xml
+	E:\PHP\Mark\remote_athlete\vendor\magento\module-catalog\view\frontend\templates\product\view\opengraph\general.phtml :: 13
+		<meta property="og:image"
+			content="<?= $block->escapeUrl($block->getImage($block->getProduct(), 'product_base_image')->getImageUrl()) ?>" />
+	E:\PHP\Mark\remote_athlete\vendor\magento\framework\Config\View.php :: 125 :: getMediaAttributes
+--------------------------------------
+magento customer data for quote item
+	E:\PHP\Rico2\site\m2\vendor\magento\module-checkout\CustomerData\AbstractItem.php :: 27 :: getItemData
+	E:\PHP\Rico2\site\m2\vendor\magento\module-checkout\CustomerData\ItemPool.php :: 61 :: getItemData
+	
+------------------------------------
+m2 invoice
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-sales\Controller\Adminhtml\Order\Invoice\Save.php
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-sales\Model\Order\Invoice.php :: 604 :: register
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-sales\Model\Order\Invoice.php :: 358 :: pay
+	
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-sales\Model\Order\StateResolver.php :: 80 :: getStateForOrder
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-sales\Model\Order\Payment.php :: 352 :: place
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-payment\Model\Method\AbstractMethod.php :: 898 :: getConfigPaymentAction
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-sales\Model\ResourceModel\Order\Handler\State.php :: 24 :: check
+	
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-sales\Model\Order.php :: 685 :: canCreditmemo
+	
+----------------------------------------------
+m2 directive
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-variable\etc\di.xml
+		:: 9
+			<type name="Magento\Variable\Model\Config\Structure\AvailableVariables">
+				<arguments>
+					<argument name="configPaths" xsi:type="array">
+						<item name="web" xsi:type="array">
+							<item name="web/unsecure/base_url" xsi:type="string">1</item>
+							<item name="web/secure/base_url" xsi:type="string">1</item>
+						</item>
+	
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-variable\Model\Config\Structure\AvailableVariables.php :: 
+		:: 45 :: getFlatConfigPaths
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-variable\Model\Source\Variables.php :: 
+		:: 106 :: getAvailableVars
+		
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-email\Model\Template\Filter.php :: 828 :: configDirective
+		:: 849 :: isAvailableConfigVariable
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\framework\Filter\Template.php :: 173 :: filter
+----------------------------------------------------
+m2 config about generated
+	vendor\magento\framework\App\ObjectManager\ConfigLoader\Compiled.php
+	
+		public function load($area) // area = "global"
+		{
+			if (isset($this->configCache[$area])) {
+				return $this->configCache[$area];
+			}
+			$diConfiguration = include(self::getFilePath($area));  // path = /var/www/daniel_m2_lcarb_shop/generated/metadata/global.php
+			$this->configCache[$area] = $diConfiguration;
+			return $this->configCache[$area];
+		}
+		
+	whenever making changes to arguments part in di.xml, you should perform the compile.
+	It's because all arguments of object are stored in generated/metadata/{scope}.php
+----------------------------------------------------------
+sales sequence m2
+	SELECT `mage_sales_sequence_meta`.`meta_id` FROM `mage_sales_sequence_meta` WHERE (entity_type = :entity_type AND store_id = :store_id)
+	
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-sales-sequence\Model\ResourceModel\Meta.php :: loadByEntityTypeAndStore
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-sales-sequence\Model\Manager.php :: getSequence
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-quote\Model\ResourceModel\Quote.php :: getReservedOrderId
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-quote\Model\Quote.php :: reserveOrderId
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-quote\Model\QuoteManagement.php :: 510
+		$quote->reserveOrderId();
+====================
+E:\PHP\magento243\vendor\magento\module-catalog\Block\Product\AbstractProduct.php
+
+================================
+shipment comment
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-sales\Model\Order\Email\Sender\ShipmentCommentSender.php :: 63 :: send
+	E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\module-shipping\Controller\Adminhtml\Order\Shipment\AddComment.php :: 61 :: execute
+	

@@ -32,9 +32,29 @@ E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\data-migration-tool\src\M
 	app\code\Vendor\Migration\etc\opensource-to-opensource\map-eav.xml
 	crypt_key should be from local.xml from magento 1.
 	
-	
+3.1. customize vendor\magento\data-migration-tool\src\Migration\ResourceModel\Destination.php :: 31 :: saveRecords
+3.2 customize app\code\Vendor\Migration\etc\opensource-to-opensource\1.9.2.1\map.xml	
+	igonire m2epro
+			<ignore>
+                <document>m2epro*</document>
+            </ignore>
 4. Migrate Settings
-		grant all PRIVILEGES on sub_l_carb_shop_de.* to 'gor'@'10.0.0.160' identified by 'blauS66S';
+		show global variables like "log_bin%";
+		set global log_bin_trust_function_creators="ON";
+
+		For lcarb server, mysql -p -u debian-sys-maint (password :mdtJS7a01IjQgTIG)
+
+
+		mysqldump --single-transaction -u root -pblauS66S l_carb_shop_de > /home/migration/l_carb_shop_de.sql
+
+	mysql -u root -pblauS66S
+	create database migration_source_lcarbshop;
+	grant all PRIVILEGES on migration_source_lcarbshop.* to 'gor'@'localhost' identified by 'blauS66S';
+	grant all PRIVILEGES on migration_source_lcarbshop.* to 'gor'@'10.0.0.160' identified by 'blauS66S';
+	grant all PRIVILEGES on migration_source_lcarbshop.* to 'root'@'localhost' identified by 'blauS66S';
+	grant all PRIVILEGES on migration_source_lcarbshop.* to 'root'@'10.0.0.160' identified by 'blauS66S';
+	mysql -u root -pblauS66S migration_source_lcarbshop < l_carb_shop_de.sql
+	
 		
 		php bin/magento migrate:settings -a /var/www/daniel_m2_lcarb_shop/app/code/Vendor/Migration/etc/opensource-to-opensource/1.9.2.1/config.xml
 		php bin/magento migrate:data -a /var/www/daniel_m2_lcarb_shop/app/code/Vendor/Migration/etc/opensource-to-opensource/1.9.2.1/config.xml
@@ -55,6 +75,11 @@ E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\data-migration-tool\src\M
 		
 		php bin/magento migrate:data -a /var/www/m2.l-carb-shop.de/app/code/Vendor/Migration/etc/opensource-to-opensource/1.9.2.1/config.xml
 		php bin/magento migrate:data -r -a /var/www/m2.l-carb-shop.de/app/code/Vendor/Migration/etc/opensource-to-opensource/1.9.2.1/config.xml
+		php bin/magento migrate:data -r -a /var/www/m2.l-carb-shop.de/app/code/Vendor/Migration/etc/opensource-to-opensource/1.9.2.1/config-all.xml
+		php bin/magento migrate:data -r -a /var/www/m2.l-carb-shop.de/app/code/Vendor/Migration/etc/opensource-to-opensource/1.9.2.1/config-catalog.xml
+		php bin/magento migrate:data -r -a /var/www/m2.l-carb-shop.de/app/code/Vendor/Migration/etc/opensource-to-opensource/1.9.2.1/config-orders.xml
+		php bin/magento migrate:delta -a /var/www/m2.l-carb-shop.de/app/code/Vendor/Migration/etc/opensource-to-opensource/1.9.2.1/config-orders.xml
+		php bin/magento migrate:delta -a /var/www/m2.l-carb-shop.de/app/code/Vendor/Migration/etc/opensource-to-opensource/1.9.2.1/config-all.xml
 		
 		php bin/magento indexer:reindex
 5. Migrate media
@@ -63,5 +88,65 @@ E:\PHP\Daniel\work\daniel_m2_lcarb_shop\vendor\magento\data-migration-tool\src\M
 	php bin/magento catalog:images:resize
 	
 6. Delta
+7.
+	rm -rf /var/lib/lxc/lxc-m2-l-carb-shop-de/rootfs/var/www/m2.l-carb-shop.de/pub/media/catalog
+	cp -r /home/l-carb-shop/public_html/media/catalog /var/lib/lxc/lxc-m2-l-carb-shop-de/rootfs/var/www/m2.l-carb-shop.de/pub/media/catalog
+	
+	php bin/magento catalog:images:resize
+8.
+	mage_m2epro_amazon_item
+	mage_m2epro_amazon_listing_other
+	mage_m2epro_ebay_item
+	mage_m2epro_ebay_listing_other
+	mage_m2epro_listing_other
+	mage_custom_product_type
+	
+	mysqlpassword: blauS66S
+	mysqldump --single-transaction -p -u gor l_carb_shop_de mage_m2epro_amazon_item mage_m2epro_amazon_listing_other mage_m2epro_ebay_item mage_m2epro_ebay_listing_other mage_m2epro_listing_other mage_custom_product_type > /home/migration/dbother.sql
+	mysqldump --single-transaction -p -u gor migration_source_lcarbshop mage_m2epro_amazon_item mage_m2epro_amazon_listing_other mage_m2epro_ebay_item mage_m2epro_ebay_listing_other mage_m2epro_listing_other mage_custom_product_type > /home/migration/dbother.sql
+	mysql -p -u gor m2_l_carb_shop_de < /home/migration/dbother.sql
+	
+	----------storemap---------
+	select * from mage_customer_entity where website_id=4
+	UPDATE mage_customer_entity SET website_id=8 WHERE website_id=4
+	UPDATE mage_customer_entity SET store_id=13 WHERE store_id=8
+	UPDATE mage_customer_entity SET store_id=14 WHERE store_id=7
+	----------------------------
 
+	SELECT * FROM `mage_eav_attribute` WHERE frontend_input LIKE '%radio%'
+	SELECT * FROM `mage_customer_address_entity_int` WHERE attribute_id=153
+	SELECT * FROM mage_eav_attribute_option WHERE attribute_id=153
+	select * from mage_eav_attribute where attribute_id=153
+
+	delete from mage_eav_attribute where attribute_id=153
+	
+	SELECT * FROM `mage_eav_attribute` WHERE attribute_code LIKE 'lenp_%'
+	delete FROM `mage_eav_attribute` WHERE attribute_code LIKE 'lenp_%'
+	------------------------------
+===========================================
+migrate only catalog
+	https://github.com/magento/data-migration-tool/issues/406
+*************************************
+migrate only tha order which are > "2019-01-01"
+
+then we get rid of a lot of old crap
+
+
+
+ there are 2 Tables, which have to be transfered from M1 to M2
+
+ probably it may be done in Database
+ mage_m2epro_amazon_item and mage_m2epro_amazon_listing_other
+
+they are both necesary to sort amazon Product to magento Product
+
+2 more tables to be transferred
+
+mage_m2epro_ebay_item
+mage_m2epro_ebay_listing_other
+and mage_m2epro_listing_other
+
+is there any cause nit to just copy them on database level
+
+*************************************
 	
